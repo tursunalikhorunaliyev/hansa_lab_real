@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "31939218038",
+    "project_id": "hansa-lab-14d4e",
+    "storage_bucket": "hansa-lab-14d4e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:31939218038:android:d6ff24b68dd9ffcf36ad57",
+        "android_client_info": {
+          "package_name": "com.hansa.hansa_lab"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "31939218038-lj0qtla0jefa2tokhkergiapgpgjvmim.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAzzk561G2AYy4yjCSQdLJA0pxoP3Js-KE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "31939218038-lj0qtla0jefa2tokhkergiapgpgjvmim.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
