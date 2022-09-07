@@ -1,0 +1,4 @@
+enum EnumActionView{
+  view,
+  send,
+}
