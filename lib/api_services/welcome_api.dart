@@ -20,17 +20,18 @@ class WelcomeApi {
   List<WelcomeModelData> list = [];
 
   WelcomeApi(token) {
-    int i = 1;
+    int i = 0;
 
     eventStream.listen(
       (event) async {
         if (event == WelcomeApiAction.fetch) {
+          
           await getWelcome(token: token, i: i).then((value) {
             list += value.data.welcomeModelListData.list;
-
             dataSink.add(list);
+            i++;
           });
-          i++;
+       
         }
 
         if (event == WelcomeApiAction.update) {
