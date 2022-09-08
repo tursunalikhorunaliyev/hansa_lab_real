@@ -130,7 +130,7 @@ class _IzbrannoeState extends State<Izbrannoe> {
                                     isFavouriteBLoC.getFavourite(token,
                                         snapshot.data!.data.list[index].unlink);
                                     providerWelcomeApi.eventSink
-                                        .add(WelcomeApiAction.update);
+                                        .add([WelcomeApiAction.update, true]);
                                   }
 
                                   return true;

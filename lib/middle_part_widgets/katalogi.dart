@@ -5,6 +5,7 @@ import 'package:hansa_lab/api_services/welcome_api.dart';
 import 'package:hansa_lab/extra/custom_katalog_item_double.dart';
 import 'package:hansa_lab/extra/custom_tablet_katalog_item.dart';
 import 'package:hansa_lab/extra/custom_title.dart';
+import 'package:hansa_lab/extra/my_behavior%20.dart';
 import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 import 'package:sticky_headers/sticky_headers.dart';
@@ -24,8 +25,6 @@ class _KatalogiState extends State<Katalogi> {
     final isTablet = Provider.of<bool>(context);
     final catalogBloc = CatalogBloc(token);
     final scroll = ScrollController();
-    final welcomeApi = WelcomeApi(token);
-    welcomeApi.eventSink.add(WelcomeApiAction.fetch);
     catalogBloc.eventSink.add(CatalogAction.get);
     return Expanded(
       child: StreamBuilder<CatalogModel>(
@@ -43,12 +42,8 @@ class _KatalogiState extends State<Katalogi> {
                         title: "Каталоги",
                       ),
                       content: isTablet
-                          ? NotificationListener(
-                              onNotification: (value) {
-                                welcomeApi.eventSink
-                                    .add(WelcomeApiAction.fetch);
-                                return false;
-                              },
+                          ? ScrollConfiguration(
+                              behavior: MyBehavior(),
                               child: Padding(
                                 padding:
                                     const EdgeInsets.symmetric(horizontal: 25),
@@ -114,12 +109,8 @@ class _KatalogiState extends State<Katalogi> {
                         title: "Архив",
                       ),
                       content: isTablet
-                          ? NotificationListener(
-                              onNotification: (value) {
-                                welcomeApi.eventSink
-                                    .add(WelcomeApiAction.fetch);
-                                return false;
-                              },
+                          ? ScrollConfiguration(
+                              behavior: MyBehavior(),
                               child: Padding(
                                 padding:
                                     const EdgeInsets.symmetric(horizontal: 25),

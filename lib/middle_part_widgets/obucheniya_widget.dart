@@ -19,8 +19,6 @@ class ObucheniyaWidget extends StatelessWidget {
     final token = Provider.of<String>(context);
     final bloc = Provider.of<BlocObucheniya>(context);
     bloc.eventSink.add(ObucheniyaEnum.obucheniya);
-    final welcomeApi = WelcomeApi(token);
-    welcomeApi.eventSink.add(WelcomeApiAction.fetch);
     final scroll = ScrollController();
 
     return Expanded(
@@ -324,7 +322,6 @@ class ObucheniyaWidget extends StatelessWidget {
                       );
                     } else {
                       bloc.eventSink.add(ObucheniyaEnum.obucheniya);
-                      welcomeApi.eventSink.add(WelcomeApiAction.fetch);
                       return Padding(
                         padding: EdgeInsets.only(
                             top:
