@@ -340,7 +340,7 @@ class _PresentArchiveState extends State<PresentArchive> {
                               ),
                               child: Padding(
                                 padding: EdgeInsets.only(
-                                    top: isTablet ? 20 : 9,
+                                    top: isTablet ? 20 : 30,
                                     bottom: isTablet ? 9 : 5),
                                 child: Row(
                                   children: [
