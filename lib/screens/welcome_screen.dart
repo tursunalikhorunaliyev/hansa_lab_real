@@ -128,13 +128,14 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
               children: [
                 Container(
                   color: const Color(0xffffffff),
-                  width: 395.w,
+                  width: double.infinity,
                   height: 100.h,
                   child: Padding(
-                    padding: EdgeInsets.only(top: 25.h),
+                    padding: EdgeInsets.only(top: 25.h, left: 20, right: 24),
                     child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      mainAxisSize: MainAxisSize.max,
+                       crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         IconButton(
                             onPressed: () {
@@ -149,7 +150,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                           child: Image.asset(
                             'assets/tepaLogo.png',
                             height: isTablet ? 30.h : 25.h,
-                            width: isTablet ? 230.w : 214.w,
+                            width: isTablet ? 230.w : null,
                           ),
                         ),
                         InkWell(
