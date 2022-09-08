@@ -1,4 +1,3 @@
-
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -57,7 +56,7 @@ class _ObucheniyaCardState extends State<ObucheniyaCard> {
                   borderRadius: BorderRadius.circular(5.r),
                   color: const Color(0xffffffff)),
               child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: 7.w),
+                padding: EdgeInsets.only(left: 18.w, right: 7.w),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
