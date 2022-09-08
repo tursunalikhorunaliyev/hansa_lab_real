@@ -51,7 +51,7 @@ class _ArchiveCardState extends State<ArchiveCard> {
     bool fav = widget.isFavourite;
     return Padding(
       padding: EdgeInsets.only(
-          top: isTablet ? 0 : 15.h,
+          top: isTablet ? 0 : 20.h,
           bottom: isTablet ? 10 : 0,
           left: isTablet ? 0 : 20,
           right: isTablet ? 0 : 20),

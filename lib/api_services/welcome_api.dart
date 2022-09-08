@@ -12,25 +12,25 @@ class WelcomeApi {
   final dataController = StreamController<List<WelcomeModelData>>.broadcast();
   StreamSink<List<WelcomeModelData>> get dataSink => dataController.sink;
   Stream<List<WelcomeModelData>> get dataStream => dataController.stream;
-  final eventController = StreamController<WelcomeApiAction>.broadcast();
-  StreamSink<WelcomeApiAction> get eventSink => eventController.sink;
-  Stream<WelcomeApiAction> get eventStream => eventController.stream;
+  final eventController = StreamController<List>.broadcast();
+  StreamSink<List> get eventSink => eventController.sink;
+  Stream<List> get eventStream => eventController.stream;
   String videoLink = "";
   String get getVideoLink => videoLink;
   List<WelcomeModelData> list = [];
 
   WelcomeApi(token) {
     int i = 0;
-
     eventStream.listen(
       (event) async {
-        if (event == WelcomeApiAction.fetch) {
-          await getWelcome(token: token, i: ++i).then((value) {
+        if (event[0] == WelcomeApiAction.fetch) {
+          await getWelcome(token: token, i: (event[1] == true) ? ++i : 1)
+              .then((value) {
             list += value.data.welcomeModelListData.list;
             dataSink.add(list);
           });
         }
-        if (event == WelcomeApiAction.update) {
+        if (event[0] == WelcomeApiAction.update) {
           dataSink.add(list);
         }
       },
@@ -48,6 +48,7 @@ class WelcomeApi {
   }
 
   Future<WelcomeModel> getWelcome({required String token, int i = 1}) async {
+    log(i.toString());
     Response response = await get(
       Uri.parse(APIUrls().getWelcomeUrl + i.toString()),
       headers: {"token": token},

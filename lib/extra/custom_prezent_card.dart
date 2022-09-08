@@ -29,7 +29,8 @@ class _CustomPrezentCardState extends State<CustomPrezentCard> {
     final isTablet = Provider.of<bool>(context);
 
     return Padding(
-      padding: EdgeInsets.only(right: 18.w, left: 18.w, bottom: 10.h),
+      padding:
+          EdgeInsets.only(right: 18.w, left: 18.w, bottom: 10.h, top: 10.h),
       child: Column(
         children: [
           InkWell(

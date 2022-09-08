@@ -45,7 +45,7 @@ class _WelcomeWidgetState extends State<WelcomeWidget> {
     final isTablet = Provider.of<bool>(context);
     final token = Provider.of<String>(context);
     final providerWelcomeApi = Provider.of<WelcomeApi>(context);
-    providerWelcomeApi.eventSink.add(WelcomeApiAction.fetch);
+    providerWelcomeApi.eventSink.add([WelcomeApiAction.fetch, true]);
     final articleBLoC = Provider.of<ArticleBLoC>(context);
     final menuProvider = Provider.of<MenuEventsBloC>(context);
 
@@ -65,7 +65,6 @@ class _WelcomeWidgetState extends State<WelcomeWidget> {
                   ..setVolume(0);
                 snapshotCount = 1;
               }
-
               return isTablet
                   ? Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 25),
@@ -137,7 +136,7 @@ class _WelcomeWidgetState extends State<WelcomeWidget> {
                                 child: GestureDetector(
                                   onTap: () {
                                     providerWelcomeApi.eventSink
-                                        .add(WelcomeApiAction.fetch);
+                                        .add([WelcomeApiAction.fetch, true]);
                                   },
                                   child: Container(
                                     alignment: Alignment.center,
@@ -216,7 +215,7 @@ class _WelcomeWidgetState extends State<WelcomeWidget> {
                             child: GestureDetector(
                               onTap: () {
                                 providerWelcomeApi.eventSink
-                                    .add(WelcomeApiAction.fetch);
+                                    .add([WelcomeApiAction.fetch, true]);
                               },
                               child: Container(
                                 alignment: Alignment.center,
@@ -247,7 +246,7 @@ class _WelcomeWidgetState extends State<WelcomeWidget> {
                       ),
                     );
             } else {
-              providerWelcomeApi.eventSink.add(WelcomeApiAction.fetch);
+              providerWelcomeApi.eventSink.add([WelcomeApiAction.fetch, false]);
               return Center(
                   child: Lottie.asset(
                 'assets/pre.json',

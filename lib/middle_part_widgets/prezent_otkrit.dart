@@ -26,17 +26,11 @@ class _PrezentOtkritState extends State<PrezentOtkrit> {
   @override
   Widget build(BuildContext context) {
     final providerMenuEventsBloc = Provider.of<MenuEventsBloC>(context);
-
     final token = Provider.of<String>(context);
     final providerSendUrlPrezentOtkrit =
         Provider.of<SendUrlPrezentOtkrit>(context);
     final blocPrezentOtkrit = BlocPrezentOtkrit();
-
     final scroll = ScrollController();
-
-    final welcomeApi = WelcomeApi(token);
-    welcomeApi.eventSink.add(WelcomeApiAction.fetch);
-
     final isTablet = Provider.of<bool>(context);
 
     return Expanded(
