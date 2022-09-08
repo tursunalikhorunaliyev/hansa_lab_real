@@ -31,9 +31,9 @@ class LoginCard extends StatefulWidget {
 
 class _LoginCardState extends State<LoginCard> {
   final usernameController =
-      TextEditingController(text: "umarnematovv98@gmail.com");
+      TextEditingController();
 
-  final passwordController = TextEditingController(text: "981755");
+  final passwordController = TextEditingController();
   final textFieldController = TextEditingController();
   final switchTextEditingController = TextEditingController();
   final pagerBloc = NavigatorBloC();
