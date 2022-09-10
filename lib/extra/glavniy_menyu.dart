@@ -149,9 +149,9 @@ class _GlavniyMenyuState extends State<GlavniyMenyu> {
                         shape: BoxShape.circle,
                       ),
                       child: Icon(
-                        CupertinoIcons.pencil,
+                        Icons.edit,
                         color: const Color(0xFFffffff),
-                        size: isTablet ? 20 : 20,
+                        size: isTablet ? 20 : 18,
                       ),
                     ),
                   ),
