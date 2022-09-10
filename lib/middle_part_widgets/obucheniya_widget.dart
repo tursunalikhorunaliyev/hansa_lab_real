@@ -168,7 +168,7 @@ class ObucheniyaWidget extends StatelessWidget {
                             header: Container(
                               color: const Color(0xffeaeaea),
                               child: Padding(
-                                padding: EdgeInsets.only(top: 9.h, bottom: 5.h),
+                                padding: EdgeInsets.only(top: 30.h, bottom: 5.h),
                                 child: Row(
                                   children: [
                                     Container(

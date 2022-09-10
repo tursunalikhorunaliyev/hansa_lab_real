@@ -38,11 +38,13 @@ class CustomClipItem extends StatelessWidget {
                   child: ClipPath(
                     clipper: CustomPaintClipper(),
                     child: Container(
-                      constraints: BoxConstraints(
+                      width: 310.w,
+                      height: 75.h,
+                      /* constraints: BoxConstraints(
                           minHeight: 71,
                           minWidth: 300.w,
                           maxHeight: 101.h,
-                          maxWidth: 300.w),
+                          maxWidth: 300.w), */
                       color: backgroundColor,
                     ),
                   ),
