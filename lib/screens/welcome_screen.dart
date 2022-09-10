@@ -73,100 +73,100 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          InkWell(
-                            onTap: () {
-                              backPressed(menuProvider);
-                            },
-                            child: Icon(
+                      InkWell(
+                        onTap: () {
+                          backPressed(menuProvider);
+                        },
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(
                               CupertinoIcons.chevron_left_circle,
                               size: isTablet ? 20.sp : 25.sp,
                               color: const Color(0xffa5a5ae),
                             ),
-                          ),
-                          const SizedBox(
-                            height: 5,
-                          ),
-                          Text(
-                            "Назад",
-                            style: TextStyle(
-                                color: Colors.grey[700], fontSize: 12),
-                          )
-                        ],
+                            const SizedBox(
+                              height: 5,
+                            ),
+                            Text(
+                              "Назад",
+                              style: TextStyle(
+                                  color: Colors.grey[700], fontSize: 12),
+                            )
+                          ],
+                        ),
                       ),
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          InkWell(
-                            onTap: () {
-                              menuProvider.eventSink.add(MenuActions.welcome);
-                            },
-                            child: Icon(
+                      InkWell(
+                        onTap: () {
+                          menuProvider.eventSink.add(MenuActions.welcome);
+                        },
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(
                               CupertinoIcons.home,
                               size: isTablet ? 20.sp : 25.sp,
                               color: const Color(0xffa5a5ae),
                             ),
-                          ),
-                          const SizedBox(
-                            height: 5,
-                          ),
-                          Text(
-                            "Дом",
-                            style: TextStyle(
-                                color: Colors.grey[700], fontSize: 12),
-                          )
-                        ],
+                            const SizedBox(
+                              height: 5,
+                            ),
+                            Text(
+                              "Домой",
+                              style: TextStyle(
+                                  color: Colors.grey[700], fontSize: 12),
+                            )
+                          ],
+                        ),
                       ),
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          InkWell(
-                            onTap: () {
-                              providerTapFavorite.setInt(1);
-                              log("${providerTapFavorite.getInt} Welcome screen get bool");
-                              providerScaffoldKey.currentState!.openDrawer();
-                            },
-                            child: Icon(
+                      InkWell(
+                        onTap: () {
+                          providerTapFavorite.setInt(1);
+                          log("${providerTapFavorite.getInt} Welcome screen get bool");
+                          providerScaffoldKey.currentState!.openDrawer();
+                        },
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(
                               CupertinoIcons.heart,
                               size: isTablet ? 20.sp : 25.sp,
                               color: const Color(0xffa5a5ae),
                             ),
-                          ),
-                          const SizedBox(
-                            height: 5,
-                          ),
-                           Text(
-                            "Избранное",
-                            style: TextStyle(
-                                color: Colors.grey[700], fontSize: 12),
-                          )
-                        ],
+                            const SizedBox(
+                              height: 5,
+                            ),
+                            Text(
+                              "Избранное",
+                              style: TextStyle(
+                                  color: Colors.grey[700], fontSize: 12),
+                            )
+                          ],
+                        ),
                       ),
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          InkWell(
-                            onTap: () {
-                              providerTapFavorite.setInt(2);
-                              providerScaffoldKey.currentState!.openDrawer();
-                            },
-                            child: Icon(
+                      InkWell(
+                        onTap: () {
+                          providerTapFavorite.setInt(2);
+                          providerScaffoldKey.currentState!.openDrawer();
+                        },
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(
                               CupertinoIcons.person,
                               size: isTablet ? 20.sp : 25.sp,
                               color: const Color(0xffa5a5ae),
                             ),
-                          ),
-                          const SizedBox(
-                            height: 5,
-                          ),
-                           Text(
-                            "Личный",
-                             style: TextStyle(
-                                color: Colors.grey[700], fontSize: 12),
-                          )
-                        ],
+                            const SizedBox(
+                              height: 5,
+                            ),
+                            Text(
+                              "Профиль",
+                              style: TextStyle(
+                                  color: Colors.grey[700], fontSize: 12),
+                            )
+                          ],
+                        ),
                       ),
                     ],
                   ),
