@@ -73,48 +73,100 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      InkWell(
-                        onTap: () {
-                          backPressed(menuProvider);
-                        },
-                        child: Icon(
-                          CupertinoIcons.chevron_left_circle,
-                          size: isTablet ? 20.sp : 25.sp,
-                          color: const Color(0xffa5a5ae),
-                        ),
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          InkWell(
+                            onTap: () {
+                              backPressed(menuProvider);
+                            },
+                            child: Icon(
+                              CupertinoIcons.chevron_left_circle,
+                              size: isTablet ? 20.sp : 25.sp,
+                              color: const Color(0xffa5a5ae),
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 5,
+                          ),
+                          Text(
+                            "Назад",
+                            style: TextStyle(
+                                color: Colors.grey[700], fontSize: 12),
+                          )
+                        ],
                       ),
-                      InkWell(
-                        onTap: () {
-                          menuProvider.eventSink.add(MenuActions.welcome);
-                        },
-                        child: Icon(
-                          CupertinoIcons.home,
-                          size: isTablet ? 20.sp : 25.sp,
-                          color: const Color(0xffa5a5ae),
-                        ),
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          InkWell(
+                            onTap: () {
+                              menuProvider.eventSink.add(MenuActions.welcome);
+                            },
+                            child: Icon(
+                              CupertinoIcons.home,
+                              size: isTablet ? 20.sp : 25.sp,
+                              color: const Color(0xffa5a5ae),
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 5,
+                          ),
+                          Text(
+                            "Дом",
+                            style: TextStyle(
+                                color: Colors.grey[700], fontSize: 12),
+                          )
+                        ],
                       ),
-                      InkWell(
-                        onTap: () {
-                          providerTapFavorite.setInt(1);
-                          log("${providerTapFavorite.getInt} Welcome screen get bool");
-                          providerScaffoldKey.currentState!.openDrawer();
-                        },
-                        child: Icon(
-                          CupertinoIcons.heart,
-                          size: isTablet ? 20.sp : 25.sp,
-                          color: const Color(0xffa5a5ae),
-                        ),
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          InkWell(
+                            onTap: () {
+                              providerTapFavorite.setInt(1);
+                              log("${providerTapFavorite.getInt} Welcome screen get bool");
+                              providerScaffoldKey.currentState!.openDrawer();
+                            },
+                            child: Icon(
+                              CupertinoIcons.heart,
+                              size: isTablet ? 20.sp : 25.sp,
+                              color: const Color(0xffa5a5ae),
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 5,
+                          ),
+                           Text(
+                            "Избранное",
+                            style: TextStyle(
+                                color: Colors.grey[700], fontSize: 12),
+                          )
+                        ],
                       ),
-                      InkWell(
-                        onTap: () {
-                          providerTapFavorite.setInt(2);
-                          providerScaffoldKey.currentState!.openDrawer();
-                        },
-                        child: Icon(
-                          CupertinoIcons.person,
-                          size: isTablet ? 20.sp : 25.sp,
-                          color: const Color(0xffa5a5ae),
-                        ),
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          InkWell(
+                            onTap: () {
+                              providerTapFavorite.setInt(2);
+                              providerScaffoldKey.currentState!.openDrawer();
+                            },
+                            child: Icon(
+                              CupertinoIcons.person,
+                              size: isTablet ? 20.sp : 25.sp,
+                              color: const Color(0xffa5a5ae),
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 5,
+                          ),
+                           Text(
+                            "Личный",
+                             style: TextStyle(
+                                color: Colors.grey[700], fontSize: 12),
+                          )
+                        ],
                       ),
                     ],
                   ),
@@ -134,7 +186,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                     padding: EdgeInsets.only(top: 25.h, left: 20, right: 24),
                     child: Row(
                       mainAxisSize: MainAxisSize.max,
-                       crossAxisAlignment: CrossAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         IconButton(

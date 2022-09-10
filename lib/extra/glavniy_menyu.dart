@@ -2,6 +2,8 @@ import 'dart:convert';
 import 'dart:developer';
 
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hansa_lab/api_models.dart/model_glavniy_menu_user_info.dart';
@@ -35,11 +37,16 @@ class GlavniyMenyu extends StatefulWidget {
 
 class _GlavniyMenyuState extends State<GlavniyMenyu> {
   GlobalKey<ScaffoldState> keyScaffold = GlobalKey();
+
   bool isFavourite = false;
   setFavourite(favourite) {
     setState(() {
       isFavourite = favourite;
     });
+  }
+
+  Future pickImage() async {
+    await ImagePicker().pickImage(source: ImageSource.gallery);
   }
 
   @override
@@ -124,22 +131,28 @@ class _GlavniyMenyuState extends State<GlavniyMenyu> {
                     ),
                   ),
                 ),
-                Padding(
-                  padding: EdgeInsets.only(
-                    top: isTablet ? 125 : 100,
-                    left: isTablet ? 240 : 175,
-                  ),
-                  child: Container(
-                    height: isTablet ? 33 : 26,
-                    width: isTablet ? 33 : 26,
-                    decoration: const BoxDecoration(
-                      color: Color.fromARGB(255, 213, 0, 50),
-                      shape: BoxShape.circle,
+                GestureDetector(
+                  onTap: () {
+                    pickImage();
+                  },
+                  child: Padding(
+                    padding: EdgeInsets.only(
+                      top: isTablet ? 125 : 100,
+                      left: isTablet ? 240 : 175,
                     ),
-                    child: Icon(
-                      Icons.check,
-                      color: const Color(0xFFffffff),
-                      size: isTablet ? 20 : 20,
+                    child: Container(
+                      height: isTablet ? 33 : 26,
+                      width: isTablet ? 33 : 26,
+                      alignment: Alignment.center,
+                      decoration: const BoxDecoration(
+                        color: Color.fromARGB(255, 213, 0, 50),
+                        shape: BoxShape.circle,
+                      ),
+                      child: Icon(
+                        CupertinoIcons.pencil,
+                        color: const Color(0xFFffffff),
+                        size: isTablet ? 20 : 20,
+                      ),
                     ),
                   ),
                 ),
