@@ -4,6 +4,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:hansa_lab/blocs/favourite_bloc.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:top_snackbar_flutter/custom_snack_bar.dart';
+import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
 class StackedStack extends StatelessWidget {
   const StackedStack(
@@ -182,6 +184,16 @@ class StackedStack extends StatelessWidget {
                           fav = !fav;
                           isFavouriteBLoC.sink.add(fav);
                           isFavouriteBLoC.getFavourite(token, isFavouriteURL);
+                          showTopSnackBar(
+                            persistent: true,
+                            animationDuration:
+                                const Duration(milliseconds: 600),
+                            context,
+                            const CustomSnackBar.success(
+                              message:
+                                  "Good job, your release is successful. Have a nice day",
+                            ),
+                          );
                         },
                         child: Container(
                           alignment: Alignment.center,
