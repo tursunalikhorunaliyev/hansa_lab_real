@@ -143,6 +143,8 @@ class _TreningiVideoState extends State<TreningiVideo> {
                                     treningiVideos.getUrl, token),
                                 builder: (context, snapshot) {
                                   if (snapshot.hasData) {
+                                    log(snapshot
+                                        .data!.data.data.data[0].videoLink);
                                     chewieController.dispose();
                                     chewieController.videoPlayerController
                                         .dispose();
@@ -152,16 +154,7 @@ class _TreningiVideoState extends State<TreningiVideo> {
                                       aspectRatio:
                                           isTablet ? 13.6 / 7.2 : 16 / 10.9,
                                       autoInitialize: true,
-                                      deviceOrientationsOnEnterFullScreen: [
-                                        DeviceOrientation.landscapeLeft,
-                                        DeviceOrientation.landscapeRight
-                                      ],
-                                      deviceOrientationsAfterFullScreen: [
-                                        DeviceOrientation.portraitDown,
-                                        DeviceOrientation.portraitUp
-                                      ],
                                       allowMuting: false,
-                                      useRootNavigator: true,
                                       cupertinoProgressColors:
                                           ChewieProgressColors(
                                         backgroundColor:
@@ -172,6 +165,14 @@ class _TreningiVideoState extends State<TreningiVideo> {
                                         handleColor: const Color.fromARGB(
                                             255, 213, 0, 50),
                                       ),
+                                      deviceOrientationsOnEnterFullScreen: [
+                                        DeviceOrientation.landscapeLeft,
+                                        DeviceOrientation.landscapeRight
+                                      ],
+                                      deviceOrientationsAfterFullScreen: [
+                                        DeviceOrientation.portraitDown,
+                                        DeviceOrientation.portraitUp
+                                      ],
                                       materialProgressColors:
                                           ChewieProgressColors(
                                         backgroundColor:
@@ -447,7 +448,6 @@ class _TreningiVideoState extends State<TreningiVideo> {
                                                 }),
                                           ],
                                         ),
-                                    
                                       ],
                                     );
                                   } else {

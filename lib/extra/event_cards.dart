@@ -189,10 +189,10 @@ class EventCards extends StatelessWidget {
                           isFavouriteBLoC.getFavourite(token, isFavouriteURL);
                          if(fav){
                             showTopSnackBar(
-                         
-                            reverseCurve: Curves.elasticIn,
+                            
+                            reverseCurve: Curves.elasticOut,
                             animationDuration: const Duration(milliseconds: 600),
-                            displayDuration: const Duration(milliseconds: 800),
+                            displayDuration: const Duration(milliseconds: 600),
                             context,
                             const CustomSnackBar.success(
                               iconRotationAngle: 0,

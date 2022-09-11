@@ -146,8 +146,6 @@ class _TopVideoWidgetState extends State<TopVideoWidget> {
     final index = Provider.of<VideoIndexProvider>(context);
     final providerBlocProgress = Provider.of<DownloadProgressFileBloc>(context);
     final token = Provider.of<String>(context);
-    final providerSendAnaliseDownload =
-        Provider.of<SendAnaliseDownload>(context);
     return SafeArea(
       child: Stack(
         children: [

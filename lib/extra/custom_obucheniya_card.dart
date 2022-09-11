@@ -5,6 +5,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hansa_lab/api_models.dart/favourite_model.dart';
 import 'package:hansa_lab/blocs/favourite_bloc.dart';
 import 'package:provider/provider.dart';
+import 'package:top_snackbar_flutter/custom_snack_bar.dart';
+import 'package:top_snackbar_flutter/top_snack_bar.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class ObucheniyaCard extends StatefulWidget {
@@ -148,6 +150,25 @@ class _ObucheniyaCardState extends State<ObucheniyaCard> {
                           isFavouriteBLoC.sink.add(fav);
                           isFavouriteBLoC.getFavourite(
                               token, widget.isFavouriteURL);
+
+                              if(fav){
+                            showTopSnackBar(
+                            
+                            reverseCurve: Curves.elasticOut,
+                            animationDuration: const Duration(milliseconds: 600),
+                            displayDuration: const Duration(milliseconds: 600),
+                            context,
+                            const CustomSnackBar.success(
+                              iconRotationAngle: 0,
+                              iconPositionLeft: 30,
+                              messagePadding: EdgeInsets.symmetric(horizontal: 80),
+                              icon: Icon(Icons.favorite, color: Colors.white, size: 30, ),
+                              backgroundColor: Color.fromARGB(255, 213, 0, 50),
+                              message:
+                                  "Этот контент сохранен в избранном",
+                            ),
+                          );
+                         }
                         },
                         child: Container(
                           alignment: Alignment.center,
