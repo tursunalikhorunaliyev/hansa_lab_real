@@ -68,9 +68,7 @@ class _LoginCardState extends State<LoginCard> {
       if (event[2]) {
         goToWelcome(event[3]);
       } else {
-  
-        log("BIZ KTGAN JOY");
-  progressButtonBLoC.sink.add(false);
+        progressButtonBLoC.sink.add(false);
         showSnac();
       }
     });
@@ -229,9 +227,10 @@ class _LoginCardState extends State<LoginCard> {
                             stream: progressButtonBLoC.stream,
                             initialData: false,
                             builder: (context, snapshot) {
-                              log(snapshot.data.toString() + " kllklkkllkl");
                               return GestureDetector(
                                 onTap: () async {
+                                  usernameController.text.trim();
+                                  passwordController.text.trim();
                                   if (usernameController.text.isNotEmpty &&
                                       passwordController.text.isNotEmpty) {
                                     try {
@@ -242,22 +241,21 @@ class _LoginCardState extends State<LoginCard> {
                                       if (response.isNotEmpty) {
                                         log(snapshot.data!.toString());
                                         log("sstatus 200");
-                                         progressButtonBLoC.sink.add(true);
+                                        progressButtonBLoC.sink.add(true);
                                         FocusManager.instance.primaryFocus
                                             ?.unfocus();
                                         List isCorrectList = await LoginAction(
                                                 username:
-                                                    usernameController.text,
+                                                    usernameController.text.trim(),
                                                 password:
-                                                    passwordController.text,
+                                                    passwordController.text.trim(),
                                                 isSaved:
                                                     switchTextEditingController
-                                                            .text ==
+                                                            .text.trim() ==
                                                         "1")
                                             .sendRequest();
                                         NotificationToken().getToken();
                                         pagerBloc.sink.add(isCorrectList);
-                                        
                                       }
                                     } catch (xatoyuuu) {
                                       log("status 400");
@@ -553,7 +551,6 @@ class _LoginCardState extends State<LoginCard> {
   }
 
   showSnac() {
-
     ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
       content: Text("Неверный E-mail или пароль"),
       backgroundColor: Color.fromARGB(255, 213, 0, 50),
