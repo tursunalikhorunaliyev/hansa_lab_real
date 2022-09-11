@@ -184,16 +184,30 @@ class StackedStack extends StatelessWidget {
                           fav = !fav;
                           isFavouriteBLoC.sink.add(fav);
                           isFavouriteBLoC.getFavourite(token, isFavouriteURL);
-                          showTopSnackBar(
-                            persistent: true,
-                            animationDuration:
-                                const Duration(milliseconds: 600),
-                            context,
-                            const CustomSnackBar.success(
-                              message:
-                                  "Good job, your release is successful. Have a nice day",
-                            ),
-                          );
+                          if (fav) {
+                            showTopSnackBar(
+                              reverseCurve: Curves.elasticOut,
+                              animationDuration:
+                                  const Duration(milliseconds: 600),
+                              displayDuration:
+                                  const Duration(milliseconds: 600),
+                              context,
+                              const CustomSnackBar.success(
+                                iconRotationAngle: 0,
+                                iconPositionLeft: 30,
+                                messagePadding:
+                                    EdgeInsets.symmetric(horizontal: 80),
+                                icon: Icon(
+                                  Icons.favorite,
+                                  color: Colors.white,
+                                  size: 30,
+                                ),
+                                backgroundColor:
+                                    Color.fromARGB(255, 213, 0, 50),
+                                message: "Этот контент сохранен в избранном",
+                              ),
+                            );
+                          }
                         },
                         child: Container(
                           alignment: Alignment.center,
