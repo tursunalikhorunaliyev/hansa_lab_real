@@ -8,12 +8,14 @@ import 'package:google_fonts/google_fonts.dart';
 class StatiComment extends StatefulWidget {
   const StatiComment(
       {Key? key,
-      required this.rating,
+      required this.initialRating,
       required this.name,
       required this.comment,
-      required this.imageURl})
+      required this.imageURl,
+      
+      })
       : super(key: key);
-  final String rating;
+  final double initialRating;
   final String name;
   final String comment;
   final String imageURl;
@@ -50,7 +52,7 @@ class _StatiCommentState extends State<StatiComment> {
                       padding: const EdgeInsets.only(top: 0),
                       child: RatingBar.builder(
                         unratedColor: Colors.grey[300],
-                        initialRating: 3,
+                        initialRating: widget.initialRating,
                         itemCount: 5,
                         itemSize: 12,
                         itemBuilder: (context, index) {

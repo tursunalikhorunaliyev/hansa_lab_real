@@ -1,20 +1,18 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
-
 class ReadStatiModel {
   bool status;
-  ReadStatiArticle article;
-  ReadStatiModel({required this.status, required this.article});
+  ReadStatiArticle data;
+  ReadStatiModel({required this.status, required this.data});
   factory ReadStatiModel.fromMap(Map<String, dynamic> map) {
     return ReadStatiModel(
-        status: map["status"], article: ReadStatiArticle.fromMap(map["data"]));
+        status: map["status"], data: ReadStatiArticle.fromMap(map["data"]));
   }
 }
 
 class ReadStatiArticle {
-  ReadStatiModelApi read;
-  ReadStatiArticle({required this.read});
+  ReadStatiModelApi article;
+  ReadStatiArticle({required this.article});
   factory ReadStatiArticle.fromMap(Map<String, dynamic> map) {
-    return ReadStatiArticle(read: ReadStatiModelApi.fromMap(map["article"]));
+    return ReadStatiArticle(article: ReadStatiModelApi.fromMap(map["article"]));
   }
 }
 
@@ -25,7 +23,7 @@ class ReadStatiModelApi {
   String body;
   ListMessageComment listMessageComment;
   String messagesLink;
-  double rating;
+  int rating;
   ReadStatiModelApi({
     required this.id,
     required this.title,
@@ -63,8 +61,8 @@ class MessageComment {
   String fullname;
   String date;
   String body;
-  String pictureLink;
-  dynamic rang;
+  String pictureLink; 
+  int rang;
   MessageComment(
       {required this.fullname,
       required this.date,

@@ -1,4 +1,5 @@
-// ignore_for_file: must_be_immutable
+import 'dart:async';
+import 'dart:convert';
 import 'dart:developer';
 
 import 'package:cached_network_image/cached_network_image.dart';
@@ -7,13 +8,13 @@ import 'package:flutter_html/flutter_html.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hansa_lab/api_models.dart/read_stati_model.dart';
 import 'package:hansa_lab/api_services/read_stati_send_comment_service.dart';
-import 'package:hansa_lab/api_services/read_stati_service.dart';
 import 'package:hansa_lab/classes/send_link.dart';
 import 'package:hansa_lab/extra/custom_title.dart';
 import 'package:hansa_lab/read_statie_section/stati_comment.dart';
 import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:http/http.dart' as http;
 
 class ReadStati extends StatefulWidget {
   const ReadStati({Key? key}) : super(key: key);
@@ -33,18 +34,49 @@ class _ReadStatiState extends State<ReadStati> {
     height: 30.33333333333333,
   );
   TextEditingController textFieldController = TextEditingController();
+
+  Future<ReadStatiModel> getData(String token, url) async {
+    var headers = {'token': token};
+    http.Response response =
+        await http.get(Uri.parse("http://hansa-lab.ru/$url"), headers: headers);
+    log("${response.statusCode} KELDI");
+    log("${response.body} Body");
+    log(url + " QALESAN");
+    return ReadStatiModel.fromMap(jsonDecode(response.body));
+  }
+
+  Future<Map<String, dynamic>> changeRating(
+      String token, id, String rating) async {
+    var headers = {'token': token};
+    http.Response response =
+        await http.post(Uri.parse("http://hansa-lab.ru/api/site/add-rating"),
+            body: {
+              "useful_skill_id": id,
+              "rating": rating,
+            },
+            headers: headers);
+    log(response.statusCode.toString() + " change rating");
+
+    return jsonDecode(response.body);
+  }
+
   @override
   Widget build(BuildContext context) {
+    log("--------------------------------------------------------");
     final isTablet = Provider.of<bool>(context);
     final providerToken = Provider.of<String>(context);
 
     final statieSendLinkProvider = Provider.of<SendLink>(context);
     positionDouble = isTablet ? 600 : 300;
     return FutureBuilder<ReadStatiModel>(
-        future: ReadStatieServices.getData(
-            providerToken, statieSendLinkProvider.getLInk),
+        future: getData(providerToken, statieSendLinkProvider.getLInk),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
+            log(statieSendLinkProvider.getLInk + " nmedi");
+            log(statieSendLinkProvider.getLInk
+                    .substring(statieSendLinkProvider.getLInk.length - 2) +
+                " osha joy");
+            log(snapshot.data!.data.article.messagesLink + " LKKLLKKLLKKL");
             return Expanded(
               child: Stack(
                 children: [
@@ -58,7 +90,7 @@ class _ReadStatiState extends State<ReadStati> {
                               topRight: Radius.circular(5.333333333333333)),
                           child: CachedNetworkImage(
                               imageUrl:
-                                  snapshot.data!.article.read.pictureLink)),
+                                  snapshot.data!.data.article.pictureLink)),
                     ],
                   ),
                   SingleChildScrollView(
@@ -98,7 +130,9 @@ class _ReadStatiState extends State<ReadStati> {
                                 padding: const EdgeInsets.only(top: 26),
                                 child: RatingBar.builder(
                                   unratedColor: Colors.grey[300],
-                                  initialRating: 3,
+                                  initialRating: snapshot
+                                      .data!.data.article.rating
+                                      .toDouble(),
                                   itemCount: 5,
                                   itemSize: 24,
                                   itemBuilder: (context, index) {
@@ -109,12 +143,29 @@ class _ReadStatiState extends State<ReadStati> {
                                   },
                                   onRatingUpdate: (value) {
                                     log(value.toString());
+                                    Timer(
+                                      const Duration(seconds: 3),
+                                      () {
+                                        changeRating(
+                                            providerToken,
+                                            statieSendLinkProvider.getLInk
+                                                .substring(
+                                                    statieSendLinkProvider
+                                                            .getLInk.length -
+                                                        2),
+                                            value.toString()).then((value) {
+                                              setState(() {
+                                                
+                                              });
+                                            });
+                                      },
+                                    );
                                   },
                                 ),
                               ),
                             ),
                             Html(
-                              data: snapshot.data!.article.read.body,
+                              data: snapshot.data!.data.article.body,
                             ),
                             Padding(
                               padding:
@@ -163,7 +214,7 @@ class _ReadStatiState extends State<ReadStati> {
                                               children: [
                                                 Text(
                                                   snapshot
-                                                      .data!.article.read.rating
+                                                      .data!.data.article.rating
                                                       .toString(),
                                                   style: GoogleFonts.montserrat(
                                                     color: Colors.white,
@@ -181,7 +232,7 @@ class _ReadStatiState extends State<ReadStati> {
                                             width: isTablet ? 15 : 0,
                                           ),
                                           Text(
-                                            "Коментариев ${snapshot.data!.article.read.listMessageComment.list.length}",
+                                            "Коментариев ${snapshot.data!.data.article.listMessageComment.list.length}",
                                             style: GoogleFonts.montserrat(
                                               color: const Color(0xFF777777),
                                               fontSize: 13.81,
@@ -211,43 +262,44 @@ class _ReadStatiState extends State<ReadStati> {
                                       children: List.generate(
                                           snapshot
                                               .data!
+                                              .data
                                               .article
-                                              .read
                                               .listMessageComment
                                               .list
                                               .length, (index) {
-                                        int length = snapshot.data!.article.read
+                                        int length = snapshot.data!.data.article
                                             .listMessageComment.list.length;
                                         return StatiComment(
-                                            comment: snapshot
-                                                .data!
-                                                .article
-                                                .read
-                                                .listMessageComment
-                                                .list[length - index - 1]
-                                                .body,
-                                            imageURl: snapshot
-                                                .data!
-                                                .article
-                                                .read
-                                                .listMessageComment
-                                                .list[length - index - 1]
-                                                .pictureLink,
-                                            name: snapshot
-                                                .data!
-                                                .article
-                                                .read
-                                                .listMessageComment
-                                                .list[length - index - 1]
-                                                .fullname,
-                                            rating: snapshot
-                                                .data!
-                                                .article
-                                                .read
-                                                .listMessageComment
-                                                .list[length - index - 1]
-                                                .rang
-                                                .toString());
+                                          comment: snapshot
+                                              .data!
+                                              .data
+                                              .article
+                                              .listMessageComment
+                                              .list[length - index - 1]
+                                              .body,
+                                          imageURl: snapshot
+                                              .data!
+                                              .data
+                                              .article
+                                              .listMessageComment
+                                              .list[length - index - 1]
+                                              .pictureLink,
+                                          name: snapshot
+                                              .data!
+                                              .data
+                                              .article
+                                              .listMessageComment
+                                              .list[length - index - 1]
+                                              .fullname,
+                                          initialRating: snapshot
+                                              .data!
+                                              .data
+                                              .article
+                                              .listMessageComment
+                                              .list[length - index - 1]
+                                              .rang
+                                              .toDouble(),
+                                        );
                                       }),
                                     ),
                                     const SizedBox(
@@ -283,15 +335,15 @@ class _ReadStatiState extends State<ReadStati> {
                                                           providerToken,
                                                           snapshot
                                                               .data!
+                                                              .data
                                                               .article
-                                                              .read
                                                               .messagesLink,
                                                           {
                                                         "body":
                                                             textFieldController
                                                                 .text,
                                                         "id": snapshot.data!
-                                                            .article.read.id
+                                                            .data.article.id
                                                             .toString()
                                                       }).then((value) {
                                                     if (value["status"] ==
@@ -302,7 +354,7 @@ class _ReadStatiState extends State<ReadStati> {
                                                     }
                                                     log(value["status"]
                                                         .toString());
-                                                    ReadStatieServices.getData(
+                                                    getData(
                                                         providerToken,
                                                         statieSendLinkProvider
                                                             .getLInk);
@@ -361,6 +413,7 @@ class _ReadStatiState extends State<ReadStati> {
               ),
             );
           } else {
+            log("FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF");
             return Expanded(
               child: Column(
                 children: [
