@@ -73,24 +73,49 @@ class _GlavniyMenyuState extends State<GlavniyMenyu> {
     log("B joylan");
   } */
 
- Future<dynamic> uploadImage() async {
-      XFile? image = await ImagePicker().pickImage(source: ImageSource.gallery);
-      File file = File(image!.path);
+  Future<dynamic> uploadImage() async {
+    /* XFile? image = await ImagePicker().pickImage(source: ImageSource.gallery);
+    File file = File(image!.path);
 
-  if(file == null){
-    return ;
+    if (file == null) {
+      return;
+    } else {
+      String fileName = file.path.split("/").last.substring(12);
+      Map<String, dynamic> formData = {
+        "ProfileForm[imageFile]":
+            await MultipartFile.fromFile(file.path, filename: fileName)
+      };
+      return await Dio()
+          .post("http://hansa-lab.ru/api/site/account-image", data: formData)
+          .then((value) {
+        log(value.data + " KECHA");
+      });
+    } */
+    XFile? image = await ImagePicker().pickImage(source: ImageSource.gallery);
+    File file = File(image!.path);
 
-  }
-  else{
-    String fileName = file.path.split("/").last.substring(12);
-    Map<String, dynamic> formData = {
-      "ProfileForm[imageFile]" : await MultipartFile.fromFile(file.path, filename: fileName)
-    };
-    return await Dio().post("http://hansa-lab.ru/api/site/account-image", data: formData).then((value) {
-      log(value.data + " KECHA");
-    });
-  }
- 
+    if (file == null) {
+      log("File is null");
+      return;
+    } else {
+      String fileName = file.path.split("/").last.substring(12);
+      FormData formData = FormData.fromMap({
+        "ProfileForm[imageFile]":
+            await MultipartFile.fromFile(file.path, filename: fileName)
+      });
+      var response = await Dio().post(
+        "http://hansa-lab.ru/api/site/account-image",
+        data: formData,
+        options: Options(
+          contentType: "image/png",
+          headers: {
+            "token":
+                "022412a69ac3e9df2bdff39b1188f5ee97b474eecad20f51fa7dc2971237643b",
+          },
+        ),
+      );
+      log(response.statusMessage ?? response.statusCode.toString());
+    }
   }
 
   @override
