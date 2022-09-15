@@ -273,7 +273,7 @@ class _TreningiState extends State<Treningi> {
                                                               index] ==
                                                           "Записаться")
                                                       ? const Color(0xff25b049)
-                                                      : const Color(0xFF232323),
+                                                      : const Color(0xFF232323),  
                                                   buttonTextColor:
                                                       const Color(0xffffffff),
                                                   titleColor:
@@ -291,7 +291,7 @@ class _TreningiState extends State<Treningi> {
                                                             .getTitles[index] ==
                                                         "Записаться") {
                                                       value.changeTitles(
-                                                          "Отписация", index);
+                                                          "Отписаться", index);
                                                     } else {
                                                       value.changeTitles(
                                                           "Записаться", index);
@@ -315,6 +315,7 @@ class _TreningiState extends State<Treningi> {
                         ),
                       ),
                     ),
+                  const   SizedBox(height: 30,),
                     StickyHeader(
                       header: const CustomTitle(
                         imagePath: "assets/kak_title.png",

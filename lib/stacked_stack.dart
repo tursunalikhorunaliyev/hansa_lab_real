@@ -195,8 +195,8 @@ class StackedStack extends StatelessWidget {
                               const CustomSnackBar.success(
                                 iconRotationAngle: 0,
                                 iconPositionLeft: 30,
-                                messagePadding:
-                                    EdgeInsets.symmetric(horizontal: 80),
+                               // messagePadding:
+                                    //EdgeInsets.symmetric(horizontal: 80),
                                 icon: Icon(
                                   Icons.favorite,
                                   color: Colors.white,
@@ -204,7 +204,7 @@ class StackedStack extends StatelessWidget {
                                 ),
                                 backgroundColor:
                                     Color.fromARGB(255, 213, 0, 50),
-                                message: "Этот контент сохранен в избранном",
+                                message: "Сохранено в избранном",
                               ),
                             );
                           }
