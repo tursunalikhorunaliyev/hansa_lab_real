@@ -48,49 +48,7 @@ class _GlavniyMenyuState extends State<GlavniyMenyu> {
     });
   }
 
-/*   Future pickImage(token) async {
-    http.Response response;
-
-
-    String fileName = image!.path.split("/").last.substring(12);
-    Uint8List uint8list = File(image.path).readAsBytesSync();
-    FormData formData = FormData.fromMap({
-      "ProfileForm[imageFile]":
-          await MultipartFile.fromFile(image.path, filename: fileName)
-    });
-    log("A joylan");
-    Dio().post(
-      "http://hansa-lab.ru/api/site/account-image",
-      data: Stream.fromIterable(uint8list.map((e) => [e])),
-      options: Options(headers: {"token": token}),
-      onSendProgress: (count, total) {
-        log(count.toString() + "count");
-        log(total.toString() + "total");
-      },
-    ).then((value) async {
-      log(value.data + " ASSD");
-    });
-    log("B joylan");
-  } */
-
   Future<dynamic> uploadImage() async {
-    /* XFile? image = await ImagePicker().pickImage(source: ImageSource.gallery);
-    File file = File(image!.path);
-
-    if (file == null) {
-      return;
-    } else {
-      String fileName = file.path.split("/").last.substring(12);
-      Map<String, dynamic> formData = {
-        "ProfileForm[imageFile]":
-            await MultipartFile.fromFile(file.path, filename: fileName)
-      };
-      return await Dio()
-          .post("http://hansa-lab.ru/api/site/account-image", data: formData)
-          .then((value) {
-        log(value.data + " KECHA");
-      });
-    } */
     XFile? image = await ImagePicker().pickImage(source: ImageSource.gallery);
     File file = File(image!.path);
     Dio dio = Dio();
@@ -212,7 +170,10 @@ class _GlavniyMenyuState extends State<GlavniyMenyu> {
                 ),
                 GestureDetector(
                   onTap: () {
-                    uploadImage();
+                    uploadImage().then((value) {
+                      blocGlavniyMenuUserInfo.eventSink
+                          .add(EnumActionView.view);
+                    });
                   },
                   child: Padding(
                     padding: EdgeInsets.only(

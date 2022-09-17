@@ -1,4 +1,5 @@
 import 'dart:developer';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -9,6 +10,8 @@ import 'package:hansa_lab/api_services/search_api.dart';
 import 'package:hansa_lab/blocs/article_bloc.dart';
 import 'package:hansa_lab/blocs/menu_events_bloc.dart';
 import 'package:hansa_lab/classes/send_link.dart';
+import 'package:hansa_lab/classes/sned_url_prezent_otkrit.dart';
+import 'package:hansa_lab/drawer_widgets/izbrannoe.dart';
 import 'package:hansa_lab/extra/top_video_vidget.dart';
 import 'package:hansa_lab/video/model_video.dart';
 import 'package:provider/provider.dart';
@@ -32,6 +35,8 @@ class _SearchScreenState extends State<SearchScreen> {
     final articleBLoC = Provider.of<ArticleBLoC>(context);
     final menuProvider = Provider.of<MenuEventsBloC>(context);
     final providerSendLink = Provider.of<SendLink>(context);
+    final providerSendUrlPrezentOtkrit =
+        Provider.of<SendUrlPrezentOtkrit>(context);
     return Scaffold(
       body: Column(
         children: [
@@ -50,12 +55,12 @@ class _SearchScreenState extends State<SearchScreen> {
                     child: Icon(
                       CupertinoIcons.back,
                       color: Colors.grey[500],
-                      size: isTablet ? 33  : null,
+                      size: isTablet ? 33 : null,
                     ),
                   ),
                 ),
                 SizedBox(
-                  width: isTablet ?   .90.sw : .85.sw,
+                  width: isTablet ? .90.sw : .85.sw,
                   child: TextField(
                     controller: search,
                     autofocus: true,
@@ -126,6 +131,12 @@ class _SearchScreenState extends State<SearchScreen> {
                                           await articleBLoC.getArticle(
                                               token, data[index].link);
                                       articleBLoC.sink.add(statiModel);
+                                    } else if (data[index].type == 2) {
+                                      Navigator.pop(context);
+                                      menuProvider.eventSink
+                                          .add(MenuActions.prezentFav);
+                                      launchInBrowser(Uri.parse(snapshot
+                                          .data!.data.data[index].link));
                                     } else if (data[index].type == 3) {
                                       Navigator.pop(context);
                                       providerSendLink
