@@ -6,8 +6,12 @@ import 'package:video_player/video_player.dart';
 class ChewieFFFI extends StatefulWidget {
   final bool isTablet;
   final String videoLink;
+  final ChewieController chewieController;
   const ChewieFFFI(
-      {super.key, required this.isTablet, required this.videoLink});
+      {super.key,
+      required this.isTablet,
+      required this.videoLink,
+      required this.chewieController});
 
   @override
   State<ChewieFFFI> createState() => _ChewieFFFIState();
@@ -17,6 +21,7 @@ class _ChewieFFFIState extends State<ChewieFFFI> {
   late ChewieController chewieController;
   @override
   void initState() {
+    chewieController = widget.chewieController;
     chewieController.dispose();
     chewieController.videoPlayerController.dispose();
     chewieController = ChewieController(

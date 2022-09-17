@@ -147,11 +147,12 @@ class _TreningiVideoState extends State<TreningiVideo> {
                                     log(snapshot
                                         .data!.data.data.data[0].videoLink);
                                     return Column(
-                                      children: [                     
+                                      children: [
                                         ChewieFFFI(
                                           isTablet: isTablet,
                                           videoLink: snapshot.data!.data.data
                                               .data[0].videoLink,
+                                          chewieController: chewieController,
                                         ),
                                         const SizedBox(
                                           height: 11,
