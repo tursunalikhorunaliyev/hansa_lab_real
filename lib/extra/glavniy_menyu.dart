@@ -4,11 +4,13 @@ import 'dart:io';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dio/dio.dart';
-import 'package:flutter/foundation.dart';
-import 'package:flutter/services.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:http/http.dart' as http;
+import 'package:http_parser/http_parser.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:provider/provider.dart';
+
 import 'package:hansa_lab/api_models.dart/model_glavniy_menu_user_info.dart';
 import 'package:hansa_lab/blocs/bloc_change_profile.dart';
 import 'package:hansa_lab/blocs/bloc_glavniy_menu_user_info.dart';
@@ -28,8 +30,6 @@ import 'package:hansa_lab/extra/sobshit_o_problem.dart';
 import 'package:hansa_lab/providers/fullname_provider.dart';
 import 'package:hansa_lab/providers/provider_otpravit_rassilku.dart';
 import 'package:hansa_lab/providers/provider_personal_textFields.dart';
-import 'package:provider/provider.dart';
-import 'package:http/http.dart' as http;
 
 class GlavniyMenyu extends StatefulWidget {
   const GlavniyMenyu({Key? key}) : super(key: key);
@@ -93,28 +93,38 @@ class _GlavniyMenyuState extends State<GlavniyMenyu> {
     } */
     XFile? image = await ImagePicker().pickImage(source: ImageSource.gallery);
     File file = File(image!.path);
+    Dio dio = Dio();
 
     if (file == null) {
       log("File is null");
       return;
     } else {
       String fileName = file.path.split("/").last.substring(12);
+      log(file.path);
+      log(fileName);
       FormData formData = FormData.fromMap({
-        "ProfileForm[imageFile]":
-            await MultipartFile.fromFile(file.path, filename: fileName)
+        "ProfileForm[imageFile]": await MultipartFile.fromFile(
+          file.path,
+          filename: fileName,
+          contentType: MediaType('image', 'png'),
+          headers: {
+            "type": ["image/png"],
+          },
+        ),
       });
-      var response = await Dio().post(
-        "http://hansa-lab.ru/api/site/account-image",
+      var response = await dio.post(
+        "https://hansa-lab.ru/api/site/account-image",
         data: formData,
         options: Options(
-          contentType: "image/png",
           headers: {
+            "accept": "*/*",
             "token":
                 "022412a69ac3e9df2bdff39b1188f5ee97b474eecad20f51fa7dc2971237643b",
+            "Content-Type": "multipart/form-data",
           },
         ),
       );
-      log(response.statusMessage ?? response.statusCode.toString());
+      log("${response.statusMessage} - ${response.statusCode}");
     }
   }
 
