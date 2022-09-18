@@ -58,6 +58,13 @@ class _ChewieFFFIState extends State<ChewieFFFI> {
   }
 
   @override
+  void dispose() {
+    super.dispose();
+    chewieController.videoPlayerController.dispose();
+    chewieController.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return ClipRRect(
       borderRadius: BorderRadius.circular(10),

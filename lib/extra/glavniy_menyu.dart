@@ -158,6 +158,11 @@ class _GlavniyMenyuState extends State<GlavniyMenyu> {
                               return CachedNetworkImage(
                                 imageUrl: snapshot.data!.data.link,
                                 fit: BoxFit.fill,
+                                placeholder: (context, url) {
+                                  return const CircularProgressIndicator(
+                                    color: Color.fromARGB(255, 213, 0, 50),
+                                  );
+                                },
                               );
                             } else {
                               return const CircularProgressIndicator(
