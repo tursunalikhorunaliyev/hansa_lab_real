@@ -578,7 +578,7 @@ class _TreningiVideoState extends State<TreningiVideo> {
                                       snapshot.data!.data.similar.data.length,
                                       (index) => Row(
                                         mainAxisAlignment:
-                                            MainAxisAlignment.center,
+                                            MainAxisAlignment.start,
                                         children: [
                                           CustomClipItem(
                                             onTap: () {

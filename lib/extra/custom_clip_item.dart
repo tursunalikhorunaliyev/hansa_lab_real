@@ -27,7 +27,7 @@ class CustomClipItem extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.only(left: 25.w, right: 25.w, top: 11.h, bottom: 5.h),
       child: SizedBox(
-        width: 325.w,
+        width: 320.w,
         child: Stack(
           alignment: Alignment.center,
           children: [
