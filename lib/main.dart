@@ -27,6 +27,7 @@ import 'package:hansa_lab/classes/sned_url_prezent_otkrit.dart';
 import 'package:hansa_lab/classes/tap_favorite.dart';
 import 'package:hansa_lab/firebase_options.dart';
 import 'package:hansa_lab/middle_part_widgets/permission_handler_screen.dart';
+import 'package:hansa_lab/providers/check_click.dart';
 import 'package:hansa_lab/providers/dialog_video_provider.dart';
 import 'package:hansa_lab/providers/event_title_provider.dart';
 import 'package:hansa_lab/providers/full_registr_provider.dart';
@@ -133,6 +134,9 @@ class MyApp extends StatelessWidget {
           Provider<SendCheckSwitcher>(create: (context) => sendCheckSwitcher),
           ChangeNotifierProvider<ProviderOtpravitPushUvodamleniya>(
               create: (context) => providerOtpravitPushUvodamleniya),
+          ChangeNotifierProvider(
+            create: (context) => CheckClick(),
+          ),
         ],
         child: const MaterialApp(
           localizationsDelegates: [
