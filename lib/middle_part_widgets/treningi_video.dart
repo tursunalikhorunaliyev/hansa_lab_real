@@ -18,7 +18,6 @@ import 'package:hansa_lab/extra/chewie_fffi.dart';
 import 'package:hansa_lab/extra/custom_clip_item.dart';
 import 'package:hansa_lab/extra/custom_tablet_stati_item.dart';
 import 'package:hansa_lab/extra/custom_title.dart';
-import 'package:hansa_lab/providers/check_click.dart';
 import 'package:hansa_lab/providers/is_video_provider.dart';
 import 'package:hansa_lab/providers/treningi_photos_provider.dart';
 import 'package:hansa_lab/providers/treningi_videos_provider.dart';
@@ -113,7 +112,7 @@ class _TreningiVideoState extends State<TreningiVideo> {
     final menuBloCProvider = Provider.of<MenuEventsBloC>(context);
     final providerSendAnaliseDownload =
         Provider.of<SendAnaliseDownload>(context);
-    final checkClick = Provider.of<CheckClick>(context);
+   
     log("VideoUrl is ${treningiVideos.getUrl}");
 
     return Expanded(
@@ -545,7 +544,7 @@ class _TreningiVideoState extends State<TreningiVideo> {
                                                 .data!.data.similar.data.length,
                                             (index) => CustomStatiTabletItem(
                                               onTap: () {
-                                                checkClick.incree();
+                                              
                                                 treningiVideos.setUrl(
                                                   snapshot.data!.data.similar
                                                       .data[index].link,
@@ -585,7 +584,7 @@ class _TreningiVideoState extends State<TreningiVideo> {
                                         children: [
                                           CustomClipItem(
                                             onTap: () {
-                                              checkClick.incree();
+                                             
                                               treningiVideos.setUrl(
                                                 snapshot.data!.data.similar
                                                     .data[index].link,
