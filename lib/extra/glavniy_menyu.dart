@@ -48,7 +48,7 @@ class _GlavniyMenyuState extends State<GlavniyMenyu> {
     });
   }
 
-  Future<dynamic> uploadImage() async {
+  Future<dynamic> uploadImage({required String token}) async {
     XFile? image = await ImagePicker().pickImage(source: ImageSource.gallery);
     File file = File(image!.path);
     Dio dio = Dio();
@@ -76,8 +76,7 @@ class _GlavniyMenyuState extends State<GlavniyMenyu> {
         options: Options(
           headers: {
             "accept": "*/*",
-            "token":
-                "022412a69ac3e9df2bdff39b1188f5ee97b474eecad20f51fa7dc2971237643b",
+            "token": token,
             "Content-Type": "multipart/form-data",
           },
         ),
@@ -175,7 +174,7 @@ class _GlavniyMenyuState extends State<GlavniyMenyu> {
                 ),
                 GestureDetector(
                   onTap: () {
-                    uploadImage().then((value) {
+                    uploadImage(token: providerToken).then((value) {
                       blocGlavniyMenuUserInfo.eventSink
                           .add(EnumActionView.view);
                     });
