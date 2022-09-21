@@ -89,12 +89,16 @@ class StackedStack extends StatelessWidget {
                                                 MainAxisAlignment.spaceEvenly,
                                             children: [
                                               Text(
+                                                  
                                                 day,
+                                                textScaleFactor: 1.0,
                                                 style: const TextStyle(
+                                                  
                                                     fontSize: 11),
                                               ),
                                               Text(
                                                 month,
+                                                textScaleFactor: 1.0,
                                                 textAlign: TextAlign.center,
                                                 style: const TextStyle(
                                                     fontSize: 9),
