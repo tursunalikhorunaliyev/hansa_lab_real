@@ -188,6 +188,7 @@ class Okompaniya extends StatelessWidget {
                   ),
                 ),
               ),
+         const Spacer(),
               Center(
                 child: Padding(
                   padding: EdgeInsets.only(

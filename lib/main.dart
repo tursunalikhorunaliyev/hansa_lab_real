@@ -53,7 +53,7 @@ void main(List<String> args) async {
   await Hive.initFlutter();
   await Hive.openBox("savedUser");
   await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
+    options: DefaultFirebaseOptions.currentPlatform, 
   );
   initMessaging();
   listenForeground(channel);

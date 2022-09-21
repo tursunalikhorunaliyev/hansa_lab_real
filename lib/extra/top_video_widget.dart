@@ -41,43 +41,7 @@ class TopVideoWidget extends StatefulWidget {
 
 class _TopVideoWidgetState extends State<TopVideoWidget> {
   ChewieController chewieController = ChewieController(
-      videoPlayerController: VideoPlayerController.network(''));
-  initVideo() {
-    chewieController = ChewieController(
-      aspectRatio: 16 / 9,
-      autoPlay: true,
-      allowedScreenSleep: false,
-      autoInitialize: true,
-      deviceOrientationsOnEnterFullScreen: [
-        DeviceOrientation.landscapeLeft,
-        DeviceOrientation.landscapeRight
-      ],
-      deviceOrientationsAfterFullScreen: [
-        DeviceOrientation.portraitDown,
-        DeviceOrientation.portraitUp
-      ],
-      allowMuting: false,
-      videoPlayerController: VideoPlayerController.network(widget.url),
-      cupertinoProgressColors: ChewieProgressColors(
-        backgroundColor: const Color(0xff090909),
-        bufferedColor: const Color(0xff090909),
-        playedColor: const Color.fromARGB(255, 213, 0, 50),
-        handleColor: const Color.fromARGB(255, 213, 0, 50),
-      ),
-      materialProgressColors: ChewieProgressColors(
-        backgroundColor: const Color(0xff090909),
-        bufferedColor: const Color(0xff090909),
-        playedColor: const Color.fromARGB(255, 213, 0, 50),
-        handleColor: const Color.fromARGB(255, 213, 0, 50),
-      ),
-    );
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    initVideo();
-  }
+      videoPlayerController: VideoPlayerController.network(""));
 
   @override
   void dispose() {
@@ -136,6 +100,38 @@ class _TopVideoWidgetState extends State<TopVideoWidget> {
 
       return true;
     }
+  }
+
+  @override
+  void initState() {
+    chewieController = ChewieController(
+      autoPlay: true,
+      allowedScreenSleep: false,
+      autoInitialize: true,
+      /* deviceOrientationsOnEnterFullScreen: [
+        DeviceOrientation.landscapeLeft,
+        DeviceOrientation.landscapeRight 
+      ],
+      deviceOrientationsAfterFullScreen: [
+        DeviceOrientation.portraitDown,
+        DeviceOrientation.portraitUp
+      ], */
+      allowMuting: false,
+      videoPlayerController: VideoPlayerController.network(widget.url),
+      cupertinoProgressColors: ChewieProgressColors(
+        backgroundColor: const Color(0xff090909),
+        bufferedColor: const Color(0xff090909),
+        playedColor: const Color.fromARGB(255, 213, 0, 50),
+        handleColor: const Color.fromARGB(255, 213, 0, 50),
+      ),
+      materialProgressColors: ChewieProgressColors(
+        backgroundColor: const Color(0xff090909),
+        bufferedColor: const Color(0xff090909),
+        playedColor: const Color.fromARGB(255, 213, 0, 50),
+        handleColor: const Color.fromARGB(255, 213, 0, 50),
+      ),
+    );
+    super.initState();
   }
 
   @override
@@ -236,16 +232,21 @@ class _TopVideoWidgetState extends State<TopVideoWidget> {
               Column(
                 children: [
                   const SizedBox(
-                    height: 13,
+                    height: 17,
                   ),
-                  ClipRRect(
-                    borderRadius: BorderRadius.circular(15),
-                    child: SizedBox(
-                      width: isTablet ? 800 : 355,
-                      height: isTablet ? 450 : 200,
-                      child: Center(
-                        child: Chewie(
-                          controller: chewieController,
+                  SizedBox(
+                    width: isTablet ? 800 : 355,
+                    height: isTablet ? 450 : 200,
+                    child: Center(
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(15),
+                        child: AspectRatio(
+                          aspectRatio: chewieController.isPlaying
+                              ? chewieController.aspectRatio!
+                              : 16 / 9,
+                          child: Chewie(
+                            controller: chewieController,
+                          ),
                         ),
                       ),
                     ),
