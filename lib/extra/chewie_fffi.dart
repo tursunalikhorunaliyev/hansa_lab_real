@@ -1,6 +1,7 @@
 import 'package:chewie/chewie.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:hansa_lab/providers/check_click.dart';
 import 'package:provider/provider.dart';
 import 'package:video_player/video_player.dart';
 
@@ -67,8 +68,10 @@ class _ChewieFFFIState extends State<ChewieFFFI> {
 
   @override
   Widget build(BuildContext context) {
-    return
-         ClipRRect(
+    return Consumer<CheckClick>(
+      builder: (context, value, child) {
+        setState(() {});
+        return ClipRRect(
           borderRadius: BorderRadius.circular(10),
           child: SizedBox(
             height: widget.isTablet ? 380 : 235,
@@ -77,6 +80,7 @@ class _ChewieFFFIState extends State<ChewieFFFI> {
             ),
           ),
         );
-    
+      },
+    );
   }
 }
