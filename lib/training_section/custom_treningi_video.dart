@@ -50,6 +50,7 @@ class CustomTreningiVideo extends StatelessWidget {
                                   width: isTablet ? 500 : 200,
                                   child: Text(
                                     title,
+                                      textScaleFactor: 1.0,
                                     overflow: TextOverflow.ellipsis,
                                     softWrap: true,
                                     maxLines: 3,
@@ -75,6 +76,7 @@ class CustomTreningiVideo extends StatelessWidget {
                                       child: Center(
                                         child: Text(
                                           "Скачать",
+                                            textScaleFactor: 1.0,
                                           style: GoogleFonts.montserrat(
                                             fontSize: isTablet ? 14 : 10,
                                             color: const Color(0xffffffff),

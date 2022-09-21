@@ -40,6 +40,7 @@ class TopVideoWidget extends StatefulWidget {
 }
 
 class _TopVideoWidgetState extends State<TopVideoWidget> {
+  
   ChewieController chewieController = ChewieController(
       videoPlayerController: VideoPlayerController.network(""));
 
@@ -104,10 +105,11 @@ class _TopVideoWidgetState extends State<TopVideoWidget> {
 
   @override
   void initState() {
-    chewieController = ChewieController(
+  chewieController = ChewieController(
       autoPlay: true,
       allowedScreenSleep: false,
       autoInitialize: true,
+      aspectRatio: 16/9,
       /* deviceOrientationsOnEnterFullScreen: [
         DeviceOrientation.landscapeLeft,
         DeviceOrientation.landscapeRight 
@@ -142,6 +144,8 @@ class _TopVideoWidgetState extends State<TopVideoWidget> {
     final index = Provider.of<VideoIndexProvider>(context);
     final providerBlocProgress = Provider.of<DownloadProgressFileBloc>(context);
     final token = Provider.of<String>(context);
+    
+     
     return SafeArea(
       child: Stack(
         children: [
@@ -241,8 +245,8 @@ class _TopVideoWidgetState extends State<TopVideoWidget> {
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(15),
                         child: AspectRatio(
-                          aspectRatio: chewieController.isPlaying
-                              ? chewieController.aspectRatio!
+                          aspectRatio: chewieController.isFullScreen
+                              ? chewieController.videoPlayerController.value.aspectRatio
                               : 16 / 9,
                           child: Chewie(
                             controller: chewieController,

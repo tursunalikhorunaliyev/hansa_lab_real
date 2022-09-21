@@ -229,6 +229,7 @@ class _TabletPhotosItemState extends State<TabletPhotosItem> {
                                   width: 550,
                                   child: Text(
                                     snapshot.data!.data.data.list[0].title,
+                                      textScaleFactor: 1.0,
                                     overflow: TextOverflow.fade,
                                     style: GoogleFonts.montserrat(
                                       fontSize: 16,
@@ -286,6 +287,7 @@ class _TabletPhotosItemState extends State<TabletPhotosItem> {
                                             child: Center(
                                               child: Text(
                                                 "Скачать",
+                                                  textScaleFactor: 1.0,
                                                 style: GoogleFonts.montserrat(
                                                   fontSize: 15,
                                                   color:

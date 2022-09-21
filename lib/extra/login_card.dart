@@ -127,6 +127,7 @@ class _LoginCardState extends State<LoginCard> {
                       Padding(
                         padding: EdgeInsets.only(top: 50.h),
                         child: Text('Вход в аккаунт',
+                          textScaleFactor: 1.0,
                             style: GoogleFonts.montserrat(
                                 fontSize: isTablet ? 18.sp : 24.sp,
                                 fontWeight: FontWeight.w500)),
@@ -196,6 +197,7 @@ class _LoginCardState extends State<LoginCard> {
                           children: [
                             Text(
                               ' Не выходить из приложения',
+                                textScaleFactor: 1.0,
                               style: GoogleFonts.montserrat(
                                   color: const Color(0xffa1b7c2),
                                   fontWeight: FontWeight.w500,
@@ -276,7 +278,7 @@ class _LoginCardState extends State<LoginCard> {
                                               ? "Электронная почта пуста"
                                               : passwordController.text.isEmpty
                                                   ? "Пароль пуст"
-                                                  : "Пустой"),
+                                                  : "Пустой",  textScaleFactor: 1.0,),
                                       backgroundColor:
                                           const Color.fromARGB(255, 213, 0, 50),
                                     ));
@@ -311,6 +313,7 @@ class _LoginCardState extends State<LoginCard> {
                                         )
                                       : Text(
                                           'Войти',
+                                            textScaleFactor: 1.0,
                                           style: GoogleFonts.montserrat(
                                               color: Colors.white,
                                               fontWeight: FontWeight.w500,
@@ -495,6 +498,7 @@ class _LoginCardState extends State<LoginCard> {
                                           ),
                                           const Text(
                                             "При возникновении проблем просьба обращаться в службу поддержки. Почта:",
+                                              textScaleFactor: 1.0,
                                             textAlign: TextAlign.center,
                                           ),
                                           Material(
@@ -529,6 +533,7 @@ class _LoginCardState extends State<LoginCard> {
                           },
                           child: Text(
                             'Забыли пароль?',
+                              textScaleFactor: 1.0,
                             style: GoogleFonts.montserrat(
                                 fontSize: isTablet ? 10.sp : 12.sp,
                                 fontWeight: FontWeight.w500,
@@ -557,7 +562,7 @@ class _LoginCardState extends State<LoginCard> {
 
   showSnac() {
     ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-      content: Text("Неверный E-mail или пароль"),
+      content: Text("Неверный E-mail или пароль",  textScaleFactor: 1.0,),
       backgroundColor: Color.fromARGB(255, 213, 0, 50),
     ));
   }

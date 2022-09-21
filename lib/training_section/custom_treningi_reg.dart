@@ -67,6 +67,7 @@ class CustomTreningiReg extends StatelessWidget {
                               child: Center(
                                 child: Text(
                                   "АА",
+                                    textScaleFactor: 1.0,
                                   style: GoogleFonts.montserrat(
                                     fontSize: 16,
                                     color: const Color(0xffffffff),
@@ -85,6 +86,7 @@ class CustomTreningiReg extends StatelessWidget {
                             child: Center(
                               child: Text(
                                 "ЕБ",
+                                  textScaleFactor: 1.0,
                                 style: GoogleFonts.montserrat(
                                   fontSize: 16,
                                   color: const Color(0xffffffff),
@@ -125,6 +127,7 @@ class CustomTreningiReg extends StatelessWidget {
                 child: Center(
                   child: Text(
                     "Зарегистрироваться",
+                      textScaleFactor: 1.0,
                     style: GoogleFonts.montserrat(
                       fontSize: 11,
                       color: const Color(0xffffffff),
