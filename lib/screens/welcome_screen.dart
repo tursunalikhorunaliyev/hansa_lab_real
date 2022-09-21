@@ -90,6 +90,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                             ),
                             Text(
                               "Назад",
+                                textScaleFactor: 1.0,
                               style: TextStyle(
                                   color: Colors.grey[700], fontSize: 12),
                             )
@@ -113,6 +114,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                             ),
                             Text(
                               "Домой",
+                                textScaleFactor: 1.0,
                               style: TextStyle(
                                   color: Colors.grey[700], fontSize: 12),
                             )
@@ -138,6 +140,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                             ),
                             Text(
                               "Избранное",
+                                textScaleFactor: 1.0,
                               style: TextStyle(
                                   color: Colors.grey[700], fontSize: 12),
                             )
@@ -161,7 +164,9 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                               height: 5,
                             ),
                             Text(
+                              
                               "Профиль",
+                                textScaleFactor: 1.0,
                               style: TextStyle(
                                   color: Colors.grey[700], fontSize: 12),
                             )

@@ -138,16 +138,19 @@ class MyApp extends StatelessWidget {
             create: (context) => CheckClick(),
           ),
         ],
-        child: const MaterialApp(
-          localizationsDelegates: [
+        child:  MaterialApp(
+          builder: (context, child) {
+            return MediaQuery(data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0), child: child!);
+          },
+          localizationsDelegates: const [
             GlobalMaterialLocalizations.delegate,
             GlobalCupertinoLocalizations.delegate,
             GlobalWidgetsLocalizations.delegate,
           ],
-          supportedLocales: [Locale("en"), Locale("ru"), Locale("ar")],
-          locale: Locale("ru"),
+          supportedLocales: const [Locale("en"), Locale("ru"), Locale("ar")],
+          locale: const Locale("ru"),
           debugShowCheckedModeBanner: false,
-          home: PermissionHandlerScreen(),
+          home: const PermissionHandlerScreen(),
         ),
       ),
     );

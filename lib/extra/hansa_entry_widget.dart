@@ -62,7 +62,9 @@ class _HansaEntryState extends State<HansaEntry> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
+                        
                         "#Увидимся",
+                        textScaleFactor: 1.0,
                         style: GoogleFonts.montserrat(
                             color: const Color.fromARGB(255, 59, 59, 59),
                             fontSize: isTablet ? 16.sp : 25.sp,
@@ -70,6 +72,7 @@ class _HansaEntryState extends State<HansaEntry> {
                       ),
                       Text(
                         "на",
+                          textScaleFactor: 1.0,
                         style: GoogleFonts.montserrat(
                             color: const Color.fromARGB(255, 59, 59, 59),
                             fontSize: isTablet ? 16.sp : 25.sp,
@@ -77,6 +80,7 @@ class _HansaEntryState extends State<HansaEntry> {
                       ),
                       Text(
                         "кухне",
+                          textScaleFactor: 1.0,
                         style: GoogleFonts.montserrat(
                             color: const Color.fromARGB(255, 59, 59, 59),
                             fontSize: isTablet ? 16.sp : 25.sp,

@@ -97,6 +97,7 @@ class _PopupPersonalGorodState extends State<PopupPersonalGorod> {
                                         child: Text(
                                           snapshot.data!.modelGorod2.list[index]
                                               .name,
+                                              textScaleFactor: 1.0,
                                           style: const TextStyle(
                                               color: Colors.white,
                                               fontSize: 10),

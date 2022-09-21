@@ -23,10 +23,8 @@ class VoytiIliSozdatAccaunt extends StatelessWidget {
 
     final loginActionProvider = Provider.of<LoginClickedProvider>(context);
 
-    return ScreenUtilInit(
-      designSize: const Size(375, 812),
-      builder: (context, child) {
-        return Wrap(
+    return 
+         Wrap(
           direction: Axis.vertical,
           alignment: WrapAlignment.center,
           spacing: isTablet ? -58.h : -50.h,
@@ -111,7 +109,6 @@ class VoytiIliSozdatAccaunt extends StatelessWidget {
             ),
           ],
         );
-      },
-    );
   }
+
 }

@@ -555,6 +555,7 @@ class _FullRegistrState extends State<FullRegistr> {
                   children: [
                     const Text(
                       "По всем вопросам пришите на",
+                        textScaleFactor: 1.0,
                       style: TextStyle(fontSize: 11, color: Color(0xFF989a9d)),
                     ),
                     const SizedBox(

@@ -126,6 +126,7 @@ class CompleteRegistr extends StatelessWidget {
                 children: const [
                   Text(
                     "По всем вопросам пришите на",
+                      textScaleFactor: 1.0,
                     style: TextStyle(fontSize: 11, color: Color(0xFF989a9d)),
                   ),
                   SizedBox(
@@ -133,6 +134,7 @@ class CompleteRegistr extends StatelessWidget {
                   ),
                   Text(
                     "Support@hansa-lab.ru",
+                      textScaleFactor: 1.0,
                     style: TextStyle(fontSize: 11, color: Color(0xFF989a9d)),
                   ),
                 ],

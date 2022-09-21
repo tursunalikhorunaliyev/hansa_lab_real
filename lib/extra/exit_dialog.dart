@@ -30,6 +30,7 @@ class ExitDialog extends StatelessWidget {
                 child: Text(
                   "Вы уверены, что хотите выйти из этого приложения?",
                   textAlign: TextAlign.center,
+                  textScaleFactor: 1.0,
                   style: TextStyle(fontSize: 18),
                 ),
               ),
@@ -58,6 +59,7 @@ class ExitDialog extends StatelessWidget {
                       ),
                       child: const Text(
                         "Да",
+                        textScaleFactor: 1.0,
                         style: TextStyle(color: Colors.black),
                       ),
                     ),
@@ -76,6 +78,7 @@ class ExitDialog extends StatelessWidget {
                       ),
                       child: const Text(
                         "Нет",
+                        textScaleFactor: 1.0,
                         style: TextStyle(color: Colors.white),
                       ),
                     ),

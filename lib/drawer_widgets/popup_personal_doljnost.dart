@@ -103,6 +103,7 @@ class _PopupPersonalDoljnostState extends State<PopupPersonalDoljnost> {
                                       child: Text(
                                         snapshot.data!.modelDoljnost2
                                             .list[index].name,
+                                            textScaleFactor: 1.0,
                                         style: const TextStyle(
                                             color: Colors.white, fontSize: 10),
                                       ),

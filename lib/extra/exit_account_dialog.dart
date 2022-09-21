@@ -26,6 +26,7 @@ class ExitAccountDialog extends StatelessWidget {
                 child: Text(
                   "Вы уверены, что хотите выйти из аккаунт?",
                   textAlign: TextAlign.center,
+                  textScaleFactor: 1.0,
                   style: TextStyle(fontSize: 18),
                 ),
               ),
@@ -53,6 +54,7 @@ class ExitAccountDialog extends StatelessWidget {
                       ),
                       child: const Text(
                         "Да",
+                        textScaleFactor: 1.0,
                         style: TextStyle(color: Colors.black),
                       ),
                     ),
@@ -71,6 +73,7 @@ class ExitAccountDialog extends StatelessWidget {
                       ),
                       child: const Text(
                         "Нет",
+                        textScaleFactor: 1.0,
                         style: TextStyle(color: Colors.white),
                       ),
                     ),

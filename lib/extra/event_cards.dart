@@ -148,11 +148,13 @@ class EventCards extends StatelessWidget {
                                     children: [
                                       Text(
                                         day,
+                                        textScaleFactor: 1.0,
                                         style:  TextStyle(
                                             fontSize: 9.sp),
                                       ),
                                       Text(
                                         month,
+                                        textScaleFactor: 1.0,
                                         textAlign: TextAlign.center,
                                         style: TextStyle(
                                             fontSize: 8.sp),

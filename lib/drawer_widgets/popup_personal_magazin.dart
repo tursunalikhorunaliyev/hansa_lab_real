@@ -101,6 +101,7 @@ class _PopupPersonalMagazinState extends State<PopupPersonalMagazin> {
                                         child: Text(
                                           snapshot.data!.modelMagazin2
                                               .list[index].name,
+                                              textScaleFactor: 1.0,
                                           style: const TextStyle(
                                               color: Colors.white,
                                               fontSize: 10),

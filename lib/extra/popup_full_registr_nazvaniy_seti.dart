@@ -102,6 +102,7 @@ class _PopupFullRegistrNazvaniySetiState
                                         padding: const EdgeInsets.only(
                                             right: 10, top: 5),
                                         child: TextField(
+                                          
                                           controller: newShopText,
                                           decoration: InputDecoration(
                                               contentPadding:
@@ -149,6 +150,7 @@ class _PopupFullRegistrNazvaniySetiState
                                                 child: Text(
                                                   snapshotStore.data!.data
                                                       .list[index].name,
+                                                        textScaleFactor: 1.0,
                                                   style: const TextStyle(
                                                       color: Colors.black,
                                                       fontSize: 10),

@@ -252,6 +252,7 @@ class _GlavniyMenyuState extends State<GlavniyMenyu> {
                             fullname.setName(snapshot.data!.data.fullname);
                             return Text(
                               snapshot.data!.data.fullname,
+                                textScaleFactor: 1.0,
                               style: TextStyle(
                                   fontSize: isTablet ? 23 : 16,
                                   color: const Color(0xFFffffff)),
@@ -260,6 +261,7 @@ class _GlavniyMenyuState extends State<GlavniyMenyu> {
                             return const Center(
                               child: Text(
                                 "Загрузка..",
+                                  textScaleFactor: 1.0,
                                 style: TextStyle(
                                     fontSize: 20, color: Colors.white),
                               ),

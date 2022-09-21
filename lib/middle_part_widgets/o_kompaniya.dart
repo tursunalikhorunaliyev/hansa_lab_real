@@ -51,6 +51,7 @@ class Okompaniya extends StatelessWidget {
                 ),
                 Text(
                   "#",
+                    textScaleFactor: 1.0,
                   style: TextStyle(
                       color: const Color.fromARGB(255, 213, 0, 50),
                       fontWeight: FontWeight.bold,
@@ -58,6 +59,7 @@ class Okompaniya extends StatelessWidget {
                 ),
                 Text(
                   "О компании ",
+                    textScaleFactor: 1.0,
                   style: GoogleFonts.montserrat(
                       fontWeight: FontWeight.bold,
                       fontSize: isTablet ? 25 : 20),
@@ -145,6 +147,7 @@ class Okompaniya extends StatelessWidget {
                                       right: isTablet ? 20 : 10),
                                   child: Text(
                                     snapshot.data!.data.list[0],
+                                      textScaleFactor: 1.0,
                                     style: TextStyle(
                                       fontSize: isTablet ? 21 : 11,
                                       color: const Color(0xFFffffff),
@@ -158,6 +161,7 @@ class Okompaniya extends StatelessWidget {
                                       right: isTablet ? 20 : 10),
                                   child: Text(
                                     snapshot.data!.data.list[1],
+                                      textScaleFactor: 1.0,
                                     style: TextStyle(
                                       fontSize: isTablet ? 21 : 11,
                                       color: const Color(0xFFffffff),
@@ -171,6 +175,7 @@ class Okompaniya extends StatelessWidget {
                                       right: isTablet ? 20 : 10),
                                   child: Text(
                                     snapshot.data!.data.list[2],
+                                      textScaleFactor: 1.0,
                                     style: TextStyle(
                                       fontSize: isTablet ? 21 : 11,
                                       color: const Color(0xFFffffff),

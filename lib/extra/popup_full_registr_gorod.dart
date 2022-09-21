@@ -113,6 +113,7 @@ class _PopupFullRegistrGorodState extends State<PopupFullRegistrGorod> {
                                           child: Text(
                                             snapshotCountry
                                                 .data!.data.list[index].name,
+                                                  textScaleFactor: 1.0,
                                             style: const TextStyle(
                                                 color: Colors.black,
                                                 fontSize: 10),

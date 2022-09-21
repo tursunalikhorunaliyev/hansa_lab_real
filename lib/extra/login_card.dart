@@ -137,6 +137,7 @@ class _LoginCardState extends State<LoginCard> {
                               right: isTablet ? 16.w : 24.w,
                               top: isTablet ? 25.h : 30.h),
                           child: TextField(
+                            
                             controller: usernameController,
                             style: TextStyle(fontSize: isTablet ? 18 : null),
                             decoration: InputDecoration(
@@ -421,6 +422,7 @@ class _LoginCardState extends State<LoginCard> {
                                                           )),
                                                       Text(
                                                         snapshot.data!,
+                                                          textScaleFactor: 1.0,
                                                         style: TextStyle(
                                                             color: snapshot
                                                                     .data!
@@ -481,6 +483,7 @@ class _LoginCardState extends State<LoginCard> {
                                                           5.r)),
                                               child: const Text(
                                                 "Отправить",
+                                                  textScaleFactor: 1.0,
                                                 style: TextStyle(
                                                   color: Color(0xFFf2f2f2),
                                                 ),
@@ -503,7 +506,9 @@ class _LoginCardState extends State<LoginCard> {
                                               },
                                               child: const Text(
                                                 "support@hansa-lab.ru",
+                                                  textScaleFactor: 1.0,
                                                 style: TextStyle(
+                                                
                                                     color: Color.fromARGB(
                                                         255, 213, 0, 50),
                                                     decoration: TextDecoration

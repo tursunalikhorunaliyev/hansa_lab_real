@@ -116,6 +116,7 @@ class _PopupFullRegistrDoljnostState extends State<PopupFullRegistrDoljnost> {
                                           child: Text(
                                             snapshotJob.data!.data
                                                 .jobModelData[index].name,
+                                                  textScaleFactor: 1.0,
                                             style: const TextStyle(
                                                 color: Colors.black,
                                                 fontSize: 10),
