@@ -5,10 +5,9 @@ import 'package:hansa_lab/api_models.dart/favourite_model.dart';
 import 'package:hansa_lab/api_services/welcome_api.dart';
 import 'package:hansa_lab/blocs/favourite_bloc.dart';
 import 'package:provider/provider.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
-
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 class EventCards extends StatelessWidget {
   const EventCards(
       {Key? key,
@@ -137,8 +136,8 @@ class EventCards extends StatelessWidget {
                               children: [
                                 Container(
                                   padding: const EdgeInsets.all(12),
-                                  height: isTablet ? 65 : 65,
-                                  width: isTablet ? 65 : 65,
+                                  height: 70,
+                                  width: 70,
                                   decoration: const BoxDecoration(
                                     shape: BoxShape.circle,
                                     color: Colors.white,
@@ -149,14 +148,14 @@ class EventCards extends StatelessWidget {
                                     children: [
                                       Text(
                                         day,
-                                        style: TextStyle(
-                                            fontSize: isTablet ? 14 : 11),
+                                        style:  TextStyle(
+                                            fontSize: 9.sp),
                                       ),
                                       Text(
                                         month,
                                         textAlign: TextAlign.center,
                                         style: TextStyle(
-                                            fontSize: isTablet ? 9 : 9),
+                                            fontSize: 8.sp),
                                       ),
                                     ],
                                   ),
