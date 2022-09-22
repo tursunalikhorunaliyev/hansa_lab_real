@@ -554,7 +554,7 @@ class _FullRegistrState extends State<FullRegistr> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     const Text(
-                      "По всем вопросам пришите на",
+                      "По всем вопросам пишите на",
                         textScaleFactor: 1.0,
                       style: TextStyle(fontSize: 11, color: Color(0xFF989a9d)),
                     ),
