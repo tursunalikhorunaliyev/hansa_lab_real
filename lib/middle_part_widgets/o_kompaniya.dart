@@ -51,7 +51,7 @@ class Okompaniya extends StatelessWidget {
                 ),
                 Text(
                   "#",
-                    textScaleFactor: 1.0,
+                  textScaleFactor: 1.0,
                   style: TextStyle(
                       color: const Color.fromARGB(255, 213, 0, 50),
                       fontWeight: FontWeight.bold,
@@ -59,7 +59,7 @@ class Okompaniya extends StatelessWidget {
                 ),
                 Text(
                   "О компании ",
-                    textScaleFactor: 1.0,
+                  textScaleFactor: 1.0,
                   style: GoogleFonts.montserrat(
                       fontWeight: FontWeight.bold,
                       fontSize: isTablet ? 25 : 20),
@@ -147,7 +147,7 @@ class Okompaniya extends StatelessWidget {
                                       right: isTablet ? 20 : 10),
                                   child: Text(
                                     snapshot.data!.data.list[0],
-                                      textScaleFactor: 1.0,
+                                    textScaleFactor: 1.0,
                                     style: TextStyle(
                                       fontSize: isTablet ? 21 : 11,
                                       color: const Color(0xFFffffff),
@@ -161,7 +161,7 @@ class Okompaniya extends StatelessWidget {
                                       right: isTablet ? 20 : 10),
                                   child: Text(
                                     snapshot.data!.data.list[1],
-                                      textScaleFactor: 1.0,
+                                    textScaleFactor: 1.0,
                                     style: TextStyle(
                                       fontSize: isTablet ? 21 : 11,
                                       color: const Color(0xFFffffff),
@@ -175,10 +175,58 @@ class Okompaniya extends StatelessWidget {
                                       right: isTablet ? 20 : 10),
                                   child: Text(
                                     snapshot.data!.data.list[2],
-                                      textScaleFactor: 1.0,
+                                    textScaleFactor: 1.0,
                                     style: TextStyle(
                                       fontSize: isTablet ? 21 : 11,
                                       color: const Color(0xFFffffff),
+                                    ),
+                                  ),
+                                ),
+                                Center(
+                                  child: Padding(
+                                    padding: EdgeInsets.only(
+                                      top: isTablet ? 900 : 30,
+                                    ),
+                                    child: GestureDetector(
+                                      onTap: () {
+                                        showDialog(
+                                          context: context,
+                                          useRootNavigator: false,
+                                          builder: (context) =>
+                                              Provider<String>.value(
+                                                  value:
+                                                      providerToken.toString(),
+                                                  child:
+                                                      const SobshitOProblem()),
+                                        );
+                                      },
+                                      child: Container(
+                                        alignment: Alignment.center,
+                                        height: isTablet ? 65 : 31,
+                                        width: isTablet ? 540 : 213,
+                                        decoration: BoxDecoration(
+                                          color: const Color(0xFF25b049),
+                                          borderRadius:
+                                              BorderRadius.circular(70),
+                                          boxShadow: [
+                                            BoxShadow(
+                                              color: const Color.fromARGB(
+                                                      255, 213, 0, 50)
+                                                  .withOpacity(0.5),
+                                              spreadRadius: 5,
+                                              blurRadius: 7,
+                                              offset: const Offset(0,
+                                                  3), // changes position of shadow
+                                            ),
+                                          ],
+                                        ),
+                                        child: Text(
+                                          "Написать разработчику",
+                                          style: GoogleFonts.montserrat(
+                                              fontSize: isTablet ? 19 : 10,
+                                              color: const Color(0xFFffffff)),
+                                        ),
+                                      ),
                                     ),
                                   ),
                                 ),
@@ -190,50 +238,6 @@ class Okompaniya extends StatelessWidget {
                             );
                           }
                         }),
-                  ),
-                ),
-              ),
-         const Spacer(),
-              Center(
-                child: Padding(
-                  padding: EdgeInsets.only(
-                    top: isTablet ? 900 : 490,
-                  ),
-                  child: GestureDetector(
-                    onTap: () {
-                      showDialog(
-                        context: context,
-                        useRootNavigator: false,
-                        builder: (context) => Provider<String>.value(
-                            value: providerToken.toString(),
-                            child: const SobshitOProblem()),
-                      );
-                    },
-                    child: Container(
-                      alignment: Alignment.center,
-                      height: isTablet ? 65 : 31,
-                      width: isTablet ? 540 : 213,
-                      decoration: BoxDecoration(
-                        color: const Color(0xFF25b049),
-                        borderRadius: BorderRadius.circular(70),
-                        boxShadow: [
-                          BoxShadow(
-                            color: const Color.fromARGB(255, 213, 0, 50)
-                                .withOpacity(0.5),
-                            spreadRadius: 5,
-                            blurRadius: 7,
-                            offset: const Offset(
-                                0, 3), // changes position of shadow
-                          ),
-                        ],
-                      ),
-                      child: Text(
-                        "Написать разработчику",
-                        style: GoogleFonts.montserrat(
-                            fontSize: isTablet ? 19 : 10,
-                            color: const Color(0xFFffffff)),
-                      ),
-                    ),
                   ),
                 ),
               ),

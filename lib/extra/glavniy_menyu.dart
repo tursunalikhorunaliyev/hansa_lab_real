@@ -105,7 +105,7 @@ class _GlavniyMenyuState extends State<GlavniyMenyu> {
 
     return Drawer(
       backgroundColor: const Color(0xFF333333),
-     // width: isTablet ? 435 : 326,
+      width: isTablet ? 435 : 326,
       child: Column(
         children: [
           Container(
@@ -156,7 +156,7 @@ class _GlavniyMenyuState extends State<GlavniyMenyu> {
                             if (snapshot.hasData) {
                               return CachedNetworkImage(
                                 imageUrl: snapshot.data!.data.link,
-                                fit: BoxFit.fill,
+                                fit: BoxFit.cover,
                                 placeholder: (context, url) {
                                   return const CircularProgressIndicator(
                                     color: Color.fromARGB(255, 213, 0, 50),
