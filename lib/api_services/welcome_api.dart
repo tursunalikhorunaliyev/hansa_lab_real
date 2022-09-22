@@ -24,7 +24,6 @@ class WelcomeApi {
     eventStream.listen(
       (event) async {
         if (event[0] == WelcomeApiAction.fetch) {
-         log(i.toString()+"aaaaaaaaf");
           await getWelcome(token: token, i: (event[1] == true) ? ++i : 1)
               .then((value) {
             list += value.data.welcomeModelListData.list;
