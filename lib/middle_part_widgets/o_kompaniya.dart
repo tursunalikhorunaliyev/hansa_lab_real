@@ -185,7 +185,7 @@ class Okompaniya extends StatelessWidget {
                                 Center(
                                   child: Padding(
                                     padding: EdgeInsets.only(
-                                      top: isTablet ? 900 : 30,
+                                      top: isTablet ? 100 : 30,
                                     ),
                                     child: GestureDetector(
                                       onTap: () {
