@@ -5,7 +5,6 @@ import 'dart:io';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
 import 'package:http_parser/http_parser.dart';
@@ -48,21 +47,10 @@ class _GlavniyMenyuState extends State<GlavniyMenyu> {
       isFavourite = favourite;
     });
   }
-Future<File> compressAndGetFile(File file, String targetPath) async {
-    var result = await FlutterImageCompress.compressAndGetFile(
-        file.absolute.path, targetPath,
-        quality: 50,
-        rotate: 0,
-      );
 
-   
-
-    return result!;
-  }
   Future<dynamic> uploadImage({required String token}) async {
     XFile? image = await ImagePicker().pickImage(source: ImageSource.gallery);
-    File file = await
-     compressAndGetFile(File(image!.path), image.path);
+    File file = File(image!.path);
     Dio dio = Dio();
 
     if (file == null) {
