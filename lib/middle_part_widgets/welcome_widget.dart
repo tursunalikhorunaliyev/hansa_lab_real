@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:chewie/chewie.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -246,7 +248,6 @@ class _WelcomeWidgetState extends State<WelcomeWidget> {
                       ),
                     );
             } else {
-              providerWelcomeApi.eventSink.add([WelcomeApiAction.fetch, false]);
               return Center(
                   child: Lottie.asset(
                 'assets/pre.json',
