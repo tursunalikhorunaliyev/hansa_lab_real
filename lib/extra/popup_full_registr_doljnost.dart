@@ -101,7 +101,7 @@ class _PopupFullRegistrDoljnostState extends State<PopupFullRegistrDoljnost> {
                                         onPressed: () {
                                           doljnostTextEdtingContoller.text =
                                               snapshotJob.data!.data
-                                                  .jobModelData[index].name;
+                                                  .jobModelData[index].id.toString()  ;
                                           text = snapshotJob.data!.data
                                               .jobModelData[index].name;
 

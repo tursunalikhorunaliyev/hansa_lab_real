@@ -99,7 +99,7 @@ class _PopupFullRegistrGorodState extends State<PopupFullRegistrGorod> {
                                         onPressed: () {
                                           gorodTextEditingContyroller.text =
                                               snapshotCountry
-                                                  .data!.data.list[index].name;
+                                                  .data!.data.list[index].id.toString();
                                           text = snapshotCountry
                                               .data!.data.list[index].name;
                                           blocPopupDrawer.dataSink.add(

@@ -1,4 +1,5 @@
 import 'dart:developer';
+import 'dart:io';
 
 import 'package:flip_card/flip_card_controller.dart';
 import 'package:flutter/cupertino.dart';
@@ -172,7 +173,11 @@ class _FullRegistrState extends State<FullRegistr> {
                             child: Stack(
                               children: [
                                 InternationalPhoneNumberInput(
+                                
                                   focusNode: node,
+                                  initialValue: PhoneNumber(
+                                    isoCode: 'RU'
+                                  ),
                                   onInputChanged: (value) {
                                     phoneTextFieldController.text =
                                         value.phoneNumber!;
@@ -191,13 +196,15 @@ class _FullRegistrState extends State<FullRegistr> {
                                       FontWeight.w500,
                                       isTablet,
                                       phoneIsEmpty
-                                          ? const Color.fromARGB(255, 213, 0, 50)
+                                          ? const Color.fromARGB(
+                                              255, 213, 0, 50)
                                           : Colors.black),
                                   textStyle: style(
                                       FontWeight.w500,
                                       isTablet,
                                       phoneIsEmpty
-                                          ? const Color.fromARGB(255, 213, 0, 50)
+                                          ? const Color.fromARGB(
+                                              255, 213, 0, 50)
                                           : Colors.black),
                                   selectorConfig: const SelectorConfig(
                                       leadingPadding: 0,
@@ -487,22 +494,36 @@ class _FullRegistrState extends State<FullRegistr> {
                                           .split("-")
                                       : ["", "", ""];
                               toSignUp(
-                                firstname: imyaTextEditingController.text,
                                 lastname: familiyaTextEditingController.text,
+                                firstname: imyaTextEditingController.text,
                                 email: emailTextFielController.text,
-                                phone: phoneTextFieldController.text,
                                 bornedAt: "${date[2]}.${date[1]}.${date[0]}",
-                                nazvaniya: nazvaniyaTextFieldController.text,
-                                dolj: doljnostTextFieldController.text,
-                                gorod: gorodTextFieldController.text,
+                                jobId: doljnostTextFieldController.text,
+                                storeId: nazvaniyaTextFieldController.text,
+                                shopnet: newShop.getNewShop.toString(),
                                 shopadress:
                                     adresTorgoviySetTextFielController.text,
-                                shopnet: newShop.getNewShop.toString(),
-                                smsemail: secondToggle.text,
-                                lichnostdannix: thirdToggle.text,
-                                personalnixdannix: fourthToggle.text,
+                                phone: phoneTextFieldController.text,
+                                cityId: gorodTextFieldController.text,
+                                isAgreeSms: secondToggle.text,
+                                isAgreeIdentity: thirdToggle.text,
+                                isAgreePersonal: fourthToggle.text,
                                 providerFlip: providerFlip,
                               );
+
+                             log(familiyaTextEditingController.text + "last");
+                             log(imyaTextEditingController.text + "first");
+                             log(emailTextFielController.text + "email");
+                             log("${date[2]}.${date[1]}.${date[0]}bornedat");
+                             log(doljnostTextFieldController.text + "jobid");
+                             log(nazvaniyaTextFieldController.text + "storeid");
+                             log(newShop.getNewShop.toString() + "shopnet");
+                             log(adresTorgoviySetTextFielController.text + "shop adress");
+                             log(phoneTextFieldController.text + "phone");
+                             log(gorodTextFieldController.text + "cityid");
+                             log(secondToggle.text + "isagreesms");
+                             log(thirdToggle.text + "isagreeidenty");
+                             log(fourthToggle.text + "isagreepersonal");
                             },
                             child: Container(
                               alignment: Alignment.center,
@@ -554,8 +575,8 @@ class _FullRegistrState extends State<FullRegistr> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     const Text(
-                      "По всем вопросам пришите на",
-                        textScaleFactor: 1.0,
+                      "По всем вопросам пишите на",
+                      textScaleFactor: 1.0,
                       style: TextStyle(fontSize: 11, color: Color(0xFF989a9d)),
                     ),
                     const SizedBox(
@@ -595,16 +616,17 @@ class _FullRegistrState extends State<FullRegistr> {
       {required String lastname,
       required String firstname,
       required String email,
-      required String phone,
       required String bornedAt,
-      required String nazvaniya,
-      required String dolj,
-      required String gorod,
-      required String shopadress,
+      required String jobId,
+      required String storeId,
       required String shopnet,
-      required String smsemail,
-      required String lichnostdannix,
-      required String personalnixdannix,
+      required String shopadress,
+      required String phone,
+      String countrytype = "1",
+      required String cityId,
+      required String isAgreeSms,
+      required String isAgreeIdentity,
+      required String isAgreePersonal,
       required dynamic providerFlip}) {
     if (firstname.isEmpty) setState(() => nameIsEmpty = true);
     if (lastname.isEmpty) setState(() => lastnameIsEmpty = true);
@@ -612,19 +634,19 @@ class _FullRegistrState extends State<FullRegistr> {
     if (shopadress.isEmpty) setState(() => adressIsEmpty = true);
     if (phone.length < 5) setState(() => phoneIsEmpty = true);
     if (bornedAt.length < 3) setState(() => dateIsEmpty = true);
-    if (nazvaniya.isEmpty && shopnet.isEmpty) {
+    if (storeId.isEmpty && shopnet.isEmpty) {
       setState(() => nazvaniyaIsEmpty = true);
     }
-    if (dolj.isEmpty) setState(() => doljnostIsEmpty = true);
-    if (gorod.isEmpty) setState(() => gorodIsEmpty = true);
+    if (jobId.isEmpty) setState(() => doljnostIsEmpty = true);
+    if (cityId.isEmpty) setState(() => gorodIsEmpty = true);
     if (firstname.isNotEmpty &&
         lastname.isNotEmpty &&
         email.isNotEmpty &&
         phone.length > 5 &&
         bornedAt.length > 3 &&
-        (nazvaniya.isNotEmpty || shopnet.isNotEmpty) &&
-        dolj.isNotEmpty &&
-        gorod.isNotEmpty &&
+        (storeId.isNotEmpty || shopnet.isNotEmpty) &&
+        jobId.isNotEmpty &&
+        cityId.isNotEmpty &&
         shopadress.isNotEmpty) {
       BlocSignUp()
           .signUp(
@@ -632,13 +654,13 @@ class _FullRegistrState extends State<FullRegistr> {
         firstname,
         email,
         bornedAt,
-        dolj,
-        nazvaniya,
+        jobId,
+        storeId,
         shopnet,
         shopadress,
         phone,
         "1",
-        gorod,
+        cityId,
         secondToggle.text,
         thirdToggle.text,
         fourthToggle.text,

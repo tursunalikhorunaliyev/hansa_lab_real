@@ -250,12 +250,18 @@ class _GlavniyMenyuState extends State<GlavniyMenyu> {
                         builder: (context, snapshot) {
                           if (snapshot.hasData) {
                             fullname.setName(snapshot.data!.data.fullname);
-                            return Text(
-                              snapshot.data!.data.fullname,
-                                textScaleFactor: 1.0,
-                              style: TextStyle(
-                                  fontSize: isTablet ? 23 : 16,
-                                  color: const Color(0xFFffffff)),
+                            return Container(
+                              alignment: Alignment.center,
+                              width: 200,
+                              child: Text(
+                               snapshot.data!.data.fullname,
+                                  textScaleFactor: 1.0,
+                                  maxLines: 2,
+                                  overflow: TextOverflow.ellipsis,
+                                style: TextStyle(
+                                    fontSize: isTablet ? 23 : 16,
+                                    color: const Color(0xFFffffff)),
+                              ),
                             );
                           } else {
                             return const Center(

@@ -1,7 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:hansa_lab/api_models.dart/favourite_model.dart';
 import 'package:hansa_lab/api_services/welcome_api.dart';
 import 'package:hansa_lab/blocs/favourite_bloc.dart';
 import 'package:provider/provider.dart';
@@ -43,7 +42,6 @@ class EventCards extends StatelessWidget {
     final token = Provider.of<String>(context);
     final isTablet = Provider.of<bool>(context);
     final providerWelcomeApi = Provider.of<WelcomeApi>(context);
-    final favouriteModel = FavouriteModel(status: true, data: true);
     bool fav = isFavourite;
     return Padding(
       padding: EdgeInsets.only(
@@ -136,8 +134,8 @@ class EventCards extends StatelessWidget {
                               children: [
                                 Container(
                                   padding: const EdgeInsets.all(12),
-                                  height: 70,
-                                  width: 70,
+                                  height: 65,
+                                  width: 65,
                                   decoration: const BoxDecoration(
                                     shape: BoxShape.circle,
                                     color: Colors.white,

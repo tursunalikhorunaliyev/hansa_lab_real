@@ -61,10 +61,10 @@ class _PopupFullRegistrNazvaniySetiState
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(radius),
                   border: Border.all(
-                      width:
-                          widget.borderColor == const Color.fromARGB(255, 213, 0, 50)
-                              ? 0.9
-                              : 0.1,
+                      width: widget.borderColor ==
+                              const Color.fromARGB(255, 213, 0, 50)
+                          ? 0.9
+                          : 0.1,
                       color: widget.borderColor),
                 ),
                 child: Padding(
@@ -102,7 +102,6 @@ class _PopupFullRegistrNazvaniySetiState
                                         padding: const EdgeInsets.only(
                                             right: 10, top: 5),
                                         child: TextField(
-                                          
                                           controller: newShopText,
                                           decoration: InputDecoration(
                                               contentPadding:
@@ -132,13 +131,16 @@ class _PopupFullRegistrNazvaniySetiState
                                           itemBuilder: (context, index) {
                                             return TextButton(
                                               onPressed: () {
+                                                newShop.setNewShop(
+                                                    snapshotStore.data!.data.list[index].id.toString());
+
                                                 nazvanieTextEditingController
                                                         .text =
                                                     snapshotStore.data!.data
-                                                        .list[index].name;
+                                                        .list[index].id.toString();
                                                 text = snapshotStore.data!.data
                                                     .list[index].name;
-                                                newShop.setNewShop("");
+
                                                 blocPopupDrawer.dataSink.add(
                                                     snapshotStore.data! == 38
                                                         ? 200
@@ -150,7 +152,7 @@ class _PopupFullRegistrNazvaniySetiState
                                                 child: Text(
                                                   snapshotStore.data!.data
                                                       .list[index].name,
-                                                        textScaleFactor: 1.0,
+                                                  textScaleFactor: 1.0,
                                                   style: const TextStyle(
                                                       color: Colors.black,
                                                       fontSize: 10),
