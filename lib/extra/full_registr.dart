@@ -233,50 +233,6 @@ class _FullRegistrState extends State<FullRegistr> {
                             dateIsEmpty = false;
                             isCollepsed = !isCollepsed;
                           });
-                          /* showCupertinoModalPopup(
-                              context: context,
-                              builder: (context) {
-                                return Container(
-                                    width: 360,
-                                    height: 400,
-                                    decoration: BoxDecoration(
-                                        color: Colors.white,
-                                        borderRadius:
-                                            BorderRadius.circular(10)),
-                                    child: SfDateRangePicker(
-                                      controller: dateRangeController,
-                                      selectionColor:
-                                          const Color.fromARGB(255, 213, 0, 50),
-                                      todayHighlightColor:
-                                          const Color.fromARGB(255, 213, 0, 50),
-                                      onSelectionChanged: (a) {
-                                        String day = dateRangeController
-                                                    .selectedDate!.day
-                                                    .toString()
-                                                    .length ==
-                                                1
-                                            ? "0${dateRangeController.selectedDate!.day}"
-                                            : dateRangeController
-                                                .selectedDate!.day
-                                                .toString();
-                                        String month = dateRangeController
-                                                    .selectedDate!.month
-                                                    .toString()
-                                                    .length ==
-                                                1
-                                            ? "0${dateRangeController.selectedDate!.month}"
-                                            : dateRangeController
-                                                .selectedDate!.month
-                                                .toString();
-                                        String year = dateRangeController
-                                            .selectedDate!.year
-                                            .toString();
-                                        dateBurnBloC.streamSink
-                                            .add("$day.$month.$year");
-                                        Navigator.pop(context);
-                                      },
-                                    ));
-                              }); */
                         },
                         child: AnimatedContainer(
                           duration: const Duration(milliseconds: 100),
