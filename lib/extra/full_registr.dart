@@ -35,6 +35,7 @@ class _FullRegistrState extends State<FullRegistr> {
   bool doljnostIsEmpty = false;
   bool gorodIsEmpty = false;
   bool adressIsEmpty = false;
+  bool isCollepsed = false;
 
   final dateRangeController = DateRangePickerController();
   final imyaTextEditingController = TextEditingController();
@@ -173,11 +174,8 @@ class _FullRegistrState extends State<FullRegistr> {
                             child: Stack(
                               children: [
                                 InternationalPhoneNumberInput(
-                                
                                   focusNode: node,
-                                  initialValue: PhoneNumber(
-                                    isoCode: 'RU'
-                                  ),
+                                  initialValue: PhoneNumber(isoCode: 'RU'),
                                   onInputChanged: (value) {
                                     phoneTextFieldController.text =
                                         value.phoneNumber!;
@@ -231,89 +229,143 @@ class _FullRegistrState extends State<FullRegistr> {
                       ),
                       InkWell(
                         onTap: () {
-                          setState(() => dateIsEmpty = false);
-                          showCupertinoModalPopup(
-                              context: context,
-                              builder: (context) {
-                                return Container(
-                                    width: 360,
-                                    height: 400,
-                                    decoration: BoxDecoration(
-                                        color: Colors.white,
-                                        borderRadius:
-                                            BorderRadius.circular(10)),
-                                    child: SfDateRangePicker(
-                                      controller: dateRangeController,
-                                      selectionColor:
-                                          const Color.fromARGB(255, 213, 0, 50),
-                                      todayHighlightColor:
-                                          const Color.fromARGB(255, 213, 0, 50),
-                                      onSelectionChanged: (a) {
-                                        String day = dateRangeController
-                                                    .selectedDate!.day
-                                                    .toString()
-                                                    .length ==
-                                                1
-                                            ? "0${dateRangeController.selectedDate!.day}"
-                                            : dateRangeController
-                                                .selectedDate!.day
-                                                .toString();
-                                        String month = dateRangeController
-                                                    .selectedDate!.month
-                                                    .toString()
-                                                    .length ==
-                                                1
-                                            ? "0${dateRangeController.selectedDate!.month}"
-                                            : dateRangeController
-                                                .selectedDate!.month
-                                                .toString();
-                                        String year = dateRangeController
-                                            .selectedDate!.year
-                                            .toString();
-                                        dateBurnBloC.streamSink
-                                            .add("$day.$month.$year");
-                                        Navigator.pop(context);
-                                      },
-                                    ));
-                              });
+                          setState(() {
+                            dateIsEmpty = false;
+                            isCollepsed = !isCollepsed;
+                          });
                         },
-                        child: Container(
+                        child: AnimatedContainer(
+                          duration: const Duration(milliseconds: 100),
                           alignment: Alignment.centerLeft,
                           width: isTablet ? 538 : 325,
-                          height: isTablet ? 43 : 38,
+                          height: isTablet
+                              ? isCollepsed
+                                  ? 383
+                                  : 43
+                              : isCollepsed
+                                  ? 378
+                                  : 38,
+                          padding: EdgeInsets.only(top: isCollepsed ? 10 : 0),
                           decoration: BoxDecoration(
                             color: const Color(0xFFffffff),
-                            borderRadius: BorderRadius.circular(54),
+                            borderRadius:
+                                BorderRadius.circular(isCollepsed ? 10 : 54),
                             border: Border.all(
                                 width: dateIsEmpty ? 0.9 : 0.1,
                                 color: dateIsEmpty
                                     ? const Color.fromARGB(255, 213, 0, 50)
                                     : Colors.black),
                           ),
-                          child: Padding(
-                            padding: const EdgeInsets.only(left: 14),
-                            child: StreamBuilder<String>(
-                                initialData: "Дата рождения",
-                                stream: dateBurnBloC.stream,
-                                builder: (context, snapshot) {
-                                  return Text(
-                                    snapshot.data!,
-                                    style: snapshot.data == "Дата рождения"
-                                        ? GoogleFonts.montserrat(
-                                            fontSize: isTablet ? 13 : 10,
-                                            color: dateIsEmpty
-                                                ? const Color.fromARGB(
-                                                    255, 213, 0, 50)
-                                                : const Color(0xFF444444))
-                                        : GoogleFonts.montserrat(
-                                            fontSize: isTablet ? 13 : 10,
-                                            fontWeight: FontWeight.w500,
-                                            color: dateIsEmpty
-                                                ? const Color.fromARGB(
-                                                    255, 213, 0, 50)
-                                                : Colors.black),
-                                  );
-                                }),
+                          child: Column(
+                            mainAxisAlignment: !isCollepsed
+                                ? MainAxisAlignment.center
+                                : MainAxisAlignment.start,
+                            children: [
+                              Row(
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.only(left: 14),
+                                    child: StreamBuilder<String>(
+                                        initialData: "Дата рождения",
+                                        stream: dateBurnBloC.stream,
+                                        builder: (context, snapshot) {
+                                          return Text(
+                                            snapshot.data!,
+                                            style: snapshot.data ==
+                                                    "Дата рождения"
+                                                ? GoogleFonts.montserrat(
+                                                    fontSize:
+                                                        isTablet ? 13 : 10,
+                                                    color: dateIsEmpty
+                                                        ? const Color.fromARGB(
+                                                            255, 213, 0, 50)
+                                                        : const Color(
+                                                            0xFF444444))
+                                                : GoogleFonts.montserrat(
+                                                    fontSize:
+                                                        isTablet ? 13 : 10,
+                                                    fontWeight: FontWeight.w500,
+                                                    color: dateIsEmpty
+                                                        ? const Color.fromARGB(
+                                                            255, 213, 0, 50)
+                                                        : Colors.black),
+                                          );
+                                        }),
+                                  ),
+                                ],
+                              ),
+                              Visibility(
+                                visible: isCollepsed,
+                                child: Column(
+                                  children: [
+                                    Container(
+                                        width: 360,
+                                        height: 300,
+                                        decoration: BoxDecoration(
+                                            color: Colors.white,
+                                            borderRadius:
+                                                BorderRadius.circular(10)),
+                                        child: SfDateRangePicker(
+                                          headerHeight: 30,
+                                          controller: dateRangeController,
+                                          selectionColor: const Color.fromARGB(
+                                              255, 213, 0, 50),
+                                          todayHighlightColor:
+                                              const Color.fromARGB(
+                                                  255, 213, 0, 50),
+                                          onSelectionChanged: (a) {
+                                            String day = dateRangeController
+                                                        .selectedDate!.day
+                                                        .toString()
+                                                        .length ==
+                                                    1
+                                                ? "0${dateRangeController.selectedDate!.day}"
+                                                : dateRangeController
+                                                    .selectedDate!.day
+                                                    .toString();
+                                            String month = dateRangeController
+                                                        .selectedDate!.month
+                                                        .toString()
+                                                        .length ==
+                                                    1
+                                                ? "0${dateRangeController.selectedDate!.month}"
+                                                : dateRangeController
+                                                    .selectedDate!.month
+                                                    .toString();
+                                            String year = dateRangeController
+                                                .selectedDate!.year
+                                                .toString();
+                                            dateBurnBloC.streamSink
+                                                .add("$day.$month.$year");
+                                          },
+                                        )),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        MaterialButton(
+                                          onPressed: () {
+                                            setState(() {
+                                              isCollepsed = !isCollepsed;
+                                            });
+                                          },
+                                          height: 30,
+                                          minWidth: 300,
+                                          color: const Color.fromARGB(
+                                              255, 213, 0, 50),
+                                          child: Text(
+                                            "OK",
+                                            style: GoogleFonts.montserrat(
+                                                fontSize: 10,
+                                                color: Colors.white),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
                           ),
                         ),
                       ),
@@ -511,19 +563,21 @@ class _FullRegistrState extends State<FullRegistr> {
                                 providerFlip: providerFlip,
                               );
 
-                             log(familiyaTextEditingController.text + "last");
-                             log(imyaTextEditingController.text + "first");
-                             log(emailTextFielController.text + "email");
-                             log("${date[2]}.${date[1]}.${date[0]}bornedat");
-                             log(doljnostTextFieldController.text + "jobid");
-                             log(nazvaniyaTextFieldController.text + "storeid");
-                             log(newShop.getNewShop.toString() + "shopnet");
-                             log(adresTorgoviySetTextFielController.text + "shop adress");
-                             log(phoneTextFieldController.text + "phone");
-                             log(gorodTextFieldController.text + "cityid");
-                             log(secondToggle.text + "isagreesms");
-                             log(thirdToggle.text + "isagreeidenty");
-                             log(fourthToggle.text + "isagreepersonal");
+                              log(familiyaTextEditingController.text + "last");
+                              log(imyaTextEditingController.text + "first");
+                              log(emailTextFielController.text + "email");
+                              log("${date[2]}.${date[1]}.${date[0]}bornedat");
+                              log(doljnostTextFieldController.text + "jobid");
+                              log(nazvaniyaTextFieldController.text +
+                                  "storeid");
+                              log(newShop.getNewShop.toString() + "shopnet");
+                              log(adresTorgoviySetTextFielController.text +
+                                  "shop adress");
+                              log(phoneTextFieldController.text + "phone");
+                              log(gorodTextFieldController.text + "cityid");
+                              log(secondToggle.text + "isagreesms");
+                              log(thirdToggle.text + "isagreeidenty");
+                              log(fourthToggle.text + "isagreepersonal");
                             },
                             child: Container(
                               alignment: Alignment.center,

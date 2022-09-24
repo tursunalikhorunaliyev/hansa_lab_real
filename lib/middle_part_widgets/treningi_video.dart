@@ -40,12 +40,18 @@ class TreningiVideo extends StatefulWidget {
 
 class _TreningiVideoState extends State<TreningiVideo> {
   final scroll = ScrollController();
-
+  String link = "";
   ChewieController chewieController = ChewieController(
     aspectRatio: 16 / 9,
     videoPlayerController: VideoPlayerController.network('',
         videoPlayerOptions: VideoPlayerOptions(mixWithOthers: false)),
   );
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
   @override
   void dispose() {
     chewieController.dispose();
@@ -112,9 +118,6 @@ class _TreningiVideoState extends State<TreningiVideo> {
     final menuBloCProvider = Provider.of<MenuEventsBloC>(context);
     final providerSendAnaliseDownload =
         Provider.of<SendAnaliseDownload>(context);
-   
-    log("VideoUrl is ${treningiVideos.getUrl}");
-
     return Expanded(
       child: Padding(
         padding: const EdgeInsets.all(1),
@@ -146,14 +149,71 @@ class _TreningiVideoState extends State<TreningiVideo> {
                                 builder: (context, snapshot) {
                                   if (snapshot.hasData) {
                                     log(snapshot
-                                        .data!.data.data.data[0].videoLink);
+                                        .data!.data.data.data.first.videoLink);
+                                    link = snapshot
+                                        .data!.data.data.data.first.videoLink;
+                                    chewieController.dispose();
+                                    chewieController.videoPlayerController
+                                        .dispose();
+                                    chewieController = ChewieController(
+                                      autoPlay: true,
+                                      allowedScreenSleep: false,
+                                      autoInitialize: true,
+                                      allowMuting: false,
+                                      optionsBuilder: (context, chewieOptions) {
+                                        print(chewieOptions.length);
+                                        return Future.value();
+                                      },
+                                      systemOverlaysAfterFullScreen: [
+                                        SystemUiOverlay.top
+                                      ],
+                                      useRootNavigator: true,
+                                      cupertinoProgressColors:
+                                          ChewieProgressColors(
+                                        backgroundColor:
+                                            const Color(0xff090909),
+                                        bufferedColor: const Color(0xff090909),
+                                        playedColor: const Color.fromARGB(
+                                            255, 213, 0, 50),
+                                        handleColor: const Color.fromARGB(
+                                            255, 213, 0, 50),
+                                      ),
+                                      allowFullScreen: true,
+                                      deviceOrientationsOnEnterFullScreen: [
+                                        DeviceOrientation.landscapeLeft,
+                                        DeviceOrientation.landscapeRight
+                                      ],
+                                      deviceOrientationsAfterFullScreen: [
+                                        DeviceOrientation.portraitDown,
+                                        DeviceOrientation.portraitUp
+                                      ],
+                                      materialProgressColors:
+                                          ChewieProgressColors(
+                                        backgroundColor:
+                                            const Color(0xff090909),
+                                        bufferedColor: const Color(0xff090909),
+                                        playedColor: const Color.fromARGB(
+                                            255, 213, 0, 50),
+                                        handleColor: const Color.fromARGB(
+                                            255, 213, 0, 50),
+                                      ),
+                                      videoPlayerController:
+                                          VideoPlayerController.network(
+                                        snapshot.data!.data.data.data.first
+                                            .videoLink,
+                                      ),
+                                    );
                                     return Column(
                                       children: [
-                                        ChewieFFFI(
-                                          isTablet: isTablet,
-                                          videoLink: snapshot.data!.data.data
-                                              .data[0].videoLink,
-                                          chewieController: chewieController,
+                                        ClipRRect(
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                          child: SizedBox(
+                                            height: isTablet ? 380 : 235,
+                                            child: Chewie(
+                                              controller: chewieController,
+                                            ),
+                                          ),
                                         ),
                                         const SizedBox(
                                           height: 11,
@@ -544,7 +604,6 @@ class _TreningiVideoState extends State<TreningiVideo> {
                                                 .data!.data.similar.data.length,
                                             (index) => CustomStatiTabletItem(
                                               onTap: () {
-                                              
                                                 treningiVideos.setUrl(
                                                   snapshot.data!.data.similar
                                                       .data[index].link,
@@ -557,6 +616,8 @@ class _TreningiVideoState extends State<TreningiVideo> {
                                                   curve: Curves.ease,
                                                 );
                                                 setState(() {});
+                                                menuBloCProvider.eventSink.add(
+                                                    MenuActions.trainingVideo);
                                               },
                                               backgroundColor:
                                                   const Color(0xff000004),
@@ -584,7 +645,6 @@ class _TreningiVideoState extends State<TreningiVideo> {
                                         children: [
                                           CustomClipItem(
                                             onTap: () {
-                                             
                                               treningiVideos.setUrl(
                                                 snapshot.data!.data.similar
                                                     .data[index].link,
@@ -597,9 +657,9 @@ class _TreningiVideoState extends State<TreningiVideo> {
                                                     milliseconds: 500),
                                                 curve: Curves.ease,
                                               );
+                                              setState(() {});
                                               menuBloCProvider.eventSink.add(
                                                   MenuActions.trainingVideo);
-                                              setState(() {});
                                             },
                                             backgroundColor:
                                                 const Color(0xff000004),
