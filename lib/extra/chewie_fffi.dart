@@ -1,6 +1,9 @@
+/* import 'dart:developer';
+
 import 'package:chewie/chewie.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:hansa_lab/middle_part_widgets/treningi_video.dart';
 import 'package:hansa_lab/providers/check_click.dart';
 import 'package:provider/provider.dart';
 import 'package:video_player/video_player.dart';
@@ -8,22 +11,19 @@ import 'package:video_player/video_player.dart';
 class ChewieFFFI extends StatefulWidget {
   final bool isTablet;
   final String videoLink;
-  final ChewieController chewieController;
   const ChewieFFFI(
-      {super.key,
-      required this.isTablet,
-      required this.videoLink,
-      required this.chewieController});
+      {super.key, required this.isTablet, required this.videoLink});
 
   @override
   State<ChewieFFFI> createState() => _ChewieFFFIState();
 }
 
 class _ChewieFFFIState extends State<ChewieFFFI> {
-  late ChewieController chewieController;
+  ChewieController chewieController = ChewieController(
+      videoPlayerController: VideoPlayerController.network(""));
   @override
   void initState() {
-    chewieController = widget.chewieController;
+    log("inin");
     chewieController.dispose();
     chewieController.videoPlayerController.dispose();
     chewieController = ChewieController(
@@ -31,6 +31,11 @@ class _ChewieFFFIState extends State<ChewieFFFI> {
       allowedScreenSleep: false,
       autoInitialize: true,
       allowMuting: false,
+      optionsBuilder: (context, chewieOptions) {
+        print(chewieOptions.length);
+        return Future.value();
+      },
+      systemOverlaysOnEnterFullScreen: [SystemUiOverlay.top],
       cupertinoProgressColors: ChewieProgressColors(
         backgroundColor: const Color(0xff090909),
         bufferedColor: const Color(0xff090909),
@@ -62,15 +67,14 @@ class _ChewieFFFIState extends State<ChewieFFFI> {
   @override
   void dispose() {
     super.dispose();
-    chewieController.videoPlayerController.dispose();
     chewieController.dispose();
+    chewieController.videoPlayerController.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Consumer<CheckClick>(
       builder: (context, value, child) {
-        setState(() {});
         return ClipRRect(
           borderRadius: BorderRadius.circular(10),
           child: SizedBox(
@@ -84,3 +88,4 @@ class _ChewieFFFIState extends State<ChewieFFFI> {
     );
   }
 }
+ */
