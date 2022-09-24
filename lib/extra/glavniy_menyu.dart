@@ -102,6 +102,7 @@ class _GlavniyMenyuState extends State<GlavniyMenyu> {
     final scafforlKeyProvider = Provider.of<GlobalKey<ScaffoldState>>(context);
     final providerSendDataPersonalUpdate =
         Provider.of<SendDataPersonalUpdate>(context);
+        final scrollController = ScrollController();
 
     return Drawer(
       backgroundColor: const Color(0xFF333333),
@@ -209,6 +210,9 @@ class _GlavniyMenyuState extends State<GlavniyMenyu> {
                       builder: (context, snapshot) {
                         return GestureDetector(
                           onTap: () {
+                            scrollController.animateTo(0,
+                          duration: const Duration(milliseconds: 400),
+                          curve: Curves.fastLinearToSlowEaseIn);
                             snapshot.data == ActionChange.izboreny ||
                                     providerTapFavorite.getInt == 1
                                 ? blocChangeProfileProvider.dataSink
@@ -330,6 +334,9 @@ class _GlavniyMenyuState extends State<GlavniyMenyu> {
                         return GestureDetector(
                           onTap: () {
                             if (snapshot.data == ActionChange.personal) {
+                              scrollController.animateTo(0,
+                          duration: const Duration(milliseconds: 400),
+                          curve: Curves.fastLinearToSlowEaseIn);
                               getData(
                                   providerToken,
                                   providerPersonalDannieTextFilelds
@@ -434,6 +441,9 @@ class _GlavniyMenyuState extends State<GlavniyMenyu> {
                             top: isTablet ? 320 : 220),
                         child: GestureDetector(
                           onTap: () {
+                            scrollController.animateTo(0,
+                          duration: const Duration(milliseconds: 400),
+                          curve: Curves.fastLinearToSlowEaseIn);
                             if (snapshot.data == ActionChange.izboreny) {
                               blocChangeProfileProvider.dataSink
                                   .add(ActionChange.textIconCard);
@@ -485,6 +495,7 @@ class _GlavniyMenyuState extends State<GlavniyMenyu> {
                   child: Container(
                     decoration: const BoxDecoration(color: Color(0xFF2c2c2c)),
                     child: SingleChildScrollView(
+                      controller: scrollController,
                       physics: const BouncingScrollPhysics(),
                       padding: EdgeInsets.only(
                           top: snapshot.data == ActionChange.izboreny ||
@@ -494,7 +505,10 @@ class _GlavniyMenyuState extends State<GlavniyMenyu> {
                           bottom: 20),
                       child: Column(
                         children: List.generate(
+                          
+
                           1,
+
                           (index) => Column(
                             children: [
                               snapshot.data == ActionChange.izboreny
@@ -548,6 +562,9 @@ class _GlavniyMenyuState extends State<GlavniyMenyu> {
                                   onTap: () {
                                     blocChangeProfileProvider.dataSink
                                         .add(ActionChange.statistik);
+                                        scrollController.animateTo(0,
+                          duration: const Duration(milliseconds: 400),
+                          curve: Curves.fastLinearToSlowEaseIn);
                                   },
                                   child: const TextIcon(
                                     text: "Рейтинг",
