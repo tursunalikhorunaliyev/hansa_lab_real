@@ -25,6 +25,7 @@ import 'package:hansa_lab/classes/send_data_personal_update.dart';
 import 'package:hansa_lab/classes/send_link.dart';
 import 'package:hansa_lab/classes/sned_url_prezent_otkrit.dart';
 import 'package:hansa_lab/classes/tap_favorite.dart';
+import 'package:hansa_lab/drawer_widgets/personalniy_daniy.dart';
 import 'package:hansa_lab/firebase_options.dart';
 import 'package:hansa_lab/middle_part_widgets/permission_handler_screen.dart';
 import 'package:hansa_lab/providers/check_click.dart';

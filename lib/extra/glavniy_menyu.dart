@@ -49,8 +49,10 @@ class _GlavniyMenyuState extends State<GlavniyMenyu> {
   }
 
   Future<dynamic> uploadImage({required String token}) async {
-    XFile? image = await ImagePicker().pickImage(source: ImageSource.gallery);
+    XFile? image = await ImagePicker().pickImage(source: ImageSource.gallery, imageQuality: 25);
+    
     File file = File(image!.path);
+    log((file.readAsBytesSync().lengthInBytes / 1024).toString() + " mbbmmb");
     Dio dio = Dio();
 
     if (file == null) {
