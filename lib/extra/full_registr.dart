@@ -284,10 +284,10 @@ class _FullRegistrState extends State<FullRegistr> {
                           width: isTablet ? 538 : 325,
                           height: isTablet
                               ? isCollepsed
-                                  ? 483
+                                  ? 383
                                   : 43
                               : isCollepsed
-                                  ? 478
+                                  ? 378
                                   : 38,
                           padding: EdgeInsets.only(top: isCollepsed ? 10 : 0),
                           decoration: BoxDecoration(
@@ -301,7 +301,9 @@ class _FullRegistrState extends State<FullRegistr> {
                                     : Colors.black),
                           ),
                           child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
+                            mainAxisAlignment: !isCollepsed
+                                ? MainAxisAlignment.center
+                                : MainAxisAlignment.start,
                             children: [
                               Row(
                                 children: [
@@ -342,12 +344,13 @@ class _FullRegistrState extends State<FullRegistr> {
                                   children: [
                                     Container(
                                         width: 360,
-                                        height: 400,
+                                        height: 300,
                                         decoration: BoxDecoration(
                                             color: Colors.white,
                                             borderRadius:
                                                 BorderRadius.circular(10)),
                                         child: SfDateRangePicker(
+                                          headerHeight: 30,
                                           controller: dateRangeController,
                                           selectionColor: const Color.fromARGB(
                                               255, 213, 0, 50),
