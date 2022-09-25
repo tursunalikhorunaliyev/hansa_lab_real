@@ -77,6 +77,7 @@ class MyApp extends StatelessWidget {
     final blocDetectTap = BlocDetectTap();
     final sendCheckSwitcher = SendCheckSwitcher();
     final providerOtpravitPushUvodamleniya = ProviderOtpravitPushUvodamleniya();
+    final providerSendListPopupGorod = ProviderOtpravitPushUvodamleniya();
 
     Size size = WidgetsBinding.instance.window.physicalSize;
     bool isTablet = (size.width / 3) > 500;
@@ -139,6 +140,10 @@ class MyApp extends StatelessWidget {
           ChangeNotifierProvider(
             create: (context) => CheckClick(),
           ),
+          ChangeNotifierProvider<ProviderOtpravitPushUvodamleniya>(
+            create: (context) => providerSendListPopupGorod,
+          ),
+
         ],
         child:  MaterialApp(
           builder: (context, child) {
