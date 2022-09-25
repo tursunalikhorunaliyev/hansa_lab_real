@@ -240,12 +240,14 @@ class _FullRegistrState extends State<FullRegistr> {
                           width: isTablet ? 538 : 325,
                           height: isTablet
                               ? isCollepsed
-                                  ? 383
+                                  ? 270
                                   : 43
                               : isCollepsed
-                                  ? 378
+                                  ? 265
                                   : 38,
-                          padding: EdgeInsets.only(top: isCollepsed ? 10 : 0),
+                          padding: EdgeInsets.only(
+                            top: isCollepsed ? 12 : 0,
+                          ),
                           decoration: BoxDecoration(
                             color: const Color(0xFFffffff),
                             borderRadius:
@@ -264,7 +266,10 @@ class _FullRegistrState extends State<FullRegistr> {
                               Row(
                                 children: [
                                   Padding(
-                                    padding: const EdgeInsets.only(left: 14),
+                                    padding: EdgeInsets.only(
+                                      left: 14,
+                                      bottom: isCollepsed ? 8 : 0,
+                                    ),
                                     child: StreamBuilder<String>(
                                         initialData: "Дата рождения",
                                         stream: dateBurnBloC.stream,
@@ -296,74 +301,67 @@ class _FullRegistrState extends State<FullRegistr> {
                               ),
                               Visibility(
                                 visible: isCollepsed,
-                                child: Column(
-                                  children: [
-                                    Container(
-                                        width: 360,
-                                        height: 300,
-                                        decoration: BoxDecoration(
-                                            color: Colors.white,
-                                            borderRadius:
-                                                BorderRadius.circular(10)),
-                                        child: SfDateRangePicker(
-                                          headerHeight: 30,
-                                          controller: dateRangeController,
-                                          selectionColor: const Color.fromARGB(
-                                              255, 213, 0, 50),
-                                          todayHighlightColor:
-                                              const Color.fromARGB(
-                                                  255, 213, 0, 50),
-                                          onSelectionChanged: (a) {
-                                            String day = dateRangeController
-                                                        .selectedDate!.day
-                                                        .toString()
-                                                        .length ==
-                                                    1
-                                                ? "0${dateRangeController.selectedDate!.day}"
-                                                : dateRangeController
-                                                    .selectedDate!.day
-                                                    .toString();
-                                            String month = dateRangeController
-                                                        .selectedDate!.month
-                                                        .toString()
-                                                        .length ==
-                                                    1
-                                                ? "0${dateRangeController.selectedDate!.month}"
-                                                : dateRangeController
-                                                    .selectedDate!.month
-                                                    .toString();
-                                            String year = dateRangeController
-                                                .selectedDate!.year
-                                                .toString();
-                                            dateBurnBloC.streamSink
-                                                .add("$day.$month.$year");
-                                          },
-                                        )),
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        MaterialButton(
-                                          onPressed: () {
-                                            setState(() {
-                                              isCollepsed = !isCollepsed;
-                                            });
-                                          },
-                                          height: 30,
-                                          minWidth: 300,
-                                          color: const Color.fromARGB(
-                                              255, 213, 0, 50),
-                                          child: Text(
-                                            "OK",
-                                            style: GoogleFonts.montserrat(
-                                                fontSize: 10,
-                                                color: Colors.white),
+                                child: Container(
+                                    width: 360,
+                                    height: 230,
+                                    decoration: BoxDecoration(
+                                        color: Colors.white,
+                                        borderRadius:
+                                            BorderRadius.circular(10)),
+                                    child: SfDateRangePicker(
+                                      headerHeight: 20,
+                                      headerStyle:
+                                          const DateRangePickerHeaderStyle(
+                                        textAlign: TextAlign.center,
+                                        textStyle: TextStyle(
+                                          fontSize: 14,
+                                          color: Colors.black,
+                                        ),
+                                      ),
+                                      monthViewSettings:
+                                          const DateRangePickerMonthViewSettings(
+                                        viewHeaderStyle:
+                                            DateRangePickerViewHeaderStyle(
+                                          textStyle: TextStyle(
+                                            fontSize: 10,
+                                            color: Colors.black,
                                           ),
                                         ),
-                                      ],
-                                    ),
-                                  ],
-                                ),
+                                      ),
+                                      controller: dateRangeController,
+                                      selectionColor:
+                                          const Color.fromARGB(255, 213, 0, 50),
+                                      todayHighlightColor:
+                                          const Color.fromARGB(255, 213, 0, 50),
+                                      onSelectionChanged: (a) {
+                                        String day = dateRangeController
+                                                    .selectedDate!.day
+                                                    .toString()
+                                                    .length ==
+                                                1
+                                            ? "0${dateRangeController.selectedDate!.day}"
+                                            : dateRangeController
+                                                .selectedDate!.day
+                                                .toString();
+                                        String month = dateRangeController
+                                                    .selectedDate!.month
+                                                    .toString()
+                                                    .length ==
+                                                1
+                                            ? "0${dateRangeController.selectedDate!.month}"
+                                            : dateRangeController
+                                                .selectedDate!.month
+                                                .toString();
+                                        String year = dateRangeController
+                                            .selectedDate!.year
+                                            .toString();
+                                        dateBurnBloC.streamSink
+                                            .add("$day.$month.$year");
+                                        setState(() {
+                                          isCollepsed = !isCollepsed;
+                                        });
+                                      },
+                                    )),
                               ),
                             ],
                           ),
