@@ -88,6 +88,9 @@ class _PopupFullRegistrNazvaniySetiState
                           ),
                         ),
                       ),
+                      const SizedBox(
+                        height: 10,
+                      ),
                       StreamBuilder<StoreModel>(
                           stream: blocStoreData.stream,
                           builder: (context, snapshotStore) {
@@ -102,10 +105,60 @@ class _PopupFullRegistrNazvaniySetiState
                                         padding: const EdgeInsets.only(
                                             right: 10, top: 5),
                                         child: TextField(
+                                          style: const TextStyle(fontSize: 13),
                                           controller: newShopText,
                                           decoration: InputDecoration(
+                                              focusedBorder:
+                                                  const OutlineInputBorder(
+                                                      borderRadius:
+                                                          BorderRadius.all(
+                                                              Radius.circular(
+                                                                  10)),
+                                                      borderSide: BorderSide(
+                                                          color: Colors.green)),
+                                              suffixIcon: ClipRRect(
+                                                borderRadius:
+                                                    const BorderRadius.only(
+                                                  topRight: Radius.circular(10),
+                                                  bottomRight:
+                                                      Radius.circular(10),
+                                                ),
+                                                child: MaterialButton(
+                                                  onPressed: () {
+                                                    if (newShopText
+                                                        .text.isNotEmpty) {
+                                                      newShop.setNewShop(
+                                                          newShopText.text);
+                                                      text = newShopText.text;
+                                                      nazvanieTextEditingController
+                                                          .text = "";
+                                                      blocPopupDrawer.dataSink
+                                                          .add(snapshotStore
+                                                                      .data! ==
+                                                                  38
+                                                              ? 200
+                                                              : 38);
+                                                      radius = radius == 54
+                                                          ? 10
+                                                          : 54;
+                                                    }
+                                                  },
+                                                  height: 30,
+                                                  minWidth: 30,
+                                                  color: Colors.green,
+                                                  child: Text(
+                                                    "OK",
+                                                    style:
+                                                        GoogleFonts.montserrat(
+                                                            fontSize: 10,
+                                                            color:
+                                                                Colors.white),
+                                                  ),
+                                                ),
+                                              ),
                                               contentPadding:
-                                                  const EdgeInsets.all(5),
+                                                  const EdgeInsets.only(
+                                                      left: 10),
                                               hintText: "Новый",
                                               hintStyle:
                                                   const TextStyle(fontSize: 13),
@@ -117,27 +170,30 @@ class _PopupFullRegistrNazvaniySetiState
                                       ),
                                     ),
                                     const SizedBox(
-                                      height: 20,
+                                      height: 10,
                                     ),
                                     SizedBox(
-                                      height: 97,
+                                      height: 160,
                                       child: Padding(
                                         padding:
                                             const EdgeInsets.only(right: 10),
                                         child: ListView.builder(
+                                          physics: const BouncingScrollPhysics(),
                                           itemCount: snapshotStore
                                               .data!.data.list.length,
                                           padding: const EdgeInsets.all(0),
                                           itemBuilder: (context, index) {
                                             return TextButton(
                                               onPressed: () {
-                                                newShop.setNewShop(
-                                                    snapshotStore.data!.data.list[index].id.toString());
+                                                newShop.setNewShop(snapshotStore
+                                                    .data!.data.list[index].id
+                                                    .toString());
 
                                                 nazvanieTextEditingController
                                                         .text =
                                                     snapshotStore.data!.data
-                                                        .list[index].id.toString();
+                                                        .list[index].id
+                                                        .toString();
                                                 text = snapshotStore.data!.data
                                                     .list[index].name;
 
@@ -160,32 +216,6 @@ class _PopupFullRegistrNazvaniySetiState
                                               ),
                                             );
                                           },
-                                        ),
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.only(right: 10),
-                                      child: MaterialButton(
-                                        onPressed: () {
-                                          newShop.setNewShop(newShopText.text);
-                                          text = newShopText.text;
-                                          nazvanieTextEditingController.text =
-                                              "";
-                                          blocPopupDrawer.dataSink.add(
-                                              snapshotStore.data! == 38
-                                                  ? 200
-                                                  : 38);
-                                          radius = radius == 54 ? 10 : 54;
-                                        },
-                                        height: 30,
-                                        minWidth: 300,
-                                        color: const Color.fromARGB(
-                                            255, 213, 0, 50),
-                                        child: Text(
-                                          "OK",
-                                          style: GoogleFonts.montserrat(
-                                              fontSize: 10,
-                                              color: Colors.white),
                                         ),
                                       ),
                                     ),
