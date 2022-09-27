@@ -47,7 +47,6 @@ dependencies:
   chewie: ^1.2.2
   video_player: ^2.4.5
   http: ^0.13.4
-  mask_text_input_formatter: ^2.3.0
   hive: ^2.2.3
   hive_flutter: ^1.1.0
   syncfusion_flutter_datepicker: ^20.2.40
@@ -73,6 +72,7 @@ dependencies:
   flutter_rating_bar: ^4.0.1
   top_snackbar_flutter: ^2.1.1
   image_picker: ^0.8.5+3
+  mask_text_input_formatter: ^2.4.0
 
 dev_dependencies:
   flutter_test:

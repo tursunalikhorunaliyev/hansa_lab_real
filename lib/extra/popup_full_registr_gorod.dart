@@ -164,7 +164,7 @@ class _PopupFullRegistrGorodState extends State<PopupFullRegistrGorod> {
                                             return InkWell(
                                               onTap: () {
                                                 gorodTextEditingContyroller
-                                                    .text = book.toString();
+                                                    .text = book.id.toString() ;
                                                 text = book.name;
                                                 blocPopupDrawer.dataSink.add(
                                                     snapshotSizeDrawer.data! ==

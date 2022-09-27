@@ -1,8 +1,6 @@
 import 'dart:developer';
-import 'dart:io';
 
 import 'package:flip_card/flip_card_controller.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hansa_lab/blocs/bloc_sign.dart';
@@ -16,8 +14,8 @@ import 'package:hansa_lab/extra/text_field_for_full_reg.dart';
 import 'package:hansa_lab/providers/new_shop_provider.dart';
 import 'package:hansa_lab/providers/provider_for_flipping/flip_login_provider.dart';
 import 'package:intl_phone_number_input/intl_phone_number_input.dart';
+import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:provider/provider.dart';
-import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 
 class FullRegistr extends StatefulWidget {
   const FullRegistr({Key? key}) : super(key: key);
@@ -35,9 +33,7 @@ class _FullRegistrState extends State<FullRegistr> {
   bool doljnostIsEmpty = false;
   bool gorodIsEmpty = false;
   bool adressIsEmpty = false;
-  bool isCollepsed = false;
 
-  final dateRangeController = DateRangePickerController();
   final imyaTextEditingController = TextEditingController();
   final familiyaTextEditingController = TextEditingController();
   final emailTextFielController = TextEditingController();
@@ -46,17 +42,25 @@ class _FullRegistrState extends State<FullRegistr> {
   final nazvaniyaTextFieldController = TextEditingController();
   final doljnostTextFieldController = TextEditingController();
   final gorodTextFieldController = TextEditingController();
+  final dataRojdeniyaController = TextEditingController();
   final firstToggle = TextEditingController(text: "0");
   final secondToggle = TextEditingController(text: "0");
   final thirdToggle = TextEditingController(text: "0");
   final fourthToggle = TextEditingController(text: "0");
   final dateBurnBloC = DateBornTextBloC();
   FocusNode node = FocusNode();
+
+  bool isHintDate = true;
+
+  var dateFormatter = new MaskTextInputFormatter(
+    mask: "##/##/####",
+  );
+
   @override
   Widget build(BuildContext context) {
     final flipLoginProvider = Provider.of<FlipLoginProvider>(context);
-    final newShop = Provider.of<NewShopProvider>(context);
     final isTablet = Provider.of<bool>(context);
+    final newShop = Provider.of<NewShopProvider>(context);
     final providerFlip = Provider.of<Map<String, FlipCardController>>(context);
     log("SignUp build");
     final blocCity = HansaCountryBloC(1);
@@ -176,6 +180,11 @@ class _FullRegistrState extends State<FullRegistr> {
                                 InternationalPhoneNumberInput(
                                   focusNode: node,
                                   initialValue: PhoneNumber(isoCode: 'RU'),
+                                  countries: const [
+                                    "RU",
+                                    "AM",
+                                    "KZ",
+                                  ],
                                   onInputChanged: (value) {
                                     phoneTextFieldController.text =
                                         value.phoneNumber!;
@@ -227,143 +236,55 @@ class _FullRegistrState extends State<FullRegistr> {
                       const SizedBox(
                         height: 4,
                       ),
-                      InkWell(
-                        onTap: () {
-                          setState(() {
-                            dateIsEmpty = false;
-                            isCollepsed = !isCollepsed;
-                          });
-                        },
-                        child: AnimatedContainer(
-                          duration: const Duration(milliseconds: 100),
-                          alignment: Alignment.centerLeft,
-                          width: isTablet ? 538 : 325,
-                          height: isTablet
-                              ? isCollepsed
-                                  ? 270
-                                  : 43
-                              : isCollepsed
-                                  ? 265
-                                  : 38,
-                          padding: EdgeInsets.only(
-                            top: isCollepsed ? 12 : 0,
-                          ),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 11, right: 9),
+                        child: Container(
+                          height: isTablet ? 45 : 38,
                           decoration: BoxDecoration(
                             color: const Color(0xFFffffff),
-                            borderRadius:
-                                BorderRadius.circular(isCollepsed ? 10 : 54),
-                            border: Border.all(
-                                width: dateIsEmpty ? 0.9 : 0.1,
-                                color: dateIsEmpty
-                                    ? const Color.fromARGB(255, 213, 0, 50)
-                                    : Colors.black),
+                            borderRadius: BorderRadius.circular(54),
                           ),
-                          child: Column(
-                            mainAxisAlignment: !isCollepsed
-                                ? MainAxisAlignment.center
-                                : MainAxisAlignment.start,
-                            children: [
-                              Row(
-                                children: [
-                                  Padding(
-                                    padding: EdgeInsets.only(
-                                      left: 14,
-                                      bottom: isCollepsed ? 8 : 0,
-                                    ),
-                                    child: StreamBuilder<String>(
-                                        initialData: "Дата рождения",
-                                        stream: dateBurnBloC.stream,
-                                        builder: (context, snapshot) {
-                                          return Text(
-                                            snapshot.data!,
-                                            style: snapshot.data ==
-                                                    "Дата рождения"
-                                                ? GoogleFonts.montserrat(
-                                                    fontSize:
-                                                        isTablet ? 13 : 10,
-                                                    color: dateIsEmpty
-                                                        ? const Color.fromARGB(
-                                                            255, 213, 0, 50)
-                                                        : const Color(
-                                                            0xFF444444))
-                                                : GoogleFonts.montserrat(
-                                                    fontSize:
-                                                        isTablet ? 13 : 10,
-                                                    fontWeight: FontWeight.w500,
-                                                    color: dateIsEmpty
-                                                        ? const Color.fromARGB(
-                                                            255, 213, 0, 50)
-                                                        : Colors.black),
-                                          );
-                                        }),
+                          child: TextField(
+                            inputFormatters: [dateFormatter],
+                            onTap: () {
+                              setState(() => dateIsEmpty = false);
+                            },
+                            cursorHeight: 15,
+                            style: GoogleFonts.montserrat(
+                                fontSize: isTablet ? 13 : 10,
+                                fontWeight: FontWeight.w500,
+                                color: Colors.black),
+                            controller: dataRojdeniyaController,
+                            decoration: InputDecoration(
+                              hintText: "Дата рождения",
+                              focusedBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  width: 0.9,
+                                  color: dateIsEmpty
+                                      ? const Color.fromARGB(255, 213, 0, 50)
+                                      : const Color(0xFF000000),
+                                ),
+                                borderRadius: BorderRadius.circular(54),
+                              ),
+                             
+                              enabledBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    width: dateIsEmpty ? 0.9 : 0.1,
+                                    color: dateIsEmpty
+                                      ? const Color.fromARGB(255, 213, 0, 50)
+                                      : const Color(0xFF000000),
                                   ),
-                                ],
-                              ),
-                              Visibility(
-                                visible: isCollepsed,
-                                child: Container(
-                                    width: 360,
-                                    height: 230,
-                                    decoration: BoxDecoration(
-                                        color: Colors.white,
-                                        borderRadius:
-                                            BorderRadius.circular(10)),
-                                    child: SfDateRangePicker(
-                                      headerHeight: 20,
-                                      headerStyle:
-                                          const DateRangePickerHeaderStyle(
-                                        textAlign: TextAlign.center,
-                                        textStyle: TextStyle(
-                                          fontSize: 14,
-                                          color: Colors.black,
-                                        ),
-                                      ),
-                                      monthViewSettings:
-                                          const DateRangePickerMonthViewSettings(
-                                        viewHeaderStyle:
-                                            DateRangePickerViewHeaderStyle(
-                                          textStyle: TextStyle(
-                                            fontSize: 10,
-                                            color: Colors.black,
-                                          ),
-                                        ),
-                                      ),
-                                      controller: dateRangeController,
-                                      selectionColor:
-                                          const Color.fromARGB(255, 213, 0, 50),
-                                      todayHighlightColor:
-                                          const Color.fromARGB(255, 213, 0, 50),
-                                      onSelectionChanged: (a) {
-                                        String day = dateRangeController
-                                                    .selectedDate!.day
-                                                    .toString()
-                                                    .length ==
-                                                1
-                                            ? "0${dateRangeController.selectedDate!.day}"
-                                            : dateRangeController
-                                                .selectedDate!.day
-                                                .toString();
-                                        String month = dateRangeController
-                                                    .selectedDate!.month
-                                                    .toString()
-                                                    .length ==
-                                                1
-                                            ? "0${dateRangeController.selectedDate!.month}"
-                                            : dateRangeController
-                                                .selectedDate!.month
-                                                .toString();
-                                        String year = dateRangeController
-                                            .selectedDate!.year
-                                            .toString();
-                                        dateBurnBloC.streamSink
-                                            .add("$day.$month.$year");
-                                        setState(() {
-                                          isCollepsed = !isCollepsed;
-                                        });
-                                      },
-                                    )),
-                              ),
-                            ],
+                                  borderRadius: BorderRadius.circular(54)),
+                              contentPadding: const EdgeInsets.symmetric(
+                                  vertical: 2, horizontal: 13),
+                              hintStyle: GoogleFonts.montserrat(
+                                  fontWeight: isTablet
+                                      ? FontWeight.normal
+                                      : FontWeight.normal,
+                                  fontSize: isTablet ? 13 : 10,
+                                  color: dateIsEmpty
+                                      ? const Color.fromARGB(255, 213, 0, 50) : const Color(0xFF444444),),
+                            ),
                           ),
                         ),
                       ),
@@ -535,19 +456,24 @@ class _FullRegistrState extends State<FullRegistr> {
                           ),
                           child: GestureDetector(
                             onTap: () {
+                              dynamic day;
+                              dynamic month;
+                              dynamic year;
                               FocusManager.instance.primaryFocus?.unfocus();
-                              List<String> date =
-                                  dateRangeController.selectedDate != null
-                                      ? dateRangeController.selectedDate!
-                                          .toIso8601String()
-                                          .split("T")[0]
-                                          .split("-")
-                                      : ["", "", ""];
+                              if (dataRojdeniyaController.text.isNotEmpty) {
+                                day = dataRojdeniyaController.text
+                                    .substring(0, 2);
+                                month = dataRojdeniyaController.text
+                                    .substring(3, 5);
+                                year =
+                                    dataRojdeniyaController.text.substring(6);
+                              }
+
                               toSignUp(
                                 lastname: familiyaTextEditingController.text,
                                 firstname: imyaTextEditingController.text,
                                 email: emailTextFielController.text,
-                                bornedAt: "${date[2]}.${date[1]}.${date[0]}",
+                                bornedAt: "$day.$month.$year",
                                 jobId: doljnostTextFieldController.text,
                                 storeId: nazvaniyaTextFieldController.text,
                                 shopnet: newShop.getNewShop.toString(),
@@ -564,7 +490,7 @@ class _FullRegistrState extends State<FullRegistr> {
                               log(familiyaTextEditingController.text + "last");
                               log(imyaTextEditingController.text + "first");
                               log(emailTextFielController.text + "email");
-                              log("${date[2]}.${date[1]}.${date[0]}bornedat");
+                              log("$day.$month.$year bornedat");
                               log(doljnostTextFieldController.text + "jobid");
                               log(nazvaniyaTextFieldController.text +
                                   "storeid");
@@ -576,6 +502,16 @@ class _FullRegistrState extends State<FullRegistr> {
                               log(secondToggle.text + "isagreesms");
                               log(thirdToggle.text + "isagreeidenty");
                               log(fourthToggle.text + "isagreepersonal");
+                              log(dateIsEmpty.toString() + "  -0-09--09-09-09-09-09--9-09");
+
+                              log(day.toString() + " day");
+                              log(month.toString() + " month");
+                              log(year.toString() + " year");
+
+
+                              log("$day.$month.$year kkkkkkkkkkkkkkkkkkkkkk");
+
+                            
                             },
                             child: Container(
                               alignment: Alignment.center,
@@ -685,7 +621,7 @@ class _FullRegistrState extends State<FullRegistr> {
     if (email.isEmpty) setState(() => emailIsEmpty = true);
     if (shopadress.isEmpty) setState(() => adressIsEmpty = true);
     if (phone.length < 5) setState(() => phoneIsEmpty = true);
-    if (bornedAt.length < 3) setState(() => dateIsEmpty = true);
+    if (bornedAt.length != 10) setState(() => dateIsEmpty = true);
     if (storeId.isEmpty && shopnet.isEmpty) {
       setState(() => nazvaniyaIsEmpty = true);
     }
