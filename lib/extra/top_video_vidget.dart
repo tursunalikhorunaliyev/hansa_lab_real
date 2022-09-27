@@ -13,6 +13,7 @@ import 'package:hansa_lab/providers/providers_for_video_title/video_index_provid
 import 'package:hansa_lab/training_section/custom_treningi_video.dart';
 import 'package:hansa_lab/video/bloc_video_api.dart';
 import 'package:hansa_lab/video/model_video.dart';
+import 'package:hansa_lab/video_fix.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:video_player/video_player.dart';
@@ -33,7 +34,6 @@ class _TopVideoVidgetState extends State<TopVideoVidget> {
       videoPlayerController: VideoPlayerController.network(''));
   initVideo() {
     chewieController = ChewieController(
-      aspectRatio: 16 / 9,
       autoPlay: true,
       allowedScreenSleep: false,
       autoInitialize: true,
@@ -80,6 +80,7 @@ class _TopVideoVidgetState extends State<TopVideoVidget> {
   bool downloading = false;
   double progress = 0;
   bool isDownloaded = false;
+  bool isINit = false;
 
   Future<String> getFilePath(uniqueFileName) async {
     String path = "";
@@ -130,6 +131,12 @@ class _TopVideoVidgetState extends State<TopVideoVidget> {
 
   @override
   Widget build(BuildContext context) {
+    chewieController.videoPlayerController.addListener(() {
+      if (!isINit) {
+        setState(() {});
+        isINit = true;
+      }
+    });
     final providerBlocProgress = Provider.of<DownloadProgressFileBloc>(context);
     final token = Provider.of<String>(context);
     final providerIndex = Provider.of<int>(context);
@@ -174,22 +181,26 @@ class _TopVideoVidgetState extends State<TopVideoVidget> {
                 Provider<ChewieController>.value(
                     value: chewieController, child: const CustomBlackAppBar()),
                 Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    const SizedBox(
-                      height: 80,
-                    ),
-                    ClipRRect(
-                      borderRadius: BorderRadius.circular(15),
-                      child: SizedBox(
-                        width: isTablet ? 800 : 355,
-                        height: isTablet ? 450 : 200,
-                        child: Center(
-                          child: Chewie(
-                            controller: chewieController,
-                          ),
-                        ),
-                      ),
-                    ),
+                    Builder(builder: (context) {
+                      return (chewieController.videoPlayerController.value.size
+                                  .aspectRatio !=
+                              0.0)
+                          ? ClipRRect(
+                              borderRadius: BorderRadius.circular(15),
+                              child: AspectRatio(
+                                  aspectRatio: chewieController
+                                      .videoPlayerController
+                                      .value
+                                      .size
+                                      .aspectRatio,
+                                  child: Chewie(controller: chewieController)),
+                            )
+                          : const Center(
+                              child: CircularProgressIndicator(),
+                            );
+                    }),
                     Consumer<VideoIndexProvider>(
                       builder: (context, value, child) {
                         return FutureBuilder<VideoMainOne>(
