@@ -24,9 +24,9 @@ class WelcomeWidget extends StatefulWidget {
 
 class _WelcomeWidgetState extends State<WelcomeWidget> {
   ChewieController chewieController = ChewieController(
-      videoPlayerController: VideoPlayerController.network(""),
+      videoPlayerController: VideoPlayerController.network("https://hansa-lab.ru/video/videoplayback_full2.webm"),
       aspectRatio: 13.6 / 7.2,
-      autoPlay: false)
+      autoPlay: true)
     ..setVolume(0);
   @override
   void initState() {
@@ -58,15 +58,8 @@ class _WelcomeWidgetState extends State<WelcomeWidget> {
             if (snapshot.hasData) {
               final data = snapshot.requireData;
               final videoLink = providerWelcomeApi.getVideoLink;
-              if (snapshotCount == 0 && isTablet) {
-                chewieController = ChewieController(
-                    videoPlayerController:
-                        VideoPlayerController.network(videoLink),
-                    aspectRatio: 13.6 / 7.2,
-                    autoPlay: true)
-                  ..setVolume(0);
-                snapshotCount = 1;
-              }
+              log(videoLink);
+             
               return isTablet
                   ? Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 25),
@@ -81,10 +74,6 @@ class _WelcomeWidgetState extends State<WelcomeWidget> {
                                     const EdgeInsets.symmetric(horizontal: 5),
                                 child: ClipRRect(
                                   borderRadius: BorderRadius.circular(5),
-                                  child: SizedBox(
-                                    height: 450,
-                                    child: Chewie(controller: chewieController),
-                                  ),
                                 ),
                               ),
                               GridView(

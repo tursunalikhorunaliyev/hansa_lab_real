@@ -113,7 +113,7 @@ class _IzbrannoeState extends State<Izbrannoe> {
                               confirmDismiss: (direction) async {
                                 if (direction == DismissDirection.endToStart) {
                                   if (snapshot.data!.data.list[index].type ==
-                                      2) {
+                                      2 ) {
                                     isFavouriteBLoC.sink.add(false);
                                     isFavouriteBLoC.getFavourite(token,
                                         snapshot.data!.data.list[index].unlink);
@@ -140,8 +140,20 @@ class _IzbrannoeState extends State<Izbrannoe> {
                               },
                               child: InkWell(
                                 onTap: () async {
-                                  if (snapshot.data!.data.list[index].type ==
-                                      1) {
+                                   if(snapshot.data!.data.list[index].type == 2 ){
+                                    if (snapshot.data!.data.list[index].pdfUrl.isNotEmpty) {
+                                      setState(() {
+                                      launched = launchInBrowser(Uri.parse(
+                                          "http://${snapshot.data!.data.list[index].pdfUrl}"));
+                                    });
+                                    } else {
+                                      setState(() {
+                                      launched = launchInBrowser(Uri.parse(
+                                          snapshot.data!.data.list[index].link));
+                                    });
+                                    }
+                                  }
+                                  else{
                                     scafforlKeyProvider.currentState!
                                         .closeDrawer();
                                     menuProvider.eventSink
@@ -153,11 +165,6 @@ class _IzbrannoeState extends State<Izbrannoe> {
                                             snapshot
                                                 .data!.data.list[index].link);
                                     articleBLoC.sink.add(statiModel);
-                                  } else {
-                                    setState(() {
-                                      launched = launchInBrowser(Uri.parse(
-                                          "http://${snapshot.data!.data.list[index].pdfUrl}"));
-                                    });
                                   }
                                 },
                                 child: Padding(
@@ -236,7 +243,7 @@ class _IzbrannoeState extends State<Izbrannoe> {
                                                                     .data
                                                                     .list[index]
                                                                     .type ==
-                                                                2
+                                                                2 && snapshot.data!.data.list[index].pdfUrl.isNotEmpty
                                                             ? Border.all(
                                                                 width: 2,
                                                                 color: const Color(
@@ -252,7 +259,7 @@ class _IzbrannoeState extends State<Izbrannoe> {
                                                                     .data
                                                                     .list[index]
                                                                     .type ==
-                                                                2
+                                                                2 && snapshot.data!.data.list[index].pdfUrl.isNotEmpty
                                                             ? Colors.white
                                                             : const Color(
                                                                 0xFF313131),
@@ -263,7 +270,7 @@ class _IzbrannoeState extends State<Izbrannoe> {
                                                                     .data
                                                                     .list[index]
                                                                     .type ==
-                                                                2
+                                                                2 && snapshot.data!.data.list[index].pdfUrl.isNotEmpty
                                                             ? "Скачать"
                                                             : "Смотреть",
                                                         style: GoogleFonts.montserrat(
@@ -273,11 +280,11 @@ class _IzbrannoeState extends State<Izbrannoe> {
                                                                         .list[
                                                                             index]
                                                                         .type ==
-                                                                    1
-                                                                ? const Color(
-                                                                    0xFFFFFFFF)
+                                                                    2 && snapshot.data!.data.list[index].pdfUrl.isNotEmpty
+                                                                ?const Color(
+                                                                    0xFF313131) 
                                                                 : const Color(
-                                                                    0xFF313131),
+                                                                    0xFFFFFFFF),
                                                             fontSize: 10),
                                                       ),
                                                     ),
