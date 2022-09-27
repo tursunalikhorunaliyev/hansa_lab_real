@@ -58,7 +58,7 @@ class Okompaniya extends StatelessWidget {
                       fontSize: isTablet ? 20 : 16),
                 ),
                 Text(
-                  "О компании ",
+                  "О проекте",
                   textScaleFactor: 1.0,
                   style: GoogleFonts.montserrat(
                       fontWeight: FontWeight.bold,
