@@ -10,7 +10,6 @@ import 'package:hansa_lab/api_services/search_api.dart';
 import 'package:hansa_lab/blocs/article_bloc.dart';
 import 'package:hansa_lab/blocs/menu_events_bloc.dart';
 import 'package:hansa_lab/classes/send_link.dart';
-import 'package:hansa_lab/classes/sned_url_prezent_otkrit.dart';
 import 'package:hansa_lab/drawer_widgets/izbrannoe.dart';
 import 'package:hansa_lab/extra/top_video_vidget.dart';
 import 'package:hansa_lab/video/model_video.dart';
@@ -35,16 +34,15 @@ class _SearchScreenState extends State<SearchScreen> {
     final articleBLoC = Provider.of<ArticleBLoC>(context);
     final menuProvider = Provider.of<MenuEventsBloC>(context);
     final providerSendLink = Provider.of<SendLink>(context);
-    final providerSendUrlPrezentOtkrit =
-        Provider.of<SendUrlPrezentOtkrit>(context);
+
     return Scaffold(
       body: Column(
         children: [
           Padding(
             padding:
-                const EdgeInsets.only(top: 40, bottom: 10, left: 10, right: 10),
+                const EdgeInsets.only(top: 50, bottom: 10, left: 10, right: 10),
             child: Row(
-              crossAxisAlignment: CrossAxisAlignment.end,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 InkWell(
                   onTap: () {
@@ -60,47 +58,55 @@ class _SearchScreenState extends State<SearchScreen> {
                   ),
                 ),
                 SizedBox(
+                  height: 35,
                   width: isTablet ? .90.sw : .85.sw,
-                  child: TextField(
-                    controller: search,
-                    autofocus: true,
-                    onChanged: (value) {
-                      if (value.length > 2) {
-                        value = search.text;
-                      } else {
-                        value = "   ";
-                      }
-                      setState(() {});
-                    },
-                    cursorColor: const Color(0xFF272624),
-                    cursorHeight: isTablet ? 20 : 14,
-                    style: TextStyle(fontSize: isTablet ? 18 : 12),
-                    decoration: InputDecoration(
-                      isDense: true,
-                      border: const UnderlineInputBorder(
-                        borderSide: BorderSide(
-                          color: Color(0xFF272624),
-                        ),
-                      ),
-                      hintText: "Поиск",
-                      focusedBorder: const UnderlineInputBorder(
-                        borderSide: BorderSide(
-                          color: Color(0xFF272624),
-                        ),
-                      ),
-                      suffixIconConstraints:
-                          const BoxConstraints(maxHeight: 20),
-                      suffixIcon: InkWell(
-                        onTap: () async {
-                          if (search.text.length > 2) {
-                            log("Search button clicked...");
-                            setState(() {});
+                  child: Container(
+                    decoration: BoxDecoration(
+                        color: const Color(0xFFFF0000).withOpacity(0.3),
+                        borderRadius: BorderRadius.circular(10)),
+                    child: SizedBox(
+                      height: 35,
+                      child: TextField(
+                        controller: search,
+                        autofocus: true,
+                        onChanged: (value) {
+                          if (value.length > 2) {
+                            value = search.text;
+                          } else {
+                            value = "   ";
                           }
+                          setState(() {});
                         },
-                        child: Icon(
-                          Icons.search,
-                          size: isTablet ? 25 : 20,
-                          color: const Color(0xFF272624),
+                        cursorColor: const Color(0xFF272624),
+                        style: TextStyle(
+                            fontSize: isTablet ? 18 : 12,
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold),
+                        decoration: InputDecoration(
+                          contentPadding:
+                              const EdgeInsets.only(bottom: 5, left: 14),
+                          border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10),
+                              borderSide:
+                                  const BorderSide(color: Colors.transparent)),
+                          focusedBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10),
+                              borderSide:
+                                  const BorderSide(color: Colors.transparent)),
+                          hintText: "Поиск",
+                          suffixIcon: InkWell(
+                            onTap: () async {
+                              if (search.text.length > 2) {
+                                log("Search button clicked...");
+                                setState(() {});
+                              }
+                            },
+                            child: Icon(
+                              Icons.search,
+                              size: isTablet ? 25 : 20,
+                              color: const Color(0xFF272624),
+                            ),
+                          ),
                         ),
                       ),
                     ),

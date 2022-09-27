@@ -1,3 +1,7 @@
+import 'dart:async';
+import 'dart:convert';
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hansa_lab/api_models.dart/country_model.dart';
@@ -21,9 +25,31 @@ class PopupFullRegistrGorod extends StatefulWidget {
 }
 
 class _PopupFullRegistrGorodState extends State<PopupFullRegistrGorod> {
+  TextEditingController textEditingController = TextEditingController();
+  final streamController = StreamController<List<CountryModelData>>.broadcast();
+
   final blocPopupDrawer = BlocPopupDrawer();
+
+  List<CountryModelData> allCities = [];
+  List<CountryModelData> cities = [];
+
   double radius = 54;
   String text = "Город";
+
+  listen() {
+    streamController.stream.listen((event) {
+      if (textEditingController.text.isEmpty) {
+        allCities = event;
+        cities = allCities;
+      }
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    listen();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -31,6 +57,7 @@ class _PopupFullRegistrGorodState extends State<PopupFullRegistrGorod> {
     final blocHansaCountry = HansaCountryBloC(1);
 
     blocHansaCountry.eventSink.add(CityEnum.city);
+
     final gorodTextEditingContyroller =
         Provider.of<TextEditingController>(context);
 
@@ -42,7 +69,7 @@ class _PopupFullRegistrGorodState extends State<PopupFullRegistrGorod> {
             onTap: () {
               widget.onTap();
               blocPopupDrawer.dataSink
-                  .add(snapshotSizeDrawer.data! == 38 ? 200 : 38);
+                  .add(snapshotSizeDrawer.data! == 38 ? 250 : 38);
               radius = radius == 54 ? 10 : 54;
             },
             child: Padding(
@@ -57,10 +84,10 @@ class _PopupFullRegistrGorodState extends State<PopupFullRegistrGorod> {
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(radius),
                   border: Border.all(
-                      width:
-                          widget.borderColor == const Color.fromARGB(255, 213, 0, 50)
-                              ? 0.9
-                              : 0.1,
+                      width: widget.borderColor ==
+                              const Color.fromARGB(255, 213, 0, 50)
+                          ? 0.9
+                          : 0.1,
                       color: widget.borderColor),
                 ),
                 child: Padding(
@@ -83,45 +110,86 @@ class _PopupFullRegistrGorodState extends State<PopupFullRegistrGorod> {
                                       color: Colors.black),
                             )),
                       ),
+                      const SizedBox(
+                        height: 10,
+                      ),
                       StreamBuilder<CountryModel>(
                           stream: blocHansaCountry.stream,
                           builder: (context, snapshotCountry) {
                             if (snapshotCountry.hasData) {
-                              return Expanded(
-                                child: Visibility(
-                                  visible: radius == 54 ? false : true,
-                                  child: ListView.builder(
-                                    itemCount:
-                                        snapshotCountry.data!.data.list.length,
-                                    padding: const EdgeInsets.all(0),
-                                    itemBuilder: (context, index) {
-                                      return TextButton(
-                                        onPressed: () {
-                                          gorodTextEditingContyroller.text =
-                                              snapshotCountry
-                                                  .data!.data.list[index].id.toString();
-                                          text = snapshotCountry
-                                              .data!.data.list[index].name;
-                                          blocPopupDrawer.dataSink.add(
-                                              snapshotCountry.data! == 38
-                                                  ? 200
-                                                  : 38);
-                                          radius = radius == 54 ? 10 : 54;
-                                        },
-                                        child: Align(
-                                          alignment: Alignment.centerLeft,
-                                          child: Text(
-                                            snapshotCountry
-                                                .data!.data.list[index].name,
-                                                  textScaleFactor: 1.0,
-                                            style: const TextStyle(
-                                                color: Colors.black,
-                                                fontSize: 10),
-                                          ),
+                              streamController.sink
+                                  .add(snapshotCountry.data!.data.list);
+                              return Visibility(
+                                visible: radius == 54 ? false : true,
+                                child: Column(
+                                  children: [
+                                    SizedBox(
+                                      height: 40,
+                                      child: Padding(
+                                        padding: const EdgeInsets.only(
+                                            right: 10, top: 5),
+                                        child: TextField(
+                                          style: const TextStyle(fontSize: 13),
+                                          controller: textEditingController,
+                                          onChanged: (value) => search(value),
+                                          decoration: InputDecoration(
+                                              contentPadding:
+                                                  const EdgeInsets.only(
+                                                      left: 10),
+                                              hintText: "Поиск",
+                                              hintStyle:
+                                                  const TextStyle(fontSize: 13),
+                                              border: OutlineInputBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          10))),
                                         ),
-                                      );
-                                    },
-                                  ),
+                                      ),
+                                    ),
+                                    const SizedBox(
+                                      height: 10,
+                                    ),
+                                    SizedBox(
+                                      height: 165,
+                                      child: Padding(
+                                        padding:
+                                            const EdgeInsets.only(right: 10),
+                                        child: ListView.builder(
+                                          physics:
+                                              const BouncingScrollPhysics(),
+                                          itemCount: cities.length,
+                                          padding: const EdgeInsets.all(0),
+                                          itemBuilder: (context, index) {
+                                            final book = cities[index];
+                                            return InkWell(
+                                              onTap: () {
+                                                gorodTextEditingContyroller
+                                                    .text = book.id.toString();
+                                                text = book.name;
+                                                blocPopupDrawer.dataSink.add(
+                                                    snapshotSizeDrawer.data! ==
+                                                            38
+                                                        ? 250
+                                                        : 38);
+                                                radius = radius == 54 ? 10 : 54;
+                                              },
+                                              child: Padding(
+                                                padding:
+                                                    const EdgeInsets.all(8),
+                                                child: Text(
+                                                  book.name,
+                                                  textScaleFactor: 1.0,
+                                                  style: const TextStyle(
+                                                      color: Colors.black,
+                                                      fontSize: 10),
+                                                ),
+                                              ),
+                                            );
+                                          },
+                                        ),
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               );
                             } else {
@@ -135,5 +203,17 @@ class _PopupFullRegistrGorodState extends State<PopupFullRegistrGorod> {
             ),
           );
         });
+  }
+
+  void search(String query) {
+    final suggestions = allCities.where((city) {
+      final cityName = city.name.toLowerCase();
+      final input = query.toLowerCase();
+      return cityName.startsWith(input) || cityName.contains(input);
+    }).toList();
+
+    setState(() {
+      cities = suggestions;
+    });
   }
 }

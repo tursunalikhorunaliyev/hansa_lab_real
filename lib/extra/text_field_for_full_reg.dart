@@ -36,7 +36,7 @@ class _TextFieldForFullRegisterState extends State<TextFieldForFullRegister> {
     final isTablet = Provider.of<bool>(context);
     return Padding(
       padding: const EdgeInsets.only(left: 11, right: 9),
-      child: SizedBox(
+      child: SizedBox(  
         height: widget.height,
         child: Stack(
           children: [
