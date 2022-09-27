@@ -164,7 +164,7 @@ class _PopupFullRegistrGorodState extends State<PopupFullRegistrGorod> {
                                             return InkWell(
                                               onTap: () {
                                                 gorodTextEditingContyroller
-                                                    .text = book.id.toString() ;
+                                                    .text = book.id.toString();
                                                 text = book.name;
                                                 blocPopupDrawer.dataSink.add(
                                                     snapshotSizeDrawer.data! ==
@@ -209,7 +209,7 @@ class _PopupFullRegistrGorodState extends State<PopupFullRegistrGorod> {
     final suggestions = allCities.where((city) {
       final cityName = city.name.toLowerCase();
       final input = query.toLowerCase();
-      return cityName.startsWith(input);
+      return cityName.startsWith(input) || cityName.contains(input);
     }).toList();
 
     setState(() {

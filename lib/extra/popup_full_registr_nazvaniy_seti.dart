@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hansa_lab/api_models.dart/store_model.dart';
@@ -24,10 +26,31 @@ class PopupFullRegistrNazvaniySeti extends StatefulWidget {
 
 class _PopupFullRegistrNazvaniySetiState
     extends State<PopupFullRegistrNazvaniySeti> {
+  final streamController = StreamController<List<StoreModelData>>.broadcast();
+
   final blocPopupDrawer = BlocPopupDrawer();
   double radius = 54;
   String text = "Названия сети";
   final newShopText = TextEditingController(text: "");
+  final textEditingController = TextEditingController();
+
+  List<StoreModelData> all = [];
+  List<StoreModelData> one = [];
+
+  listen() {
+    streamController.stream.listen((event) {
+      if (textEditingController.text.isEmpty) {
+        all = event;
+        one = all;
+      }
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    listen();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -46,7 +69,7 @@ class _PopupFullRegistrNazvaniySetiState
             onTap: () {
               widget.onTap();
               blocPopupDrawer.dataSink
-                  .add(snapshotSizeDrawer.data! == 38 ? 250 : 38);
+                  .add(snapshotSizeDrawer.data! == 38 ? 300 : 38);
               radius = radius == 54 ? 10 : 54;
             },
             child: Padding(
@@ -95,6 +118,9 @@ class _PopupFullRegistrNazvaniySetiState
                           stream: blocStoreData.stream,
                           builder: (context, snapshotStore) {
                             if (snapshotStore.hasData) {
+                              streamController.sink
+                                  .add(snapshotStore.data!.data.list);
+
                               return Visibility(
                                 visible: (radius > 50) ? false : true,
                                 child: Column(
@@ -173,32 +199,55 @@ class _PopupFullRegistrNazvaniySetiState
                                       height: 10,
                                     ),
                                     SizedBox(
+                                      height: 40,
+                                      child: Padding(
+                                        padding: const EdgeInsets.only(
+                                            right: 10, top: 5),
+                                        child: TextField(
+                                          style: const TextStyle(fontSize: 13),
+                                          controller: textEditingController,
+                                          onChanged: (value) => search(value),
+                                          decoration: InputDecoration(
+                                              contentPadding:
+                                                  const EdgeInsets.only(
+                                                      left: 10),
+                                              hintText: "Поиск",
+                                              hintStyle:
+                                                  const TextStyle(fontSize: 13),
+                                              border: OutlineInputBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          10))),
+                                        ),
+                                      ),
+                                    ),
+                                    const SizedBox(
+                                      height: 10,
+                                    ),
+                                    SizedBox(
                                       height: 160,
                                       child: Padding(
                                         padding:
                                             const EdgeInsets.only(right: 10),
                                         child: ListView.builder(
-                                          physics: const BouncingScrollPhysics(),
-                                          itemCount: snapshotStore
-                                              .data!.data.list.length,
+                                          physics:
+                                              const BouncingScrollPhysics(),
+                                          itemCount: one.length,
                                           padding: const EdgeInsets.all(0),
                                           itemBuilder: (context, index) {
+                                            final nazvanSeti = one[index];
                                             return TextButton(
                                               onPressed: () {
-                                                newShop.setNewShop(snapshotStore
-                                                    .data!.data.list[index].id
-                                                    .toString());
+                                                newShop.setNewShop(
+                                                    nazvanSeti.id.toString());
 
                                                 nazvanieTextEditingController
                                                         .text =
-                                                    snapshotStore.data!.data
-                                                        .list[index].id
-                                                        .toString();
-                                                text = snapshotStore.data!.data
-                                                    .list[index].name;
+                                                    nazvanSeti.id.toString();
+                                                text = nazvanSeti.name;
 
                                                 blocPopupDrawer.dataSink.add(
-                                                    snapshotStore.data! == 38
+                                                    nazvanSeti == 38
                                                         ? 200
                                                         : 38);
                                                 radius = radius == 54 ? 10 : 54;
@@ -206,8 +255,7 @@ class _PopupFullRegistrNazvaniySetiState
                                               child: Align(
                                                 alignment: Alignment.centerLeft,
                                                 child: Text(
-                                                  snapshotStore.data!.data
-                                                      .list[index].name,
+                                                  nazvanSeti.name,
                                                   textScaleFactor: 1.0,
                                                   style: const TextStyle(
                                                       color: Colors.black,
@@ -233,5 +281,17 @@ class _PopupFullRegistrNazvaniySetiState
             ),
           );
         });
+  }
+
+  void search(String query) {
+    final suggestions = all.where((nazvan) {
+      final nazvanName = nazvan.name.toLowerCase();
+      final input = query.toLowerCase();
+      return nazvanName.startsWith(input) || nazvanName.contains(input) ;
+    }).toList();
+
+    setState(() {
+      one = suggestions;
+    });
   }
 }
