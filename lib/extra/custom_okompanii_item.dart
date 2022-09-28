@@ -55,7 +55,8 @@ class CustomOKompaniiItem extends StatelessWidget {
                       width: 185,
                       child: Text(
                         title,
-                        overflow: TextOverflow.clip,
+                        maxLines: 3,
+                        overflow: TextOverflow.ellipsis,
                         style: GoogleFonts.montserrat(
                           color: const Color(0xff272624),
                           fontWeight: FontWeight.bold,
