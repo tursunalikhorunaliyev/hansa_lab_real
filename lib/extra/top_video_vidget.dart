@@ -6,6 +6,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hansa_lab/blocs/bloc_detect_tap.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hansa_lab/blocs/download_progress_bloc.dart';
 import 'package:hansa_lab/classes/send_analise_download.dart';
 import 'package:hansa_lab/extra/custom_black_appbar.dart';
@@ -176,92 +177,110 @@ class _TopVideoVidgetState extends State<TopVideoVidget> {
                 Navigator.pop(context);
               },
             ),
-            Column(
+            Stack(
               children: [
                 Provider<ChewieController>.value(
                     value: chewieController, child: const CustomBlackAppBar()),
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Builder(builder: (context) {
-                      return (chewieController.videoPlayerController.value.size
-                                  .aspectRatio !=
-                              0.0)
-                          ? ClipRRect(
-                              borderRadius: BorderRadius.circular(15),
-                              child: AspectRatio(
-                                  aspectRatio: chewieController
-                                      .videoPlayerController
-                                      .value
-                                      .size
-                                      .aspectRatio,
-                                  child: Chewie(controller: chewieController)),
-                            )
-                          : const Center(
-                              child: CircularProgressIndicator(),
-                            );
-                    }),
-                    Consumer<VideoIndexProvider>(
-                      builder: (context, value, child) {
-                        return FutureBuilder<VideoMainOne>(
-                          future: blocVideoApi.getData(token: token),
-                          builder: (context, snapshot) {
-                            return Padding(
-                              padding: const EdgeInsets.only(top: 13),
-                              child: Provider(
-                                create: (context) => blocDetectTap,
-                                child: StreamBuilder<bool>(
-                                    stream: blocDetectTap.dataStream,
-                                    builder: (context, snapshotDetectTap) {
-                                      return StreamBuilder<double>(
-                                          stream: providerBlocProgress.stream,
-                                          builder: (context, snapshotProgress) {
-                                            return CustomTreningiVideo(
-                                              onTap: () {
-                                                blocDetectTap.dataSink
-                                                    .add(true);
-
-                                                if (snapshotProgress.data ==
-                                                        null ||
-                                                    snapshotProgress.data ==
-                                                        0) {
-                                                  downloadFile(
-                                                    snapshot
-                                                        .data!
-                                                        .videoListData
-                                                        .list[value.getIndex]
-                                                        .data
-                                                        .list[providerIndex]
-                                                        .videoLink,
-                                                    snapshot
-                                                        .data!
-                                                        .videoListData
-                                                        .list[value.getIndex]
-                                                        .data
-                                                        .list[providerIndex]
-                                                        .title,
-                                                    providerBlocProgress,
-                                                  ).then((value) {
-                                                    log("$value download status");
-                                                    providerSendAnaliseDownload
-                                                        .setAnalise(value);
-                                                  });
-                                                } else {
-                                                  log("asdffffffffffff=----------------------------------------");
-                                                }
-                                              },
-                                              title: widget.title,
-                                            );
-                                          });
-                                    }),
+                (chewieController
+                            .videoPlayerController.value.size.aspectRatio !=
+                        0.0)
+                    ? Padding(
+                        padding: const EdgeInsets.only(top: 100),
+                        child: SingleChildScrollView(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Row(),
+                              SizedBox(
+                                width: isTablet ? 800 : 355,
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(15),
+                                  child: AspectRatio(
+                                      aspectRatio: chewieController
+                                          .videoPlayerController
+                                          .value
+                                          .size
+                                          .aspectRatio,
+                                      child:
+                                          Chewie(controller: chewieController)),
+                                ),
                               ),
-                            );
-                          },
-                        );
-                      },
-                    )
-                  ],
-                )
+                              Consumer<VideoIndexProvider>(
+                                builder: (context, value, child) {
+                                  return FutureBuilder<VideoMainOne>(
+                                    future: blocVideoApi.getData(token: token),
+                                    builder: (context, snapshot) {
+                                      return Padding(
+                                        padding: const EdgeInsets.only(top: 13),
+                                        child: Provider(
+                                          create: (context) => blocDetectTap,
+                                          child: StreamBuilder<bool>(
+                                              stream: blocDetectTap.dataStream,
+                                              builder:
+                                                  (context, snapshotDetectTap) {
+                                                return StreamBuilder<double>(
+                                                    stream: providerBlocProgress
+                                                        .stream,
+                                                    builder: (context,
+                                                        snapshotProgress) {
+                                                      return CustomTreningiVideo(
+                                                        onTap: () {
+                                                          blocDetectTap.dataSink
+                                                              .add(true);
+
+                                                          if (snapshotProgress
+                                                                      .data ==
+                                                                  null ||
+                                                              snapshotProgress
+                                                                      .data ==
+                                                                  0) {
+                                                            downloadFile(
+                                                              snapshot
+                                                                  .data!
+                                                                  .videoListData
+                                                                  .list[value
+                                                                      .getIndex]
+                                                                  .data
+                                                                  .list[
+                                                                      providerIndex]
+                                                                  .videoLink,
+                                                              snapshot
+                                                                  .data!
+                                                                  .videoListData
+                                                                  .list[value
+                                                                      .getIndex]
+                                                                  .data
+                                                                  .list[
+                                                                      providerIndex]
+                                                                  .title,
+                                                              providerBlocProgress,
+                                                            ).then((value) {
+                                                              log("$value download status");
+                                                              providerSendAnaliseDownload
+                                                                  .setAnalise(
+                                                                      value);
+                                                            });
+                                                          } else {
+                                                            log("asdffffffffffff=----------------------------------------");
+                                                          }
+                                                        },
+                                                        title: widget.title,
+                                                      );
+                                                    });
+                                              }),
+                                        ),
+                                      );
+                                    },
+                                  );
+                                },
+                              )
+                            ],
+                          ),
+                        ),
+                      )
+                    : const Center(
+                        child: CircularProgressIndicator(),
+                      ),
               ],
             ),
           ],
