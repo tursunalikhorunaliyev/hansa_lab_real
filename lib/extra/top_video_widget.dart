@@ -189,50 +189,67 @@ class _TopVideoWidgetState extends State<TopVideoWidget> {
                               ],
                             ),
                             Column(children: [
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                children: [
-                                  PhysicalModel(
-                                    shadowColor: Colors.grey.withOpacity(.5),
-                                    color: Colors.transparent,
-                                    borderRadius: BorderRadius.circular(64),
-                                    elevation: 5,
-                                    child: GestureDetector(
+                              Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 25),
+                                child: Row(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    InkWell(
                                       onTap: () {
+                                        
                                         Navigator.pop(context);
-                                        reset();
-                                        menuEventsBloCProvider.eventSink
-                                            .add(MenuActions.oKompanii);
-                                        title.changeTitle(
-                                            widget.selectedTitle);
-                                        index.changeIndex(
-                                            widget.selectedIndex);
                                       },
-                                      child: ClipRRect(
-                                        borderRadius:
-                                            BorderRadius.circular(64),
-                                        child: Container(
-                                          padding: const EdgeInsets.all(7),
-                                          constraints: BoxConstraints(
-                                            minWidth: isTablet ? 150 : 90,
-                                          ),
-                                          color: const Color.fromARGB(
-                                              255, 213, 0, 50),
-                                          child: Center(
-                                            child: Text(
-                                              "Открыть раздел",
-                                              style: GoogleFonts.montserrat(
-                                                color:
-                                                    const Color(0xffffffff),
-                                                fontSize: isTablet ? 14 : 10,
+                                      child: const Icon(
+                                        Icons.arrow_back_ios,
+                                        color: Color.fromARGB(255, 213, 0, 50),
+                                        size: 20,
+                                      ),
+                                    ),
+                                    PhysicalModel(
+                                      shadowColor: Colors.grey.withOpacity(.5),
+                                      color: Colors.transparent,
+                                      borderRadius: BorderRadius.circular(64),
+                                      elevation: 5,
+                                      child: GestureDetector(
+                                        onTap: () {
+                                          Navigator.pop(context);
+                                          reset();
+                                          menuEventsBloCProvider.eventSink
+                                              .add(MenuActions.oKompanii);
+                                          title.changeTitle(
+                                              widget.selectedTitle);
+                                          index.changeIndex(
+                                              widget.selectedIndex);
+                                        },
+                                        child: ClipRRect(
+                                          borderRadius:
+                                              BorderRadius.circular(64),
+                                          child: Container(
+                                            padding: const EdgeInsets.all(7),
+                                            constraints: BoxConstraints(
+                                              minWidth: isTablet ? 150 : 90,
+                                            ),
+                                            color: const Color.fromARGB(
+                                                255, 213, 0, 50),
+                                            child: Center(
+                                              child: Text(
+                                                "Открыть раздел",
+                                                style: GoogleFonts.montserrat(
+                                                  color:
+                                                      const Color(0xffffffff),
+                                                  fontSize: isTablet ? 14 : 10,
+                                                ),
                                               ),
                                             ),
                                           ),
                                         ),
                                       ),
                                     ),
-                                  ),
-                                ],
+                                  ],
+                                ),
                               )
                             ]),
                             Column(
@@ -243,8 +260,7 @@ class _TopVideoWidgetState extends State<TopVideoWidget> {
                                     width: isTablet ? 800 : 355,
                                     child: Center(
                                       child: ClipRRect(
-                                        borderRadius:
-                                            BorderRadius.circular(15),
+                                        borderRadius: BorderRadius.circular(15),
                                         child: AspectRatio(
                                           aspectRatio: chewieController
                                               .videoPlayerController
@@ -263,15 +279,14 @@ class _TopVideoWidgetState extends State<TopVideoWidget> {
                                   child: Consumer<VideoIndexProvider>(
                                     builder: (context, value, child) {
                                       return FutureBuilder<VideoMainOne>(
-                                        future: blocVideoApi.getData(
-                                            token: token),
+                                        future:
+                                            blocVideoApi.getData(token: token),
                                         builder: (context, snapshot) {
                                           return Provider(
-                                            create: (context) =>
-                                                blocDetectTap,
+                                            create: (context) => blocDetectTap,
                                             child: StreamBuilder<double>(
-                                                stream: providerBlocProgress
-                                                    .stream,
+                                                stream:
+                                                    providerBlocProgress.stream,
                                                 builder: (context,
                                                     snapshotProgress) {
                                                   return CustomTreningiVideo(
@@ -306,8 +321,7 @@ class _TopVideoWidgetState extends State<TopVideoWidget> {
                                                           providerBlocProgress,
                                                         ).then((v) {
                                                           log("Not download");
-                                                          if (Platform
-                                                              .isIOS) {
+                                                          if (Platform.isIOS) {
                                                             GallerySaver.saveVideo(snapshot
                                                                 .data!
                                                                 .videoListData
