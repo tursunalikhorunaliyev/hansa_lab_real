@@ -101,7 +101,20 @@ class HansaZagruzka extends StatelessWidget {
                             : FlipCard(
                                 controller: flipCardController['signin'],
                                 flipOnTouch: false,
-                                back: const CompleteRegistr(),
+                                back:  FlipCard(
+                                  flipOnTouch: false,
+                                  controller: flipCardController['toLogin'],
+                                  front: const CompleteRegistr(),
+                                  back: MultiProvider(
+                                    providers: [
+                                      ChangeNotifierProvider(
+                                      create: (context) =>
+                                          PasswordVisibilityProvider(),
+                                    ),
+                                    ],
+                                    
+                                    child: const LoginCard()),
+                                  ),
                                 front: Provider.value(
                                   value: flipLoginProvider,
                                   child: const FullRegistr(),

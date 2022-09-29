@@ -114,6 +114,8 @@ class _LoginCardState extends State<LoginCard> {
                                 flipLoginProvider.changeIsClosed(false);
                                 log(flipLoginProvider.getIsClosed.toString());
                                 flip['login']!.toggleCard();
+                                flip["signin"]!.toggleCard();
+                                flip["toLogin"]!.toggleCard();
                               },
                               child: Icon(
                                 Icons.close_rounded,
