@@ -514,7 +514,6 @@ class _FullRegistrState extends State<FullRegistr> {
                               log(year.toString() + " year");
 
                               log("$day.$month.$year kkkkkkkkkkkkkkkkkkkkkk");
-
                             },
                             child: Container(
                               alignment: Alignment.center,
@@ -658,10 +657,13 @@ class _FullRegistrState extends State<FullRegistr> {
       )
           .then((value) {
         if (value['status'] as bool == false) {
-          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-            content: Text("Проверьте корректность заполненных данных"),
-            backgroundColor: Color.fromARGB(255, 213, 0, 50),
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            content: Text(value["message"]["email"][0].toString()),
+            backgroundColor: const Color.fromARGB(255, 213, 0, 50),
           ));
+          setState(() {
+            emailIsEmpty = true;
+          });
         } else {
           providerFlip['signin']!.toggleCard();
           scrollController.animateTo(0,
