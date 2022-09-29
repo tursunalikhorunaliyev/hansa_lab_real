@@ -52,9 +52,11 @@ class _FullRegistrState extends State<FullRegistr> {
 
   bool isHintDate = true;
 
-  var dateFormatter = new MaskTextInputFormatter(
+  var dateFormatter = MaskTextInputFormatter(
     mask: "##/##/####",
   );
+
+  ScrollController scrollController = ScrollController();
 
   @override
   Widget build(BuildContext context) {
@@ -66,6 +68,7 @@ class _FullRegistrState extends State<FullRegistr> {
     final blocCity = HansaCountryBloC(1);
     blocCity.eventSink.add(CityEnum.city);
     return SingleChildScrollView(
+      controller: scrollController,
       child: Center(
         child: GestureDetector(
           onTap: () {
@@ -266,24 +269,25 @@ class _FullRegistrState extends State<FullRegistr> {
                                 ),
                                 borderRadius: BorderRadius.circular(54),
                               ),
-                             
                               enabledBorder: OutlineInputBorder(
                                   borderSide: BorderSide(
                                     width: dateIsEmpty ? 0.9 : 0.1,
                                     color: dateIsEmpty
-                                      ? const Color.fromARGB(255, 213, 0, 50)
-                                      : const Color(0xFF000000),
+                                        ? const Color.fromARGB(255, 213, 0, 50)
+                                        : const Color(0xFF000000),
                                   ),
                                   borderRadius: BorderRadius.circular(54)),
                               contentPadding: const EdgeInsets.symmetric(
                                   vertical: 2, horizontal: 13),
                               hintStyle: GoogleFonts.montserrat(
-                                  fontWeight: isTablet
-                                      ? FontWeight.normal
-                                      : FontWeight.normal,
-                                  fontSize: isTablet ? 13 : 10,
-                                  color: dateIsEmpty
-                                      ? const Color.fromARGB(255, 213, 0, 50) : const Color(0xFF444444),),
+                                fontWeight: isTablet
+                                    ? FontWeight.normal
+                                    : FontWeight.normal,
+                                fontSize: isTablet ? 13 : 10,
+                                color: dateIsEmpty
+                                    ? const Color.fromARGB(255, 213, 0, 50)
+                                    : const Color(0xFF444444),
+                              ),
                             ),
                           ),
                         ),
@@ -502,16 +506,15 @@ class _FullRegistrState extends State<FullRegistr> {
                               log(secondToggle.text + "isagreesms");
                               log(thirdToggle.text + "isagreeidenty");
                               log(fourthToggle.text + "isagreepersonal");
-                              log(dateIsEmpty.toString() + "  -0-09--09-09-09-09-09--9-09");
+                              log(dateIsEmpty.toString() +
+                                  "  -0-09--09-09-09-09-09--9-09");
 
                               log(day.toString() + " day");
                               log(month.toString() + " month");
                               log(year.toString() + " year");
 
-
                               log("$day.$month.$year kkkkkkkkkkkkkkkkkkkkkk");
 
-                            
                             },
                             child: Container(
                               alignment: Alignment.center,
@@ -661,6 +664,8 @@ class _FullRegistrState extends State<FullRegistr> {
           ));
         } else {
           providerFlip['signin']!.toggleCard();
+          scrollController.animateTo(0,
+              duration: const Duration(milliseconds: 100), curve: Curves.ease);
         }
       });
     } else {

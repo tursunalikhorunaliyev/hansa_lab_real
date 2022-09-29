@@ -83,7 +83,8 @@ class MyApp extends StatelessWidget {
     bool isTablet = (size.width / 3) > 500;
     Map<String, FlipCardController> map = {
       "login": FlipCardController(),
-      "signin": FlipCardController()
+      "signin": FlipCardController(),
+      "toLogin" : FlipCardController(),
     };
     return ScreenUtilInit(
       designSize: const Size(375, 812),
