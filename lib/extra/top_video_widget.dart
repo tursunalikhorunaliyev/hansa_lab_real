@@ -3,13 +3,11 @@ import 'dart:io';
 import 'package:chewie/chewie.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:gallery_saver/gallery_saver.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hansa_lab/blocs/bloc_detect_tap.dart';
 import 'package:hansa_lab/blocs/download_progress_bloc.dart';
 import 'package:hansa_lab/blocs/menu_events_bloc.dart';
-import 'package:hansa_lab/classes/send_analise_download.dart';
 import 'package:hansa_lab/extra/black_custom_title.dart';
 import 'package:hansa_lab/extra/custom_black_appbar.dart';
 import 'package:hansa_lab/providers/providers_for_video_title/video_index_provider.dart';
@@ -109,14 +107,6 @@ class _TopVideoWidgetState extends State<TopVideoWidget> {
       autoPlay: true,
       allowedScreenSleep: false,
       autoInitialize: true,
-      /* deviceOrientationsOnEnterFullScreen: [
-        DeviceOrientation.landscapeLeft,
-        DeviceOrientation.landscapeRight 
-      ],
-      deviceOrientationsAfterFullScreen: [
-        DeviceOrientation.portraitDown,
-        DeviceOrientation.portraitUp
-      ], */
       allowMuting: false,
       videoPlayerController: VideoPlayerController.network(widget.url),
       cupertinoProgressColors: ChewieProgressColors(
@@ -187,116 +177,138 @@ class _TopVideoWidgetState extends State<TopVideoWidget> {
                       0.0)
                   ? Padding(
                       padding: const EdgeInsets.only(top: 100),
-                      child: Flexible(
-                        child: SingleChildScrollView(
-                          child: Column(
-                            children: [
+                      child: SingleChildScrollView(
+                        child: Column(
+                          children: [
+                            Row(
+                              children: const [
+                                BlackCustomTitle(
+                                  imagePath: "assets/video_title.png",
+                                  title: "Видео",
+                                ),
+                              ],
+                            ),
+                            Column(children: [
                               Row(
-                                children: const [
-                                  BlackCustomTitle(
-                                    imagePath: "assets/video_title.png",
-                                    title: "Видео",
-                                  ),
-                                ],
-                              ),
-                              Column(children: [
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.end,
-                                  children: [
-                                    PhysicalModel(
-                                      shadowColor: Colors.grey.withOpacity(.5),
-                                      color: Colors.transparent,
-                                      borderRadius: BorderRadius.circular(64),
-                                      elevation: 5,
-                                      child: GestureDetector(
-                                        onTap: () {
-                                          Navigator.pop(context);
-                                          reset();
-                                          menuEventsBloCProvider.eventSink
-                                              .add(MenuActions.oKompanii);
-                                          title.changeTitle(
-                                              widget.selectedTitle);
-                                          index.changeIndex(
-                                              widget.selectedIndex);
-                                        },
-                                        child: ClipRRect(
-                                          borderRadius:
-                                              BorderRadius.circular(64),
-                                          child: Container(
-                                            padding: const EdgeInsets.all(7),
-                                            constraints: BoxConstraints(
-                                              minWidth: isTablet ? 150 : 90,
-                                            ),
-                                            color: const Color.fromARGB(
-                                                255, 213, 0, 50),
-                                            child: Center(
-                                              child: Text(
-                                                "Открыть раздел",
-                                                style: GoogleFonts.montserrat(
-                                                  color:
-                                                      const Color(0xffffffff),
-                                                  fontSize: isTablet ? 14 : 10,
-                                                ),
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: [
+                                  PhysicalModel(
+                                    shadowColor: Colors.grey.withOpacity(.5),
+                                    color: Colors.transparent,
+                                    borderRadius: BorderRadius.circular(64),
+                                    elevation: 5,
+                                    child: GestureDetector(
+                                      onTap: () {
+                                        Navigator.pop(context);
+                                        reset();
+                                        menuEventsBloCProvider.eventSink
+                                            .add(MenuActions.oKompanii);
+                                        title.changeTitle(
+                                            widget.selectedTitle);
+                                        index.changeIndex(
+                                            widget.selectedIndex);
+                                      },
+                                      child: ClipRRect(
+                                        borderRadius:
+                                            BorderRadius.circular(64),
+                                        child: Container(
+                                          padding: const EdgeInsets.all(7),
+                                          constraints: BoxConstraints(
+                                            minWidth: isTablet ? 150 : 90,
+                                          ),
+                                          color: const Color.fromARGB(
+                                              255, 213, 0, 50),
+                                          child: Center(
+                                            child: Text(
+                                              "Открыть раздел",
+                                              style: GoogleFonts.montserrat(
+                                                color:
+                                                    const Color(0xffffffff),
+                                                fontSize: isTablet ? 14 : 10,
                                               ),
                                             ),
                                           ),
                                         ),
                                       ),
                                     ),
-                                  ],
-                                )
-                              ]),
-                              Column(
-                                children: [
-                                  Padding(
-                                    padding: const EdgeInsets.only(top: 20),
-                                    child: SizedBox(
-                                      width: isTablet ? 800 : 355,
-                                      child: Center(
-                                        child: ClipRRect(
-                                          borderRadius:
-                                              BorderRadius.circular(15),
-                                          child: AspectRatio(
-                                            aspectRatio: chewieController
-                                                .videoPlayerController
-                                                .value
-                                                .aspectRatio,
-                                            child: Chewie(
-                                              controller: chewieController,
-                                            ),
+                                  ),
+                                ],
+                              )
+                            ]),
+                            Column(
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.only(top: 20),
+                                  child: SizedBox(
+                                    width: isTablet ? 800 : 355,
+                                    child: Center(
+                                      child: ClipRRect(
+                                        borderRadius:
+                                            BorderRadius.circular(15),
+                                        child: AspectRatio(
+                                          aspectRatio: chewieController
+                                              .videoPlayerController
+                                              .value
+                                              .aspectRatio,
+                                          child: Chewie(
+                                            controller: chewieController,
                                           ),
                                         ),
                                       ),
                                     ),
                                   ),
-                                  Padding(
-                                    padding: const EdgeInsets.only(top: 13),
-                                    child: Consumer<VideoIndexProvider>(
-                                      builder: (context, value, child) {
-                                        return FutureBuilder<VideoMainOne>(
-                                          future: blocVideoApi.getData(
-                                              token: token),
-                                          builder: (context, snapshot) {
-                                            return Provider(
-                                              create: (context) =>
-                                                  blocDetectTap,
-                                              child: StreamBuilder<double>(
-                                                  stream: providerBlocProgress
-                                                      .stream,
-                                                  builder: (context,
-                                                      snapshotProgress) {
-                                                    return CustomTreningiVideo(
-                                                      onTap: () {
-                                                        blocDetectTap.dataSink
-                                                            .add(true);
-                                                        if (snapshotProgress
-                                                                    .data ==
-                                                                null ||
-                                                            snapshotProgress
-                                                                    .data ==
-                                                                0) {
-                                                          downloadFile(
-                                                            snapshot
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(top: 13),
+                                  child: Consumer<VideoIndexProvider>(
+                                    builder: (context, value, child) {
+                                      return FutureBuilder<VideoMainOne>(
+                                        future: blocVideoApi.getData(
+                                            token: token),
+                                        builder: (context, snapshot) {
+                                          return Provider(
+                                            create: (context) =>
+                                                blocDetectTap,
+                                            child: StreamBuilder<double>(
+                                                stream: providerBlocProgress
+                                                    .stream,
+                                                builder: (context,
+                                                    snapshotProgress) {
+                                                  return CustomTreningiVideo(
+                                                    onTap: () {
+                                                      blocDetectTap.dataSink
+                                                          .add(true);
+                                                      if (snapshotProgress
+                                                                  .data ==
+                                                              null ||
+                                                          snapshotProgress
+                                                                  .data ==
+                                                              0) {
+                                                        downloadFile(
+                                                          snapshot
+                                                              .data!
+                                                              .videoListData
+                                                              .list[value
+                                                                  .getIndex]
+                                                              .data
+                                                              .list[widget
+                                                                  .selectedIndex]
+                                                              .videoLink,
+                                                          snapshot
+                                                              .data!
+                                                              .videoListData
+                                                              .list[value
+                                                                  .getIndex]
+                                                              .data
+                                                              .list[widget
+                                                                  .selectedIndex]
+                                                              .title,
+                                                          providerBlocProgress,
+                                                        ).then((v) {
+                                                          log("Not download");
+                                                          if (Platform
+                                                              .isIOS) {
+                                                            GallerySaver.saveVideo(snapshot
                                                                 .data!
                                                                 .videoListData
                                                                 .list[value
@@ -304,49 +316,25 @@ class _TopVideoWidgetState extends State<TopVideoWidget> {
                                                                 .data
                                                                 .list[widget
                                                                     .selectedIndex]
-                                                                .videoLink,
-                                                            snapshot
-                                                                .data!
-                                                                .videoListData
-                                                                .list[value
-                                                                    .getIndex]
-                                                                .data
-                                                                .list[widget
-                                                                    .selectedIndex]
-                                                                .title,
-                                                            providerBlocProgress,
-                                                          ).then((v) {
-                                                            log("Not download");
-                                                            if (Platform
-                                                                .isIOS) {
-                                                              GallerySaver.saveVideo(snapshot
-                                                                  .data!
-                                                                  .videoListData
-                                                                  .list[value
-                                                                      .getIndex]
-                                                                  .data
-                                                                  .list[widget
-                                                                      .selectedIndex]
-                                                                  .videoLink);
-                                                            }
-                                                          });
-                                                        } else {
-                                                          log("asdffffffffffff=----------------------------------------");
-                                                        }
-                                                      },
-                                                      title: widget.title,
-                                                    );
-                                                  }),
-                                            );
-                                          },
-                                        );
-                                      },
-                                    ),
-                                  )
-                                ],
-                              ),
-                            ],
-                          ),
+                                                                .videoLink);
+                                                          }
+                                                        });
+                                                      } else {
+                                                        log("asdffffffffffff=----------------------------------------");
+                                                      }
+                                                    },
+                                                    title: widget.title,
+                                                  );
+                                                }),
+                                          );
+                                        },
+                                      );
+                                    },
+                                  ),
+                                )
+                              ],
+                            ),
+                          ],
                         ),
                       ),
                     )
