@@ -27,7 +27,6 @@ class _DrawerStatsState extends State<DrawerStats> {
     return SingleChildScrollView(
       physics: const BouncingScrollPhysics(),
       child: Container(
-   
         color: const Color(0xFFffffff),
         child: Column(
           children: [
@@ -52,127 +51,130 @@ class _DrawerStatsState extends State<DrawerStats> {
                 ),
               ],
             ),
-            SizedBox(
-              height: isTablet ? 490 : 330,
-              child: FutureBuilder<RatingTopModel>(
-                  future: bloc.getStores(prov),
-                  builder: (context, snapshot) {
-                    if (snapshot.hasData) {
-                      return SingleChildScrollView(
-                        controller: scroll,
-                        child: DataTable(
-                          headingRowHeight: 40,
-                          columnSpacing: 10,
-                          dataRowHeight: isTablet ? 45 : 30,
-                          horizontalMargin: 1,
-                          columns: [
-                            DataColumn(
-                              label: Text(
-                                "Место",
-                                style: GoogleFonts.montserrat(
-                                  fontSize: isTablet ? 14 : 8,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ),
-                            DataColumn(
-                              label: Text(
-                                "Сеть",
-                                style: GoogleFonts.montserrat(
-                                  fontSize: isTablet ? 14 : 8,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ),
-                            DataColumn(
-                              label: Text(
-                                "Участник",
-                                style: GoogleFonts.montserrat(
-                                  fontSize: isTablet ? 14 : 8,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ),
-                            DataColumn(
-                              label: Text(
-                                "Баллы",
-                                style: GoogleFonts.montserrat(
-                                  fontSize: isTablet ? 14 : 8,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ),
-                          ],
-                          rows: List.generate(
-                              snapshot.data!.data.list.length, (index) {
-                            bool thisUser = snapshot
-                                    .data!.data.list[index].name ==
-                                "${fullname.getName.split(' ').last} ${fullname.getName.split(' ').first}";
-                            return DataRow(
-                              color: MaterialStateProperty.all(
-                                thisUser
-                                    ? const Color.fromARGB(255, 213, 0, 50)
-                                    : Colors.white,
-                              ),
-                              cells: [
-                                DataCell(
-                                  Align(
-                                    alignment: Alignment.center,
-                                    child: Text(
-                                      "${index + 1}",
-                                      style: GoogleFonts.montserrat(
-                                          fontSize: isTablet ? 13 : 8,
-                                          fontWeight: FontWeight.normal,
-                                          color: thisUser
-                                              ? Colors.white
-                                              : const Color(0xff353433)),
-                                    ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 10),
+              child: SizedBox(
+                height: isTablet ? 490 : 330,
+                child: FutureBuilder<RatingTopModel>(
+                    future: bloc.getStores(prov),
+                    builder: (context, snapshot) {
+                      if (snapshot.hasData) {
+                        return SingleChildScrollView(
+                          controller: scroll,
+                          child: DataTable(
+                            headingRowHeight: 40,
+                            columnSpacing: 10,
+                            dataRowHeight: isTablet ? 45 : 30,
+                            horizontalMargin: 1,
+                            columns: [
+                              DataColumn(
+                                label: Text(
+                                  "Место",
+                                  style: GoogleFonts.montserrat(
+                                    fontSize: isTablet ? 14 : 8,
+                                    fontWeight: FontWeight.bold,
                                   ),
                                 ),
-                                DataCell(Text(
-                                  snapshot.data!.data.list[index].shopNet,
+                              ),
+                              DataColumn(
+                                label: Text(
+                                  "Сеть",
                                   style: GoogleFonts.montserrat(
-                                      fontSize: isTablet ? 12 : 8,
-                                      fontWeight: FontWeight.normal,
-                                      color: thisUser
-                                          ? Colors.white
-                                          : const Color(0xff353433)),
-                                )),
-                                DataCell(Text(
-                                  snapshot.data!.data.list[index].name,
+                                    fontSize: isTablet ? 14 : 8,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ),
+                              DataColumn(
+                                label: Text(
+                                  "Участник",
                                   style: GoogleFonts.montserrat(
-                                      fontSize: 8,
-                                      fontWeight: FontWeight.normal,
-                                      color: thisUser
-                                          ? Colors.white
-                                          : const Color(0xff353433)),
-                                )),
-                                DataCell(Align(
-                                  alignment: Alignment.center,
-                                  child: Text(
-                                    snapshot.data!.data.list[index].score,
+                                    fontSize: isTablet ? 14 : 8,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ),
+                              DataColumn(
+                                label: Text(
+                                  "Баллы",
+                                  style: GoogleFonts.montserrat(
+                                    fontSize: isTablet ? 14 : 8,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ),
+                            ],
+                            rows: List.generate(snapshot.data!.data.list.length,
+                                (index) {
+                              bool thisUser = snapshot
+                                      .data!.data.list[index].name ==
+                                  "${fullname.getName.split(' ').last} ${fullname.getName.split(' ').first}";
+                              return DataRow(
+                                color: MaterialStateProperty.all(
+                                  thisUser
+                                      ? const Color.fromARGB(255, 213, 0, 50)
+                                      : Colors.white,
+                                ),
+                                cells: [
+                                  DataCell(
+                                    Align(
+                                      alignment: Alignment.center,
+                                      child: Text(
+                                        "${index + 1}",
+                                        style: GoogleFonts.montserrat(
+                                            fontSize: isTablet ? 13 : 8,
+                                            fontWeight: FontWeight.normal,
+                                            color: thisUser
+                                                ? Colors.white
+                                                : const Color(0xff353433)),
+                                      ),
+                                    ),
+                                  ),
+                                  DataCell(Text(
+                                    snapshot.data!.data.list[index].shopNet,
+                                    style: GoogleFonts.montserrat(
+                                        fontSize: isTablet ? 12 : 8,
+                                        fontWeight: FontWeight.normal,
+                                        color: thisUser
+                                            ? Colors.white
+                                            : const Color(0xff353433)),
+                                  )),
+                                  DataCell(Text(
+                                    snapshot.data!.data.list[index].name,
                                     style: GoogleFonts.montserrat(
                                         fontSize: 8,
                                         fontWeight: FontWeight.normal,
                                         color: thisUser
                                             ? Colors.white
                                             : const Color(0xff353433)),
-                                  ),
-                                )),
-                              ],
-                            );
-                          }),
-                        ),
-                      );
-                    } else {
-                      return SizedBox(
-                        height: isTablet ? 530 : 330,
-                        child: const SpinKitPulse(
-                          color: Color.fromARGB(255, 213, 0, 50),
-                        ),
-                      );
-                    }
-                  }),
+                                  )),
+                                  DataCell(Align(
+                                    alignment: Alignment.center,
+                                    child: Text(
+                                      snapshot.data!.data.list[index].score,
+                                      style: GoogleFonts.montserrat(
+                                          fontSize: 8,
+                                          fontWeight: FontWeight.normal,
+                                          color: thisUser
+                                              ? Colors.white
+                                              : const Color(0xff353433)),
+                                    ),
+                                  )),
+                                ],
+                              );
+                            }),
+                          ),
+                        );
+                      } else {
+                        return SizedBox(
+                          height: isTablet ? 530 : 330,
+                          child: const SpinKitPulse(
+                            color: Color.fromARGB(255, 213, 0, 50),
+                          ),
+                        );
+                      }
+                    }),
+              ),
             ),
           ],
         ),
