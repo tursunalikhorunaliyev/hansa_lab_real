@@ -18,10 +18,12 @@ class ObucheniyaCard extends StatefulWidget {
       required this.url,
       required this.isFavourite,
       required this.linkPDF,
+      required this.link,
       required this.isFavouriteURL})
       : super(key: key);
   final String url;
   final Color buttonColor;
+  final String link;
   final String bottomButtonText;
   final String title;
   final bool isFavourite;
@@ -53,7 +55,7 @@ class _ObucheniyaCardState extends State<ObucheniyaCard> {
             padding: EdgeInsets.only(top: isTablet ? 180 : 217),
             child: Container(
               width: isTablet ? 390 : double.infinity,
-              height: isTablet ? 75.h : 93.h,
+              height: isTablet ? 75.h : 110.h,
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(5.r),
                   color: const Color(0xffffffff)),
@@ -76,7 +78,40 @@ class _ObucheniyaCardState extends State<ObucheniyaCard> {
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          InkWell(
+                          SizedBox(
+                            height: widget.link.isEmpty || widget.linkPDF.isEmpty?0: 10,
+                          ),
+                          widget.link.isNotEmpty? InkWell(
+                            onTap: () {
+                              String fullUrl = widget.link.startsWith("http")
+                                  ? widget.link
+                                  : "http://${widget.link}";
+
+                              setState(() {
+                                launched = _launchInBrowser(Uri.parse(fullUrl));
+                              });
+                            },
+                            child:  Container(
+                              alignment: Alignment.center,
+                              width: isTablet ? 100 : 94,
+                              height: isTablet ? 28 : 25,
+                              decoration: BoxDecoration(
+                                  color: widget.buttonColor,
+                                  borderRadius: BorderRadius.circular(13.r)),
+                              child: Text(
+                                "Смотреть"
+                                ,
+                                style: GoogleFonts.montserrat(
+                                    fontSize: isTablet ? 12 : 10,
+                                    color: const Color(0xffffffff),
+                                    fontWeight: FontWeight.w500),
+                              ),
+                            ),
+                          ):const SizedBox(),
+                          SizedBox(
+                            height:widget.link.isEmpty || widget.linkPDF.isEmpty?0: 10,
+                          ),
+                          widget.linkPDF.isNotEmpty? InkWell(
                             onTap: () {
                               String fullUrl = widget.linkPDF.startsWith("http")
                                   ? widget.linkPDF
@@ -101,7 +136,7 @@ class _ObucheniyaCardState extends State<ObucheniyaCard> {
                                     fontWeight: FontWeight.w500),
                               ),
                             ),
-                          ),
+                          ): const SizedBox(),
                         ],
                       ),
                     )
@@ -112,9 +147,16 @@ class _ObucheniyaCardState extends State<ObucheniyaCard> {
           ),
           InkWell(
             onTap: () {
-              String fullUrl = widget.linkPDF.startsWith("http")
+String fullUrl;
+              if (widget.link.isNotEmpty) {
+                 fullUrl = widget.link.startsWith("http")
+                  ? widget.link
+                  : "http://${widget.link}";
+              } else {
+                fullUrl = widget.linkPDF.startsWith("http")
                   ? widget.linkPDF
                   : "http://${widget.linkPDF}";
+              }
 
               setState(() {
                 launched = _launchInBrowser(Uri.parse(fullUrl));

@@ -98,6 +98,7 @@ class ObucheniyaWidget extends StatelessWidget {
                                             padding:
                                                 const EdgeInsets.only(top: 5.0),
                                             child: StackedStackObuch(
+                                              link: snapshot.data!.data.listGuides.list[index].link,
                                                 isFavouriteURL: snapshot
                                                     .data!
                                                     .data
@@ -106,7 +107,7 @@ class ObucheniyaWidget extends StatelessWidget {
                                                     .favouriteLink,
                                                 buttonColor:
                                                     const Color.fromARGB(255, 213, 0, 50),
-                                                bottomButtonText: 'скачать ',
+                                                bottomButtonText: 'Скачать ',
                                                 title: snapshot
                                                     .data!
                                                     .data
@@ -139,6 +140,7 @@ class ObucheniyaWidget extends StatelessWidget {
                                       Row(),
                                       Column(children: [
                                         ObucheniyaCard(
+                                          link: snapshot.data!.data.listGuides.list[index].link,
                                             isFavouriteURL: snapshot
                                                 .data!
                                                 .data
@@ -147,7 +149,7 @@ class ObucheniyaWidget extends StatelessWidget {
                                                 .favouriteLink,
                                             buttonColor:
                                                 const Color.fromARGB(255, 213, 0, 50),
-                                            bottomButtonText: 'скачать ',
+                                            bottomButtonText: 'Скачать ',
                                             title: snapshot.data!.data
                                                 .listGuides.list[index].title,
                                             url: snapshot.data!.data.listGuides
@@ -228,6 +230,7 @@ class ObucheniyaWidget extends StatelessWidget {
                                             padding:
                                                 const EdgeInsets.only(top: 5.0),
                                             child: StackedStackObuch(
+                                              link: snapshot.data!.data.listArchiveGuides.list[index].link,
                                                 isFavouriteURL: snapshot
                                                     .data!
                                                     .data
@@ -236,7 +239,7 @@ class ObucheniyaWidget extends StatelessWidget {
                                                     .favouriteLink,
                                                 buttonColor:
                                                     const Color.fromARGB(255, 213, 0, 50),
-                                                bottomButtonText: 'скачать ',
+                                                bottomButtonText: 'Скачать ',
                                                 title: snapshot
                                                     .data!
                                                     .data
@@ -270,6 +273,7 @@ class ObucheniyaWidget extends StatelessWidget {
                                       Column(
                                         children: [
                                           ObucheniyaCard(
+                                            link: snapshot.data!.data.listArchiveGuides.list[index].link,
                                               isFavouriteURL: snapshot
                                                   .data!
                                                   .data
@@ -278,7 +282,7 @@ class ObucheniyaWidget extends StatelessWidget {
                                                   .favouriteLink,
                                               buttonColor:
                                                   const Color.fromARGB(255, 213, 0, 50),
-                                              bottomButtonText: 'скачать ',
+                                              bottomButtonText: 'Скачать ',
                                               title: snapshot
                                                   .data!
                                                   .data
@@ -302,17 +306,7 @@ class ObucheniyaWidget extends StatelessWidget {
                                                   .data
                                                   .listArchiveGuides
                                                   .list[index]
-                                                  .pdfUrl.toString().isEmpty?snapshot
-                                                  .data!
-                                                  .data
-                                                  .listArchiveGuides
-                                                  .list[index]
-                                                  .link:snapshot
-                                                  .data!
-                                                  .data
-                                                  .listArchiveGuides
-                                                  .list[index]
-                                                  .pdfUrl)
+                                                  .pdfUrl.toString())
                                         ],
                                       )
                                     ],

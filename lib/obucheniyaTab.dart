@@ -16,12 +16,14 @@ class StackedStackObuch extends StatefulWidget {
       required this.title,
       required this.url,
       required this.isFavourite,
+      required this.link,
       required this.linkPDF,
       required this.isFavouriteURL})
       : super(key: key);
 
   final String url;
   final Color buttonColor;
+  final String link;
   final String bottomButtonText;
   final String title;
   final bool isFavourite;
@@ -55,8 +57,20 @@ class _StackedStackObuchState extends State<StackedStackObuch> {
                   InkWell(
                     onTap: () {
                       setState(() {
-                        launched = _launchInBrowser(
-                            Uri.parse("http://${widget.linkPDF}"));
+                       String fullUrl;
+              if (widget.link.isNotEmpty) {
+                 fullUrl = widget.link.startsWith("http")
+                  ? widget.link
+                  : "http://${widget.link}";
+              } else {
+                fullUrl = widget.linkPDF.startsWith("http")
+                  ? widget.linkPDF
+                  : "http://${widget.linkPDF}";
+              }
+
+              setState(() {
+                launched = _launchInBrowser(Uri.parse(fullUrl));
+              });
                       });
                     },
                     child: SizedBox(
@@ -75,7 +89,7 @@ class _StackedStackObuchState extends State<StackedStackObuch> {
                   ),
                   Container(
                     width: 410,
-                    height: 75.h,
+                    height: 85.h,
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(5.r),
                         color: const Color(0xffffffff)),
@@ -97,11 +111,45 @@ class _StackedStackObuchState extends State<StackedStackObuch> {
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                InkWell(
+                                SizedBox(
+                                  height:widget.link.isEmpty || widget.linkPDF.isEmpty?0: 10,
+                                ),
+                                widget.link.isNotEmpty? InkWell(
                                   onTap: () {
                                     setState(() {
                                       launched = _launchInBrowser(Uri.parse(
-                                          "http://${widget.linkPDF}"));
+                                          widget.link.startsWith("http")
+                  ? widget.link
+                  : "http://${widget.link}"));
+                                    });
+                                  },
+                                  child: Container(
+                                    alignment: Alignment.center,
+                                    width: 100,
+                                    height: 28,
+                                    decoration: BoxDecoration(
+                                        color: widget.buttonColor,
+                                        borderRadius:
+                                            BorderRadius.circular(13.r)),
+                                    child: Text(
+                                      "Смотреть",
+                                      style: GoogleFonts.montserrat(
+                                          fontSize: 12,
+                                          color: const Color(0xffffffff),
+                                          fontWeight: FontWeight.w500),
+                                    ),
+                                  ),
+                                ) : const SizedBox(),
+                                SizedBox(
+                                  height:widget.link.isEmpty || widget.linkPDF.isEmpty?0: 10,
+                                ),
+                                widget.linkPDF.isNotEmpty? InkWell(
+                                  onTap: () {
+                                    setState(() {
+                                      launched = _launchInBrowser(Uri.parse(
+                                          widget.linkPDF.startsWith("http")
+                  ? widget.linkPDF
+                  : "http://${widget.linkPDF}"));
                                     });
                                   },
                                   child: Container(
@@ -120,7 +168,7 @@ class _StackedStackObuchState extends State<StackedStackObuch> {
                                           fontWeight: FontWeight.w500),
                                     ),
                                   ),
-                                ),
+                                ) : const SizedBox(),
                               ],
                             ),
                           )

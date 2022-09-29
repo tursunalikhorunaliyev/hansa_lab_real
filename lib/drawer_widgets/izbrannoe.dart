@@ -113,7 +113,7 @@ class _IzbrannoeState extends State<Izbrannoe> {
                               confirmDismiss: (direction) async {
                                 if (direction == DismissDirection.endToStart) {
                                   if (snapshot.data!.data.list[index].type ==
-                                      2 ) {
+                                      2) {
                                     isFavouriteBLoC.sink.add(false);
                                     isFavouriteBLoC.getFavourite(token,
                                         snapshot.data!.data.list[index].unlink);
@@ -140,20 +140,23 @@ class _IzbrannoeState extends State<Izbrannoe> {
                               },
                               child: InkWell(
                                 onTap: () async {
-                                   if(snapshot.data!.data.list[index].type == 2 ){
-                                    if (snapshot.data!.data.list[index].pdfUrl.isNotEmpty) {
+                                  if (snapshot.data!.data.list[index].type ==
+                                      2) {
+                                    if (snapshot.data!.data.list[index].pdfUrl
+                                        .isNotEmpty) {
                                       setState(() {
-                                      launched = launchInBrowser(Uri.parse(
-                                          "http://${snapshot.data!.data.list[index].pdfUrl}"));
-                                    });
+                                        launched = launchInBrowser(Uri.parse(
+                                            snapshot.data!.data.list[index]
+                                                .pdfUrl));
+                                      });
                                     } else {
                                       setState(() {
-                                      launched = launchInBrowser(Uri.parse(
-                                          snapshot.data!.data.list[index].link));
-                                    });
+                                        launched = launchInBrowser(Uri.parse(
+                                            snapshot
+                                                .data!.data.list[index].link));
+                                      });
                                     }
-                                  }
-                                  else{
+                                  } else {
                                     scafforlKeyProvider.currentState!
                                         .closeDrawer();
                                     menuProvider.eventSink
@@ -227,67 +230,149 @@ class _IzbrannoeState extends State<Izbrannoe> {
                                                 ),
                                                 Row(
                                                   children: [
-                                                    SizedBox(
-                                                      width:
-                                                          isTablet ? 200 : 90,
-                                                    ),
-                                                    Container(
-                                                      alignment:
-                                                          Alignment.center,
-                                                      height:
-                                                          isTablet ? 22 : 21,
-                                                      width: isTablet ? 74 : 63,
-                                                      decoration: BoxDecoration(
-                                                        border: snapshot
-                                                                    .data!
-                                                                    .data
-                                                                    .list[index]
-                                                                    .type ==
-                                                                2 && snapshot.data!.data.list[index].pdfUrl.isNotEmpty
-                                                            ? Border.all(
-                                                                width: 2,
-                                                                color: const Color(
-                                                                    0xFF313131))
-                                                            : Border.all(
-                                                                color: Colors
-                                                                    .transparent),
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(10.5),
-                                                        color: snapshot
-                                                                    .data!
-                                                                    .data
-                                                                    .list[index]
-                                                                    .type ==
-                                                                2 && snapshot.data!.data.list[index].pdfUrl.isNotEmpty
-                                                            ? Colors.white
-                                                            : const Color(
-                                                                0xFF313131),
-                                                      ),
-                                                      child: Text(
-                                                        snapshot
-                                                                    .data!
-                                                                    .data
-                                                                    .list[index]
-                                                                    .type ==
-                                                                2 && snapshot.data!.data.list[index].pdfUrl.isNotEmpty
-                                                            ? "Скачать"
-                                                            : "Смотреть",
-                                                        style: GoogleFonts.montserrat(
-                                                            color: snapshot
+                                                    isTablet
+                                                        ? SizedBox(
+                                                            width: snapshot
                                                                         .data!
                                                                         .data
                                                                         .list[
                                                                             index]
-                                                                        .type ==
-                                                                    2 && snapshot.data!.data.list[index].pdfUrl.isNotEmpty
-                                                                ?const Color(
-                                                                    0xFF313131) 
-                                                                : const Color(
-                                                                    0xFFFFFFFF),
-                                                            fontSize: 10),
-                                                      ),
+                                                                        .link
+                                                                        .isNotEmpty &&
+                                                                    snapshot
+                                                                        .data!
+                                                                        .data
+                                                                        .list[
+                                                                            index]
+                                                                        .pdfUrl
+                                                                        .isNotEmpty
+                                                                ? 120
+                                                                : 200,
+                                                          )
+                                                        : SizedBox(
+                                                            width: 90,
+                                                          ),
+                                                    snapshot
+                                                            .data!
+                                                            .data
+                                                            .list[index]
+                                                            .link
+                                                            .isNotEmpty
+                                                        ? InkWell(
+                                                            onTap: () async {
+                                                              setState(() {
+                                                                launched = launchInBrowser(
+                                                                    Uri.parse(snapshot
+                                                                        .data!
+                                                                        .data
+                                                                        .list[
+                                                                            index]
+                                                                        .link));
+                                                              });
+                                                            },
+                                                            child: Container(
+                                                              alignment:
+                                                                  Alignment
+                                                                      .center,
+                                                              height: isTablet
+                                                                  ? 22
+                                                                  : 21,
+                                                              width: isTablet
+                                                                  ? 74
+                                                                  : 63,
+                                                              decoration:
+                                                                  BoxDecoration(
+                                                                border: Border.all(
+                                                                    color: Colors
+                                                                        .transparent),
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .circular(
+                                                                            10.5),
+                                                                color: const Color(
+                                                                    0xFF313131),
+                                                              ),
+                                                              child: Text(
+                                                                "Смотреть",
+                                                                style: GoogleFonts
+                                                                    .montserrat(
+                                                                        color: const Color(
+                                                                            0xFFFFFFFF),
+                                                                        fontSize:
+                                                                            10),
+                                                              ),
+                                                            ),
+                                                          )
+                                                        : const SizedBox(),
+                                                    SizedBox(
+                                                      width: snapshot
+                                                                  .data!
+                                                                  .data
+                                                                  .list[index]
+                                                                  .link
+                                                                  .isNotEmpty &&
+                                                              snapshot
+                                                                  .data!
+                                                                  .data
+                                                                  .list[index]
+                                                                  .pdfUrl
+                                                                  .isNotEmpty
+                                                          ? 10
+                                                          : 0,
                                                     ),
+                                                    snapshot
+                                                            .data!
+                                                            .data
+                                                            .list[index]
+                                                            .pdfUrl
+                                                            .isNotEmpty
+                                                        ? InkWell(
+                                                            onTap: () {
+                                                              setState(() {
+                                                                launched = launchInBrowser(
+                                                                    Uri.parse(snapshot
+                                                                        .data!
+                                                                        .data
+                                                                        .list[
+                                                                            index]
+                                                                        .pdfUrl));
+                                                              });
+                                                            },
+                                                            child: Container(
+                                                              alignment:
+                                                                  Alignment
+                                                                      .center,
+                                                              height: isTablet
+                                                                  ? 22
+                                                                  : 21,
+                                                              width: isTablet
+                                                                  ? 74
+                                                                  : 63,
+                                                              decoration:
+                                                                  BoxDecoration(
+                                                                border: Border.all(
+                                                                    width: 2,
+                                                                    color: const Color(
+                                                                        0xFF313131)),
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .circular(
+                                                                            10.5),
+                                                                color: Colors
+                                                                    .white,
+                                                              ),
+                                                              child: Text(
+                                                                "Скачать",
+                                                                style: GoogleFonts
+                                                                    .montserrat(
+                                                                        color: const Color(
+                                                                            0xFF313131),
+                                                                        fontSize:
+                                                                            10),
+                                                              ),
+                                                            ),
+                                                          )
+                                                        : const SizedBox(),
                                                   ],
                                                 ),
                                               ],
