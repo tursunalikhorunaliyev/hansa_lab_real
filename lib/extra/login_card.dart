@@ -431,7 +431,7 @@ class _LoginCardState extends State<LoginCard> {
                                                                 0xFF25b049),
                                                           )),
                                                       SizedBox(
-                                                        width: 280,
+                                                        width: 250,
                                                         child: Text(
                                                           snapshot.data!,
                                                           maxLines: 2,
