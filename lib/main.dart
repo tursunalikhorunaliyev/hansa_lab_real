@@ -56,7 +56,7 @@ void main(List<String> args) async {
   await Hive.initFlutter();
   await Hive.openBox("savedUser");
   await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform, 
+    options: DefaultFirebaseOptions.currentPlatform,
   );
   initMessaging();
   listenForeground(channel);
@@ -84,7 +84,7 @@ class MyApp extends StatelessWidget {
     Map<String, FlipCardController> map = {
       "login": FlipCardController(),
       "signin": FlipCardController(),
-      "toLogin" : FlipCardController(),
+      "toLogin": FlipCardController(),
     };
     return ScreenUtilInit(
       designSize: const Size(375, 812),
@@ -144,11 +144,12 @@ class MyApp extends StatelessWidget {
           ChangeNotifierProvider<ProviderOtpravitPushUvodamleniya>(
             create: (context) => providerSendListPopupGorod,
           ),
-
         ],
-        child:  MaterialApp(
+        child: MaterialApp(
           builder: (context, child) {
-            return MediaQuery(data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0), child: child!);
+            return MediaQuery(
+                data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),
+                child: child!);
           },
           localizationsDelegates: const [
             GlobalMaterialLocalizations.delegate,
