@@ -250,7 +250,19 @@ class _IzbrannoeState extends State<Izbrannoe> {
                                                                 : 200,
                                                           )
                                                         : SizedBox(
-                                                            width: 90,
+                                                            width: snapshot
+                                                                    .data!
+                                                                    .data
+                                                                    .list[index]
+                                                                    .link
+                                                                    .isNotEmpty && snapshot
+                                                                    .data!
+                                                                    .data
+                                                                    .list[index]
+                                                                    .pdfUrl
+                                                                    .isEmpty 
+                                                                ? 100
+                                                                : 30,
                                                           ),
                                                     snapshot
                                                             .data!
