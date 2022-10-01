@@ -83,8 +83,6 @@ class _LoginCardState extends State<LoginCard> {
     final flip = Provider.of<Map<String, FlipCardController>>(context);
     final blocEmptySobshit = BlocEmptySobshit();
 
-    
-
     return ScreenUtilInit(
       designSize: const Size(375, 812),
       builder: (context, child) => GestureDetector(
@@ -298,7 +296,9 @@ class _LoginCardState extends State<LoginCard> {
                                   duration: const Duration(milliseconds: 300),
                                   alignment: Alignment.center,
                                   width: isTablet
-                                      ? 210.w
+                                      ? snapshot.data!
+                                          ? 75
+                                          : 210.w
                                       : snapshot.data!
                                           ? 46
                                           : 318.w,
@@ -315,7 +315,7 @@ class _LoginCardState extends State<LoginCard> {
                                       ],
                                       color:
                                           const Color.fromARGB(255, 213, 0, 50),
-                                      borderRadius: BorderRadius.circular(23)),
+                                      borderRadius: BorderRadius.circular(50)),
                                   child: snapshot.data!
                                       ? const CircularProgressIndicator(
                                           color: Colors.white,
