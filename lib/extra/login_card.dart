@@ -100,7 +100,7 @@ class _LoginCardState extends State<LoginCard> {
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(5.r)),
                   width: isTablet ? 230.w : 346.w,
-                  height: isTablet ? 450.h : 432.h,
+                  height: isTablet ? 450.h : null,
                   child: Column(
                     children: [
                       Row(
@@ -193,37 +193,39 @@ class _LoginCardState extends State<LoginCard> {
                           );
                         }),
                       ),
-                      Expanded(
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: [
-                            Text(
-                              ' Не выходить из приложения',
-                              textScaleFactor: 1.0,
-                              style: GoogleFonts.montserrat(
-                                  color: const Color(0xffa1b7c2),
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: isTablet ? 9.sp : 12.sp),
-                            ),
-                            MultiProvider(
-                              providers: [
-                                Provider(create: (context) => ""),
-                                Provider(
-                                    create: (context) =>
-                                        switchTextEditingController),
-                              ],
-                              child: ToggleSwitch(
-                                colorContainer: Colors.grey[300],
-                                colorCircle: Colors.green[600],
-                                tickerSize: isTablet ? 15.sp : 21.sp,
-                                handlerWidth: isTablet ? 30.w : 40.w,
-                                handlerHeight: isTablet ? 12.h : 12.h,
-                                onButton: () {},
+                     Padding(
+                       padding: const EdgeInsets.symmetric(vertical: 20),
+                       child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              Text(
+                                ' Не выходить из приложения',
+                                textScaleFactor: 1.0,
+                                style: GoogleFonts.montserrat(
+                                    color: const Color(0xffa1b7c2),
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: isTablet ? 9.sp : 12.sp),
                               ),
-                            )
-                          ],
-                        ),
-                      ),
+                              MultiProvider(
+                                providers: [
+                                  Provider(create: (context) => ""),
+                                  Provider(
+                                      create: (context) =>
+                                          switchTextEditingController),
+                                ],
+                                child: ToggleSwitch(
+                                  colorContainer: Colors.grey[300],
+                                  colorCircle: Colors.green[600],
+                                  tickerSize: isTablet ? 15.sp : 21.sp,
+                                  handlerWidth: isTablet ? 30.w : 40.w,
+                                  handlerHeight: isTablet ? 12.h : 12.h,
+                                  onButton: () {},
+                                ),
+                              )
+                            ],
+                          ),
+                     ),
+                      
                       Padding(
                           padding: EdgeInsets.only(
                             bottom: isTablet ? 35.h : 23.h,
@@ -297,9 +299,9 @@ class _LoginCardState extends State<LoginCard> {
                                   width: isTablet
                                       ? 210.w
                                       : snapshot.data!
-                                          ? 46.w
+                                          ? 46
                                           : 318.w,
-                                  height: isTablet ? 48.h : 46.h,
+                                  height: isTablet ? 48.h : 46,
                                   decoration: BoxDecoration(
                                       boxShadow: [
                                         BoxShadow(
@@ -313,7 +315,7 @@ class _LoginCardState extends State<LoginCard> {
                                       color:
                                           const Color.fromARGB(255, 213, 0, 50),
                                       borderRadius:
-                                          BorderRadius.circular(23.r)),
+                                          BorderRadius.circular(23)),
                                   child: snapshot.data!
                                       ? const CircularProgressIndicator(
                                           color: Colors.white,
