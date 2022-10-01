@@ -62,14 +62,14 @@ class _PopupFullRegistrNazvaniySetiState
         Provider.of<TextEditingController>(context);
 
     return StreamBuilder<double>(
-        initialData: 38,
+        initialData: isTablet ? 40  : 38,
         stream: blocPopupDrawer.dataStream,
         builder: (context, snapshotSizeDrawer) {
           return InkWell(
             onTap: () {
               widget.onTap();
               blocPopupDrawer.dataSink
-                  .add(snapshotSizeDrawer.data! == 38 ? 300 : 38);
+                  .add(snapshotSizeDrawer.data! == (isTablet ? 40  : 38) ? 300 : isTablet ? 40  : 38);
               radius = radius == 54 ? 10 : 54;
             },
             child: Padding(

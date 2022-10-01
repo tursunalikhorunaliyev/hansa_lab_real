@@ -141,6 +141,7 @@ class _LoginCardState extends State<LoginCard> {
                               top: isTablet ? 25.h : 30.h),
                           child: TextField(
                             controller: usernameController,
+                            keyboardType: TextInputType.emailAddress,
                             style: TextStyle(fontSize: isTablet ? 18 : null),
                             decoration: InputDecoration(
                                 hintText: 'Ваш e-mail',
