@@ -80,9 +80,8 @@ class CompleteRegistr extends StatelessWidget {
                         padding: const EdgeInsets.only(top: 37),
                         child: GestureDetector(
                           onTap: () {
-                            /* loginActionProvider
-                                .changeLoginAction(LoginAction.signin);
-                            flipLoginProvider.changeIsClosed(false); */
+               
+                            flipLoginProvider.changeIsClosed(true);
                             providerFlip['toLogin']!.toggleCard();
                           },
                           child: Container(
@@ -121,17 +120,21 @@ class CompleteRegistr extends StatelessWidget {
             ),
             //Tugadi
             Padding(
-              padding: EdgeInsets.only(
-                  top: isTablet ? 190 : 213, left: isTablet ? 350 : 130),
-              child: isTablet
-                  ? Image.asset(
-                      'assets/tabletTumLogo.png',
-                    )
-                  : Image.asset(
-                      'assets/Logo.png',
-                      height: 134,
-                      width: 134,
-                    ),
+              padding: const EdgeInsets.only(top: 220),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  isTablet
+                      ? Image.asset(
+                          'assets/tabletTumLogo.png',
+                        )
+                      : Image.asset(
+                          'assets/Logo.png',
+                          height: 134,
+                          width: 134,
+                        ),
+                ],
+              ),
             ),
             Padding(
               padding: const EdgeInsets.only(top: 730, left: 115),

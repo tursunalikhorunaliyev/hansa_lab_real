@@ -1,15 +1,19 @@
+import 'dart:async';
 import 'dart:developer';
 
 import 'package:flip_card/flip_card_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:hansa_lab/blocs/bloc_number_country.dart';
 import 'package:hansa_lab/blocs/bloc_sign.dart';
 import 'package:hansa_lab/blocs/data_burn_text_changer_bloc.dart';
 import 'package:hansa_lab/blocs/hansa_country_api.dart';
+import 'package:hansa_lab/classes/number_coubtry.dart';
 import 'package:hansa_lab/drawer_widgets/toggle_switcher.dart';
 import 'package:hansa_lab/extra/popup_full_registr_doljnost.dart';
 import 'package:hansa_lab/extra/popup_full_registr_gorod.dart';
 import 'package:hansa_lab/extra/popup_full_registr_nazvaniy_seti.dart';
+import 'package:hansa_lab/extra/popup_full_registr_number.dart';
 import 'package:hansa_lab/extra/text_field_for_full_reg.dart';
 import 'package:hansa_lab/providers/new_shop_provider.dart';
 import 'package:hansa_lab/providers/provider_for_flipping/flip_login_provider.dart';
@@ -43,6 +47,7 @@ class _FullRegistrState extends State<FullRegistr> {
   final doljnostTextFieldController = TextEditingController();
   final gorodTextFieldController = TextEditingController();
   final dataRojdeniyaController = TextEditingController();
+  final numberCountryaController = TextEditingController();
   final firstToggle = TextEditingController(text: "0");
   final secondToggle = TextEditingController(text: "0");
   final thirdToggle = TextEditingController(text: "0");
@@ -55,7 +60,7 @@ class _FullRegistrState extends State<FullRegistr> {
   var dateFormatter = MaskTextInputFormatter(
     mask: "##/##/####",
   );
-
+  var numberFormat = MaskTextInputFormatter(mask: "(###) ### ## ##");
   ScrollController scrollController = ScrollController();
 
   @override
@@ -64,6 +69,8 @@ class _FullRegistrState extends State<FullRegistr> {
     final isTablet = Provider.of<bool>(context);
     final newShop = Provider.of<NewShopProvider>(context);
     final providerFlip = Provider.of<Map<String, FlipCardController>>(context);
+    final providerNumberCountry = Provider.of<BlocNumberCountry>(context);
+
     log("SignUp build");
     final blocCity = HansaCountryBloC(1);
     blocCity.eventSink.add(CityEnum.city);
@@ -171,70 +178,96 @@ class _FullRegistrState extends State<FullRegistr> {
                       const SizedBox(
                         height: 4,
                       ),
+                      Provider(
+                          create: (context) => numberCountryaController,
+                          child: PopUpFullRegistrNumber(
+                            borderColor: gorodIsEmpty
+                                ? const Color.fromARGB(255, 213, 0, 50)
+                                : Colors.black,
+                            hintColor: gorodIsEmpty
+                                ? const Color.fromARGB(255, 213, 0, 50)
+                                : const Color(0xff444444),
+                            onTap: () => setState(() => gorodIsEmpty = false),
+                          )),
+                      const SizedBox(
+                        height: 4,
+                      ),
                       Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 10),
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(54),
-                          child: Container(
-                            color: Colors.white,
-                            height: 38,
-                            child: Stack(
-                              children: [
-                                InternationalPhoneNumberInput(
-                                  focusNode: node,
-                                  initialValue: PhoneNumber(isoCode: 'RU'),
-                                  countries: const [
-                                    "RU",
-                                    "AM",
-                                    "KZ",
-                                  ],
-                                  onInputChanged: (value) {
-                                    phoneTextFieldController.text =
-                                        value.phoneNumber!;
-                                  },
-                                  inputDecoration: inputDecoration(
-                                    isTablet,
-                                    phoneIsEmpty
-                                        ? const Color.fromARGB(255, 213, 0, 50)
-                                        : Colors.black,
-                                    phoneIsEmpty
-                                        ? const Color.fromARGB(255, 213, 0, 50)
-                                        : null,
-                                  ),
-                                  keyboardType: TextInputType.phone,
-                                  selectorTextStyle: style(
-                                      FontWeight.w500,
-                                      isTablet,
-                                      phoneIsEmpty
-                                          ? const Color.fromARGB(
-                                              255, 213, 0, 50)
-                                          : Colors.black),
-                                  textStyle: style(
-                                      FontWeight.w500,
-                                      isTablet,
-                                      phoneIsEmpty
-                                          ? const Color.fromARGB(
-                                              255, 213, 0, 50)
-                                          : Colors.black),
-                                  selectorConfig: const SelectorConfig(
-                                      leadingPadding: 0,
-                                      useEmoji: false,
-                                      showFlags: false,
-                                      setSelectorButtonAsPrefixIcon: true,
-                                      selectorType:
-                                          PhoneInputSelectorType.BOTTOM_SHEET),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.only(left: 35),
-                                  child: GestureDetector(onTap: () {
-                                    setState(() => phoneIsEmpty = false);
-                                    node.requestFocus();
-                                  }),
-                                ),
-                              ],
+                        padding: const EdgeInsets.only(left: 11, right: 9),
+                        child: Container(
+                            height: isTablet ? 45 : 38,
+                            decoration: BoxDecoration(
+                              color: const Color(0xFFffffff),
+                              borderRadius: BorderRadius.circular(54),
                             ),
-                          ),
-                        ),
+                            child: StreamBuilder<EnumCuntryNumber>(
+                                stream: providerNumberCountry.stream,
+                                builder: (context, snapshot) {
+                                  return TextField(
+                                    inputFormatters: [numberFormat],
+                                    onTap: () {
+                                      setState(() => dateIsEmpty = false);
+                                    },
+                                    cursorHeight: 15,
+                                    style: GoogleFonts.montserrat(
+                                        fontSize: isTablet ? 13 : 10,
+                                        fontWeight: FontWeight.w500,
+                                        color: Colors.black),
+                                    controller: dataRojdeniyaController,
+                                    decoration: InputDecoration(
+                                      hintText: "Телефон",
+                                      prefixIcon: Padding(
+                                        padding: const EdgeInsets.only(
+                                            top: 13, left: 17),
+                                        child: Text(
+                                          snapshot.data == EnumCuntryNumber.rus
+                                              ? '+7 '
+                                              : snapshot.data ==
+                                                      EnumCuntryNumber.kazak
+                                                  ? '+7 '
+                                                  : snapshot.data ==
+                                                          EnumCuntryNumber.armen
+                                                      ? '+374 '
+                                                      : '+7 ',
+                                          style: TextStyle(fontSize: 10),
+                                        ),
+                                      ),
+                                      focusedBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                          width: 0.9,
+                                          color: dateIsEmpty
+                                              ? const Color.fromARGB(
+                                                  255, 213, 0, 50)
+                                              : const Color(0xFF000000),
+                                        ),
+                                        borderRadius: BorderRadius.circular(54),
+                                      ),
+                                      enabledBorder: OutlineInputBorder(
+                                          borderSide: BorderSide(
+                                            width: dateIsEmpty ? 0.9 : 0.1,
+                                            color: dateIsEmpty
+                                                ? const Color.fromARGB(
+                                                    255, 213, 0, 50)
+                                                : const Color(0xFF000000),
+                                          ),
+                                          borderRadius:
+                                              BorderRadius.circular(54)),
+                                      contentPadding:
+                                          const EdgeInsets.symmetric(
+                                              vertical: 2, horizontal: 13),
+                                      hintStyle: GoogleFonts.montserrat(
+                                        fontWeight: isTablet
+                                            ? FontWeight.normal
+                                            : FontWeight.normal,
+                                        fontSize: isTablet ? 13 : 10,
+                                        color: dateIsEmpty
+                                            ? const Color.fromARGB(
+                                                255, 213, 0, 50)
+                                            : const Color(0xFF444444),
+                                      ),
+                                    ),
+                                  );
+                                })),
                       ),
                       const SizedBox(
                         height: 4,
@@ -473,7 +506,7 @@ class _FullRegistrState extends State<FullRegistr> {
                                     dataRojdeniyaController.text.substring(6);
                               }
 
-                              toSignUp(
+                              /* toSignUp(
                                 lastname: familiyaTextEditingController.text,
                                 firstname: imyaTextEditingController.text,
                                 email: emailTextFielController.text,
@@ -489,7 +522,12 @@ class _FullRegistrState extends State<FullRegistr> {
                                 isAgreeIdentity: thirdToggle.text,
                                 isAgreePersonal: fourthToggle.text,
                                 providerFlip: providerFlip,
-                              );
+                              ); */
+
+                              providerFlip['signin']!.toggleCard();
+                              scrollController.animateTo(0,
+                                  duration: const Duration(milliseconds: 100),
+                                  curve: Curves.ease);
 
                               log(familiyaTextEditingController.text + "last");
                               log(imyaTextEditingController.text + "first");

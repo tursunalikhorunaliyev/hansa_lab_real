@@ -102,7 +102,7 @@ class _HansaEntryState extends State<HansaEntry> {
                 )
               : const SizedBox(),
           Positioned(
-            top: -58.h,
+            top: isTablet ? -90  : -58,
             child: isTablet
                 ? Image.asset("assets/tabletTumLogo.png")
                 : Image.asset(

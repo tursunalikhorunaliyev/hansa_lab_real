@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
@@ -100,8 +101,9 @@ class _LoginCardState extends State<LoginCard> {
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(5.r)),
                   width: isTablet ? 230.w : 346.w,
-                  height: isTablet ? 450.h : 432.h,
+                  height: isTablet ? 450.h : null,
                   child: Column(
+                    mainAxisSize: MainAxisSize.min,
                     children: [
                       Row(
                         mainAxisAlignment: MainAxisAlignment.end,
@@ -110,9 +112,7 @@ class _LoginCardState extends State<LoginCard> {
                             padding: EdgeInsets.only(top: 7.h, right: 8.w),
                             child: InkWell(
                               onTap: () {
-                                FocusManager.instance.primaryFocus?.unfocus();
                                 flipLoginProvider.changeIsClosed(false);
-                                log(flipLoginProvider.getIsClosed.toString());
                                 flip['login']!.toggleCard();
                                 flip["signin"]!.toggleCard();
                                 flip["toLogin"]!.toggleCard();
@@ -129,7 +129,7 @@ class _LoginCardState extends State<LoginCard> {
                       Padding(
                         padding: EdgeInsets.only(top: 50.h),
                         child: Text('Вход в аккаунт',
-                          textScaleFactor: 1.0,
+                            textScaleFactor: 1.0,
                             style: GoogleFonts.montserrat(
                                 fontSize: isTablet ? 18.sp : 24.sp,
                                 fontWeight: FontWeight.w500)),
@@ -140,8 +140,8 @@ class _LoginCardState extends State<LoginCard> {
                               right: isTablet ? 16.w : 24.w,
                               top: isTablet ? 25.h : 30.h),
                           child: TextField(
-                            
                             controller: usernameController,
+                            keyboardType: TextInputType.emailAddress,
                             style: TextStyle(fontSize: isTablet ? 18 : null),
                             decoration: InputDecoration(
                                 hintText: 'Ваш e-mail',
@@ -193,13 +193,14 @@ class _LoginCardState extends State<LoginCard> {
                           );
                         }),
                       ),
-                      Expanded(
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 20),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
                             Text(
                               ' Не выходить из приложения',
-                                textScaleFactor: 1.0,
+                              textScaleFactor: 1.0,
                               style: GoogleFonts.montserrat(
                                   color: const Color(0xffa1b7c2),
                                   fontWeight: FontWeight.w500,
@@ -250,13 +251,16 @@ class _LoginCardState extends State<LoginCard> {
                                         FocusManager.instance.primaryFocus
                                             ?.unfocus();
                                         List isCorrectList = await LoginAction(
-                                                username:
-                                                    usernameController.text.trim(),
-                                                password:
-                                                    passwordController.text.trim(),
+                                                username: usernameController
+                                                    .text
+                                                    .trim(),
+                                                password: passwordController
+                                                    .text
+                                                    .trim(),
                                                 isSaved:
                                                     switchTextEditingController
-                                                            .text.trim() ==
+                                                            .text
+                                                            .trim() ==
                                                         "1")
                                             .sendRequest();
                                         NotificationToken().getToken();
@@ -275,12 +279,14 @@ class _LoginCardState extends State<LoginCard> {
                                   } else {
                                     ScaffoldMessenger.of(context)
                                         .showSnackBar(SnackBar(
-                                      content:
-                                          Text(usernameController.text.isEmpty
-                                              ? "Электронная почта пуста"
-                                              : passwordController.text.isEmpty
-                                                  ? "Пароль пуст"
-                                                  : "Пустой",  textScaleFactor: 1.0,),
+                                      content: Text(
+                                        usernameController.text.isEmpty
+                                            ? "Электронная почта пуста"
+                                            : passwordController.text.isEmpty
+                                                ? "Пароль пуст"
+                                                : "Пустой",
+                                        textScaleFactor: 1.0,
+                                      ),
                                       backgroundColor:
                                           const Color.fromARGB(255, 213, 0, 50),
                                     ));
@@ -290,11 +296,13 @@ class _LoginCardState extends State<LoginCard> {
                                   duration: const Duration(milliseconds: 300),
                                   alignment: Alignment.center,
                                   width: isTablet
-                                      ? 210.w
+                                      ? snapshot.data!
+                                          ? 75
+                                          : 210.w
                                       : snapshot.data!
-                                          ? 46.w
+                                          ? 46
                                           : 318.w,
-                                  height: isTablet ? 48.h : 46.h,
+                                  height: isTablet ? 48.h : 46,
                                   decoration: BoxDecoration(
                                       boxShadow: [
                                         BoxShadow(
@@ -307,15 +315,14 @@ class _LoginCardState extends State<LoginCard> {
                                       ],
                                       color:
                                           const Color.fromARGB(255, 213, 0, 50),
-                                      borderRadius:
-                                          BorderRadius.circular(23.r)),
+                                      borderRadius: BorderRadius.circular(50)),
                                   child: snapshot.data!
                                       ? const CircularProgressIndicator(
                                           color: Colors.white,
                                         )
                                       : Text(
                                           'Войти',
-                                            textScaleFactor: 1.0,
+                                          textScaleFactor: 1.0,
                                           style: GoogleFonts.montserrat(
                                               color: Colors.white,
                                               fontWeight: FontWeight.w500,
@@ -330,10 +337,10 @@ class _LoginCardState extends State<LoginCard> {
                         padding: EdgeInsets.only(bottom: 36.h),
                         child: InkWell(
                           onTap: () {
+                            textFieldController.text = "";
                             showDialog(
                               context: context,
                               builder: (context) {
-                                textFieldController.text = "";
                                 return Padding(
                                   padding: const EdgeInsets.all(20),
                                   child: Center(
@@ -361,6 +368,7 @@ class _LoginCardState extends State<LoginCard> {
                                                     child: SizedBox(
                                                       height: 40.h,
                                                       child: TextField(
+                                                        focusNode: FocusNode(),
                                                         onChanged: (value) {
                                                           blocEmptySobshit
                                                               .dataSink
@@ -402,7 +410,7 @@ class _LoginCardState extends State<LoginCard> {
                                                 }
                                               }),
                                           SizedBox(
-                                            height: 5.h,
+                                            height: 1.h,
                                           ),
                                           StreamBuilder<String>(
                                               stream: blocText.dataStream,
@@ -425,10 +433,17 @@ class _LoginCardState extends State<LoginCard> {
                                                             color: Color(
                                                                 0xFF25b049),
                                                           )),
-                                                      Text(
-                                                        snapshot.data!,
-                                                          textScaleFactor: 1.0,
-                                                        style: TextStyle(
+                                                      SizedBox(
+                                                        width: 250,
+                                                        child: Text(
+                                                          snapshot.data!,
+                                                          maxLines: 2,
+                                                          textAlign:
+                                                              TextAlign.center,
+                                                          style: TextStyle(
+                                                            overflow:
+                                                                TextOverflow
+                                                                    .ellipsis,
                                                             color: snapshot
                                                                     .data!
                                                                     .contains(
@@ -440,7 +455,9 @@ class _LoginCardState extends State<LoginCard> {
                                                                     255,
                                                                     213,
                                                                     0,
-                                                                    50)),
+                                                                    50),
+                                                          ),
+                                                        ),
                                                       ),
                                                     ],
                                                   );
@@ -488,7 +505,7 @@ class _LoginCardState extends State<LoginCard> {
                                                           5.r)),
                                               child: const Text(
                                                 "Отправить",
-                                                  textScaleFactor: 1.0,
+                                                textScaleFactor: 1.0,
                                                 style: TextStyle(
                                                   color: Color(0xFFf2f2f2),
                                                 ),
@@ -500,7 +517,7 @@ class _LoginCardState extends State<LoginCard> {
                                           ),
                                           const Text(
                                             "При возникновении проблем просьба обращаться в службу поддержки. Почта:",
-                                              textScaleFactor: 1.0,
+                                            textScaleFactor: 1.0,
                                             textAlign: TextAlign.center,
                                           ),
                                           Material(
@@ -512,9 +529,8 @@ class _LoginCardState extends State<LoginCard> {
                                               },
                                               child: const Text(
                                                 "support@hansa-lab.ru",
-                                                  textScaleFactor: 1.0,
+                                                textScaleFactor: 1.0,
                                                 style: TextStyle(
-                                                
                                                     color: Color.fromARGB(
                                                         255, 213, 0, 50),
                                                     decoration: TextDecoration
@@ -535,7 +551,7 @@ class _LoginCardState extends State<LoginCard> {
                           },
                           child: Text(
                             'Забыли пароль?',
-                              textScaleFactor: 1.0,
+                            textScaleFactor: 1.0,
                             style: GoogleFonts.montserrat(
                                 fontSize: isTablet ? 10.sp : 12.sp,
                                 fontWeight: FontWeight.w500,
@@ -564,7 +580,10 @@ class _LoginCardState extends State<LoginCard> {
 
   showSnac() {
     ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-      content: Text("Неверный E-mail или пароль",  textScaleFactor: 1.0,),
+      content: Text(
+        "Неверный E-mail или пароль",
+        textScaleFactor: 1.0,
+      ),
       backgroundColor: Color.fromARGB(255, 213, 0, 50),
     ));
   }

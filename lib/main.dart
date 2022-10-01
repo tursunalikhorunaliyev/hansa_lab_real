@@ -10,6 +10,7 @@ import 'package:hansa_lab/blocs/bloc_change_profile.dart';
 import 'package:hansa_lab/blocs/bloc_change_title.dart';
 import 'package:hansa_lab/blocs/bloc_detect_tap.dart';
 import 'package:hansa_lab/blocs/bloc_flip_login.dart';
+import 'package:hansa_lab/blocs/bloc_number_country.dart';
 import 'package:hansa_lab/blocs/bloc_play_video.dart';
 import 'package:hansa_lab/blocs/bloc_video_controll.dart';
 import 'package:hansa_lab/blocs/download_progress_bloc.dart';
@@ -19,13 +20,13 @@ import 'package:hansa_lab/blocs/read_stati_bloc.dart';
 import 'package:hansa_lab/blocs/voyti_ili_sozdata_bloc.dart';
 import 'package:hansa_lab/classes/notification_functions.dart';
 import 'package:hansa_lab/classes/notification_token.dart';
+import 'package:hansa_lab/classes/number_coubtry.dart';
 import 'package:hansa_lab/classes/send_analise_download.dart';
 import 'package:hansa_lab/classes/send_check_switcher.dart';
 import 'package:hansa_lab/classes/send_data_personal_update.dart';
 import 'package:hansa_lab/classes/send_link.dart';
 import 'package:hansa_lab/classes/sned_url_prezent_otkrit.dart';
 import 'package:hansa_lab/classes/tap_favorite.dart';
-import 'package:hansa_lab/drawer_widgets/personalniy_daniy.dart';
 import 'package:hansa_lab/firebase_options.dart';
 import 'package:hansa_lab/middle_part_widgets/permission_handler_screen.dart';
 import 'package:hansa_lab/providers/check_click.dart';
@@ -46,7 +47,6 @@ import 'package:hansa_lab/providers/stati_id_provider.dart';
 import 'package:hansa_lab/providers/treningi_photos_provider.dart';
 import 'package:hansa_lab/providers/treningi_video_changer_provider.dart';
 import 'package:hansa_lab/providers/treningi_videos_provider.dart';
-import 'package:hansa_lab/test.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:provider/provider.dart';
 
@@ -56,7 +56,7 @@ void main(List<String> args) async {
   await Hive.initFlutter();
   await Hive.openBox("savedUser");
   await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform, 
+    options: DefaultFirebaseOptions.currentPlatform,
   );
   initMessaging();
   listenForeground(channel);
@@ -78,13 +78,14 @@ class MyApp extends StatelessWidget {
     final sendCheckSwitcher = SendCheckSwitcher();
     final providerOtpravitPushUvodamleniya = ProviderOtpravitPushUvodamleniya();
     final providerSendListPopupGorod = ProviderOtpravitPushUvodamleniya();
+    final providerNumberCountry = BlocNumberCountry();
 
     Size size = WidgetsBinding.instance.window.physicalSize;
     bool isTablet = (size.width / 3) > 500;
     Map<String, FlipCardController> map = {
       "login": FlipCardController(),
       "signin": FlipCardController(),
-      "toLogin" : FlipCardController(),
+      "toLogin": FlipCardController(),
     };
     return ScreenUtilInit(
       designSize: const Size(375, 812),
@@ -116,6 +117,8 @@ class MyApp extends StatelessWidget {
           Provider(create: (context) => BlocChangeTitleIndex()),
           Provider(create: (context) => map),
           Provider(create: (context) => VoytiIliSozdatBloC()),
+          Provider<BlocNumberCountry>(
+              create: (context) => providerNumberCountry),
           Provider(create: (context) => ReadStatiBLoC()),
           Provider(create: (context) => MenuEventsBloC()),
           Provider(create: (context) => ArticleBLoC()),
@@ -146,9 +149,11 @@ class MyApp extends StatelessWidget {
           ),
 
         ],
-        child:  MaterialApp(
+        child: MaterialApp(
           builder: (context, child) {
-            return MediaQuery(data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0), child: child!);
+            return MediaQuery(
+                data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),
+                child: child!);
           },
           localizationsDelegates: const [
             GlobalMaterialLocalizations.delegate,

@@ -49,8 +49,9 @@ class _GlavniyMenyuState extends State<GlavniyMenyu> {
   }
 
   Future<dynamic> uploadImage({required String token}) async {
-    XFile? image = await ImagePicker().pickImage(source: ImageSource.gallery, imageQuality: 25);
-    
+    XFile? image = await ImagePicker()
+        .pickImage(source: ImageSource.gallery, imageQuality: 25);
+
     File file = File(image!.path);
     log((file.readAsBytesSync().lengthInBytes / 1024).toString() + " mbbmmb");
     Dio dio = Dio();
@@ -104,7 +105,7 @@ class _GlavniyMenyuState extends State<GlavniyMenyu> {
     final scafforlKeyProvider = Provider.of<GlobalKey<ScaffoldState>>(context);
     final providerSendDataPersonalUpdate =
         Provider.of<SendDataPersonalUpdate>(context);
-        final scrollController = ScrollController();
+    final scrollController = ScrollController();
 
     return Drawer(
       backgroundColor: const Color(0xFF333333),
@@ -213,8 +214,8 @@ class _GlavniyMenyuState extends State<GlavniyMenyu> {
                         return GestureDetector(
                           onTap: () {
                             scrollController.animateTo(0,
-                          duration: const Duration(milliseconds: 400),
-                          curve: Curves.fastLinearToSlowEaseIn);
+                                duration: const Duration(milliseconds: 400),
+                                curve: Curves.fastLinearToSlowEaseIn);
                             snapshot.data == ActionChange.izboreny ||
                                     providerTapFavorite.getInt == 1
                                 ? blocChangeProfileProvider.dataSink
@@ -258,12 +259,12 @@ class _GlavniyMenyuState extends State<GlavniyMenyu> {
                             fullname.setName(snapshot.data!.data.fullname);
                             return Container(
                               alignment: Alignment.center,
-                              width: 200,
+                              width: isTablet ? double.infinity : 200,
                               child: Text(
-                               snapshot.data!.data.fullname,
-                                  textScaleFactor: 1.0,
-                                  maxLines: 2,
-                                  overflow: TextOverflow.ellipsis,
+                                snapshot.data!.data.fullname,
+                                textScaleFactor: 1.0,
+                                maxLines: 2,
+                                overflow: TextOverflow.ellipsis,
                                 style: TextStyle(
                                     fontSize: isTablet ? 23 : 16,
                                     color: const Color(0xFFffffff)),
@@ -273,7 +274,7 @@ class _GlavniyMenyuState extends State<GlavniyMenyu> {
                             return const Center(
                               child: Text(
                                 "Загрузка..",
-                                  textScaleFactor: 1.0,
+                                textScaleFactor: 1.0,
                                 style: TextStyle(
                                     fontSize: 20, color: Colors.white),
                               ),
@@ -337,8 +338,8 @@ class _GlavniyMenyuState extends State<GlavniyMenyu> {
                           onTap: () {
                             if (snapshot.data == ActionChange.personal) {
                               scrollController.animateTo(0,
-                          duration: const Duration(milliseconds: 400),
-                          curve: Curves.fastLinearToSlowEaseIn);
+                                  duration: const Duration(milliseconds: 400),
+                                  curve: Curves.fastLinearToSlowEaseIn);
                               getData(
                                   providerToken,
                                   providerPersonalDannieTextFilelds
@@ -444,8 +445,8 @@ class _GlavniyMenyuState extends State<GlavniyMenyu> {
                         child: GestureDetector(
                           onTap: () {
                             scrollController.animateTo(0,
-                          duration: const Duration(milliseconds: 400),
-                          curve: Curves.fastLinearToSlowEaseIn);
+                                duration: const Duration(milliseconds: 400),
+                                curve: Curves.fastLinearToSlowEaseIn);
                             if (snapshot.data == ActionChange.izboreny) {
                               blocChangeProfileProvider.dataSink
                                   .add(ActionChange.textIconCard);
@@ -507,10 +508,7 @@ class _GlavniyMenyuState extends State<GlavniyMenyu> {
                           bottom: 20),
                       child: Column(
                         children: List.generate(
-                          
-
                           1,
-
                           (index) => Column(
                             children: [
                               snapshot.data == ActionChange.izboreny
@@ -564,9 +562,10 @@ class _GlavniyMenyuState extends State<GlavniyMenyu> {
                                   onTap: () {
                                     blocChangeProfileProvider.dataSink
                                         .add(ActionChange.statistik);
-                                        scrollController.animateTo(0,
-                          duration: const Duration(milliseconds: 400),
-                          curve: Curves.fastLinearToSlowEaseIn);
+                                    scrollController.animateTo(0,
+                                        duration:
+                                            const Duration(milliseconds: 400),
+                                        curve: Curves.fastLinearToSlowEaseIn);
                                   },
                                   child: const TextIcon(
                                     text: "Рейтинг",
