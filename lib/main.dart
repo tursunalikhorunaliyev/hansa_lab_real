@@ -25,7 +25,6 @@ import 'package:hansa_lab/classes/send_data_personal_update.dart';
 import 'package:hansa_lab/classes/send_link.dart';
 import 'package:hansa_lab/classes/sned_url_prezent_otkrit.dart';
 import 'package:hansa_lab/classes/tap_favorite.dart';
-import 'package:hansa_lab/drawer_widgets/personalniy_daniy.dart';
 import 'package:hansa_lab/firebase_options.dart';
 import 'package:hansa_lab/middle_part_widgets/permission_handler_screen.dart';
 import 'package:hansa_lab/providers/check_click.dart';
@@ -46,7 +45,6 @@ import 'package:hansa_lab/providers/stati_id_provider.dart';
 import 'package:hansa_lab/providers/treningi_photos_provider.dart';
 import 'package:hansa_lab/providers/treningi_video_changer_provider.dart';
 import 'package:hansa_lab/providers/treningi_videos_provider.dart';
-import 'package:hansa_lab/test.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:provider/provider.dart';
 
@@ -144,6 +142,7 @@ class MyApp extends StatelessWidget {
           ChangeNotifierProvider<ProviderOtpravitPushUvodamleniya>(
             create: (context) => providerSendListPopupGorod,
           ),
+
         ],
         child: MaterialApp(
           builder: (context, child) {

@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
@@ -82,6 +83,8 @@ class _LoginCardState extends State<LoginCard> {
     final flip = Provider.of<Map<String, FlipCardController>>(context);
     final blocEmptySobshit = BlocEmptySobshit();
 
+    
+
     return ScreenUtilInit(
       designSize: const Size(375, 812),
       builder: (context, child) => GestureDetector(
@@ -102,6 +105,7 @@ class _LoginCardState extends State<LoginCard> {
                   width: isTablet ? 230.w : 346.w,
                   height: isTablet ? 450.h : null,
                   child: Column(
+                    mainAxisSize: MainAxisSize.min,
                     children: [
                       Row(
                         mainAxisAlignment: MainAxisAlignment.end,
@@ -110,9 +114,7 @@ class _LoginCardState extends State<LoginCard> {
                             padding: EdgeInsets.only(top: 7.h, right: 8.w),
                             child: InkWell(
                               onTap: () {
-                                FocusManager.instance.primaryFocus?.unfocus();
                                 flipLoginProvider.changeIsClosed(false);
-                                log(flipLoginProvider.getIsClosed.toString());
                                 flip['login']!.toggleCard();
                                 flip["signin"]!.toggleCard();
                                 flip["toLogin"]!.toggleCard();
@@ -193,39 +195,38 @@ class _LoginCardState extends State<LoginCard> {
                           );
                         }),
                       ),
-                     Padding(
-                       padding: const EdgeInsets.symmetric(vertical: 20),
-                       child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: [
-                              Text(
-                                ' Не выходить из приложения',
-                                textScaleFactor: 1.0,
-                                style: GoogleFonts.montserrat(
-                                    color: const Color(0xffa1b7c2),
-                                    fontWeight: FontWeight.w500,
-                                    fontSize: isTablet ? 9.sp : 12.sp),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 20),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            Text(
+                              ' Не выходить из приложения',
+                              textScaleFactor: 1.0,
+                              style: GoogleFonts.montserrat(
+                                  color: const Color(0xffa1b7c2),
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: isTablet ? 9.sp : 12.sp),
+                            ),
+                            MultiProvider(
+                              providers: [
+                                Provider(create: (context) => ""),
+                                Provider(
+                                    create: (context) =>
+                                        switchTextEditingController),
+                              ],
+                              child: ToggleSwitch(
+                                colorContainer: Colors.grey[300],
+                                colorCircle: Colors.green[600],
+                                tickerSize: isTablet ? 15.sp : 21.sp,
+                                handlerWidth: isTablet ? 30.w : 40.w,
+                                handlerHeight: isTablet ? 12.h : 12.h,
+                                onButton: () {},
                               ),
-                              MultiProvider(
-                                providers: [
-                                  Provider(create: (context) => ""),
-                                  Provider(
-                                      create: (context) =>
-                                          switchTextEditingController),
-                                ],
-                                child: ToggleSwitch(
-                                  colorContainer: Colors.grey[300],
-                                  colorCircle: Colors.green[600],
-                                  tickerSize: isTablet ? 15.sp : 21.sp,
-                                  handlerWidth: isTablet ? 30.w : 40.w,
-                                  handlerHeight: isTablet ? 12.h : 12.h,
-                                  onButton: () {},
-                                ),
-                              )
-                            ],
-                          ),
-                     ),
-                      
+                            )
+                          ],
+                        ),
+                      ),
                       Padding(
                           padding: EdgeInsets.only(
                             bottom: isTablet ? 35.h : 23.h,
@@ -314,8 +315,7 @@ class _LoginCardState extends State<LoginCard> {
                                       ],
                                       color:
                                           const Color.fromARGB(255, 213, 0, 50),
-                                      borderRadius:
-                                          BorderRadius.circular(23)),
+                                      borderRadius: BorderRadius.circular(23)),
                                   child: snapshot.data!
                                       ? const CircularProgressIndicator(
                                           color: Colors.white,

@@ -473,7 +473,7 @@ class _FullRegistrState extends State<FullRegistr> {
                                     dataRojdeniyaController.text.substring(6);
                               }
 
-                              toSignUp(
+                              /* toSignUp(
                                 lastname: familiyaTextEditingController.text,
                                 firstname: imyaTextEditingController.text,
                                 email: emailTextFielController.text,
@@ -489,7 +489,12 @@ class _FullRegistrState extends State<FullRegistr> {
                                 isAgreeIdentity: thirdToggle.text,
                                 isAgreePersonal: fourthToggle.text,
                                 providerFlip: providerFlip,
-                              );
+                              ); */
+
+                              providerFlip['signin']!.toggleCard();
+                              scrollController.animateTo(0,
+                                  duration: const Duration(milliseconds: 100),
+                                  curve: Curves.ease);
 
                               log(familiyaTextEditingController.text + "last");
                               log(imyaTextEditingController.text + "first");
