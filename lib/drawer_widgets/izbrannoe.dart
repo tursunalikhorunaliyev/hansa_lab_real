@@ -226,7 +226,7 @@ class _IzbrannoeState extends State<Izbrannoe> {
                                                   ),
                                                 ),
                                                 const SizedBox(
-                                                  height: 5,
+                                                  height: 16,
                                                 ),
                                                 Row(
                                                   children: [
@@ -251,16 +251,19 @@ class _IzbrannoeState extends State<Izbrannoe> {
                                                           )
                                                         : SizedBox(
                                                             width: snapshot
-                                                                    .data!
-                                                                    .data
-                                                                    .list[index]
-                                                                    .link
-                                                                    .isNotEmpty && snapshot
-                                                                    .data!
-                                                                    .data
-                                                                    .list[index]
-                                                                    .pdfUrl
-                                                                    .isEmpty 
+                                                                        .data!
+                                                                        .data
+                                                                        .list[
+                                                                            index]
+                                                                        .link
+                                                                        .isNotEmpty &&
+                                                                    snapshot
+                                                                        .data!
+                                                                        .data
+                                                                        .list[
+                                                                            index]
+                                                                        .pdfUrl
+                                                                        .isEmpty
                                                                 ? 100
                                                                 : 30,
                                                           ),
