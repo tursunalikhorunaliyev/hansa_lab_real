@@ -10,6 +10,7 @@ import 'package:hansa_lab/blocs/bloc_change_profile.dart';
 import 'package:hansa_lab/blocs/bloc_change_title.dart';
 import 'package:hansa_lab/blocs/bloc_detect_tap.dart';
 import 'package:hansa_lab/blocs/bloc_flip_login.dart';
+import 'package:hansa_lab/blocs/bloc_number_country.dart';
 import 'package:hansa_lab/blocs/bloc_play_video.dart';
 import 'package:hansa_lab/blocs/bloc_video_controll.dart';
 import 'package:hansa_lab/blocs/download_progress_bloc.dart';
@@ -19,6 +20,7 @@ import 'package:hansa_lab/blocs/read_stati_bloc.dart';
 import 'package:hansa_lab/blocs/voyti_ili_sozdata_bloc.dart';
 import 'package:hansa_lab/classes/notification_functions.dart';
 import 'package:hansa_lab/classes/notification_token.dart';
+import 'package:hansa_lab/classes/number_coubtry.dart';
 import 'package:hansa_lab/classes/send_analise_download.dart';
 import 'package:hansa_lab/classes/send_check_switcher.dart';
 import 'package:hansa_lab/classes/send_data_personal_update.dart';
@@ -78,6 +80,7 @@ class MyApp extends StatelessWidget {
     final sendCheckSwitcher = SendCheckSwitcher();
     final providerOtpravitPushUvodamleniya = ProviderOtpravitPushUvodamleniya();
     final providerSendListPopupGorod = ProviderOtpravitPushUvodamleniya();
+    final providerNumberCountry = BlocNumberCountry();
 
     Size size = WidgetsBinding.instance.window.physicalSize;
     bool isTablet = (size.width / 3) > 500;
@@ -116,6 +119,8 @@ class MyApp extends StatelessWidget {
           Provider(create: (context) => BlocChangeTitleIndex()),
           Provider(create: (context) => map),
           Provider(create: (context) => VoytiIliSozdatBloC()),
+          Provider<BlocNumberCountry>(
+              create: (context) => providerNumberCountry),
           Provider(create: (context) => ReadStatiBLoC()),
           Provider(create: (context) => MenuEventsBloC()),
           Provider(create: (context) => ArticleBLoC()),
