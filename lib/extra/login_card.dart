@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
@@ -100,8 +101,9 @@ class _LoginCardState extends State<LoginCard> {
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(5.r)),
                   width: isTablet ? 230.w : 346.w,
-                  height: isTablet ? 450.h : 432.h,
+                  height: isTablet ? 450.h : null,
                   child: Column(
+                    mainAxisSize: MainAxisSize.min,
                     children: [
                       Row(
                         mainAxisAlignment: MainAxisAlignment.end,
@@ -110,9 +112,7 @@ class _LoginCardState extends State<LoginCard> {
                             padding: EdgeInsets.only(top: 7.h, right: 8.w),
                             child: InkWell(
                               onTap: () {
-                                FocusManager.instance.primaryFocus?.unfocus();
                                 flipLoginProvider.changeIsClosed(false);
-                                log(flipLoginProvider.getIsClosed.toString());
                                 flip['login']!.toggleCard();
                                 flip["signin"]!.toggleCard();
                                 flip["toLogin"]!.toggleCard();
@@ -141,6 +141,7 @@ class _LoginCardState extends State<LoginCard> {
                               top: isTablet ? 25.h : 30.h),
                           child: TextField(
                             controller: usernameController,
+                            keyboardType: TextInputType.emailAddress,
                             style: TextStyle(fontSize: isTablet ? 18 : null),
                             decoration: InputDecoration(
                                 hintText: 'Ваш e-mail',
@@ -192,7 +193,8 @@ class _LoginCardState extends State<LoginCard> {
                           );
                         }),
                       ),
-                      Expanded(
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 20),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
@@ -294,11 +296,13 @@ class _LoginCardState extends State<LoginCard> {
                                   duration: const Duration(milliseconds: 300),
                                   alignment: Alignment.center,
                                   width: isTablet
-                                      ? 210.w
+                                      ? snapshot.data!
+                                          ? 75
+                                          : 210.w
                                       : snapshot.data!
-                                          ? 46.w
+                                          ? 46
                                           : 318.w,
-                                  height: isTablet ? 48.h : 46.h,
+                                  height: isTablet ? 48.h : 46,
                                   decoration: BoxDecoration(
                                       boxShadow: [
                                         BoxShadow(
@@ -311,8 +315,7 @@ class _LoginCardState extends State<LoginCard> {
                                       ],
                                       color:
                                           const Color.fromARGB(255, 213, 0, 50),
-                                      borderRadius:
-                                          BorderRadius.circular(23.r)),
+                                      borderRadius: BorderRadius.circular(50)),
                                   child: snapshot.data!
                                       ? const CircularProgressIndicator(
                                           color: Colors.white,
