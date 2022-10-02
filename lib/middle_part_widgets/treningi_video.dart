@@ -24,6 +24,7 @@ import 'package:hansa_lab/providers/treningi_photos_provider.dart';
 import 'package:hansa_lab/providers/treningi_videos_provider.dart';
 import 'package:hansa_lab/training_video_section/custom_tablet_photos.dart';
 import 'package:hansa_lab/training_video_section/custom_treningi_photos.dart';
+import 'package:hansa_lab/video_fullscreen_widget.dart';
 import 'package:lottie/lottie.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
@@ -64,8 +65,7 @@ class _TreningiVideoState extends State<TreningiVideo> {
 
   ChewieController chewieController = ChewieController(
     aspectRatio: 16 / 9,
-    videoPlayerController: VideoPlayerController.network('',
-        videoPlayerOptions: VideoPlayerOptions(mixWithOthers: false)),
+    videoPlayerController: VideoPlayerController.network(''),
   );
 
   Future<ChewieController> videoInitialize(String link) async {
@@ -170,7 +170,7 @@ class _TreningiVideoState extends State<TreningiVideo> {
           if (progress == 100) {
             log("Download success");
           } else {
-            log("$progress %%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
+            log("$progress % downloaded");
           }
         },
         deleteOnError: true,
@@ -479,10 +479,15 @@ class _TreningiVideoState extends State<TreningiVideo> {
                             ],
                           );
                         } else {
-                          return Lottie.asset(
-                            'assets/pre.json',
-                            height: 70,
-                            width: 70,
+                          return SizedBox(
+                            height: 250,
+                            child: Center(
+                              child: Lottie.asset(
+                                'assets/pre.json',
+                                height: 70,
+                                width: 70,
+                              ),
+                            ),
                           );
                         }
                       }),
