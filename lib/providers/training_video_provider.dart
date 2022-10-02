@@ -1,5 +1,5 @@
 import 'package:chewie/chewie.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hansa_lab/api_models.dart/treningi_video_model.dart';
 import 'package:hansa_lab/api_services/treningi_video_api.dart';
@@ -30,14 +30,7 @@ class TrainingVideoProvider extends ChangeNotifier {
         handleColor: const Color.fromARGB(255, 213, 0, 50),
       ),
       allowFullScreen: true,
-      deviceOrientationsOnEnterFullScreen: [
-        DeviceOrientation.landscapeLeft,
-        DeviceOrientation.landscapeRight
-      ],
-      deviceOrientationsAfterFullScreen: [
-        DeviceOrientation.portraitDown,
-        DeviceOrientation.portraitUp
-      ],
+      deviceOrientationsAfterFullScreen: [DeviceOrientation.portraitUp],
       materialProgressColors: ChewieProgressColors(
         backgroundColor: const Color(0xff090909),
         bufferedColor: const Color(0xff090909),
@@ -56,12 +49,14 @@ class TrainingVideoProvider extends ChangeNotifier {
     final chVideo =
         videoInitialize(treningiVideoModel!.data.data.data.first.videoLink);
     if (chVideo.videoPlayerController.value.size.aspectRatio > 0.0) {
-      chewieWidget = SizedBox(
-        width: isTablet ? 800 : 355,
-        child: AspectRatio(
-          aspectRatio: 16 / 9,
-          child: Chewie(
-            controller: chVideo,
+      chewieWidget = Scaffold(
+        body: SizedBox(
+          width: isTablet ? 800 : 355,
+          child: AspectRatio(
+            aspectRatio: 16 / 9,
+            child: Chewie(
+              controller: chVideo,
+            ),
           ),
         ),
       );

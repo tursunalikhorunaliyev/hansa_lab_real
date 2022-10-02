@@ -122,6 +122,7 @@ class _TopVideoWidgetState extends State<TopVideoWidget> {
         handleColor: const Color.fromARGB(255, 213, 0, 50),
       ),
     );
+    log(widget.url);
     super.initState();
   }
 
@@ -198,7 +199,6 @@ class _TopVideoWidgetState extends State<TopVideoWidget> {
                                   children: [
                                     InkWell(
                                       onTap: () {
-                                        
                                         Navigator.pop(context);
                                       },
                                       child: const Icon(

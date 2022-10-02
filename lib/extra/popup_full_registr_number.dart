@@ -44,7 +44,7 @@ class _PopUpFullRegistrNumberState extends State<PopUpFullRegistrNumber> {
   ];
 
   double radius = 54;
-  String text = "Номер";
+  String text = "Страна";
 
   listen() {
     streamController.stream.listen((event) {
@@ -111,7 +111,7 @@ class _PopUpFullRegistrNumberState extends State<PopUpFullRegistrNumber> {
                           alignment: Alignment.centerLeft,
                           child: Text(
                             text,
-                            style: text == "Номер"
+                            style: text == "Страна"
                                 ? GoogleFonts.montserrat(
                                     fontSize: isTablet ? 13 : 10,
                                     color: widget.hintColor)
