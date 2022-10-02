@@ -185,7 +185,7 @@ class _TopVideoVidgetState extends State<TopVideoVidget> {
                             .videoPlayerController.value.size.aspectRatio !=
                         0.0)
                     ? Padding(
-                        padding: const EdgeInsets.only(top: 100),
+                        padding: EdgeInsets.only(top:isTablet?150: 100),
                         child: SingleChildScrollView(
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.start,
