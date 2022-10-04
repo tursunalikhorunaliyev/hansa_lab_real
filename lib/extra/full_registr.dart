@@ -213,7 +213,7 @@ class _FullRegistrState extends State<FullRegistr> {
                                         fontSize: isTablet ? 13 : 10,
                                         fontWeight: FontWeight.w500,
                                         color: Colors.black),
-                                    controller: dataRojdeniyaController,
+                                    controller: phoneTextFieldController,
                                     decoration: InputDecoration(
                                       hintText: "Телефон",
                                       prefixIcon: Padding(
@@ -229,7 +229,13 @@ class _FullRegistrState extends State<FullRegistr> {
                                                           EnumCuntryNumber.armen
                                                       ? '+374 '
                                                       : '+7 ',
-                                          style: TextStyle(fontSize: 10),
+                                          style: TextStyle(
+                                            fontSize: 10,
+                                            color: phoneIsEmpty
+                                                ? const Color.fromARGB(
+                                                    255, 213, 0, 50)
+                                                : const Color(0xFF444444),
+                                          ),
                                         ),
                                       ),
                                       focusedBorder: OutlineInputBorder(
@@ -506,7 +512,7 @@ class _FullRegistrState extends State<FullRegistr> {
                                     dataRojdeniyaController.text.substring(6);
                               }
 
-                              /* toSignUp(
+                              toSignUp(
                                 lastname: familiyaTextEditingController.text,
                                 firstname: imyaTextEditingController.text,
                                 email: emailTextFielController.text,
@@ -522,12 +528,7 @@ class _FullRegistrState extends State<FullRegistr> {
                                 isAgreeIdentity: thirdToggle.text,
                                 isAgreePersonal: fourthToggle.text,
                                 providerFlip: providerFlip,
-                              ); */
-
-                              providerFlip['signin']!.toggleCard();
-                              scrollController.animateTo(0,
-                                  duration: const Duration(milliseconds: 100),
-                                  curve: Curves.ease);
+                              );
 
                               log(familiyaTextEditingController.text + "last");
                               log(imyaTextEditingController.text + "first");
