@@ -216,9 +216,9 @@ class _LoginCardState extends State<LoginCard> {
                               child: ToggleSwitch(
                                 colorContainer: Colors.grey[300],
                                 colorCircle: Colors.green[600],
-                                tickerSize: isTablet ? 15.sp : 21.sp,
-                                handlerWidth: isTablet ? 30.w : 40.w,
-                                handlerHeight: isTablet ? 12.h : 12.h,
+                                tickerSize: isTablet ? 12.sp : 21.sp,
+                                handlerWidth: isTablet ? 22.w : 40.w,
+                                handlerHeight: isTablet ? 10.h : 12.h,
                                 onButton: () {},
                               ),
                             )

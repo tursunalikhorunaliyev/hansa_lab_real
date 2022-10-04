@@ -14,7 +14,6 @@ import 'package:hansa_lab/providers/providers_for_video_title/video_index_provid
 import 'package:hansa_lab/training_section/custom_treningi_video.dart';
 import 'package:hansa_lab/video/bloc_video_api.dart';
 import 'package:hansa_lab/video/model_video.dart';
-import 'package:hansa_lab/video_fix.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:video_player/video_player.dart';
@@ -185,7 +184,7 @@ class _TopVideoVidgetState extends State<TopVideoVidget> {
                             .videoPlayerController.value.size.aspectRatio !=
                         0.0)
                     ? Padding(
-                        padding: const EdgeInsets.only(top: 100),
+                        padding: EdgeInsets.only(top:isTablet?150: 100),
                         child: SingleChildScrollView(
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.start,

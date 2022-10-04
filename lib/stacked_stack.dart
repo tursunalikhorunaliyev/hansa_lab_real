@@ -51,7 +51,7 @@ class StackedStack extends StatelessWidget {
                 children: [
                   SizedBox(
                       width: 410,
-                      height: 230,
+                      height: 200,
                       child: Stack(
                         children: [
                           InkWell(
@@ -89,11 +89,9 @@ class StackedStack extends StatelessWidget {
                                                 MainAxisAlignment.spaceEvenly,
                                             children: [
                                               Text(
-                                                  
                                                 day,
                                                 textScaleFactor: 1.0,
                                                 style: const TextStyle(
-                                                  
                                                     fontSize: 11),
                                               ),
                                               Text(
@@ -179,57 +177,63 @@ class StackedStack extends StatelessWidget {
                 initialData: false,
                 stream: isFavouriteBLoC.stream,
                 builder: (context, snapshot) {
-                  return Align(
-                    alignment: Alignment.centerRight,
-                    child: Padding(
-                      padding: const EdgeInsets.only(top: 115, right: 45),
-                      child: InkWell(
-                        onTap: () {
-                          fav = !fav;
-                          isFavouriteBLoC.sink.add(fav);
-                          isFavouriteBLoC.getFavourite(token, isFavouriteURL);
-                          if (fav) {
-                            showTopSnackBar(
-                              reverseCurve: Curves.elasticOut,
-                              animationDuration:
-                                  const Duration(milliseconds: 600),
-                              displayDuration:
-                                  const Duration(milliseconds: 600),
-                              context,
-                              const CustomSnackBar.success(
-                                iconRotationAngle: 0,
-                                iconPositionLeft: 30,
-                               // messagePadding:
-                                    //EdgeInsets.symmetric(horizontal: 80),
-                                icon: Icon(
-                                  Icons.favorite,
-                                  color: Colors.white,
-                                  size: 30,
+                  return Positioned(
+                    top: 180,
+                    right: 45,
+                    child: Align(
+                      alignment: Alignment.centerRight,
+                      child: Padding(
+                        padding:
+                            const EdgeInsets.only(/* top: 115, right: 45 */),
+                        child: InkWell(
+                          onTap: () {
+                            fav = !fav;
+                            isFavouriteBLoC.sink.add(fav);
+                            isFavouriteBLoC.getFavourite(token, isFavouriteURL);
+                            if (fav) {
+                              showTopSnackBar(
+                                reverseCurve: Curves.elasticOut,
+                                animationDuration:
+                                    const Duration(milliseconds: 600),
+                                displayDuration:
+                                    const Duration(milliseconds: 600),
+                                context,
+                                const CustomSnackBar.success(
+                                  iconRotationAngle: 0,
+                                  iconPositionLeft: 30,
+                                  // messagePadding:
+                                  //EdgeInsets.symmetric(horizontal: 80),
+                                  icon: Icon(
+                                    Icons.favorite,
+                                    color: Colors.white,
+                                    size: 30,
+                                  ),
+                                  backgroundColor:
+                                      Color.fromARGB(255, 213, 0, 50),
+                                  message: "Сохранено в избранном",
                                 ),
-                                backgroundColor:
-                                    Color.fromARGB(255, 213, 0, 50),
-                                message: "Сохранено в избранном",
-                              ),
-                            );
-                          }
-                        },
-                        child: Container(
-                          alignment: Alignment.center,
-                          height: 52,
-                          width: 52,
-                          decoration: const BoxDecoration(
-                              color: Color(0xfff1f1f1), shape: BoxShape.circle),
-                          child: (fav)
-                              ? const Icon(
-                                  Icons.favorite,
-                                  color: Color.fromARGB(255, 213, 0, 50),
-                                  size: 30,
-                                )
-                              : const Icon(
-                                  Icons.favorite_border_sharp,
-                                  color: Color.fromARGB(255, 213, 0, 50),
-                                  size: 30,
-                                ),
+                              );
+                            }
+                          },
+                          child: Container(
+                            alignment: Alignment.center,
+                            height: 52,
+                            width: 52,
+                            decoration: const BoxDecoration(
+                                color: Color(0xfff1f1f1),
+                                shape: BoxShape.circle),
+                            child: (fav)
+                                ? const Icon(
+                                    Icons.favorite,
+                                    color: Color.fromARGB(255, 213, 0, 50),
+                                    size: 30,
+                                  )
+                                : const Icon(
+                                    Icons.favorite_border_sharp,
+                                    color: Color.fromARGB(255, 213, 0, 50),
+                                    size: 30,
+                                  ),
+                          ),
                         ),
                       ),
                     ),

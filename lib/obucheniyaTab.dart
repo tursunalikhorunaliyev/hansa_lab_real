@@ -46,7 +46,7 @@ class _StackedStackObuchState extends State<StackedStackObuch> {
     bool fav = widget.isFavourite;
     return Center(
       child: SizedBox(
-        height: 360,
+        height: widget.link.isEmpty || widget.linkPDF.isEmpty? 365 : 390,
         width: 430,
         child: Stack(
           children: [
@@ -89,7 +89,7 @@ class _StackedStackObuchState extends State<StackedStackObuch> {
                   ),
                   Container(
                     width: 410,
-                    height: 85.h,
+                    height: 65.h,
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(5.r),
                         color: const Color(0xffffffff)),
@@ -183,53 +183,57 @@ class _StackedStackObuchState extends State<StackedStackObuch> {
                 initialData: false,
                 stream: isFavouriteBLoC.stream,
                 builder: (context, snapshot) {
-                  return Align(
-                    alignment: Alignment.centerRight,
-                    child: Padding(
-                      padding: const EdgeInsets.only(top: 115, right: 45),
-                      child: InkWell(
-                        onTap: () {
-                          fav = !fav;
-                          isFavouriteBLoC.sink.add(fav);
-                          isFavouriteBLoC.getFavourite(
-                              token, widget.isFavouriteURL);
-                              if(fav){
-                            showTopSnackBar(
-                            
-                            reverseCurve: Curves.elasticOut,
-                            animationDuration: const Duration(milliseconds: 600),
-                            displayDuration: const Duration(milliseconds: 600),
-                            context,
-                            const CustomSnackBar.success(
-                              iconRotationAngle: 0,
-                              iconPositionLeft: 30,
-                             // messagePadding: EdgeInsets.symmetric(horizontal: 20),
-                              icon: Icon(Icons.favorite, color: Colors.white, size: 30, ),
-                              backgroundColor: Color.fromARGB(255, 213, 0, 50),
-                              message:
-                                  "Сохранено в избранном",
-                            ),
-                          );
-                         }
-                        },
-                        child: Container(
-                          alignment: Alignment.center,
-                          height: 52,
-                          width: 52,
-                          decoration: BoxDecoration(
-                              color: const Color(0xfff1f1f1),
-                              borderRadius: BorderRadius.circular(90.w)),
-                          child: fav
-                              ? const Icon(
-                                  Icons.favorite,
-                                  color: Color.fromARGB(255, 213, 0, 50),
-                                  size: 30,
-                                )
-                              : const Icon(
-                                  Icons.favorite_border_sharp,
-                                  color: Color.fromARGB(255, 213, 0, 50),
-                                  size: 30,
-                                ),
+                  return Positioned(
+                    top: 207,
+                    right: 45,
+                    child: Align(
+                      alignment: Alignment.centerRight,
+                      child: Padding(
+                        padding: const EdgeInsets.only(/* top: 115, right: 45*/),
+                        child: InkWell(
+                          onTap: () {
+                            fav = !fav;
+                            isFavouriteBLoC.sink.add(fav);
+                            isFavouriteBLoC.getFavourite(
+                                token, widget.isFavouriteURL);
+                                if(fav){
+                              showTopSnackBar(
+                              
+                              reverseCurve: Curves.elasticOut,
+                              animationDuration: const Duration(milliseconds: 600),
+                              displayDuration: const Duration(milliseconds: 600),
+                              context,
+                              const CustomSnackBar.success(
+                                iconRotationAngle: 0,
+                                iconPositionLeft: 30,
+                               // messagePadding: EdgeInsets.symmetric(horizontal: 20),
+                                icon: Icon(Icons.favorite, color: Colors.white, size: 30, ),
+                                backgroundColor: Color.fromARGB(255, 213, 0, 50),
+                                message:
+                                    "Сохранено в избранном",
+                              ),
+                            );
+                           }
+                          },
+                          child: Container(
+                            alignment: Alignment.center,
+                            height: 52,
+                            width: 52,
+                            decoration: BoxDecoration(
+                                color: const Color(0xfff1f1f1),
+                                borderRadius: BorderRadius.circular(90.w)),
+                            child: fav
+                                ? const Icon(
+                                    Icons.favorite,
+                                    color: Color.fromARGB(255, 213, 0, 50),
+                                    size: 30,
+                                  )
+                                : const Icon(
+                                    Icons.favorite_border_sharp,
+                                    color: Color.fromARGB(255, 213, 0, 50),
+                                    size: 30,
+                                  ),
+                          ),
                         ),
                       ),
                     ),

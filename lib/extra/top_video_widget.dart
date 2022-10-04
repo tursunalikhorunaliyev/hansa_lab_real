@@ -122,6 +122,7 @@ class _TopVideoWidgetState extends State<TopVideoWidget> {
         handleColor: const Color.fromARGB(255, 213, 0, 50),
       ),
     );
+    log(widget.url);
     super.initState();
   }
 
@@ -141,7 +142,6 @@ class _TopVideoWidgetState extends State<TopVideoWidget> {
     final index = Provider.of<VideoIndexProvider>(context);
     final providerBlocProgress = Provider.of<DownloadProgressFileBloc>(context);
     final token = Provider.of<String>(context);
-
     return SafeArea(
       child: Stack(
         children: [
@@ -176,7 +176,7 @@ class _TopVideoWidgetState extends State<TopVideoWidget> {
               (chewieController.videoPlayerController.value.size.aspectRatio !=
                       0.0)
                   ? Padding(
-                      padding: const EdgeInsets.only(top: 100),
+                      padding:   EdgeInsets.only(top: isTablet ? 130 : 100),
                       child: SingleChildScrollView(
                         child: Column(
                           children: [
@@ -199,7 +199,6 @@ class _TopVideoWidgetState extends State<TopVideoWidget> {
                                   children: [
                                     InkWell(
                                       onTap: () {
-                                        
                                         Navigator.pop(context);
                                       },
                                       child: const Icon(

@@ -1,54 +1,59 @@
 import 'package:chewie/chewie.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
 import 'package:video_player/video_player.dart';
 
-class VideoFullscreenWidget extends StatelessWidget {
-  final VideoPlayerController? controller;
-  const VideoFullscreenWidget({super.key, required this.controller});
+class VideoFullscreenWidget extends StatefulWidget {
+  const VideoFullscreenWidget({super.key});
+
+  @override
+  State<VideoFullscreenWidget> createState() => _VideoFullscreenWidgetState();
+}
+
+class _VideoFullscreenWidgetState extends State<VideoFullscreenWidget> {
+  late ChewieController chewieController;
+
+  @override
+  void initState() {
+    chewieController = ChewieController(
+      autoPlay: true,
+      allowedScreenSleep: false,
+      autoInitialize: true,
+      fullScreenByDefault: true,
+      startAt: const Duration(seconds: 25),
+      deviceOrientationsOnEnterFullScreen: [
+        DeviceOrientation.landscapeLeft,
+        DeviceOrientation.landscapeRight
+      ],
+      deviceOrientationsAfterFullScreen: [
+        DeviceOrientation.portraitDown,
+        DeviceOrientation.portraitUp
+      ],
+      allowMuting: false,
+      videoPlayerController: VideoPlayerController.network(
+          'https://hansa-lab.ru/storage/upload/videos/RFQx56MX6ugz.mp4'),
+      cupertinoProgressColors: ChewieProgressColors(
+        backgroundColor: const Color(0xff090909),
+        bufferedColor: const Color(0xff090909),
+        playedColor: const Color.fromARGB(255, 213, 0, 50),
+        handleColor: const Color.fromARGB(255, 213, 0, 50),
+      ),
+      materialProgressColors: ChewieProgressColors(
+        backgroundColor: const Color(0xff090909),
+        bufferedColor: const Color(0xff090909),
+        playedColor: const Color.fromARGB(255, 213, 0, 50),
+        handleColor: const Color.fromARGB(255, 213, 0, 50),
+      ),
+    );
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return (controller != null && controller!.value.isInitialized)
-        ? Container(
-            alignment: Alignment.topCenter,
-            child: buildVideo(),
-          )
-        : const Center(child: CircularProgressIndicator());
-  }
-
-  Widget buildVideo() {
-    return Stack(
-      children: [
-        buildVideoPlayer(),
-      ],
-    );
-  }
-
-  Widget buildVideoPlayer() {
-    return buildFullScreen(
-      child: AspectRatio(
-        aspectRatio: controller!.value.aspectRatio,
-        child: Chewie(
-          controller: ChewieController(
-            allowFullScreen: true,
-            looping: true,
-            videoPlayerController: controller!,
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget buildFullScreen({required Widget child}) {
-    final size = controller!.value.size;
-    final width = size.width;
-    final height = size.height;
-    return FittedBox(
-      fit: BoxFit.fitWidth,
-      child: SizedBox(
-        width: width,
-        height: height,
-        child: child,
+    return Scaffold(
+      body: Chewie(
+        controller: chewieController,
       ),
     );
   }
