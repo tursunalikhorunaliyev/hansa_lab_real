@@ -159,8 +159,9 @@ class MyApp extends StatelessWidget {
             GlobalMaterialLocalizations.delegate,
             GlobalCupertinoLocalizations.delegate,
             GlobalWidgetsLocalizations.delegate,
-          ],
+          ], 
           supportedLocales: const [Locale("en"), Locale("ru"), Locale("ar")],
+
           locale: const Locale("ru"),
           debugShowCheckedModeBanner: false,
           home: const PermissionHandlerScreen(),

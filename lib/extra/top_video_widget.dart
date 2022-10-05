@@ -8,6 +8,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:hansa_lab/blocs/bloc_detect_tap.dart';
 import 'package:hansa_lab/blocs/download_progress_bloc.dart';
 import 'package:hansa_lab/blocs/menu_events_bloc.dart';
+import 'package:hansa_lab/classes/send_analise_download.dart';
 import 'package:hansa_lab/extra/black_custom_title.dart';
 import 'package:hansa_lab/extra/custom_black_appbar.dart';
 import 'package:hansa_lab/providers/providers_for_video_title/video_index_provider.dart';
@@ -142,6 +143,8 @@ class _TopVideoWidgetState extends State<TopVideoWidget> {
     final index = Provider.of<VideoIndexProvider>(context);
     final providerBlocProgress = Provider.of<DownloadProgressFileBloc>(context);
     final token = Provider.of<String>(context);
+     final providerSendAnaliseDownload =
+        Provider.of<SendAnaliseDownload>(context);
     return SafeArea(
       child: Stack(
         children: [
@@ -281,7 +284,8 @@ class _TopVideoWidgetState extends State<TopVideoWidget> {
                                         future:
                                             blocVideoApi.getData(token: token),
                                         builder: (context, snapshot) {
-                                          return Provider(
+                                          if(snapshot.hasData){
+                                            return Provider(
                                             create: (context) => blocDetectTap,
                                             child: StreamBuilder<double>(
                                                 stream:
@@ -319,6 +323,9 @@ class _TopVideoWidgetState extends State<TopVideoWidget> {
                                                               .title,
                                                           providerBlocProgress,
                                                         ).then((v) {
+                                                          providerSendAnaliseDownload
+                                                                  .setAnalise(
+                                                                      v);
                                                           log("Not download");
                                                           if (Platform.isIOS) {
                                                             GallerySaver.saveVideo(snapshot
@@ -340,6 +347,12 @@ class _TopVideoWidgetState extends State<TopVideoWidget> {
                                                   );
                                                 }),
                                           );
+
+                                          }
+                                          else{
+                                            return const SizedBox();
+                                          }
+                                          
                                         },
                                       );
                                     },
