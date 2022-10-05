@@ -20,7 +20,6 @@ import 'package:hansa_lab/blocs/read_stati_bloc.dart';
 import 'package:hansa_lab/blocs/voyti_ili_sozdata_bloc.dart';
 import 'package:hansa_lab/classes/notification_functions.dart';
 import 'package:hansa_lab/classes/notification_token.dart';
-import 'package:hansa_lab/classes/number_coubtry.dart';
 import 'package:hansa_lab/classes/send_analise_download.dart';
 import 'package:hansa_lab/classes/send_check_switcher.dart';
 import 'package:hansa_lab/classes/send_data_personal_update.dart';
@@ -159,9 +158,8 @@ class MyApp extends StatelessWidget {
             GlobalMaterialLocalizations.delegate,
             GlobalCupertinoLocalizations.delegate,
             GlobalWidgetsLocalizations.delegate,
-          ], 
+          ],
           supportedLocales: const [Locale("en"), Locale("ru"), Locale("ar")],
-
           locale: const Locale("ru"),
           debugShowCheckedModeBanner: false,
           home: const PermissionHandlerScreen(),

@@ -72,11 +72,7 @@ class _ReadStatiState extends State<ReadStati> {
         future: getData(providerToken, statieSendLinkProvider.getLInk),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
-            log(statieSendLinkProvider.getLInk + " nmedi");
-            log(statieSendLinkProvider.getLInk
-                    .substring(statieSendLinkProvider.getLInk.length - 2) +
-                " osha joy");
-            log(snapshot.data!.data.article.messagesLink + " LKKLLKKLLKKL");
+            
             return Expanded(
               child: Stack(
                 children: [
