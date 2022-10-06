@@ -15,6 +15,7 @@ import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:http/http.dart' as http;
+import 'package:url_launcher/url_launcher.dart';
 
 class ReadStati extends StatefulWidget {
   const ReadStati({Key? key}) : super(key: key);
@@ -162,7 +163,11 @@ class _ReadStatiState extends State<ReadStati> {
                             ),
                             Html(
                               data: snapshot.data!.data.article.body,
+                              onLinkTap: (url, context, attributes, element) {
+                                launchUrl(Uri.parse(url!));
+                              },
                             ),
+                          
                             Padding(
                               padding:
                                   const EdgeInsets.symmetric(horizontal: 10.0),
@@ -172,131 +177,6 @@ class _ReadStatiState extends State<ReadStati> {
                                   children: [
                                     const SizedBox(
                                       height: 10,
-                                    ),
-                                    Container(
-                                      height: 54.66666666666667,
-                                      width: double.infinity,
-                                      decoration: BoxDecoration(
-                                          color: const Color(0xFFffffff),
-                                          borderRadius:
-                                              BorderRadius.circular(5),
-                                          boxShadow: [
-                                            BoxShadow(
-                                                color: Colors.black
-                                                    .withOpacity(.3),
-                                                blurRadius: 30,
-                                                offset: const Offset(3, 7))
-                                          ]),
-                                      child: Row(
-                                        mainAxisAlignment: isTablet
-                                            ? MainAxisAlignment.spaceEvenly
-                                            : MainAxisAlignment.spaceAround,
-                                        children: [
-                                          SizedBox(
-                                            width: isTablet ? 20 : 0,
-                                          ),
-                                          Container(
-                                            height: 32.22333333333333,
-                                            width: 82.40333333333333,
-                                            decoration: BoxDecoration(
-                                                borderRadius:
-                                                    BorderRadius.circular(
-                                                        11.66666666666667),
-                                                color: const Color.fromARGB(
-                                                    255, 213, 0, 50)),
-                                            child: Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.spaceEvenly,
-                                              children: [
-                                                Text(
-                                                  snapshot
-                                                      .data!.data.article.rating
-                                                      .toString(),
-                                                  style: GoogleFonts.montserrat(
-                                                    color: Colors.white,
-                                                  ),
-                                                ),
-                                                const Icon(
-                                                  Icons.star,
-                                                  size: 14,
-                                                  color: Colors.white,
-                                                )
-                                              ],
-                                            ),
-                                          ),
-                                          SizedBox(
-                                            width: isTablet ? 15 : 0,
-                                          ),
-                                          Text(
-                                            "Коментариев ${snapshot.data!.data.article.listMessageComment.list.length}",
-                                            style: GoogleFonts.montserrat(
-                                              color: const Color(0xFF777777),
-                                              fontSize: 13.81,
-                                            ),
-                                          ),
-                                          isTablet
-                                              ? const Spacer()
-                                              : const SizedBox(),
-                                          SizedBox(
-                                            height: 46.03666666666667,
-                                            width: 46.03666666666667,
-                                            child: Image.asset(
-                                              "assets/imageLAB.png",
-                                              fit: BoxFit.cover,
-                                            ),
-                                          ),
-                                          SizedBox(
-                                            width: isTablet ? 20 : 0,
-                                          )
-                                        ],
-                                      ),
-                                    ),
-                                    const SizedBox(
-                                      height: 19.33333333333333,
-                                    ),
-                                    Column(
-                                      children: List.generate(
-                                          snapshot
-                                              .data!
-                                              .data
-                                              .article
-                                              .listMessageComment
-                                              .list
-                                              .length, (index) {
-                                        int length = snapshot.data!.data.article
-                                            .listMessageComment.list.length;
-                                        return StatiComment(
-                                          comment: snapshot
-                                              .data!
-                                              .data
-                                              .article
-                                              .listMessageComment
-                                              .list[length - index - 1]
-                                              .body,
-                                          imageURl: snapshot
-                                              .data!
-                                              .data
-                                              .article
-                                              .listMessageComment
-                                              .list[length - index - 1]
-                                              .pictureLink,
-                                          name: snapshot
-                                              .data!
-                                              .data
-                                              .article
-                                              .listMessageComment
-                                              .list[length - index - 1]
-                                              .fullname,
-                                          initialRating: snapshot
-                                              .data!
-                                              .data
-                                              .article
-                                              .listMessageComment
-                                              .list[length - index - 1]
-                                              .rang
-                                              .toDouble(),
-                                        );
-                                      }),
                                     ),
                                     const SizedBox(
                                       height: 10,
@@ -395,9 +275,135 @@ class _ReadStatiState extends State<ReadStati> {
                                         ),
                                       ),
                                     ),
-                                    const SizedBox(
-                                      height: 300,
+                                  const  SizedBox(height: 40,),
+                                    Container(
+                                      height: 54.66666666666667,
+                                      width: double.infinity,
+                                      decoration: BoxDecoration(
+                                          color: const Color(0xFFffffff),
+                                          borderRadius:
+                                              BorderRadius.circular(5),
+                                          boxShadow: [
+                                            BoxShadow(
+                                                color: Colors.black
+                                                    .withOpacity(.3),
+                                                blurRadius: 30,
+                                                offset: const Offset(3, 7))
+                                          ]),
+                                      child: Row(
+                                        mainAxisAlignment: isTablet
+                                            ? MainAxisAlignment.spaceEvenly
+                                            : MainAxisAlignment.spaceAround,
+                                        children: [
+                                          SizedBox(
+                                            width: isTablet ? 20 : 0,
+                                          ),
+                                          Container(
+                                            height: 32.22333333333333,
+                                            width: 82.40333333333333,
+                                            decoration: BoxDecoration(
+                                                borderRadius:
+                                                    BorderRadius.circular(
+                                                        11.66666666666667),
+                                                color: const Color.fromARGB(
+                                                    255, 213, 0, 50)),
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.spaceEvenly,
+                                              children: [
+                                                Text(
+                                                  snapshot
+                                                      .data!.data.article.rating
+                                                      .toString(),
+                                                  style: GoogleFonts.montserrat(
+                                                    color: Colors.white,
+                                                  ),
+                                                ),
+                                                const Icon(
+                                                  Icons.star,
+                                                  size: 14,
+                                                  color: Colors.white,
+                                                )
+                                              ],
+                                            ),
+                                          ),
+                                          SizedBox(
+                                            width: isTablet ? 15 : 0,
+                                          ),
+                                          Text(
+                                            "Коментариев ${snapshot.data!.data.article.listMessageComment.list.length}",
+                                            style: GoogleFonts.montserrat(
+                                              color: const Color(0xFF777777),
+                                              fontSize: 13.81,
+                                            ),
+                                          ),
+                                          isTablet
+                                              ? const Spacer()
+                                              : const SizedBox(),
+                                          SizedBox(
+                                            height: 46.03666666666667,
+                                            width: 46.03666666666667,
+                                            child: Image.asset(
+                                              "assets/imageLAB.png",
+                                              fit: BoxFit.cover,
+                                            ),
+                                          ),
+                                          SizedBox(
+                                            width: isTablet ? 20 : 0,
+                                          )
+                                        ],
+                                      ),
                                     ),
+                                    
+                                    const SizedBox(
+                                      height: 19.33333333333333,
+                                    ),
+                                    Column(
+                                      children: List.generate(
+                                          snapshot
+                                              .data!
+                                              .data
+                                              .article
+                                              .listMessageComment
+                                              .list
+                                              .length, (index) {
+                                        int length = snapshot.data!.data.article
+                                            .listMessageComment.list.length;
+                                        return StatiComment(
+                                          comment: snapshot
+                                              .data!
+                                              .data
+                                              .article
+                                              .listMessageComment
+                                              .list[index]
+                                              .body,
+                                          imageURl: snapshot
+                                              .data!
+                                              .data
+                                              .article
+                                              .listMessageComment
+                                              .list[index]
+                                              .pictureLink,
+                                          name: snapshot
+                                              .data!
+                                              .data
+                                              .article
+                                              .listMessageComment
+                                              .list[index]
+                                              .fullname,
+                                          initialRating: snapshot
+                                              .data!
+                                              .data
+                                              .article
+                                              .listMessageComment
+                                              .list[index]
+                                              .rang
+                                              .toDouble(),
+                                        );
+                                      }),
+                                    ),
+                                    
+                                    
                                   ]),
                             ),
                           ]),
