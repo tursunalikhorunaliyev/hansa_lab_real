@@ -70,11 +70,16 @@ class _StatiCommentState extends State<StatiComment> {
                   const SizedBox(
                     height: 7,
                   ),
-                  Text(
-                    widget.name,
-                    style: GoogleFonts.montserrat(
-                      color: const Color(0xFF474747),
-                      fontSize: 15.65333333333333,
+                  SizedBox(
+                    width: 280,
+                    child: Text(
+
+                      widget.name,
+                      overflow: TextOverflow.clip,
+                      style: GoogleFonts.montserrat(
+                        color: const Color(0xFF474747),
+                        fontSize: 15.65333333333333,
+                      ),
                     ),
                   )
                 ],
