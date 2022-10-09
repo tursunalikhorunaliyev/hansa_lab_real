@@ -33,13 +33,6 @@
 		D756648928EEAA4C00152EE4 /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D756648728EEAA4C00152EE4 /* MainInterface.storyboard */; };
 		D756648D28EEAA4C00152EE4 /* Hansa File AccessUI.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = D756648328EEAA4C00152EE4 /* Hansa File AccessUI.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		D756649028EEAA4C00152EE4 /* Hansa File Access.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = D756647328EEAA4C00152EE4 /* Hansa File Access.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		D75664A028EEAA7900152EE4 /* ShareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D756649F28EEAA7900152EE4 /* ShareViewController.swift */; };
-		D75664A328EEAA7900152EE4 /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D75664A128EEAA7900152EE4 /* MainInterface.storyboard */; };
-		D75664A728EEAA7900152EE4 /* Hansa Share.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = D756649D28EEAA7900152EE4 /* Hansa Share.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		D75664B128EEAAD100152EE4 /* AuthenticationServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D756643728EEA62200152EE4 /* AuthenticationServices.framework */; };
-		D75664B428EEAAD100152EE4 /* CredentialProviderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D75664B328EEAAD100152EE4 /* CredentialProviderViewController.swift */; };
-		D75664B728EEAAD100152EE4 /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D75664B528EEAAD100152EE4 /* MainInterface.storyboard */; };
-		D75664BC28EEAAD100152EE4 /* Hansa autofill.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = D75664B028EEAAD100152EE4 /* Hansa autofill.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -78,20 +71,6 @@
 			remoteGlobalIDString = D756647228EEAA4C00152EE4;
 			remoteInfo = "Hansa File Access";
 		};
-		D75664A528EEAA7900152EE4 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 97C146E61CF9000F007C117D /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = D756649C28EEAA7900152EE4;
-			remoteInfo = "Hansa Share";
-		};
-		D75664BA28EEAAD100152EE4 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 97C146E61CF9000F007C117D /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = D75664AF28EEAAD100152EE4;
-			remoteInfo = "Hansa autofill";
-		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -114,8 +93,6 @@
 				D756648D28EEAA4C00152EE4 /* Hansa File AccessUI.appex in Embed App Extensions */,
 				D756649028EEAA4C00152EE4 /* Hansa File Access.appex in Embed App Extensions */,
 				D756646A28EEA67D00152EE4 /* Hansa Notification Service.appex in Embed App Extensions */,
-				D75664A728EEAA7900152EE4 /* Hansa Share.appex in Embed App Extensions */,
-				D75664BC28EEAAD100152EE4 /* Hansa autofill.appex in Embed App Extensions */,
 				D756645A28EEA65F00152EE4 /* Hansa Notification.appex in Embed App Extensions */,
 				D756644228EEA62200152EE4 /* Hansa-LAB.appex in Embed App Extensions */,
 			);
@@ -167,11 +144,9 @@
 		D756648528EEAA4C00152EE4 /* DocumentActionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentActionViewController.swift; sourceTree = "<group>"; };
 		D756648828EEAA4C00152EE4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainInterface.storyboard; sourceTree = "<group>"; };
 		D756648A28EEAA4C00152EE4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		D756649D28EEAA7900152EE4 /* Hansa Share.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "Hansa Share.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D756649F28EEAA7900152EE4 /* ShareViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareViewController.swift; sourceTree = "<group>"; };
 		D75664A228EEAA7900152EE4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainInterface.storyboard; sourceTree = "<group>"; };
 		D75664A428EEAA7900152EE4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		D75664B028EEAAD100152EE4 /* Hansa autofill.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "Hansa autofill.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D75664B328EEAAD100152EE4 /* CredentialProviderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CredentialProviderViewController.swift; sourceTree = "<group>"; };
 		D75664B628EEAAD100152EE4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainInterface.storyboard; sourceTree = "<group>"; };
 		D75664B828EEAAD100152EE4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -226,21 +201,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		D756649A28EEAA7900152EE4 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		D75664AD28EEAAD100152EE4 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				D75664B128EEAAD100152EE4 /* AuthenticationServices.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -282,8 +242,6 @@
 				D756646328EEA67C00152EE4 /* Hansa Notification Service.appex */,
 				D756647328EEAA4C00152EE4 /* Hansa File Access.appex */,
 				D756648328EEAA4C00152EE4 /* Hansa File AccessUI.appex */,
-				D756649D28EEAA7900152EE4 /* Hansa Share.appex */,
-				D75664B028EEAAD100152EE4 /* Hansa autofill.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -423,8 +381,6 @@
 				D756646928EEA67D00152EE4 /* PBXTargetDependency */,
 				D756648C28EEAA4C00152EE4 /* PBXTargetDependency */,
 				D756648F28EEAA4C00152EE4 /* PBXTargetDependency */,
-				D75664A628EEAA7900152EE4 /* PBXTargetDependency */,
-				D75664BB28EEAAD100152EE4 /* PBXTargetDependency */,
 			);
 			name = Runner;
 			productName = Runner;
@@ -516,40 +472,6 @@
 			productReference = D756648328EEAA4C00152EE4 /* Hansa File AccessUI.appex */;
 			productType = "com.apple.product-type.app-extension";
 		};
-		D756649C28EEAA7900152EE4 /* Hansa Share */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = D75664A828EEAA7900152EE4 /* Build configuration list for PBXNativeTarget "Hansa Share" */;
-			buildPhases = (
-				D756649928EEAA7900152EE4 /* Sources */,
-				D756649A28EEAA7900152EE4 /* Frameworks */,
-				D756649B28EEAA7900152EE4 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = "Hansa Share";
-			productName = "Hansa Share";
-			productReference = D756649D28EEAA7900152EE4 /* Hansa Share.appex */;
-			productType = "com.apple.product-type.app-extension";
-		};
-		D75664AF28EEAAD100152EE4 /* Hansa autofill */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = D75664BD28EEAAD100152EE4 /* Build configuration list for PBXNativeTarget "Hansa autofill" */;
-			buildPhases = (
-				D75664AC28EEAAD100152EE4 /* Sources */,
-				D75664AD28EEAAD100152EE4 /* Frameworks */,
-				D75664AE28EEAAD100152EE4 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = "Hansa autofill";
-			productName = "Hansa autofill";
-			productReference = D75664B028EEAAD100152EE4 /* Hansa autofill.appex */;
-			productType = "com.apple.product-type.app-extension";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -579,12 +501,6 @@
 					D756648228EEAA4C00152EE4 = {
 						CreatedOnToolsVersion = 13.4.1;
 					};
-					D756649C28EEAA7900152EE4 = {
-						CreatedOnToolsVersion = 13.4.1;
-					};
-					D75664AF28EEAAD100152EE4 = {
-						CreatedOnToolsVersion = 13.4.1;
-					};
 				};
 			};
 			buildConfigurationList = 97C146E91CF9000F007C117D /* Build configuration list for PBXProject "Runner" */;
@@ -606,8 +522,6 @@
 				D756646228EEA67C00152EE4 /* Hansa Notification Service */,
 				D756647228EEAA4C00152EE4 /* Hansa File Access */,
 				D756648228EEAA4C00152EE4 /* Hansa File AccessUI */,
-				D756649C28EEAA7900152EE4 /* Hansa Share */,
-				D75664AF28EEAAD100152EE4 /* Hansa autofill */,
 			);
 		};
 /* End PBXProject section */
@@ -659,22 +573,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				D756648928EEAA4C00152EE4 /* MainInterface.storyboard in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		D756649B28EEAA7900152EE4 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				D75664A328EEAA7900152EE4 /* MainInterface.storyboard in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		D75664AE28EEAAD100152EE4 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				D75664B728EEAAD100152EE4 /* MainInterface.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -822,22 +720,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		D756649928EEAA7900152EE4 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				D75664A028EEAA7900152EE4 /* ShareViewController.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		D75664AC28EEAAD100152EE4 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				D75664B428EEAAD100152EE4 /* CredentialProviderViewController.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -865,16 +747,6 @@
 			isa = PBXTargetDependency;
 			target = D756647228EEAA4C00152EE4 /* Hansa File Access */;
 			targetProxy = D756648E28EEAA4C00152EE4 /* PBXContainerItemProxy */;
-		};
-		D75664A628EEAA7900152EE4 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = D756649C28EEAA7900152EE4 /* Hansa Share */;
-			targetProxy = D75664A528EEAA7900152EE4 /* PBXContainerItemProxy */;
-		};
-		D75664BB28EEAAD100152EE4 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = D75664AF28EEAAD100152EE4 /* Hansa autofill */;
-			targetProxy = D75664BA28EEAAD100152EE4 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -1681,213 +1553,6 @@
 			};
 			name = Profile;
 		};
-		D75664A928EEAA7900152EE4 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
-				CLANG_ENABLE_OBJC_WEAK = YES;
-				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
-				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = T83P45N4G2;
-				GCC_C_LANGUAGE_STANDARD = gnu11;
-				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = "Hansa Share/Info.plist";
-				INFOPLIST_KEY_CFBundleDisplayName = "Hansa Share";
-				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.5;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@executable_path/../../Frameworks",
-				);
-				MARKETING_VERSION = 1.0;
-				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
-				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.hansa.hansaLab.Hansa-Share";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SKIP_INSTALL = YES;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
-				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Debug;
-		};
-		D75664AA28EEAA7900152EE4 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
-				CLANG_ENABLE_OBJC_WEAK = YES;
-				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
-				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = T83P45N4G2;
-				GCC_C_LANGUAGE_STANDARD = gnu11;
-				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = "Hansa Share/Info.plist";
-				INFOPLIST_KEY_CFBundleDisplayName = "Hansa Share";
-				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.5;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@executable_path/../../Frameworks",
-				);
-				MARKETING_VERSION = 1.0;
-				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.hansa.hansaLab.Hansa-Share";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SKIP_INSTALL = YES;
-				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Release;
-		};
-		D75664AB28EEAA7900152EE4 /* Profile */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
-				CLANG_ENABLE_OBJC_WEAK = YES;
-				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
-				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = T83P45N4G2;
-				GCC_C_LANGUAGE_STANDARD = gnu11;
-				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = "Hansa Share/Info.plist";
-				INFOPLIST_KEY_CFBundleDisplayName = "Hansa Share";
-				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.5;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@executable_path/../../Frameworks",
-				);
-				MARKETING_VERSION = 1.0;
-				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.hansa.hansaLab.Hansa-Share";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SKIP_INSTALL = YES;
-				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Profile;
-		};
-		D75664BE28EEAAD100152EE4 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
-				CLANG_ENABLE_OBJC_WEAK = YES;
-				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
-				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CODE_SIGN_ENTITLEMENTS = "Hansa autofill/Hansa_autofill.entitlements";
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = T83P45N4G2;
-				GCC_C_LANGUAGE_STANDARD = gnu11;
-				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = "Hansa autofill/Info.plist";
-				INFOPLIST_KEY_CFBundleDisplayName = "Hansa autofill";
-				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.5;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@executable_path/../../Frameworks",
-				);
-				MARKETING_VERSION = 1.0;
-				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
-				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.hansa.hansaLab.Hansa-autofill";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SKIP_INSTALL = YES;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
-				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Debug;
-		};
-		D75664BF28EEAAD100152EE4 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
-				CLANG_ENABLE_OBJC_WEAK = YES;
-				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
-				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CODE_SIGN_ENTITLEMENTS = "Hansa autofill/Hansa_autofill.entitlements";
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = T83P45N4G2;
-				GCC_C_LANGUAGE_STANDARD = gnu11;
-				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = "Hansa autofill/Info.plist";
-				INFOPLIST_KEY_CFBundleDisplayName = "Hansa autofill";
-				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.5;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@executable_path/../../Frameworks",
-				);
-				MARKETING_VERSION = 1.0;
-				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.hansa.hansaLab.Hansa-autofill";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SKIP_INSTALL = YES;
-				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Release;
-		};
-		D75664C028EEAAD100152EE4 /* Profile */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
-				CLANG_ENABLE_OBJC_WEAK = YES;
-				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
-				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CODE_SIGN_ENTITLEMENTS = "Hansa autofill/Hansa_autofill.entitlements";
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = T83P45N4G2;
-				GCC_C_LANGUAGE_STANDARD = gnu11;
-				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = "Hansa autofill/Info.plist";
-				INFOPLIST_KEY_CFBundleDisplayName = "Hansa autofill";
-				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.5;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@executable_path/../../Frameworks",
-				);
-				MARKETING_VERSION = 1.0;
-				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.hansa.hansaLab.Hansa-autofill";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SKIP_INSTALL = YES;
-				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Profile;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -1957,26 +1622,6 @@
 				D756649628EEAA4C00152EE4 /* Debug */,
 				D756649728EEAA4C00152EE4 /* Release */,
 				D756649828EEAA4C00152EE4 /* Profile */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		D75664A828EEAA7900152EE4 /* Build configuration list for PBXNativeTarget "Hansa Share" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				D75664A928EEAA7900152EE4 /* Debug */,
-				D75664AA28EEAA7900152EE4 /* Release */,
-				D75664AB28EEAA7900152EE4 /* Profile */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		D75664BD28EEAAD100152EE4 /* Build configuration list for PBXNativeTarget "Hansa autofill" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				D75664BE28EEAAD100152EE4 /* Debug */,
-				D75664BF28EEAAD100152EE4 /* Release */,
-				D75664C028EEAAD100152EE4 /* Profile */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
