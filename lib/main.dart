@@ -46,6 +46,8 @@ import 'package:hansa_lab/providers/stati_id_provider.dart';
 import 'package:hansa_lab/providers/treningi_photos_provider.dart';
 import 'package:hansa_lab/providers/treningi_video_changer_provider.dart';
 import 'package:hansa_lab/providers/treningi_videos_provider.dart';
+import 'package:hansa_lab/providers/video_ind_provider.dart';
+import 'package:hansa_lab/providers/video_tit_provider.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:provider/provider.dart';
 
@@ -146,7 +148,12 @@ class MyApp extends StatelessWidget {
           ChangeNotifierProvider<ProviderOtpravitPushUvodamleniya>(
             create: (context) => providerSendListPopupGorod,
           ),
-
+          Provider(
+            create: (context) => VideoTitProvider(),
+          ),
+          Provider(
+            create: (context) => VideoIndProvider(),
+          ),
         ],
         child: MaterialApp(
           builder: (context, child) {
