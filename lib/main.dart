@@ -46,6 +46,7 @@ import 'package:hansa_lab/providers/stati_id_provider.dart';
 import 'package:hansa_lab/providers/treningi_photos_provider.dart';
 import 'package:hansa_lab/providers/treningi_video_changer_provider.dart';
 import 'package:hansa_lab/providers/treningi_videos_provider.dart';
+import 'package:hansa_lab/screens/pdf_viewer.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:provider/provider.dart';
 
@@ -162,7 +163,7 @@ class MyApp extends StatelessWidget {
           supportedLocales: const [Locale("en"), Locale("ru"), Locale("ar")],
           locale: const Locale("ru"),
           debugShowCheckedModeBanner: false,
-          home: const PermissionHandlerScreen(),
+          home: const PDFViewer(),
         ),
       ),
     );
