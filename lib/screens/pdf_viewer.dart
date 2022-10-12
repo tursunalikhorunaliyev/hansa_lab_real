@@ -12,8 +12,13 @@ class _PDFViewerState extends State<PDFViewer> {
   @override
   Widget build(BuildContext context) {
     return  Scaffold(
-      body: Center(
-        child: SfPdfViewer.network("https://hansa-lab.ru/storage/upload/guide/m1.pdf"),
+      body: Column(
+        children: [
+          Container(color: Colors.red,width: 300,height: 300,),
+          Center(
+            child: SfPdfViewer.network("https://hansa-lab.ru/storage/upload/guide/m1.pdf"),
+          ),
+        ],
       ),
     );
   }
