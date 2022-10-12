@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -55,21 +56,27 @@ class _PopupFullRegistrNazvaniySetiState
   @override
   Widget build(BuildContext context) {
     final isTablet = Provider.of<bool>(context);
-    final newShop = Provider.of<NewShopProvider>(context);
     final blocStoreData = StoreData();
     blocStoreData.eventSink.add(StoreEnum.store);
     final nazvanieTextEditingController =
         Provider.of<TextEditingController>(context);
 
+    final providerStreamController =
+        Provider.of<StreamController<bool>>(context);
+
     return StreamBuilder<double>(
-        initialData: isTablet ? 40  : 38,
+        initialData: isTablet ? 40 : 38,
         stream: blocPopupDrawer.dataStream,
         builder: (context, snapshotSizeDrawer) {
           return InkWell(
             onTap: () {
               widget.onTap();
               blocPopupDrawer.dataSink
-                  .add(snapshotSizeDrawer.data! == (isTablet ? 40  : 38) ? 300 : isTablet ? 40  : 38);
+                  .add(snapshotSizeDrawer.data! == (isTablet ? 40 : 38)
+                      ? 283
+                      : isTablet
+                          ? 40
+                          : 38);
               radius = radius == 54 ? 10 : 54;
             },
             child: Padding(
@@ -111,9 +118,6 @@ class _PopupFullRegistrNazvaniySetiState
                           ),
                         ),
                       ),
-                      const SizedBox(
-                        height: 10,
-                      ),
                       StreamBuilder<StoreModel>(
                           stream: blocStoreData.stream,
                           builder: (context, snapshotStore) {
@@ -122,79 +126,9 @@ class _PopupFullRegistrNazvaniySetiState
                                   .add(snapshotStore.data!.data.list);
 
                               return Visibility(
-                                visible: (radius > 50) ? false : true,
+                                visible: radius == 54 ? false : true,
                                 child: Column(
                                   children: [
-                                    SizedBox(
-                                      height: 40,
-                                      child: Padding(
-                                        padding: const EdgeInsets.only(
-                                            right: 10, top: 5),
-                                        child: TextField(
-                                          style: const TextStyle(fontSize: 13),
-                                          controller: newShopText,
-                                          decoration: InputDecoration(
-                                              focusedBorder:
-                                                  const OutlineInputBorder(
-                                                      borderRadius:
-                                                          BorderRadius.all(
-                                                              Radius.circular(
-                                                                  10)),
-                                                      borderSide: BorderSide(
-                                                          color: Colors.green)),
-                                              suffixIcon: ClipRRect(
-                                                borderRadius:
-                                                    const BorderRadius.only(
-                                                  topRight: Radius.circular(10),
-                                                  bottomRight:
-                                                      Radius.circular(10),
-                                                ),
-                                                child: MaterialButton(
-                                                  onPressed: () {
-                                                    if (newShopText
-                                                        .text.isNotEmpty) {
-                                                      newShop.setNewShop(
-                                                          newShopText.text);
-                                                      text = newShopText.text;
-                                                      nazvanieTextEditingController
-                                                          .text = "";
-                                                      blocPopupDrawer.dataSink
-                                                          .add(snapshotStore
-                                                                      .data! ==
-                                                                  38
-                                                              ? 200
-                                                              : 38);
-                                                      radius = radius == 54
-                                                          ? 10
-                                                          : 54;
-                                                    }
-                                                  },
-                                                  height: 30,
-                                                  minWidth: 30,
-                                                  color: Colors.green,
-                                                  child: Text(
-                                                    "OK",
-                                                    style:
-                                                        GoogleFonts.montserrat(
-                                                            fontSize: 10,
-                                                            color:
-                                                                Colors.white),
-                                                  ),
-                                                ),
-                                              ),
-                                              contentPadding:
-                                                  const EdgeInsets.only(
-                                                      left: 10),
-                                              hintText: "Новый",
-                                              hintStyle:
-                                                  const TextStyle(fontSize: 13),
-                                              border: OutlineInputBorder(
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          10))),
-                                        ),
-                                      ),
-                                    ),
                                     const SizedBox(
                                       height: 10,
                                     ),
@@ -221,8 +155,28 @@ class _PopupFullRegistrNazvaniySetiState
                                         ),
                                       ),
                                     ),
-                                    const SizedBox(
-                                      height: 10,
+                                    TextButton(
+                                      onPressed: () {
+                                        providerStreamController.sink.add(true);
+                                        nazvanieTextEditingController.text =
+                                            "Другое";
+                                        text = "Другое";
+
+                                        blocPopupDrawer.dataSink.add(
+                                            snapshotSizeDrawer.data! == 38
+                                                ? 200
+                                                : 38);
+                                        radius = radius == 54 ? 10 : 54;
+                                      },
+                                      child: Align(
+                                        alignment: Alignment.centerLeft,
+                                        child: Text(
+                                          "Другое",
+                                          style: TextStyle(
+                                              color: widget.hintColor,
+                                              fontSize: 10),
+                                        ),
+                                      ),
                                     ),
                                     SizedBox(
                                       height: 160,
@@ -238,8 +192,8 @@ class _PopupFullRegistrNazvaniySetiState
                                             final nazvanSeti = one[index];
                                             return TextButton(
                                               onPressed: () {
-                                                newShop.setNewShop(
-                                                    nazvanSeti.id.toString());
+                                                providerStreamController.sink
+                                                    .add(false);
 
                                                 nazvanieTextEditingController
                                                         .text =
@@ -247,7 +201,8 @@ class _PopupFullRegistrNazvaniySetiState
                                                 text = nazvanSeti.name;
 
                                                 blocPopupDrawer.dataSink.add(
-                                                    nazvanSeti == 38
+                                                    snapshotSizeDrawer.data! ==
+                                                            38
                                                         ? 200
                                                         : 38);
                                                 radius = radius == 54 ? 10 : 54;
@@ -287,7 +242,7 @@ class _PopupFullRegistrNazvaniySetiState
     final suggestions = all.where((nazvan) {
       final nazvanName = nazvan.name.toLowerCase();
       final input = query.toLowerCase();
-      return nazvanName.startsWith(input) || nazvanName.contains(input) ;
+      return nazvanName.startsWith(input) || nazvanName.contains(input);
     }).toList();
 
     setState(() {

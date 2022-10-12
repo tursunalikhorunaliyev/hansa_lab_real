@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
@@ -79,10 +81,11 @@ class MyApp extends StatelessWidget {
     final providerOtpravitPushUvodamleniya = ProviderOtpravitPushUvodamleniya();
     final providerSendListPopupGorod = ProviderOtpravitPushUvodamleniya();
     final providerNumberCountry = BlocNumberCountry();
+    final providerStreamController  = StreamController<bool>.broadcast();
 
     Size size = WidgetsBinding.instance.window.physicalSize;
     bool isTablet = (size.width / 3) > 500;
-    Map<String, FlipCardController> map = {
+    Map<String, FlipCardController> map = { 
       "login": FlipCardController(),
       "signin": FlipCardController(),
       "toLogin": FlipCardController(),
@@ -98,7 +101,6 @@ class MyApp extends StatelessWidget {
           ChangeNotifierProvider(create: (context) => StatiIdProvider()),
           ChangeNotifierProvider(
               create: (context) => TreningiVideoChangerProvider()),
-          ChangeNotifierProvider(create: (context) => NewShopProvider()),
           ChangeNotifierProvider(create: (context) => FlipProvider()),
           ChangeNotifierProvider(create: (context) => LoginClickedProvider()),
           ChangeNotifierProvider(create: (context) => FlipLoginProvider()),
@@ -147,8 +149,10 @@ class MyApp extends StatelessWidget {
           ChangeNotifierProvider<ProviderOtpravitPushUvodamleniya>(
             create: (context) => providerSendListPopupGorod,
           ),
-
-        ],
+       
+              Provider<StreamController<bool>>(
+              create: (context) => providerStreamController),
+        ], 
         child: MaterialApp(
           builder: (context, child) {
             return MediaQuery(
