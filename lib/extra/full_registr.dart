@@ -14,6 +14,7 @@ import 'package:hansa_lab/extra/popup_full_registr_doljnost.dart';
 import 'package:hansa_lab/extra/popup_full_registr_gorod.dart';
 import 'package:hansa_lab/extra/popup_full_registr_nazvaniy_seti.dart';
 import 'package:hansa_lab/extra/popup_full_registr_number.dart';
+import 'package:hansa_lab/extra/textField_for_new_nazvan.dart';
 import 'package:hansa_lab/extra/text_field_for_full_reg.dart';
 import 'package:hansa_lab/providers/new_shop_provider.dart';
 import 'package:hansa_lab/providers/provider_for_flipping/flip_login_provider.dart';
@@ -37,13 +38,14 @@ class _FullRegistrState extends State<FullRegistr> {
   bool doljnostIsEmpty = false;
   bool gorodIsEmpty = false;
   bool adressIsEmpty = false;
+  bool newNazvanIsEmpty = false;
 
   final imyaTextEditingController = TextEditingController();
   final familiyaTextEditingController = TextEditingController();
   final emailTextFielController = TextEditingController();
   final phoneTextFieldController = TextEditingController();
   final adresTorgoviySetTextFielController = TextEditingController();
-  final nazvaniyaTextFieldController = TextEditingController();
+  final nazvaniyaTextFieldController = TextEditingController(text: "null");
   final doljnostTextFieldController = TextEditingController();
   final gorodTextFieldController = TextEditingController();
   final dataRojdeniyaController = TextEditingController();
@@ -53,6 +55,7 @@ class _FullRegistrState extends State<FullRegistr> {
   final thirdToggle = TextEditingController(text: "0");
   final fourthToggle = TextEditingController(text: "0");
   final dateBurnBloC = DateBornTextBloC();
+  final newNazvanController = TextEditingController();
   FocusNode node = FocusNode();
 
   bool isHintDate = true;
@@ -67,9 +70,11 @@ class _FullRegistrState extends State<FullRegistr> {
   Widget build(BuildContext context) {
     final flipLoginProvider = Provider.of<FlipLoginProvider>(context);
     final isTablet = Provider.of<bool>(context);
-    final newShop = Provider.of<NewShopProvider>(context);
     final providerFlip = Provider.of<Map<String, FlipCardController>>(context);
     final providerNumberCountry = Provider.of<BlocNumberCountry>(context);
+
+    final providerStreamController =
+        Provider.of<StreamController<bool>>(context);
 
     log("SignUp build");
     final blocCity = HansaCountryBloC(1);
@@ -346,6 +351,41 @@ class _FullRegistrState extends State<FullRegistr> {
                             onTap: () =>
                                 setState(() => nazvaniyaIsEmpty = false),
                           )),
+                      StreamBuilder<bool>(
+                        stream: providerStreamController.stream,
+                        builder: (context, snapshot) {
+                          if (snapshot.hasData) {
+                            return Column(
+                              children: [
+                                Visibility(
+                                    visible: snapshot.data!,
+                                    child: Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          vertical: 4),
+                                      child: TextFieldForNewNazvan(
+                                        onTap: () {
+                                          setState(() => newNazvanIsEmpty = false);
+                                        },
+                                         textEditingController:
+                                            newNazvanController,
+                                        hintColor: newNazvanIsEmpty
+                                            ? const Color.fromARGB(
+                                                255, 213, 0, 50)
+                                            : const Color(0xFF444444),
+                                       
+                                        borderColor: newNazvanIsEmpty
+                                            ? const Color.fromARGB(
+                                                255, 213, 0, 50)
+                                            : const Color(0xFF000000),
+                                      ),
+                                    )),
+                              ],
+                            );
+                          } else {
+                            return const SizedBox();
+                          }
+                        },
+                      ),
                       const SizedBox(
                         height: 4,
                       ),
@@ -497,87 +537,116 @@ class _FullRegistrState extends State<FullRegistr> {
                             right: 9,
                             top: isTablet ? 30 : 25,
                           ),
-                          child: GestureDetector(
-                            onTap: () {
-                              dynamic day;
-                              dynamic month;
-                              dynamic year;
-                              FocusManager.instance.primaryFocus?.unfocus();
-                              if (dataRojdeniyaController.text.isNotEmpty) {
-                                day = dataRojdeniyaController.text
-                                    .substring(0, 2);
-                                month = dataRojdeniyaController.text
-                                    .substring(3, 5);
-                                year =
-                                    dataRojdeniyaController.text.substring(6);
-                              }
+                          child: StreamBuilder<bool>(
+                            initialData: false,
+                              stream: providerStreamController.stream,
+                              builder: (context, snapshot) {
+                                return GestureDetector(
+                                  onTap: () {
+                                    dynamic day;
+                                    dynamic month;
+                                    dynamic year;
+                                    FocusManager.instance.primaryFocus
+                                        ?.unfocus();
+                                    if (dataRojdeniyaController
+                                        .text.isNotEmpty) {
+                                      day = dataRojdeniyaController.text
+                                          .substring(0, 2);
+                                      month = dataRojdeniyaController.text
+                                          .substring(3, 5);
+                                      year = dataRojdeniyaController.text
+                                          .substring(6);
+                                    }
+                                    log(snapshot.data.toString() + " kutil");
 
-                              toSignUp(
-                                lastname: familiyaTextEditingController.text,
-                                firstname: imyaTextEditingController.text,
-                                email: emailTextFielController.text,
-                                bornedAt: "$day.$month.$year",
-                                jobId: doljnostTextFieldController.text,
-                                storeId: nazvaniyaTextFieldController.text,
-                                shopnet: newShop.getNewShop.toString(),
-                                shopadress:
-                                    adresTorgoviySetTextFielController.text,
-                                phone: phoneTextFieldController.text,
-                                cityId: gorodTextFieldController.text,
-                                isAgreeSms: secondToggle.text,
-                                isAgreeIdentity: thirdToggle.text,
-                                isAgreePersonal: fourthToggle.text,
-                                providerFlip: providerFlip,
-                              );
+                                    toSignUp(
+                                      lastname:
+                                          familiyaTextEditingController.text,
+                                      firstname: imyaTextEditingController.text,
+                                      email: emailTextFielController.text,
+                                      bornedAt: "$day.$month.$year",
+                                      jobId: doljnostTextFieldController.text,
+                                      storeId: snapshot.data == true
+                                          ? ""
+                                          : nazvaniyaTextFieldController.text,
+                                      shopnet: snapshot.data == true
+                                          ? newNazvanController.text
+                                          : "",
+                                      shopadress:
+                                          adresTorgoviySetTextFielController
+                                              .text,
+                                      phone: phoneTextFieldController.text,
+                                      cityId: gorodTextFieldController.text,
+                                      isAgreeSms: secondToggle.text,
+                                      isAgreeIdentity: thirdToggle.text,
+                                      isAgreePersonal: fourthToggle.text,
+                                      providerFlip: providerFlip,
+                                    );
 
-                              log(familiyaTextEditingController.text + "last");
-                              log(imyaTextEditingController.text + "first");
-                              log(emailTextFielController.text + "email");
-                              log("$day.$month.$year bornedat");
-                              log(doljnostTextFieldController.text + "jobid");
-                              log(nazvaniyaTextFieldController.text +
-                                  "storeid");
-                              log(newShop.getNewShop.toString() + "shopnet");
-                              log(adresTorgoviySetTextFielController.text +
-                                  "shop adress");
-                              log(phoneTextFieldController.text + "phone");
-                              log(gorodTextFieldController.text + "cityid");
-                              log(secondToggle.text + "isagreesms");
-                              log(thirdToggle.text + "isagreeidenty");
-                              log(fourthToggle.text + "isagreepersonal");
-                              log(dateIsEmpty.toString() +
-                                  "  -0-09--09-09-09-09-09--9-09");
+                                    log(nazvaniyaTextFieldController.text +
+                                        " oooooooo");
 
-                              log(day.toString() + " day");
-                              log(month.toString() + " month");
-                              log(year.toString() + " year");
+                                    log(familiyaTextEditingController.text +
+                                        "last");
+                                    log(imyaTextEditingController.text +
+                                        "first");
+                                    log(emailTextFielController.text + "email");
+                                    log("$day.$month.$year bornedat");
+                                    log(doljnostTextFieldController.text +
+                                        "jobid");
+                                    log((snapshot.data == true
+                                            ? ""
+                                            : nazvaniyaTextFieldController
+                                                .text) +
+                                        "store id");
+                                    log((snapshot.data == true
+                                            ? newNazvanController.text
+                                            : "") +
+                                        "shopnet");
+                                    log(adresTorgoviySetTextFielController
+                                            .text +
+                                        "shop adress");
+                                    log(phoneTextFieldController.text +
+                                        "phone");
+                                    log(gorodTextFieldController.text +
+                                        "cityid");
+                                    log(secondToggle.text + "isagreesms");
+                                    log(thirdToggle.text + "isagreeidenty");
+                                    log(fourthToggle.text + "isagreepersonal");
+                                    log(dateIsEmpty.toString() +
+                                        "  -0-09--09-09-09-09-09--9-09");
 
-                              log("$day.$month.$year kkkkkkkkkkkkkkkkkkkkkk");
-                            },
-                            child: Container(
-                              alignment: Alignment.center,
-                              height: isTablet ? 60 : 46,
-                              width: isTablet ? 525 : 325,
-                              decoration: BoxDecoration(
-                                color: const Color(0xFF25b049),
-                                borderRadius: BorderRadius.circular(70),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.grey.withOpacity(0.5),
-                                    spreadRadius: 5,
-                                    blurRadius: 7,
-                                    offset: const Offset(0, 15),
+                                    log(day.toString() + " day");
+                                    log(month.toString() + " month");
+                                    log(year.toString() + " year");
+
+                                    log("$day.$month.$year kkkkkkkkkkkkkkkkkkkkkk");
+                                  },
+                                  child: Container(
+                                    alignment: Alignment.center,
+                                    height: isTablet ? 60 : 46,
+                                    width: isTablet ? 525 : 325,
+                                    decoration: BoxDecoration(
+                                      color: const Color(0xFF25b049),
+                                      borderRadius: BorderRadius.circular(70),
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color: Colors.grey.withOpacity(0.5),
+                                          spreadRadius: 5,
+                                          blurRadius: 7,
+                                          offset: const Offset(0, 15),
+                                        ),
+                                      ],
+                                    ),
+                                    child: Text(
+                                      "Зарегистрироваться",
+                                      style: GoogleFonts.montserrat(
+                                          fontSize: isTablet ? 18 : 12,
+                                          color: const Color(0xFFffffff)),
+                                    ),
                                   ),
-                                ],
-                              ),
-                              child: Text(
-                                "Зарегистрироваться",
-                                style: GoogleFonts.montserrat(
-                                    fontSize: isTablet ? 18 : 12,
-                                    color: const Color(0xFFffffff)),
-                              ),
-                            ),
-                          )),
+                                );
+                              })),
                       const SizedBox(
                         height: 60,
                       )
@@ -657,15 +726,22 @@ class _FullRegistrState extends State<FullRegistr> {
       required String isAgreeIdentity,
       required String isAgreePersonal,
       required dynamic providerFlip}) {
+    log(storeId + " store IDDDDD");
+    log(shopnet + " shop ntntntnt");
+    log(nazvaniyaTextFieldController.text + " op");
     if (firstname.isEmpty) setState(() => nameIsEmpty = true);
     if (lastname.isEmpty) setState(() => lastnameIsEmpty = true);
     if (email.isEmpty) setState(() => emailIsEmpty = true);
     if (shopadress.isEmpty) setState(() => adressIsEmpty = true);
     if (phone.length < 5) setState(() => phoneIsEmpty = true);
     if (bornedAt.length != 10) setState(() => dateIsEmpty = true);
-    if (storeId.isEmpty && shopnet.isEmpty) {
+    if (storeId.contains("null")) {
       setState(() => nazvaniyaIsEmpty = true);
     }
+    if (shopnet.isEmpty) {
+      setState(() => newNazvanIsEmpty = true);
+    }
+
     if (jobId.isEmpty) setState(() => doljnostIsEmpty = true);
     if (cityId.isEmpty) setState(() => gorodIsEmpty = true);
     if (firstname.isNotEmpty &&

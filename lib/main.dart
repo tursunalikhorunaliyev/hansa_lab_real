@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
@@ -48,6 +50,7 @@ import 'package:hansa_lab/providers/treningi_video_changer_provider.dart';
 import 'package:hansa_lab/providers/treningi_videos_provider.dart';
 import 'package:hansa_lab/providers/video_ind_provider.dart';
 import 'package:hansa_lab/providers/video_tit_provider.dart';
+import 'package:hansa_lab/screens/pdf_viewer.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:provider/provider.dart';
 
@@ -80,6 +83,7 @@ class MyApp extends StatelessWidget {
     final providerOtpravitPushUvodamleniya = ProviderOtpravitPushUvodamleniya();
     final providerSendListPopupGorod = ProviderOtpravitPushUvodamleniya();
     final providerNumberCountry = BlocNumberCountry();
+    final providerStreamController = StreamController<bool>.broadcast();
 
     Size size = WidgetsBinding.instance.window.physicalSize;
     bool isTablet = (size.width / 3) > 500;
@@ -99,7 +103,6 @@ class MyApp extends StatelessWidget {
           ChangeNotifierProvider(create: (context) => StatiIdProvider()),
           ChangeNotifierProvider(
               create: (context) => TreningiVideoChangerProvider()),
-          ChangeNotifierProvider(create: (context) => NewShopProvider()),
           ChangeNotifierProvider(create: (context) => FlipProvider()),
           ChangeNotifierProvider(create: (context) => LoginClickedProvider()),
           ChangeNotifierProvider(create: (context) => FlipLoginProvider()),
@@ -154,6 +157,8 @@ class MyApp extends StatelessWidget {
           Provider(
             create: (context) => VideoIndProvider(),
           ),
+          Provider<StreamController<bool>>(
+              create: (context) => providerStreamController),
         ],
         child: MaterialApp(
           builder: (context, child) {
@@ -169,7 +174,7 @@ class MyApp extends StatelessWidget {
           supportedLocales: const [Locale("en"), Locale("ru"), Locale("ar")],
           locale: const Locale("ru"),
           debugShowCheckedModeBanner: false,
-          home: const PermissionHandlerScreen(),
+          home: const PDFViewer(),
         ),
       ),
     );
