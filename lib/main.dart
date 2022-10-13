@@ -14,6 +14,7 @@ import 'package:hansa_lab/blocs/bloc_detect_tap.dart';
 import 'package:hansa_lab/blocs/bloc_flip_login.dart';
 import 'package:hansa_lab/blocs/bloc_number_country.dart';
 import 'package:hansa_lab/blocs/bloc_play_video.dart';
+import 'package:hansa_lab/blocs/bloc_send_id.dart';
 import 'package:hansa_lab/blocs/bloc_video_controll.dart';
 import 'package:hansa_lab/blocs/download_progress_bloc.dart';
 import 'package:hansa_lab/blocs/login_clicked_bloc.dart';
@@ -80,11 +81,12 @@ class MyApp extends StatelessWidget {
     final providerOtpravitPushUvodamleniya = ProviderOtpravitPushUvodamleniya();
     final providerSendListPopupGorod = ProviderOtpravitPushUvodamleniya();
     final providerNumberCountry = BlocNumberCountry();
-    final providerStreamController  = StreamController<bool>.broadcast();
+    final providerStreamController = StreamController<bool>.broadcast();
+    final providerBlocSendId = BlocSendId();
 
     Size size = WidgetsBinding.instance.window.physicalSize;
     bool isTablet = (size.width / 3) > 500;
-    Map<String, FlipCardController> map = { 
+    Map<String, FlipCardController> map = {
       "login": FlipCardController(),
       "signin": FlipCardController(),
       "toLogin": FlipCardController(),
@@ -148,10 +150,10 @@ class MyApp extends StatelessWidget {
           ChangeNotifierProvider<ProviderOtpravitPushUvodamleniya>(
             create: (context) => providerSendListPopupGorod,
           ),
-       
-              Provider<StreamController<bool>>(
+          Provider<StreamController<bool>>(
               create: (context) => providerStreamController),
-        ], 
+          Provider<BlocSendId>(create: (context) => providerBlocSendId),
+        ],
         child: MaterialApp(
           builder: (context, child) {
             return MediaQuery(
