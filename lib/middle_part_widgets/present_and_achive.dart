@@ -3,7 +3,6 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hansa_lab/api_models.dart/prezintatsi_model.dart';
-import 'package:hansa_lab/api_services/welcome_api.dart';
 import 'package:hansa_lab/blocs/prezintatsia_bloc.dart';
 import 'package:hansa_lab/classes/sned_url_prezent_otkrit.dart';
 import 'package:hansa_lab/extra/archive_card.dart';

@@ -57,17 +57,19 @@ class _StackedStackObuchState extends State<StackedStackObuch> {
                 children: [
                   InkWell(
                     onTap: () {
-                      if (widget.link.contains(".pdf") && widget.link.contains("google")) {
-                        String pdfInAppUrl =
-                            widget.link.split("url=")[1].split("&")[0];
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) =>
-                                  PDFViewer(pdfUrlForPDFViewer: pdfInAppUrl),
-                            ));
-                      } 
-                      else if (widget.link
+                       if (widget.link.contains(".pdf") && widget.link.contains("google")) {
+                                      String pdfInAppUrl = widget.link
+                                          .split("url=")[1]
+                                          .split("&")[0];
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) => PDFViewer(
+                                                pdfUrlForPDFViewer:
+                                                    pdfInAppUrl),
+                                          ));
+                                    } 
+                                    else if (widget.linkPDF
                                               .endsWith(".pdf")) {
                                             Navigator.push(
                                                 context,
@@ -75,18 +77,20 @@ class _StackedStackObuchState extends State<StackedStackObuch> {
                                                   builder: (context) =>
                                                       PDFViewer(
                                                           pdfUrlForPDFViewer:
-                                                              widget.link),
+                                                              widget.linkPDF),
                                                 ));
                                           }
-                      else {
-                        String fullUrl = widget.link.startsWith("http")
-                            ? widget.link
-                            : "http://${widget.link}";
+                                    else {
+                                      String fullUrl =
+                                          widget.link.startsWith("http")
+                                              ? widget.link
+                                              : "http://${widget.link}";
 
-                        setState(() {
-                          launched = _launchInBrowser(Uri.parse(fullUrl));
-                        });
-                      }
+                                      setState(() {
+                                        launched = _launchInBrowser(
+                                            Uri.parse(fullUrl));
+                                      });
+                                    }
                     },
                     child: SizedBox(
                         width: 410,
@@ -135,20 +139,19 @@ class _StackedStackObuchState extends State<StackedStackObuch> {
                                 widget.link.isNotEmpty
                                     ? InkWell(
                                         onTap: () {
-                                          if (widget.link.contains(".pdf") &&
-                                              widget.link.contains("google")) {
-                                            String pdfInAppUrl = widget.link
-                                                .split("url=")[1]
-                                                .split("&")[0];
-                                            Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      PDFViewer(
-                                                          pdfUrlForPDFViewer:
-                                                              pdfInAppUrl),
-                                                ));
-                                          } else if (widget.link
+                                           if (widget.link.contains(".pdf") && widget.link.contains("google")) {
+                                      String pdfInAppUrl = widget.link
+                                          .split("url=")[1]
+                                          .split("&")[0];
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) => PDFViewer(
+                                                pdfUrlForPDFViewer:
+                                                    pdfInAppUrl),
+                                          ));
+                                    } 
+                                    else if (widget.linkPDF
                                               .endsWith(".pdf")) {
                                             Navigator.push(
                                                 context,
@@ -156,19 +159,20 @@ class _StackedStackObuchState extends State<StackedStackObuch> {
                                                   builder: (context) =>
                                                       PDFViewer(
                                                           pdfUrlForPDFViewer:
-                                                              widget.link),
+                                                              widget.linkPDF),
                                                 ));
-                                          } else {
-                                            String fullUrl =
-                                                widget.link.startsWith("http")
-                                                    ? widget.link
-                                                    : "http://${widget.link}";
-
-                                            setState(() {
-                                              launched = _launchInBrowser(
-                                                  Uri.parse(fullUrl));
-                                            });
                                           }
+                                    else {
+                                      String fullUrl =
+                                          widget.link.startsWith("http")
+                                              ? widget.link
+                                              : "http://${widget.link}";
+
+                                      setState(() {
+                                        launched = _launchInBrowser(
+                                            Uri.parse(fullUrl));
+                                      });
+                                    }
                                         },
                                         child: Container(
                                           alignment: Alignment.center,
@@ -197,20 +201,19 @@ class _StackedStackObuchState extends State<StackedStackObuch> {
                                 widget.linkPDF.isNotEmpty
                                     ? InkWell(
                                         onTap: () {
-                                          if (widget.link.contains(".pdf") && widget.link.contains("google")) {
-                                            String pdfInAppUrl = widget.link
-                                                .split("url=")[1]
-                                                .split("&")[0];
-                                            Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      PDFViewer(
-                                                          pdfUrlForPDFViewer:
-                                                              pdfInAppUrl),
-                                                ));
-                                          }
-                                          else if (widget.linkPDF
+                                         if (widget.link.contains(".pdf") && widget.link.contains("google")) {
+                                      String pdfInAppUrl = widget.link
+                                          .split("url=")[1]
+                                          .split("&")[0];
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) => PDFViewer(
+                                                pdfUrlForPDFViewer:
+                                                    pdfInAppUrl),
+                                          ));
+                                    } 
+                                    else if (widget.linkPDF
                                               .endsWith(".pdf")) {
                                             Navigator.push(
                                                 context,
@@ -221,17 +224,17 @@ class _StackedStackObuchState extends State<StackedStackObuch> {
                                                               widget.linkPDF),
                                                 ));
                                           }
-                                           else {
-                                            String fullUrl =
-                                                widget.link.startsWith("http")
-                                                    ? widget.link
-                                                    : "http://${widget.link}";
+                                    else {
+                                      String fullUrl =
+                                          widget.link.startsWith("http")
+                                              ? widget.link
+                                              : "http://${widget.link}";
 
-                                            setState(() {
-                                              launched = _launchInBrowser(
-                                                  Uri.parse(fullUrl));
-                                            });
-                                          }
+                                      setState(() {
+                                        launched = _launchInBrowser(
+                                            Uri.parse(fullUrl));
+                                      });
+                                    }
                                         },
                                         child: Container(
                                           alignment: Alignment.center,

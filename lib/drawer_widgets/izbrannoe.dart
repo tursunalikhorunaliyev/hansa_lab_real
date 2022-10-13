@@ -9,6 +9,7 @@ import 'package:hansa_lab/blocs/bloc_obucheniya.dart';
 import 'package:hansa_lab/blocs/favourite_bloc.dart';
 import 'package:hansa_lab/blocs/izbrannoe_bloc.dart';
 import 'package:hansa_lab/blocs/menu_events_bloc.dart';
+import 'package:hansa_lab/screens/pdf_viewer.dart';
 import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -144,18 +145,54 @@ class _IzbrannoeState extends State<Izbrannoe> {
                                       2) {
                                     if (snapshot.data!.data.list[index].pdfUrl
                                         .isNotEmpty) {
-                                      setState(() {
-                                        launched = launchInBrowser(Uri.parse(
-                                            snapshot.data!.data.list[index]
-                                                .pdfUrl));
-                                      });
-                                    } else {
-                                      setState(() {
-                                        launched = launchInBrowser(Uri.parse(
-                                            snapshot
-                                                .data!.data.list[index].link));
-                                      });
-                                    }
+                                     
+                                      if (snapshot
+                                                .data!.data.list[index].link
+                                                          .contains(".pdf") &&
+                                                      snapshot
+                                                .data!.data.list[index].link
+                                                          .contains("google")) {
+                                                    String pdfInAppUrl =
+                                                        snapshot
+                                                .data!.data.list[index].link
+                                                            .split("url=")[1]
+                                                            .split("&")[0];
+                                                    Navigator.push(
+                                                        context,
+                                                        MaterialPageRoute(
+                                                          builder: (context) =>
+                                                              PDFViewer(
+                                                                  pdfUrlForPDFViewer:
+                                                                      pdfInAppUrl),
+                                                        ));
+                                                  }
+                                                  else if (snapshot
+                                                .data!.data.list[index].link.endsWith(".pdf")) {
+                                            Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      PDFViewer(pdfUrlForPDFViewer: snapshot
+                                                .data!.data.list[index].link),
+                                                ));
+                                          }
+                                                   else {
+                                                    String fullUrl = snapshot
+                                                .data!.data.list[index].link
+                                                            .startsWith("http")
+                                                        ? snapshot
+                                                .data!.data.list[index].link
+                                                        : "http://${snapshot
+                                                .data!.data.list[index].link}";
+
+                                                    setState(() {
+                                                      launched =
+                                                          _launchInBrowser(
+                                                              Uri.parse(
+                                                                  fullUrl));
+                                                    });
+                                                  }
+                                    } 
                                   } else {
                                     scafforlKeyProvider.currentState!
                                         .closeDrawer();
@@ -275,15 +312,53 @@ class _IzbrannoeState extends State<Izbrannoe> {
                                                             .isNotEmpty
                                                         ? InkWell(
                                                             onTap: () async {
-                                                              setState(() {
-                                                                launched = launchInBrowser(
-                                                                    Uri.parse(snapshot
-                                                                        .data!
-                                                                        .data
-                                                                        .list[
-                                                                            index]
-                                                                        .link));
-                                                              });
+                                                              if (snapshot
+                                                .data!.data.list[index].link
+                                                          .contains(".pdf") &&
+                                                      snapshot
+                                                .data!.data.list[index].link
+                                                          .contains("google")) {
+                                                    String pdfInAppUrl =
+                                                        snapshot
+                                                .data!.data.list[index].link
+                                                            .split("url=")[1]
+                                                            .split("&")[0];
+                                                    Navigator.push(
+                                                        context,
+                                                        MaterialPageRoute(
+                                                          builder: (context) =>
+                                                              PDFViewer(
+                                                                  pdfUrlForPDFViewer:
+                                                                      pdfInAppUrl),
+                                                        ));
+                                                  }
+                                                  else if (snapshot
+                                                .data!.data.list[index].link.endsWith(".pdf")) {
+                                            Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      PDFViewer(pdfUrlForPDFViewer: snapshot
+                                                .data!.data.list[index].link),
+                                                ));
+                                          }
+                                                   else {
+                                                    String fullUrl = snapshot
+                                                .data!.data.list[index].link
+                                                            .startsWith("http")
+                                                        ? snapshot
+                                                .data!.data.list[index].link
+                                                        : "http://${snapshot
+                                                .data!.data.list[index].link}";
+
+                                                    setState(() {
+                                                      launched =
+                                                          _launchInBrowser(
+                                                              Uri.parse(
+                                                                  fullUrl));
+                                                    });
+                                                  }
+                                    
                                                             },
                                                             child: Container(
                                                               alignment:
@@ -344,7 +419,7 @@ class _IzbrannoeState extends State<Izbrannoe> {
                                                         ? InkWell(
                                                             onTap: () {
                                                               setState(() {
-                                                                launched = launchInBrowser(
+                                                                launched = _launchInBrowser(
                                                                     Uri.parse(snapshot
                                                                         .data!
                                                                         .data
@@ -432,7 +507,7 @@ class _IzbrannoeState extends State<Izbrannoe> {
   }
 }
 
-launchInBrowser(Uri url) async {
+_launchInBrowser(Uri url) async {
   if (!await launchUrl(
     url,
     mode: LaunchMode.externalApplication,

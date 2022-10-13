@@ -19,7 +19,6 @@ import 'package:hansa_lab/video/model_video.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:video_player/video_player.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class TopVideoWidget extends StatefulWidget {
   final String url;

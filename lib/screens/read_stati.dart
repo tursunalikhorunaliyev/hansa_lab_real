@@ -56,7 +56,7 @@ class _ReadStatiState extends State<ReadStati> {
               "rating": rating,
             },
             headers: headers);
-    log(response.statusCode.toString() + " change rating");
+    log("${response.statusCode} change rating");
 
     return jsonDecode(response.body);
   }

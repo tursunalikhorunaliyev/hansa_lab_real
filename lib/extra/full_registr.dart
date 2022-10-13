@@ -8,7 +8,6 @@ import 'package:hansa_lab/blocs/bloc_number_country.dart';
 import 'package:hansa_lab/blocs/bloc_sign.dart';
 import 'package:hansa_lab/blocs/data_burn_text_changer_bloc.dart';
 import 'package:hansa_lab/blocs/hansa_country_api.dart';
-import 'package:hansa_lab/classes/number_coubtry.dart';
 import 'package:hansa_lab/drawer_widgets/toggle_switcher.dart';
 import 'package:hansa_lab/extra/popup_full_registr_doljnost.dart';
 import 'package:hansa_lab/extra/popup_full_registr_gorod.dart';
@@ -16,9 +15,7 @@ import 'package:hansa_lab/extra/popup_full_registr_nazvaniy_seti.dart';
 import 'package:hansa_lab/extra/popup_full_registr_number.dart';
 import 'package:hansa_lab/extra/textField_for_new_nazvan.dart';
 import 'package:hansa_lab/extra/text_field_for_full_reg.dart';
-import 'package:hansa_lab/providers/new_shop_provider.dart';
 import 'package:hansa_lab/providers/provider_for_flipping/flip_login_provider.dart';
-import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:provider/provider.dart';
 
@@ -557,7 +554,7 @@ class _FullRegistrState extends State<FullRegistr> {
                                       year = dataRojdeniyaController.text
                                           .substring(6);
                                     }
-                                    log(snapshot.data.toString() + " kutil");
+                                    log("${snapshot.data} kutil");
 
                                     toSignUp(
                                       lastname:
@@ -583,42 +580,32 @@ class _FullRegistrState extends State<FullRegistr> {
                                       providerFlip: providerFlip,
                                     );
 
-                                    log(nazvaniyaTextFieldController.text +
-                                        " oooooooo");
+                                    log("${nazvaniyaTextFieldController.text} oooooooo");
 
-                                    log(familiyaTextEditingController.text +
-                                        "last");
-                                    log(imyaTextEditingController.text +
-                                        "first");
-                                    log(emailTextFielController.text + "email");
+                                    log("${familiyaTextEditingController.text}last");
+                                    log("${imyaTextEditingController.text}first");
+                                    log("${emailTextFielController.text}email");
                                     log("$day.$month.$year bornedat");
-                                    log(doljnostTextFieldController.text +
-                                        "jobid");
-                                    log((snapshot.data == true
+                                    log("${doljnostTextFieldController.text}jobid");
+                                    log("${snapshot.data == true
                                             ? ""
                                             : nazvaniyaTextFieldController
-                                                .text) +
-                                        "store id");
-                                    log((snapshot.data == true
+                                                .text}store id");
+                                    log("${snapshot.data == true
                                             ? newNazvanController.text
-                                            : "") +
-                                        "shopnet");
-                                    log(adresTorgoviySetTextFielController
-                                            .text +
-                                        "shop adress");
-                                    log(phoneTextFieldController.text +
-                                        "phone");
-                                    log(gorodTextFieldController.text +
-                                        "cityid");
-                                    log(secondToggle.text + "isagreesms");
-                                    log(thirdToggle.text + "isagreeidenty");
-                                    log(fourthToggle.text + "isagreepersonal");
-                                    log(dateIsEmpty.toString() +
-                                        "  -0-09--09-09-09-09-09--9-09");
+                                            : ""}shopnet");
+                                    log("${adresTorgoviySetTextFielController
+                                            .text}shop adress");
+                                    log("${phoneTextFieldController.text}phone");
+                                    log("${gorodTextFieldController.text}cityid");
+                                    log("${secondToggle.text}isagreesms");
+                                    log("${thirdToggle.text}isagreeidenty");
+                                    log("${fourthToggle.text}isagreepersonal");
+                                    log("$dateIsEmpty  -0-09--09-09-09-09-09--9-09");
 
-                                    log(day.toString() + " day");
-                                    log(month.toString() + " month");
-                                    log(year.toString() + " year");
+                                    log("$day day");
+                                    log("$month month");
+                                    log("$year year");
 
                                     log("$day.$month.$year kkkkkkkkkkkkkkkkkkkkkk");
                                   },
@@ -726,9 +713,9 @@ class _FullRegistrState extends State<FullRegistr> {
       required String isAgreeIdentity,
       required String isAgreePersonal,
       required dynamic providerFlip}) {
-    log(storeId + " store IDDDDD");
-    log(shopnet + " shop ntntntnt");
-    log(nazvaniyaTextFieldController.text + " op");
+    log("$storeId store IDDDDD");
+    log("$shopnet shop ntntntnt");
+    log("${nazvaniyaTextFieldController.text} op");
     if (firstname.isEmpty) setState(() => nameIsEmpty = true);
     if (lastname.isEmpty) setState(() => lastnameIsEmpty = true);
     if (email.isEmpty) setState(() => emailIsEmpty = true);

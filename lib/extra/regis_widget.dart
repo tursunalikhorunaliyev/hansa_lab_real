@@ -1,7 +1,6 @@
 import 'package:flip_card/flip_card_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:hansa_lab/blocs/login_clicked_bloc.dart';
 import 'package:hansa_lab/providers/provider_for_flipping/flip_login_provider.dart';
 import 'package:hansa_lab/providers/provider_for_flipping/login_clicked_provider.dart';
 import 'package:provider/provider.dart';
