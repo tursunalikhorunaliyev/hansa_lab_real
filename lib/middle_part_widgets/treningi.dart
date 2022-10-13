@@ -5,18 +5,23 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hansa_lab/api_models.dart/training_model.dart';
 import 'package:hansa_lab/api_services/training_api_bloc.dart';
+import 'package:hansa_lab/api_services/treningi_video_api.dart';
 import 'package:hansa_lab/blocs/menu_events_bloc.dart';
 import 'package:hansa_lab/drawer_widgets/izbrannoe.dart';
 import 'package:hansa_lab/extra/custom_tablet_item.dart';
 import 'package:hansa_lab/extra/custom_treningi_ipad_container.dart';
 import 'package:hansa_lab/extra/my_behavior%20.dart';
+import 'package:hansa_lab/extra/top_video_vidg.dart';
 import 'package:hansa_lab/providers/event_title_provider.dart';
 import 'package:hansa_lab/providers/is_video_provider.dart';
 import 'package:hansa_lab/providers/treningi_photos_provider.dart';
 import 'package:hansa_lab/providers/treningi_videos_provider.dart';
+import 'package:hansa_lab/providers/video_ind_provider.dart';
+import 'package:hansa_lab/providers/video_tit_provider.dart';
 import 'package:hansa_lab/training_section/custom_calendar.dart';
 import 'package:hansa_lab/extra/custom_clip_item.dart';
 import 'package:hansa_lab/extra/custom_title.dart';
+import 'package:hansa_lab/video/model_video.dart';
 import 'package:lottie/lottie.dart';
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
@@ -44,6 +49,8 @@ class _TreningiState extends State<Treningi> {
     final token = Provider.of<String>(context);
     final treningiPhotos = Provider.of<TreningiPhotosProvider>(context);
     final treningiVideos = Provider.of<TreningiVideosProvider>(context);
+    final title = Provider.of<VideoTitProvider>(context);
+    final index = Provider.of<VideoIndProvider>(context);
     final isVideo = Provider.of<IsVideoprovider>(context);
     final trainingBloc = TrainingAPIBloc();
     final scroll = ScrollController();
@@ -85,8 +92,10 @@ class _TreningiState extends State<Treningi> {
                                     children: List.generate(
                                       snapshot.data!.data.webinar.data.length,
                                       (index) => Container(
-                                        margin:  EdgeInsets.only(
-                                            left:isTablet?53: 25, right:isTablet?53: 25, bottom: 13),
+                                        margin: EdgeInsets.only(
+                                            left: isTablet ? 53 : 25,
+                                            right: isTablet ? 53 : 25,
+                                            bottom: 13),
                                         decoration: BoxDecoration(
                                             borderRadius:
                                                 BorderRadius.circular(8),
@@ -145,7 +154,9 @@ class _TreningiState extends State<Treningi> {
                                                                     .circular(
                                                                         64),
                                                             child: Container(
-                                                              height:isTablet?35: 25,
+                                                              height: isTablet
+                                                                  ? 35
+                                                                  : 25,
                                                               width: 170,
                                                               color: const Color(
                                                                   0xff25b049),
@@ -161,8 +172,9 @@ class _TreningiState extends State<Treningi> {
                                                                         fontWeight:
                                                                             FontWeight
                                                                                 .w700,
-                                                                        fontSize:
-                                                                          isTablet?12:  8,
+                                                                        fontSize: isTablet
+                                                                            ? 12
+                                                                            : 8,
                                                                         color: Colors
                                                                             .white),
                                                                   ),
@@ -273,7 +285,7 @@ class _TreningiState extends State<Treningi> {
                                                               index] ==
                                                           "Записаться")
                                                       ? const Color(0xff25b049)
-                                                      : const Color(0xFF232323),  
+                                                      : const Color(0xFF232323),
                                                   buttonTextColor:
                                                       const Color(0xffffffff),
                                                   titleColor:
@@ -315,7 +327,9 @@ class _TreningiState extends State<Treningi> {
                         ),
                       ),
                     ),
-                  const   SizedBox(height: 30,),
+                    const SizedBox(
+                      height: 30,
+                    ),
                     StickyHeader(
                       header: const CustomTitle(
                         imagePath: "assets/kak_title.png",
@@ -358,7 +372,7 @@ class _TreningiState extends State<Treningi> {
                                               title:
                                                   data.videos.list[index].title,
                                               onTap: () {
-                                                treningiVideos.setUrl(snapshot
+                                                /* treningiVideos.setUrl(snapshot
                                                     .data!
                                                     .data
                                                     .videos
@@ -366,7 +380,29 @@ class _TreningiState extends State<Treningi> {
                                                     .link);
                                                 isVideo.setIsVideo(true);
                                                 menuBloCProvider.eventSink.add(
-                                                    MenuActions.trainingVideo);
+                                                    MenuActions.trainingVideo); */
+                                                final video = snapshot.data!
+                                                    .data.videos.list[index];
+                                                showDialog(
+                                                  context: context,
+                                                  builder: (context) {
+                                                    return Scaffold(
+                                                      backgroundColor:
+                                                          Colors.transparent,
+                                                      body: Provider<
+                                                          String>.value(
+                                                        value: token,
+                                                        child: TopVideoWidg(
+                                                          url: video.link,
+                                                          title: video.title,
+                                                          selectedIndex: index,
+                                                          selectedTitle:
+                                                              video.title,
+                                                        ),
+                                                      ),
+                                                    );
+                                                  },
+                                                );
                                               },
                                             ),
                                           );
@@ -431,12 +467,38 @@ class _TreningiState extends State<Treningi> {
                                       titleColor: const Color(0xffffffff),
                                       buttonText: "Смотреть",
                                       title: data.videos.list[index].title,
-                                      onTap: () {
-                                        treningiVideos.setUrl(
+                                      onTap: () async {
+                                        /* treningiVideos.setUrl(
                                             data.videos.list[index].link);
                                         isVideo.setIsVideo(true);
                                         menuBloCProvider.eventSink
-                                            .add(MenuActions.trainingVideo);
+                                            .add(MenuActions.trainingVideo); */
+                                        final video = snapshot
+                                            .data!.data.videos.list[index].link;
+
+                                        final data = await TreningiVideoApi
+                                            .getTreningiVideo(video, token);
+
+                                        final dat = data.data.data.data.first;
+
+                                        showDialog(
+                                          context: context,
+                                          builder: (context) {
+                                            return Scaffold(
+                                              backgroundColor:
+                                                  Colors.transparent,
+                                              body: Provider<String>.value(
+                                                value: token,
+                                                child: TopVideoWidg(
+                                                  url: dat.videoLink,
+                                                  title: dat.title,
+                                                  selectedIndex: index,
+                                                  selectedTitle: dat.title,
+                                                ),
+                                              ),
+                                            );
+                                          },
+                                        );
                                       },
                                     );
                                   },
