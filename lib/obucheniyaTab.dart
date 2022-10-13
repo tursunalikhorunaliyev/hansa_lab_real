@@ -210,7 +210,7 @@ class _StackedStackObuchState extends State<StackedStackObuch> {
                                                               pdfInAppUrl),
                                                 ));
                                           }
-                                          else if (widget.linkPDF!
+                                          else if (widget.linkPDF
                                               .endsWith(".pdf")) {
                                             Navigator.push(
                                                 context,
@@ -218,7 +218,7 @@ class _StackedStackObuchState extends State<StackedStackObuch> {
                                                   builder: (context) =>
                                                       PDFViewer(
                                                           pdfUrlForPDFViewer:
-                                                              widget.linkPDF!),
+                                                              widget.linkPDF),
                                                 ));
                                           }
                                            else {
