@@ -92,9 +92,9 @@ class _ArchiveCardState extends State<ArchiveCard> {
                             padding: EdgeInsets.only(top: 4.h),
                             child: InkWell(
                               onTap: () {
-                                if (widget.linkPDF!.contains(".pdf") &&
-                                    widget.linkPDF!.contains("google")) {
-                                  String pdfInAppUrl = widget.linkPDF!
+                                if (widget.linkPDF.contains(".pdf") &&
+                                    widget.linkPDF.contains("google")) {
+                                  String pdfInAppUrl = widget.linkPDF
                                       .split("url=")[1]
                                       .split("&")[0];
                                   Navigator.push(
@@ -103,10 +103,22 @@ class _ArchiveCardState extends State<ArchiveCard> {
                                         builder: (context) => PDFViewer(
                                             pdfUrlForPDFViewer: pdfInAppUrl),
                                       ));
-                                } else {
+                                } 
+                                else if (widget.linkPDF
+                                              .endsWith(".pdf")) {
+                                            Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      PDFViewer(
+                                                          pdfUrlForPDFViewer:
+                                                              widget.linkPDF),
+                                                ));
+                                          }
+                                else {
                                   String fullUrl =
-                                      widget.linkPDF!.startsWith("http")
-                                          ? widget.linkPDF!
+                                      widget.linkPDF.startsWith("http")
+                                          ? widget.linkPDF
                                           : "http://${widget.linkPDF}";
 
                                   setState(() {
@@ -142,19 +154,31 @@ class _ArchiveCardState extends State<ArchiveCard> {
           ),
           InkWell(
             onTap: () {
-              if (widget.linkPDF!.contains(".pdf") &&
-                  widget.linkPDF!.contains("google")) {
+              if (widget.linkPDF.contains(".pdf") &&
+                  widget.linkPDF.contains("google")) {
                 String pdfInAppUrl =
-                    widget.linkPDF!.split("url=")[1].split("&")[0];
+                    widget.linkPDF.split("url=")[1].split("&")[0];
                 Navigator.push(
                     context,
                     MaterialPageRoute(
                       builder: (context) =>
                           PDFViewer(pdfUrlForPDFViewer: pdfInAppUrl),
                     ));
-              } else {
-                String fullUrl = widget.linkPDF!.startsWith("http")
-                    ? widget.linkPDF!
+              } 
+              else if (widget.linkPDF
+                                              .endsWith(".pdf")) {
+                                            Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      PDFViewer(
+                                                          pdfUrlForPDFViewer:
+                                                              widget.linkPDF),
+                                                ));
+                                          }
+              else {
+                String fullUrl = widget.linkPDF.startsWith("http")
+                    ? widget.linkPDF
                     : "http://${widget.linkPDF}";
 
                 setState(() {

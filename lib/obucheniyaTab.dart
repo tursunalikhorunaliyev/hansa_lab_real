@@ -57,7 +57,7 @@ class _StackedStackObuchState extends State<StackedStackObuch> {
                 children: [
                   InkWell(
                     onTap: () {
-                      if (widget.link.contains(".pdf")) {
+                      if (widget.link.contains(".pdf") && widget.link.contains("google")) {
                         String pdfInAppUrl =
                             widget.link.split("url=")[1].split("&")[0];
                         Navigator.push(
@@ -66,7 +66,19 @@ class _StackedStackObuchState extends State<StackedStackObuch> {
                               builder: (context) =>
                                   PDFViewer(pdfUrlForPDFViewer: pdfInAppUrl),
                             ));
-                      } else {
+                      } 
+                      else if (widget.link
+                                              .endsWith(".pdf")) {
+                                            Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      PDFViewer(
+                                                          pdfUrlForPDFViewer:
+                                                              widget.link),
+                                                ));
+                                          }
+                      else {
                         String fullUrl = widget.link.startsWith("http")
                             ? widget.link
                             : "http://${widget.link}";
@@ -123,7 +135,8 @@ class _StackedStackObuchState extends State<StackedStackObuch> {
                                 widget.link.isNotEmpty
                                     ? InkWell(
                                         onTap: () {
-                                          if (widget.link.contains(".pdf")) {
+                                          if (widget.link.contains(".pdf") &&
+                                              widget.link.contains("google")) {
                                             String pdfInAppUrl = widget.link
                                                 .split("url=")[1]
                                                 .split("&")[0];
@@ -134,6 +147,16 @@ class _StackedStackObuchState extends State<StackedStackObuch> {
                                                       PDFViewer(
                                                           pdfUrlForPDFViewer:
                                                               pdfInAppUrl),
+                                                ));
+                                          } else if (widget.link
+                                              .endsWith(".pdf")) {
+                                            Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      PDFViewer(
+                                                          pdfUrlForPDFViewer:
+                                                              widget.link),
                                                 ));
                                           } else {
                                             String fullUrl =
@@ -174,7 +197,7 @@ class _StackedStackObuchState extends State<StackedStackObuch> {
                                 widget.linkPDF.isNotEmpty
                                     ? InkWell(
                                         onTap: () {
-                                          if (widget.link.contains(".pdf")) {
+                                          if (widget.link.contains(".pdf") && widget.link.contains("google")) {
                                             String pdfInAppUrl = widget.link
                                                 .split("url=")[1]
                                                 .split("&")[0];
@@ -186,7 +209,19 @@ class _StackedStackObuchState extends State<StackedStackObuch> {
                                                           pdfUrlForPDFViewer:
                                                               pdfInAppUrl),
                                                 ));
-                                          } else {
+                                          }
+                                          else if (widget.linkPDF!
+                                              .endsWith(".pdf")) {
+                                            Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      PDFViewer(
+                                                          pdfUrlForPDFViewer:
+                                                              widget.linkPDF!),
+                                                ));
+                                          }
+                                           else {
                                             String fullUrl =
                                                 widget.link.startsWith("http")
                                                     ? widget.link

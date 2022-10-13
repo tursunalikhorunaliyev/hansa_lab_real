@@ -161,7 +161,28 @@ class _PresentArchiveState extends State<PresentArchive> {
                                                                     pdfUrlForPDFViewer:
                                                                         pdfInAppUrl),
                                                           ));
-                                                    } else {
+                                                    } 
+                                                    else if (snapshot
+                                                              .data!
+                                                              .data
+                                                              .guides
+                                                              .dataGuides[index]
+                                                              .pdfUrl.endsWith(".pdf")) {
+                                            Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      PDFViewer(
+                                                          pdfUrlForPDFViewer:
+                                                              snapshot
+                                                              .data!
+                                                              .data
+                                                              .guides
+                                                              .dataGuides[index]
+                                                              .pdfUrl),
+                                                ));
+                                          }
+                                                    else {
                                                       String fullUrl = snapshot
                                                               .data!
                                                               .data
@@ -338,7 +359,28 @@ class _PresentArchiveState extends State<PresentArchive> {
                                                                   pdfUrlForPDFViewer:
                                                                       pdfInAppUrl),
                                                         ));
-                                                  } else {
+                                                  }
+                                                  else if (snapshot
+                                                              .data!
+                                                              .data
+                                                              .guides
+                                                              .dataGuides[index]
+                                                              .pdfUrl.endsWith(".pdf")) {
+                                            Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      PDFViewer(
+                                                          pdfUrlForPDFViewer:
+                                                              snapshot
+                                                              .data!
+                                                              .data
+                                                              .guides
+                                                              .dataGuides[index]
+                                                              .pdfUrl),
+                                                ));
+                                          }
+                                                   else {
                                                     String fullUrl = snapshot
                                                             .data!
                                                             .data
@@ -550,7 +592,28 @@ class _PresentArchiveState extends State<PresentArchive> {
                                                                   pdfUrlForPDFViewer:
                                                                       pdfInAppUrl),
                                                         ));
-                                                  } else {
+                                                  }
+                                                  else if (snapshot
+                                                              .data!
+                                                              .data
+                                                              .guides
+                                                              .dataGuides[index]
+                                                              .pdfUrl.endsWith(".pdf")) {
+                                            Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      PDFViewer(
+                                                          pdfUrlForPDFViewer:
+                                                              snapshot
+                                                              .data!
+                                                              .data
+                                                              .guidesArchive
+                                                              .dataGuidesArchive[index]
+                                                              .pdfUrl),
+                                                ));
+                                          }
+                                                   else {
                                                     String fullUrl = snapshot
                                                             .data!
                                                             .data
@@ -709,7 +772,29 @@ class _PresentArchiveState extends State<PresentArchive> {
                                                                   pdfUrlForPDFViewer:
                                                                       pdfInAppUrl),
                                                         ));
-                                                  } else {
+                                                  } 
+                                                  else if (snapshot
+                                                              .data!
+                                                              .data
+                                                              .guides
+                                                              .dataGuides[index]
+                                                              .pdfUrl.endsWith(".pdf")) {
+                                            Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      PDFViewer(
+                                                          pdfUrlForPDFViewer:
+                                                              snapshot
+                                                              .data!
+                                                              .data
+                                                              .guidesArchive
+                                                              .dataGuidesArchive[index]
+                                                              .pdfUrl),
+                                                ));
+                                          }
+                                                  
+                                                  else {
                                                     String fullUrl = snapshot
                                                             .data!
                                                             .data

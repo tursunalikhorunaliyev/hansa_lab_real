@@ -81,7 +81,19 @@ class _StackedStackPrezentatsiyaTabState
                                                                     pdfUrlForPDFViewer:
                                                                         pdfInAppUrl),
                                                           ));
-                                                    } else {
+                                                    } 
+                                                    else if (widget.linkPDF!
+                                              .endsWith(".pdf")) {
+                                            Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      PDFViewer(
+                                                          pdfUrlForPDFViewer:
+                                                              widget.linkPDF!),
+                                                ));
+                                          }
+                                                    else {
                                                       String fullUrl = widget.linkPDF!.startsWith("http")
                                                           ? widget.linkPDF!
                                                           : "http://${widget.linkPDF}";
@@ -186,7 +198,19 @@ class _StackedStackPrezentatsiyaTabState
                                                                     pdfUrlForPDFViewer:
                                                                         pdfInAppUrl),
                                                           ));
-                                                    } else {
+                                                    } 
+                                                    else if (widget.linkPDF!
+                                              .endsWith(".pdf")) {
+                                            Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      PDFViewer(
+                                                          pdfUrlForPDFViewer:
+                                                              widget.linkPDF!),
+                                                ));
+                                          }
+                                                    else {
                                                       String fullUrl = widget.linkPDF!.startsWith("http")
                                                           ? widget.linkPDF!
                                                           : "http://${widget.linkPDF}";
