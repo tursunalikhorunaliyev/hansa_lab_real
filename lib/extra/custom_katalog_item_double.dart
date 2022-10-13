@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:hansa_lab/extra/custom_double_clip_item.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:hansa_lab/screens/pdf_viewer.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class CustomKatalogItemDouble extends StatefulWidget {
@@ -45,11 +46,25 @@ class _CustomKatalogItemDoubleState extends State<CustomKatalogItemDouble> {
         children: [
           InkWell(
             onTap: () {
-              setState(() {
-                launched = _launchInBrowser(
-                  Uri.parse(widget.linkPDF),
-                );
-              });
+              if (widget.linkPDF.contains(".pdf") &&
+                  widget.linkPDF.contains("google")) {
+                String pdfInAppUrl =
+                    widget.linkPDF.split("url=")[1].split("&")[0];
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) =>
+                          PDFViewer(pdfUrlForPDFViewer: pdfInAppUrl),
+                    ));
+              } else {
+                String fullUrl = widget.linkPDF.startsWith("http")
+                    ? widget.linkPDF
+                    : "http://${widget.linkPDF}";
+
+                setState(() {
+                  launched = _launchInBrowser(Uri.parse(fullUrl));
+                });
+              }
             },
             child: ClipRRect(
               borderRadius: BorderRadius.circular(6.r),

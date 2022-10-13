@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hansa_lab/extra/custom_paint_clipper.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:hansa_lab/screens/pdf_viewer.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -123,10 +124,25 @@ class _CustomDoubleClipItemState extends State<CustomDoubleClipItem> {
                         elevation: 5,
                         child: GestureDetector(
                           onTap: () {
-                            setState(() {
-                              launched =
-                                  _launchInBrowser(Uri.parse(widget.linkPDF));
-                            });
+                            if (widget.linkPDF.contains(".pdf") &&
+                                widget.linkPDF.contains("google")) {
+                              String pdfInAppUrl =
+                                  widget.linkPDF.split("url=")[1].split("&")[0];
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => PDFViewer(
+                                        pdfUrlForPDFViewer: pdfInAppUrl),
+                                  ));
+                            } else {
+                              String fullUrl = widget.linkPDF.startsWith("http")
+                                  ? widget.linkPDF
+                                  : "http://${widget.linkPDF}";
+
+                              setState(() {
+                                launched = _launchInBrowser(Uri.parse(fullUrl));
+                              });
+                            }
                           },
                           child: ClipRRect(
                             borderRadius: BorderRadius.circular(64),

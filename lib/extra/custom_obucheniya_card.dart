@@ -189,7 +189,7 @@ class _ObucheniyaCardState extends State<ObucheniyaCard> {
           ),
           InkWell(
             onTap: () {
-              if (widget.link.contains(".pdf")) {
+              if (widget.link.contains(".pdf") && widget.link.contains("google")) {
                 String pdfInAppUrl = widget.link.split("url=")[1].split("&")[0];
                 Navigator.push(
                     context,
