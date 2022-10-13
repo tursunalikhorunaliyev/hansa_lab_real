@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hansa_lab/api_models.dart/country_model.dart';
 import 'package:hansa_lab/blocs/bloc_popup_drawer.dart';
+import 'package:hansa_lab/blocs/bloc_send_id.dart';
 import 'package:hansa_lab/blocs/hansa_country_api.dart';
 import 'package:provider/provider.dart';
 
@@ -54,22 +55,24 @@ class _PopupFullRegistrGorodState extends State<PopupFullRegistrGorod> {
   @override
   Widget build(BuildContext context) {
     final isTablet = Provider.of<bool>(context);
-    final blocHansaCountry = HansaCountryBloC(1);
+    final providerBlocSendId = Provider.of<BlocSendId>(context);
+    providerBlocSendId.eventSink.add(CityEnum.city);
 
-    blocHansaCountry.eventSink.add(CityEnum.city);
 
     final gorodTextEditingContyroller =
         Provider.of<TextEditingController>(context);
 
     return StreamBuilder<double>(
-        initialData: isTablet ? 40  : 38,
+        initialData: isTablet ? 40 : 38,
         stream: blocPopupDrawer.dataStream,
         builder: (context, snapshotSizeDrawer) {
           return InkWell(
             onTap: () {
               widget.onTap();
-              blocPopupDrawer.dataSink
-                  .add(snapshotSizeDrawer.data! == (isTablet ? 40  : 38) ? (isTablet ? 280  : 250) : (isTablet ? 40  : 38));
+              blocPopupDrawer.dataSink.add(
+                  snapshotSizeDrawer.data! == (isTablet ? 40 : 38)
+                      ? (isTablet ? 280 : 250)
+                      : (isTablet ? 40 : 38));
               radius = radius == 54 ? 10 : 54;
             },
             child: Padding(
@@ -114,11 +117,12 @@ class _PopupFullRegistrGorodState extends State<PopupFullRegistrGorod> {
                         height: 10,
                       ),
                       StreamBuilder<CountryModel>(
-                          stream: blocHansaCountry.stream,
+                          stream: providerBlocSendId.stream,
                           builder: (context, snapshotCountry) {
                             if (snapshotCountry.hasData) {
                               streamController.sink
                                   .add(snapshotCountry.data!.data.list);
+
                               return Visibility(
                                 visible: radius == 54 ? false : true,
                                 child: Column(
@@ -169,7 +173,7 @@ class _PopupFullRegistrGorodState extends State<PopupFullRegistrGorod> {
                                                 blocPopupDrawer.dataSink.add(
                                                     snapshotSizeDrawer.data! ==
                                                             38
-                                                        ? (isTablet ? 280  : 250)
+                                                        ? (isTablet ? 280 : 250)
                                                         : 38);
                                                 radius = radius == 54 ? 10 : 54;
                                               },
