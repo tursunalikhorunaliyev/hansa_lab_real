@@ -4,6 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hansa_lab/api_models.dart/favourite_model.dart';
 import 'package:hansa_lab/blocs/favourite_bloc.dart';
+import 'package:hansa_lab/screens/pdf_viewer.dart';
 import 'package:provider/provider.dart';
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
@@ -79,64 +80,105 @@ class _ObucheniyaCardState extends State<ObucheniyaCard> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           SizedBox(
-                            height: widget.link.isEmpty || widget.linkPDF.isEmpty?0: 10,
+                            height:
+                                widget.link.isEmpty || widget.linkPDF.isEmpty
+                                    ? 0
+                                    : 10,
                           ),
-                          widget.link.isNotEmpty? InkWell(
-                            onTap: () {
-                              String fullUrl = widget.link.startsWith("http")
-                                  ? widget.link
-                                  : "http://${widget.link}";
+                          widget.link.isNotEmpty
+                              ? InkWell(
+                                  onTap: () {
+                                    if (widget.link.contains(".pdf")) {
+                                      String pdfInAppUrl = widget.link
+                                          .split("url=")[1]
+                                          .split("&")[0];
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) => PDFViewer(
+                                                pdfUrlForPDFViewer:
+                                                    pdfInAppUrl),
+                                          ));
+                                    } else {
+                                      String fullUrl =
+                                          widget.link.startsWith("http")
+                                              ? widget.link
+                                              : "http://${widget.link}";
 
-                              setState(() {
-                                launched = _launchInBrowser(Uri.parse(fullUrl));
-                              });
-                            },
-                            child:  Container(
-                              alignment: Alignment.center,
-                              width: isTablet ? 100 : 94,
-                              height: isTablet ? 28 : 25,
-                              decoration: BoxDecoration(
-                                  color: widget.buttonColor,
-                                  borderRadius: BorderRadius.circular(13.r)),
-                              child: Text(
-                                "Смотреть"
-                                ,
-                                style: GoogleFonts.montserrat(
-                                    fontSize: isTablet ? 12 : 10,
-                                    color: const Color(0xffffffff),
-                                    fontWeight: FontWeight.w500),
-                              ),
-                            ),
-                          ):const SizedBox(),
+                                      setState(() {
+                                        launched = _launchInBrowser(
+                                            Uri.parse(fullUrl));
+                                      });
+                                    }
+                                  },
+                                  child: Container(
+                                    alignment: Alignment.center,
+                                    width: isTablet ? 100 : 94,
+                                    height: isTablet ? 28 : 25,
+                                    decoration: BoxDecoration(
+                                        color: widget.buttonColor,
+                                        borderRadius:
+                                            BorderRadius.circular(13.r)),
+                                    child: Text(
+                                      "Смотреть",
+                                      style: GoogleFonts.montserrat(
+                                          fontSize: isTablet ? 12 : 10,
+                                          color: const Color(0xffffffff),
+                                          fontWeight: FontWeight.w500),
+                                    ),
+                                  ),
+                                )
+                              : const SizedBox(),
                           SizedBox(
-                            height:widget.link.isEmpty || widget.linkPDF.isEmpty?0: 10,
+                            height:
+                                widget.link.isEmpty || widget.linkPDF.isEmpty
+                                    ? 0
+                                    : 10,
                           ),
-                          widget.linkPDF.isNotEmpty? InkWell(
-                            onTap: () {
-                              String fullUrl = widget.linkPDF.startsWith("http")
-                                  ? widget.linkPDF
-                                  : "http://${widget.linkPDF}";
+                          widget.linkPDF.isNotEmpty
+                              ? InkWell(
+                                  onTap: () {
+                                    if (widget.link.contains(".pdf")) {
+                                      String pdfInAppUrl = widget.link
+                                          .split("url=")[1]
+                                          .split("&")[0];
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) => PDFViewer(
+                                                pdfUrlForPDFViewer:
+                                                    pdfInAppUrl),
+                                          ));
+                                    } else {
+                                      String fullUrl =
+                                          widget.link.startsWith("http")
+                                              ? widget.link
+                                              : "http://${widget.link}";
 
-                              setState(() {
-                                launched = _launchInBrowser(Uri.parse(fullUrl));
-                              });
-                            },
-                            child: Container(
-                              alignment: Alignment.center,
-                              width: isTablet ? 100 : 94,
-                              height: isTablet ? 28 : 25,
-                              decoration: BoxDecoration(
-                                  color: widget.buttonColor,
-                                  borderRadius: BorderRadius.circular(13.r)),
-                              child: Text(
-                                widget.bottomButtonText,
-                                style: GoogleFonts.montserrat(
-                                    fontSize: isTablet ? 12 : 10,
-                                    color: const Color(0xffffffff),
-                                    fontWeight: FontWeight.w500),
-                              ),
-                            ),
-                          ): const SizedBox(),
+                                      setState(() {
+                                        launched = _launchInBrowser(
+                                            Uri.parse(fullUrl));
+                                      });
+                                    }
+                                  },
+                                  child: Container(
+                                    alignment: Alignment.center,
+                                    width: isTablet ? 100 : 94,
+                                    height: isTablet ? 28 : 25,
+                                    decoration: BoxDecoration(
+                                        color: widget.buttonColor,
+                                        borderRadius:
+                                            BorderRadius.circular(13.r)),
+                                    child: Text(
+                                      widget.bottomButtonText,
+                                      style: GoogleFonts.montserrat(
+                                          fontSize: isTablet ? 12 : 10,
+                                          color: const Color(0xffffffff),
+                                          fontWeight: FontWeight.w500),
+                                    ),
+                                  ),
+                                )
+                              : const SizedBox(),
                         ],
                       ),
                     )
@@ -147,20 +189,23 @@ class _ObucheniyaCardState extends State<ObucheniyaCard> {
           ),
           InkWell(
             onTap: () {
-String fullUrl;
-              if (widget.link.isNotEmpty) {
-                 fullUrl = widget.link.startsWith("http")
-                  ? widget.link
-                  : "http://${widget.link}";
+              if (widget.link.contains(".pdf")) {
+                String pdfInAppUrl = widget.link.split("url=")[1].split("&")[0];
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) =>
+                          PDFViewer(pdfUrlForPDFViewer: pdfInAppUrl),
+                    ));
               } else {
-                fullUrl = widget.linkPDF.startsWith("http")
-                  ? widget.linkPDF
-                  : "http://${widget.linkPDF}";
-              }
+                String fullUrl = widget.link.startsWith("http")
+                    ? widget.link
+                    : "http://${widget.link}";
 
-              setState(() {
-                launched = _launchInBrowser(Uri.parse(fullUrl));
-              });
+                setState(() {
+                  launched = _launchInBrowser(Uri.parse(fullUrl));
+                });
+              }
             },
             child: SizedBox(
                 width: isTablet ? 388 : double.infinity,
@@ -193,24 +238,29 @@ String fullUrl;
                           isFavouriteBLoC.getFavourite(
                               token, widget.isFavouriteURL);
 
-                              if(fav){
+                          if (fav) {
                             showTopSnackBar(
-                            
-                            reverseCurve: Curves.elasticOut,
-                            animationDuration: const Duration(milliseconds: 600),
-                            displayDuration: const Duration(milliseconds: 600),
-                            context,
-                            const CustomSnackBar.success(
-                              iconRotationAngle: 0,
-                              iconPositionLeft: 30,
-                            //  messagePadding: EdgeInsets.symmetric(horizontal: 80),
-                              icon: Icon(Icons.favorite, color: Colors.white, size: 30, ),
-                              backgroundColor: Color.fromARGB(255, 213, 0, 50),
-                              message:
-                                  "Сохранено в избранном",
-                            ),
-                          );
-                         }
+                              reverseCurve: Curves.elasticOut,
+                              animationDuration:
+                                  const Duration(milliseconds: 600),
+                              displayDuration:
+                                  const Duration(milliseconds: 600),
+                              context,
+                              const CustomSnackBar.success(
+                                iconRotationAngle: 0,
+                                iconPositionLeft: 30,
+                                //  messagePadding: EdgeInsets.symmetric(horizontal: 80),
+                                icon: Icon(
+                                  Icons.favorite,
+                                  color: Colors.white,
+                                  size: 30,
+                                ),
+                                backgroundColor:
+                                    Color.fromARGB(255, 213, 0, 50),
+                                message: "Сохранено в избранном",
+                              ),
+                            );
+                          }
                         },
                         child: Container(
                           alignment: Alignment.center,

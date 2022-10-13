@@ -2,6 +2,7 @@ import 'dart:developer';
 import 'dart:io';
 import 'package:chewie/chewie.dart';
 import 'package:dio/dio.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:gallery_saver/gallery_saver.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -171,8 +172,10 @@ class _TopVideoWidgState extends State<TopVideoWidg> {
           ),
           Stack(
             children: [
+             
               Column(
                 children: [
+                  
                   Provider<ChewieController>.value(
                       value: chewieController,
                       child: const CustomBlackAppBar()),
@@ -180,120 +183,126 @@ class _TopVideoWidgState extends State<TopVideoWidg> {
               ),
               (chewieController.videoPlayerController.value.size.aspectRatio !=
                       0.0)
-                  ? Center(
-                      child: Padding(
-                        padding: EdgeInsets.only(top: isTablet ? 130 : 100),
-                        child: ScrollConfiguration(
-                          behavior: MyBehavior(),
-                          child: SingleChildScrollView(
-                            child: Column(
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsets.only(top: 20),
-                                  child: SizedBox(
-                                    width: isTablet ? 800 : 355,
-                                    child: Center(
-                                      child: ClipRRect(
-                                        borderRadius: BorderRadius.circular(15),
-                                        child: AspectRatio(
-                                          aspectRatio: chewieController
-                                              .videoPlayerController
-                                              .value
-                                              .aspectRatio,
-                                          child: Chewie(
-                                            controller: chewieController,
-                                          ),
-                                        ),
+                  ? Padding(
+                    padding: const EdgeInsets.only(left: 20, right: 20, top: 100),
+                    child: ScrollConfiguration(
+                      behavior: MyBehavior(),
+                      child: SingleChildScrollView(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                             InkWell(
+                               onTap: () {
+                                 Navigator.pop(context);
+                               },
+                               child: const Icon(CupertinoIcons.back, color:  Color.fromARGB(
+                                                          255, 213, 0, 50),size: 30,),
+                             ),
+                            Padding(
+                              padding: const EdgeInsets.only(top: 20),
+                              child: SizedBox(
+                                width: isTablet ? 800 : 355,
+                                child: Center(
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(15),
+                                    child: AspectRatio(
+                                      aspectRatio: chewieController
+                                          .videoPlayerController
+                                          .value
+                                          .aspectRatio,
+                                      child: Chewie(
+                                        controller: chewieController,
                                       ),
                                     ),
                                   ),
                                 ),
-                                Padding(
-                                  padding: const EdgeInsets.only(top: 13),
-                                  child: Consumer<VideoIndexProvider>(
-                                    builder: (context, value, child) {
-                                      return FutureBuilder<VideoMainOne>(
-                                        future:
-                                            blocVideoApi.getData(token: token),
-                                        builder: (context, snapshot) {
-                                          if (snapshot.hasData) {
-                                            return Provider(
-                                              create: (context) =>
-                                                  blocDetectTap,
-                                              child: StreamBuilder<double>(
-                                                  stream: providerBlocProgress
-                                                      .stream,
-                                                  builder: (context,
-                                                      snapshotProgress) {
-                                                    return CustomTreningiVideo(
-                                                      onTap: () {
-                                                        blocDetectTap.dataSink
-                                                            .add(true);
-                                                        if (snapshotProgress
-                                                                    .data ==
-                                                                null ||
-                                                            snapshotProgress
-                                                                    .data ==
-                                                                0) {
-                                                          downloadFile(
-                                                            snapshot
-                                                                .data!
-                                                                .videoListData
-                                                                .list[value
-                                                                    .getIndex]
-                                                                .data
-                                                                .list[widget
-                                                                    .selectedIndex]
-                                                                .videoLink,
-                                                            snapshot
-                                                                .data!
-                                                                .videoListData
-                                                                .list[value
-                                                                    .getIndex]
-                                                                .data
-                                                                .list[widget
-                                                                    .selectedIndex]
-                                                                .title,
-                                                            providerBlocProgress,
-                                                          ).then((v) {
-                                                            providerSendAnaliseDownload
-                                                                .setAnalise(v);
-                                                            log("Not download");
-                                                            if (Platform
-                                                                .isIOS) {
-                                                              GallerySaver.saveVideo(snapshot
-                                                                  .data!
-                                                                  .videoListData
-                                                                  .list[value
-                                                                      .getIndex]
-                                                                  .data
-                                                                  .list[widget
-                                                                      .selectedIndex]
-                                                                  .videoLink);
-                                                            }
-                                                          });
-                                                        } else {
-                                                          log("asdffffffffffff=----------------------------------------");
-                                                        }
-                                                      },
-                                                      title: widget.title,
-                                                    );
-                                                  }),
-                                            );
-                                          } else {
-                                            return const SizedBox();
-                                          }
-                                        },
-                                      );
-                                    },
-                                  ),
-                                )
-                              ],
+                              ),
                             ),
-                          ),
+                            Padding(
+                              padding: const EdgeInsets.only(top: 13),
+                              child: Consumer<VideoIndexProvider>(
+                                builder: (context, value, child) {
+                                  return FutureBuilder<VideoMainOne>(
+                                    future:
+                                        blocVideoApi.getData(token: token),
+                                    builder: (context, snapshot) {
+                                      if (snapshot.hasData) {
+                                        return Provider(
+                                          create: (context) =>
+                                              blocDetectTap,
+                                          child: StreamBuilder<double>(
+                                              stream: providerBlocProgress
+                                                  .stream,
+                                              builder: (context,
+                                                  snapshotProgress) {
+                                                return CustomTreningiVideo(
+                                                  onTap: () {
+                                                    blocDetectTap.dataSink
+                                                        .add(true);
+                                                    if (snapshotProgress
+                                                                .data ==
+                                                            null ||
+                                                        snapshotProgress
+                                                                .data ==
+                                                            0) {
+                                                      downloadFile(
+                                                        snapshot
+                                                            .data!
+                                                            .videoListData
+                                                            .list[value
+                                                                .getIndex]
+                                                            .data
+                                                            .list[widget
+                                                                .selectedIndex]
+                                                            .videoLink,
+                                                        snapshot
+                                                            .data!
+                                                            .videoListData
+                                                            .list[value
+                                                                .getIndex]
+                                                            .data
+                                                            .list[widget
+                                                                .selectedIndex]
+                                                            .title,
+                                                        providerBlocProgress,
+                                                      ).then((v) {
+                                                        providerSendAnaliseDownload
+                                                            .setAnalise(v);
+                                                        log("Not download");
+                                                        if (Platform
+                                                            .isIOS) {
+                                                          GallerySaver.saveVideo(snapshot
+                                                              .data!
+                                                              .videoListData
+                                                              .list[value
+                                                                  .getIndex]
+                                                              .data
+                                                              .list[widget
+                                                                  .selectedIndex]
+                                                              .videoLink);
+                                                        }
+                                                      });
+                                                    } else {
+                                                      log("asdffffffffffff=----------------------------------------");
+                                                    }
+                                                  },
+                                                  title: widget.title,
+                                                );
+                                              }),
+                                        );
+                                      } else {
+                                        return const SizedBox();
+                                      }
+                                    },
+                                  );
+                                },
+                              ),
+                            )
+                          ],
                         ),
                       ),
-                    )
+                    ),
+                  )
                   : const Center(
                       child: CircularProgressIndicator(),
                     ),

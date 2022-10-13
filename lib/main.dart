@@ -174,7 +174,7 @@ class MyApp extends StatelessWidget {
           supportedLocales: const [Locale("en"), Locale("ru"), Locale("ar")],
           locale: const Locale("ru"),
           debugShowCheckedModeBanner: false,
-          home: const PDFViewer(),
+          home: const PermissionHandlerScreen(),
         ),
       ),
     );
