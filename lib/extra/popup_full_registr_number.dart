@@ -115,8 +115,8 @@ class _PopUpFullRegistrNumberState extends State<PopUpFullRegistrNumber> {
                                 padding: const EdgeInsets.all(0),
                                 itemCount: 3,
                                 itemBuilder: (context, index) {
-                                  return TextButton(
-                                    onPressed: () {
+                                  return InkWell(
+                                    onTap: () {
                                       providerBlocSendId.dataSinkId
                                           .add(ccs[index].contains("Россия")
                                               ? 1
@@ -138,13 +138,20 @@ class _PopUpFullRegistrNumberState extends State<PopUpFullRegistrNumber> {
                                       radius = radius == 54 ? 10 : 54;
                                       setState(() {});
                                     },
-                                    child: Align(
-                                      alignment: Alignment.centerLeft,
-                                      child: Text(
-                                        ccs[index],
-                                        style: const TextStyle(
-                                            color: Colors.black, fontSize: 10),
-                                      ),
+                                    child: Row(
+                                      children: [
+                                        Padding(
+                                          padding: const EdgeInsets.only(
+                                              bottom: 16,),
+                                          child: Text(
+                                            ccs[index],
+                                            style: const TextStyle(
+                                                color: Colors.black,
+                                                fontSize: 10),
+                                          ),
+                                        ),
+                                        const Spacer(),
+                                      ],
                                     ),
                                   );
                                 },
