@@ -141,9 +141,6 @@ class _TopVideoWidgState extends State<TopVideoWidg> {
       }
     });
     final isTablet = Provider.of<bool>(context);
-    final menuEventsBloCProvider = Provider.of<MenuEventsBloC>(context);
-    final title = Provider.of<VideoTitProvider>(context);
-    final index = Provider.of<VideoIndProvider>(context);
     final providerBlocProgress = Provider.of<DownloadProgressFileBloc>(context);
     final token = Provider.of<String>(context);
     final providerSendAnaliseDownload =
