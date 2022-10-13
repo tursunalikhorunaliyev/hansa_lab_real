@@ -48,9 +48,6 @@ class _TreningiState extends State<Treningi> {
     final isTablet = Provider.of<bool>(context);
     final token = Provider.of<String>(context);
     final treningiPhotos = Provider.of<TreningiPhotosProvider>(context);
-    final treningiVideos = Provider.of<TreningiVideosProvider>(context);
-    final title = Provider.of<VideoTitProvider>(context);
-    final index = Provider.of<VideoIndProvider>(context);
     final isVideo = Provider.of<IsVideoprovider>(context);
     final trainingBloc = TrainingAPIBloc();
     final scroll = ScrollController();
