@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -35,6 +37,7 @@ class _IzbrannoeState extends State<Izbrannoe> {
     final bloc = Provider.of<BlocObucheniya>(context);
 
     Future<void>? launched;
+    log(token);
 
     final isFavouriteBLoC = FavouriteBLoC();
     return Center(
@@ -312,7 +315,12 @@ class _IzbrannoeState extends State<Izbrannoe> {
                                                             .isNotEmpty
                                                         ? InkWell(
                                                             onTap: () async {
-                                                              if (snapshot
+                                                   if (snapshot.data!.data.list[index].type ==
+                                      2) {
+                                    if (snapshot.data!.data.list[index].pdfUrl
+                                        .isNotEmpty) {
+                                     
+                                      if (snapshot
                                                 .data!.data.list[index].link
                                                           .contains(".pdf") &&
                                                       snapshot
@@ -358,6 +366,20 @@ class _IzbrannoeState extends State<Izbrannoe> {
                                                                   fullUrl));
                                                     });
                                                   }
+                                    } 
+                                  } else {
+                                    scafforlKeyProvider.currentState!
+                                        .closeDrawer();
+                                    menuProvider.eventSink
+                                        .add(MenuActions.article);
+
+                                    ArticleModel statiModel =
+                                        await articleBLoC.getArticle(
+                                            token,
+                                            snapshot
+                                                .data!.data.list[index].link);
+                                    articleBLoC.sink.add(statiModel);
+                                  }
                                     
                                                             },
                                                             child: Container(

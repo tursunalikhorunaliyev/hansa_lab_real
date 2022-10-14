@@ -7,6 +7,7 @@ import 'package:hansa_lab/api_models.dart/article_model.dart';
 import 'package:hansa_lab/blocs/article_bloc.dart';
 import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
+import 'package:selectable/selectable.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class ArticleScreen extends StatelessWidget {
@@ -81,11 +82,15 @@ class ArticleScreen extends StatelessWidget {
                                       fontSize: 18),
                                 ),
                               ),
-                              Html(
-                                data: snapshot.data!.article.body,
-                                onLinkTap: (url, context, attributes, element) {
-                                  _launchInBrowser(Uri.parse(url.toString()));
-                                },
+                              Selectable(
+                                selectWordOnDoubleTap: true,
+                                selectWordOnLongPress: true,
+                                child: Html(
+                                  data: snapshot.data!.article.body,
+                                  onLinkTap: (url, context, attributes, element) {
+                                    _launchInBrowser(Uri.parse(url.toString()));
+                                  },
+                                ),
                               ),
                             ],
                           ),
