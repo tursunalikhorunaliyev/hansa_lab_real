@@ -10,11 +10,11 @@ import 'package:hansa_lab/api_services/search_api.dart';
 import 'package:hansa_lab/blocs/article_bloc.dart';
 import 'package:hansa_lab/blocs/menu_events_bloc.dart';
 import 'package:hansa_lab/classes/send_link.dart';
-import 'package:hansa_lab/drawer_widgets/izbrannoe.dart';
 import 'package:hansa_lab/extra/top_video_vidget.dart';
 import 'package:hansa_lab/video/model_video.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class SearchScreen extends StatefulWidget {
   const SearchScreen({Key? key}) : super(key: key);
@@ -141,7 +141,7 @@ class _SearchScreenState extends State<SearchScreen> {
                                       Navigator.pop(context);
                                       menuProvider.eventSink
                                           .add(MenuActions.prezentFav);
-                                      launchInBrowser(Uri.parse(snapshot
+                                      _launchInBrowser(Uri.parse(snapshot
                                           .data!.data.data[index].link));
                                     } else if (data[index].type == 3) {
                                       Navigator.pop(context);
@@ -329,4 +329,12 @@ class _SearchScreenState extends State<SearchScreen> {
       ),
     );
   }
+  _launchInBrowser(Uri url) async {
+  if (!await launchUrl(
+    url,
+    mode: LaunchMode.externalApplication,
+  )) {
+    throw 'Could not launch $url';
+  }
+}
 }

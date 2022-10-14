@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hansa_lab/blocs/favourite_bloc.dart';
+import 'package:hansa_lab/screens/pdf_viewer.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';
@@ -63,9 +64,49 @@ class _StackedStackPrezentatsiyaTabState
                 children: [
                   InkWell(
                     onTap: () {
-                      setState(() {
-                        launched = _launchInBrowser(Uri.parse(widget.linkPDF!));
-                      });
+                      if (widget.linkPDF!
+                                                            .contains(".pdf") &&
+                                                        widget.linkPDF!
+                                                            .contains(
+                                                                "google")) {
+                                                      String pdfInAppUrl =
+                                                          widget.linkPDF!
+                                                              .split("url=")[1]
+                                                              .split("&")[0];
+                                                      Navigator.push(
+                                                          context,
+                                                          MaterialPageRoute(
+                                                            builder: (context) =>
+                                                                PDFViewer(
+                                                                    pdfUrlForPDFViewer:
+                                                                        pdfInAppUrl),
+                                                          ));
+                                                    } 
+                                                    else if (widget.linkPDF!
+                                              .endsWith(".pdf")) {
+                                            Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      PDFViewer(
+                                                          pdfUrlForPDFViewer:
+                                                              widget.linkPDF!),
+                                                ));
+                                          }
+                                                    else {
+                                                      String fullUrl = widget.linkPDF!.startsWith("http")
+                                                          ? widget.linkPDF!
+                                                          : "http://${widget.linkPDF}";
+
+                                                      setState(() {
+                                                        launched =
+                                                            _launchInBrowser(
+                                                                Uri.parse(
+                                                                    fullUrl));
+                                                      });
+                                                    }
+                      
+                      
                     },
                     child: SizedBox(
                         width: 410,
@@ -140,10 +181,49 @@ class _StackedStackPrezentatsiyaTabState
                                   padding: EdgeInsets.only(top: 4.h),
                                   child: InkWell(
                                     onTap: () {
-                                      setState(() {
-                                        launched = _launchInBrowser(
-                                            Uri.parse(widget.linkPDF!));
-                                      });
+                                      if (widget.linkPDF!
+                                                            .contains(".pdf") &&
+                                                        widget.linkPDF!
+                                                            .contains(
+                                                                "google")) {
+                                                      String pdfInAppUrl =
+                                                          widget.linkPDF!
+                                                              .split("url=")[1]
+                                                              .split("&")[0];
+                                                      Navigator.push(
+                                                          context,
+                                                          MaterialPageRoute(
+                                                            builder: (context) =>
+                                                                PDFViewer(
+                                                                    pdfUrlForPDFViewer:
+                                                                        pdfInAppUrl),
+                                                          ));
+                                                    } 
+                                                    else if (widget.linkPDF!
+                                              .endsWith(".pdf")) {
+                                            Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      PDFViewer(
+                                                          pdfUrlForPDFViewer:
+                                                              widget.linkPDF!),
+                                                ));
+                                          }
+                                                    else {
+                                                      String fullUrl = widget.linkPDF!.startsWith("http")
+                                                          ? widget.linkPDF!
+                                                          : "http://${widget.linkPDF}";
+
+                                                      setState(() {
+                                                        launched =
+                                                            _launchInBrowser(
+                                                                Uri.parse(
+                                                                    fullUrl));
+                                                      });
+                                                    }
+                      
+                      
                                     },
                                     child: Container(
                                       alignment: Alignment.center,

@@ -59,10 +59,10 @@ class _PopupFullRegistrDoljnostState extends State<PopupFullRegistrDoljnost> {
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(radius),
                   border: Border.all(
-                      width:
-                          widget.borderColor == const Color.fromARGB(255, 213, 0, 50)
-                              ? 0.9
-                              : 0.1,
+                      width: widget.borderColor ==
+                              const Color.fromARGB(255, 213, 0, 50)
+                          ? 0.9
+                          : 0.1,
                       color: widget.borderColor),
                 ),
                 child: Padding(
@@ -101,7 +101,8 @@ class _PopupFullRegistrDoljnostState extends State<PopupFullRegistrDoljnost> {
                                         onPressed: () {
                                           doljnostTextEdtingContoller.text =
                                               snapshotJob.data!.data
-                                                  .jobModelData[index].id.toString()  ;
+                                                  .jobModelData[index].id
+                                                  .toString();
                                           text = snapshotJob.data!.data
                                               .jobModelData[index].name;
 
@@ -116,7 +117,7 @@ class _PopupFullRegistrDoljnostState extends State<PopupFullRegistrDoljnost> {
                                           child: Text(
                                             snapshotJob.data!.data
                                                 .jobModelData[index].name,
-                                                  textScaleFactor: 1.0,
+                                            textScaleFactor: 1.0,
                                             style: const TextStyle(
                                                 color: Colors.black,
                                                 fontSize: 10),

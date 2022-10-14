@@ -7,7 +7,6 @@ import 'package:hansa_lab/api_models.dart/training_model.dart';
 import 'package:hansa_lab/api_services/training_api_bloc.dart';
 import 'package:hansa_lab/api_services/treningi_video_api.dart';
 import 'package:hansa_lab/blocs/menu_events_bloc.dart';
-import 'package:hansa_lab/drawer_widgets/izbrannoe.dart';
 import 'package:hansa_lab/extra/custom_tablet_item.dart';
 import 'package:hansa_lab/extra/custom_treningi_ipad_container.dart';
 import 'package:hansa_lab/extra/my_behavior%20.dart';
@@ -15,17 +14,14 @@ import 'package:hansa_lab/extra/top_video_vidg.dart';
 import 'package:hansa_lab/providers/event_title_provider.dart';
 import 'package:hansa_lab/providers/is_video_provider.dart';
 import 'package:hansa_lab/providers/treningi_photos_provider.dart';
-import 'package:hansa_lab/providers/treningi_videos_provider.dart';
-import 'package:hansa_lab/providers/video_ind_provider.dart';
-import 'package:hansa_lab/providers/video_tit_provider.dart';
 import 'package:hansa_lab/training_section/custom_calendar.dart';
 import 'package:hansa_lab/extra/custom_clip_item.dart';
 import 'package:hansa_lab/extra/custom_title.dart';
-import 'package:hansa_lab/video/model_video.dart';
 import 'package:lottie/lottie.dart';
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
 import 'package:sticky_headers/sticky_headers.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class Treningi extends StatefulWidget {
   const Treningi({Key? key}) : super(key: key);
@@ -48,9 +44,7 @@ class _TreningiState extends State<Treningi> {
     final isTablet = Provider.of<bool>(context);
     final token = Provider.of<String>(context);
     final treningiPhotos = Provider.of<TreningiPhotosProvider>(context);
-    final treningiVideos = Provider.of<TreningiVideosProvider>(context);
-    final title = Provider.of<VideoTitProvider>(context);
-    final index = Provider.of<VideoIndProvider>(context);
+    
     final isVideo = Provider.of<IsVideoprovider>(context);
     final trainingBloc = TrainingAPIBloc();
     final scroll = ScrollController();
@@ -579,6 +573,15 @@ class _TreningiState extends State<Treningi> {
     } else {
       return "Декабрь";
     }
+  }
+
+  launchInBrowser(Uri url) async {
+  if (!await launchUrl(
+    url,
+    mode: LaunchMode.externalApplication,
+  )) {
+    throw 'Could not launch $url';
+  }
   }
 
   postChecked(token, url) async {

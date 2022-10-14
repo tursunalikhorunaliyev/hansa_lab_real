@@ -3,11 +3,11 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hansa_lab/api_models.dart/prezintatsi_model.dart';
-import 'package:hansa_lab/api_services/welcome_api.dart';
 import 'package:hansa_lab/blocs/prezintatsia_bloc.dart';
 import 'package:hansa_lab/classes/sned_url_prezent_otkrit.dart';
 import 'package:hansa_lab/extra/archive_card.dart';
 import 'package:hansa_lab/extra/prezentatTabCard.dart';
+import 'package:hansa_lab/screens/pdf_viewer.dart';
 import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 import 'package:sticky_headers/sticky_headers.dart';
@@ -128,11 +128,83 @@ class _PresentArchiveState extends State<PresentArchive> {
                                                         isTablet ? 22.h : 15.h),
                                                 child: InkWell(
                                                   onTap: () {
-                                                    setState(() {
-                                                      launched = _launchInBrowser(
-                                                          Uri.parse(
-                                                              "https://${snapshot.data!.data.guides.dataGuides[index].pdfUrl}"));
-                                                    });
+                                                    if (snapshot
+                                                            .data!
+                                                            .data
+                                                            .guides
+                                                            .dataGuides[index]
+                                                            .pdfUrl
+                                                            .contains(".pdf") &&
+                                                        snapshot
+                                                            .data!
+                                                            .data
+                                                            .guides
+                                                            .dataGuides[index]
+                                                            .pdfUrl
+                                                            .contains(
+                                                                "google")) {
+                                                      String pdfInAppUrl =
+                                                          snapshot
+                                                              .data!
+                                                              .data
+                                                              .guides
+                                                              .dataGuides[index]
+                                                              .pdfUrl
+                                                              .split("url=")[1]
+                                                              .split("&")[0];
+                                                      Navigator.push(
+                                                          context,
+                                                          MaterialPageRoute(
+                                                            builder: (context) =>
+                                                                PDFViewer(
+                                                                    pdfUrlForPDFViewer:
+                                                                        pdfInAppUrl),
+                                                          ));
+                                                    } 
+                                                    else if (snapshot
+                                                              .data!
+                                                              .data
+                                                              .guides
+                                                              .dataGuides[index]
+                                                              .pdfUrl.endsWith(".pdf")) {
+                                            Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      PDFViewer(
+                                                          pdfUrlForPDFViewer:
+                                                              snapshot
+                                                              .data!
+                                                              .data
+                                                              .guides
+                                                              .dataGuides[index]
+                                                              .pdfUrl),
+                                                ));
+                                          }
+                                                    else {
+                                                      String fullUrl = snapshot
+                                                              .data!
+                                                              .data
+                                                              .guides
+                                                              .dataGuides[index]
+                                                              .pdfUrl
+                                                              .startsWith(
+                                                                  "http")
+                                                          ? snapshot
+                                                              .data!
+                                                              .data
+                                                              .guides
+                                                              .dataGuides[index]
+                                                              .pdfUrl
+                                                          : "http://${snapshot.data!.data.guides.dataGuides[index].pdfUrl}";
+
+                                                      setState(() {
+                                                        launched =
+                                                            _launchInBrowser(
+                                                                Uri.parse(
+                                                                    fullUrl));
+                                                      });
+                                                    }
                                                   },
                                                   child: Container(
                                                     alignment: Alignment.center,
@@ -255,12 +327,81 @@ class _PresentArchiveState extends State<PresentArchive> {
                                                   top: isTablet ? 22.h : 15.h),
                                               child: InkWell(
                                                 onTap: () {
-                                                  log("https://${snapshot.data!.data.guides.dataGuides[index].pdfUrl}");
-                                                  setState(() {
-                                                    launched = _launchInBrowser(
-                                                        Uri.parse(
-                                                            "https://${snapshot.data!.data.guides.dataGuides[index].pdfUrl}"));
-                                                  });
+                                                  if (snapshot
+                                                          .data!
+                                                          .data
+                                                          .guides
+                                                          .dataGuides[index]
+                                                          .pdfUrl
+                                                          .contains(".pdf") &&
+                                                      snapshot
+                                                          .data!
+                                                          .data
+                                                          .guides
+                                                          .dataGuides[index]
+                                                          .pdfUrl
+                                                          .contains("google")) {
+                                                    String pdfInAppUrl =
+                                                        snapshot
+                                                            .data!
+                                                            .data
+                                                            .guides
+                                                            .dataGuides[index]
+                                                            .pdfUrl
+                                                            .split("url=")[1]
+                                                            .split("&")[0];
+                                                    Navigator.push(
+                                                        context,
+                                                        MaterialPageRoute(
+                                                          builder: (context) =>
+                                                              PDFViewer(
+                                                                  pdfUrlForPDFViewer:
+                                                                      pdfInAppUrl),
+                                                        ));
+                                                  }
+                                                  else if (snapshot
+                                                              .data!
+                                                              .data
+                                                              .guides
+                                                              .dataGuides[index]
+                                                              .pdfUrl.endsWith(".pdf")) {
+                                            Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      PDFViewer(
+                                                          pdfUrlForPDFViewer:
+                                                              snapshot
+                                                              .data!
+                                                              .data
+                                                              .guides
+                                                              .dataGuides[index]
+                                                              .pdfUrl),
+                                                ));
+                                          }
+                                                   else {
+                                                    String fullUrl = snapshot
+                                                            .data!
+                                                            .data
+                                                            .guides
+                                                            .dataGuides[index]
+                                                            .pdfUrl
+                                                            .startsWith("http")
+                                                        ? snapshot
+                                                            .data!
+                                                            .data
+                                                            .guides
+                                                            .dataGuides[index]
+                                                            .pdfUrl
+                                                        : "http://${snapshot.data!.data.guides.dataGuides[index].pdfUrl}";
+
+                                                    setState(() {
+                                                      launched =
+                                                          _launchInBrowser(
+                                                              Uri.parse(
+                                                                  fullUrl));
+                                                    });
+                                                  }
                                                 },
                                                 child: Container(
                                                   alignment: Alignment.center,
@@ -416,11 +557,86 @@ class _PresentArchiveState extends State<PresentArchive> {
                                                   top: isTablet ? 22.h : 15.h),
                                               child: InkWell(
                                                 onTap: () {
-                                                  setState(() {
-                                                    launched = _launchInBrowser(
-                                                        Uri.parse(
-                                                            "https://${snapshot.data!.data.guidesArchive.dataGuidesArchive[index].pdfUrl}"));
-                                                  });
+                                                  if (snapshot
+                                                          .data!
+                                                          .data
+                                                          .guidesArchive
+                                                          .dataGuidesArchive[
+                                                              index]
+                                                          .pdfUrl
+                                                          .contains(".pdf") &&
+                                                      snapshot
+                                                          .data!
+                                                          .data
+                                                          .guidesArchive
+                                                          .dataGuidesArchive[
+                                                              index]
+                                                          .pdfUrl
+                                                          .contains("google")) {
+                                                    String pdfInAppUrl =
+                                                        snapshot
+                                                            .data!
+                                                            .data
+                                                            .guidesArchive
+                                                            .dataGuidesArchive[
+                                                                index]
+                                                            .pdfUrl
+                                                            .split("url=")[1]
+                                                            .split("&")[0];
+                                                    Navigator.push(
+                                                        context,
+                                                        MaterialPageRoute(
+                                                          builder: (context) =>
+                                                              PDFViewer(
+                                                                  pdfUrlForPDFViewer:
+                                                                      pdfInAppUrl),
+                                                        ));
+                                                  }
+                                                  else if (snapshot
+                                                              .data!
+                                                              .data
+                                                              .guides
+                                                              .dataGuides[index]
+                                                              .pdfUrl.endsWith(".pdf")) {
+                                            Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      PDFViewer(
+                                                          pdfUrlForPDFViewer:
+                                                              snapshot
+                                                              .data!
+                                                              .data
+                                                              .guidesArchive
+                                                              .dataGuidesArchive[index]
+                                                              .pdfUrl),
+                                                ));
+                                          }
+                                                   else {
+                                                    String fullUrl = snapshot
+                                                            .data!
+                                                            .data
+                                                            .guidesArchive
+                                                            .dataGuidesArchive[
+                                                                index]
+                                                            .pdfUrl
+                                                            .startsWith("http")
+                                                        ? snapshot
+                                                            .data!
+                                                            .data
+                                                            .guidesArchive
+                                                            .dataGuidesArchive[
+                                                                index]
+                                                            .pdfUrl
+                                                        : "http://${snapshot.data!.data.guidesArchive.dataGuidesArchive[index].pdfUrl}";
+
+                                                    setState(() {
+                                                      launched =
+                                                          _launchInBrowser(
+                                                              Uri.parse(
+                                                                  fullUrl));
+                                                    });
+                                                  }
                                                 },
                                                 child: Container(
                                                   alignment: Alignment.center,
@@ -521,13 +737,87 @@ class _PresentArchiveState extends State<PresentArchive> {
                                                             : 15.h),
                                                     child: InkWell(
                                                       onTap: () {
-                                                        log("https://${snapshot.data!.data.guidesArchive.dataGuidesArchive[index].pdfUrl}");
-                                                        setState(() {
-                                                          launched =
-                                                              _launchInBrowser(
-                                                                  Uri.parse(
-                                                                      "https://${snapshot.data!.data.guidesArchive.dataGuidesArchive[index].pdfUrl}"));
-                                                        });
+                                                        if (snapshot
+                                                          .data!
+                                                          .data
+                                                          .guidesArchive
+                                                          .dataGuidesArchive[
+                                                              index]
+                                                          .pdfUrl
+                                                          .contains(".pdf") &&
+                                                      snapshot
+                                                          .data!
+                                                          .data
+                                                          .guidesArchive
+                                                          .dataGuidesArchive[
+                                                              index]
+                                                          .pdfUrl
+                                                          .contains("google")) {
+                                                    String pdfInAppUrl =
+                                                        snapshot
+                                                            .data!
+                                                            .data
+                                                            .guidesArchive
+                                                            .dataGuidesArchive[
+                                                                index]
+                                                            .pdfUrl
+                                                            .split("url=")[1]
+                                                            .split("&")[0];
+                                                    Navigator.push(
+                                                        context,
+                                                        MaterialPageRoute(
+                                                          builder: (context) =>
+                                                              PDFViewer(
+                                                                  pdfUrlForPDFViewer:
+                                                                      pdfInAppUrl),
+                                                        ));
+                                                  } 
+                                                  else if (snapshot
+                                                              .data!
+                                                              .data
+                                                              .guides
+                                                              .dataGuides[index]
+                                                              .pdfUrl.endsWith(".pdf")) {
+                                            Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      PDFViewer(
+                                                          pdfUrlForPDFViewer:
+                                                              snapshot
+                                                              .data!
+                                                              .data
+                                                              .guidesArchive
+                                                              .dataGuidesArchive[index]
+                                                              .pdfUrl),
+                                                ));
+                                          }
+                                                  
+                                                  else {
+                                                    String fullUrl = snapshot
+                                                            .data!
+                                                            .data
+                                                            .guidesArchive
+                                                            .dataGuidesArchive[
+                                                                index]
+                                                            .pdfUrl
+                                                            .startsWith("http")
+                                                        ? snapshot
+                                                            .data!
+                                                            .data
+                                                            .guidesArchive
+                                                            .dataGuidesArchive[
+                                                                index]
+                                                            .pdfUrl
+                                                        : "http://${snapshot.data!.data.guidesArchive.dataGuidesArchive[index].pdfUrl}";
+
+                                                    setState(() {
+                                                      launched =
+                                                          _launchInBrowser(
+                                                              Uri.parse(
+                                                                  fullUrl));
+                                                    });
+                                                  }
                                                       },
                                                       child: Container(
                                                         alignment:

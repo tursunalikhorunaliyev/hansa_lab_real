@@ -5,18 +5,12 @@ import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:gallery_saver/gallery_saver.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:hansa_lab/blocs/bloc_detect_tap.dart';
 import 'package:hansa_lab/blocs/download_progress_bloc.dart';
-import 'package:hansa_lab/blocs/menu_events_bloc.dart';
 import 'package:hansa_lab/classes/send_analise_download.dart';
-import 'package:hansa_lab/extra/black_custom_title.dart';
 import 'package:hansa_lab/extra/custom_black_appbar.dart';
 import 'package:hansa_lab/extra/my_behavior%20.dart';
 import 'package:hansa_lab/providers/providers_for_video_title/video_index_provider.dart';
-import 'package:hansa_lab/providers/providers_for_video_title/video_title_provider.dart';
-import 'package:hansa_lab/providers/video_ind_provider.dart';
-import 'package:hansa_lab/providers/video_tit_provider.dart';
 import 'package:hansa_lab/training_section/custom_treningi_video.dart';
 import 'package:hansa_lab/video/bloc_video_api.dart';
 import 'package:hansa_lab/video/model_video.dart';
@@ -141,9 +135,6 @@ class _TopVideoWidgState extends State<TopVideoWidg> {
       }
     });
     final isTablet = Provider.of<bool>(context);
-    final menuEventsBloCProvider = Provider.of<MenuEventsBloC>(context);
-    final title = Provider.of<VideoTitProvider>(context);
-    final index = Provider.of<VideoIndProvider>(context);
     final providerBlocProgress = Provider.of<DownloadProgressFileBloc>(context);
     final token = Provider.of<String>(context);
     final providerSendAnaliseDownload =

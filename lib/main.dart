@@ -14,6 +14,7 @@ import 'package:hansa_lab/blocs/bloc_detect_tap.dart';
 import 'package:hansa_lab/blocs/bloc_flip_login.dart';
 import 'package:hansa_lab/blocs/bloc_number_country.dart';
 import 'package:hansa_lab/blocs/bloc_play_video.dart';
+import 'package:hansa_lab/blocs/bloc_send_id.dart';
 import 'package:hansa_lab/blocs/bloc_video_controll.dart';
 import 'package:hansa_lab/blocs/download_progress_bloc.dart';
 import 'package:hansa_lab/blocs/login_clicked_bloc.dart';
@@ -36,7 +37,6 @@ import 'package:hansa_lab/providers/event_title_provider.dart';
 import 'package:hansa_lab/providers/full_registr_provider.dart';
 import 'package:hansa_lab/providers/fullname_provider.dart';
 import 'package:hansa_lab/providers/is_video_provider.dart';
-import 'package:hansa_lab/providers/new_shop_provider.dart';
 import 'package:hansa_lab/providers/provider_for_flipping/flip_login_provider.dart';
 import 'package:hansa_lab/providers/provider_for_flipping/login_clicked_provider.dart';
 import 'package:hansa_lab/providers/provider_for_flipping/provider_for_flipping.dart';
@@ -48,9 +48,6 @@ import 'package:hansa_lab/providers/stati_id_provider.dart';
 import 'package:hansa_lab/providers/treningi_photos_provider.dart';
 import 'package:hansa_lab/providers/treningi_video_changer_provider.dart';
 import 'package:hansa_lab/providers/treningi_videos_provider.dart';
-import 'package:hansa_lab/providers/video_ind_provider.dart';
-import 'package:hansa_lab/providers/video_tit_provider.dart';
-import 'package:hansa_lab/screens/pdf_viewer.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:provider/provider.dart';
 
@@ -84,6 +81,7 @@ class MyApp extends StatelessWidget {
     final providerSendListPopupGorod = ProviderOtpravitPushUvodamleniya();
     final providerNumberCountry = BlocNumberCountry();
     final providerStreamController = StreamController<bool>.broadcast();
+    final providerBlocSendId = BlocSendId();
 
     Size size = WidgetsBinding.instance.window.physicalSize;
     bool isTablet = (size.width / 3) > 500;
@@ -151,14 +149,9 @@ class MyApp extends StatelessWidget {
           ChangeNotifierProvider<ProviderOtpravitPushUvodamleniya>(
             create: (context) => providerSendListPopupGorod,
           ),
-          Provider(
-            create: (context) => VideoTitProvider(),
-          ),
-          Provider(
-            create: (context) => VideoIndProvider(),
-          ),
           Provider<StreamController<bool>>(
               create: (context) => providerStreamController),
+          Provider<BlocSendId>(create: (context) => providerBlocSendId),
         ],
         child: MaterialApp(
           builder: (context, child) {

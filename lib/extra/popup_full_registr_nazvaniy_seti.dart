@@ -1,12 +1,10 @@
 import 'dart:async';
-import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hansa_lab/api_models.dart/store_model.dart';
 import 'package:hansa_lab/api_services/store_service.dart';
 import 'package:hansa_lab/blocs/bloc_popup_drawer.dart';
-import 'package:hansa_lab/providers/new_shop_provider.dart';
 import 'package:provider/provider.dart';
 
 class PopupFullRegistrNazvaniySeti extends StatefulWidget {

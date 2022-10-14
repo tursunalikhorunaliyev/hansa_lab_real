@@ -6,7 +6,6 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hansa_lab/blocs/bloc_detect_tap.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hansa_lab/blocs/download_progress_bloc.dart';
 import 'package:hansa_lab/classes/send_analise_download.dart';
 import 'package:hansa_lab/extra/custom_black_appbar.dart';

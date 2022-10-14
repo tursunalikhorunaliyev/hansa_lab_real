@@ -53,7 +53,7 @@ class _GlavniyMenyuState extends State<GlavniyMenyu> {
         .pickImage(source: ImageSource.gallery, imageQuality: 25);
 
     File file = File(image!.path);
-    log((file.readAsBytesSync().lengthInBytes / 1024).toString() + " mbbmmb");
+    log("${file.readAsBytesSync().lengthInBytes / 1024} mbbmmb");
     Dio dio = Dio();
 
     if (file == null) {
