@@ -90,7 +90,8 @@ class _ObucheniyaCardState extends State<ObucheniyaCard> {
                           widget.link.isNotEmpty
                               ? InkWell(
                                   onTap: () {
-                                    if (widget.link.contains(".pdf") && widget.link.contains("google")) {
+                                    if (widget.link.contains(".pdf") &&
+                                        widget.link.contains("google")) {
                                       String pdfInAppUrl = widget.link
                                           .split("url=")[1]
                                           .split("&")[0];
@@ -101,19 +102,16 @@ class _ObucheniyaCardState extends State<ObucheniyaCard> {
                                                 pdfUrlForPDFViewer:
                                                     pdfInAppUrl),
                                           ));
-                                    } 
-                                    else if (widget.linkPDF
-                                              .endsWith(".pdf")) {
-                                            Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      PDFViewer(
-                                                          pdfUrlForPDFViewer:
-                                                              widget.linkPDF),
-                                                ));
-                                          }
-                                    else {
+                                    } else if (widget.linkPDF
+                                        .endsWith(".pdf")) {
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) => PDFViewer(
+                                                pdfUrlForPDFViewer:
+                                                    widget.linkPDF),
+                                          ));
+                                    } else {
                                       String fullUrl =
                                           widget.link.startsWith("http")
                                               ? widget.link
@@ -152,7 +150,8 @@ class _ObucheniyaCardState extends State<ObucheniyaCard> {
                           widget.linkPDF.isNotEmpty
                               ? InkWell(
                                   onTap: () {
-                                    if (widget.link.contains(".pdf") && widget.link.contains("google")) {
+                                    if (widget.link.contains(".pdf") &&
+                                        widget.link.contains("google")) {
                                       String pdfInAppUrl = widget.link
                                           .split("url=")[1]
                                           .split("&")[0];
@@ -163,19 +162,16 @@ class _ObucheniyaCardState extends State<ObucheniyaCard> {
                                                 pdfUrlForPDFViewer:
                                                     pdfInAppUrl),
                                           ));
-                                    }
-                                    else if (widget.linkPDF
-                                              .endsWith(".pdf")) {
-                                            Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      PDFViewer(
-                                                          pdfUrlForPDFViewer:
-                                                              widget.linkPDF),
-                                                ));
-                                          }
-                                     else {
+                                    } else if (widget.linkPDF
+                                        .endsWith(".pdf")) {
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) => PDFViewer(
+                                                pdfUrlForPDFViewer:
+                                                    widget.linkPDF),
+                                          ));
+                                    } else {
                                       String fullUrl =
                                           widget.link.startsWith("http")
                                               ? widget.link
@@ -215,8 +211,8 @@ class _ObucheniyaCardState extends State<ObucheniyaCard> {
           ),
           InkWell(
             onTap: () {
-              if (widget.link.contains(".pdf") && widget.link.contains("google")) {
-                log("ifga tushdi");
+              if (widget.link.contains(".pdf") &&
+                  widget.link.contains("google")) {
                 String pdfInAppUrl = widget.link.split("url=")[1].split("&")[0];
                 Navigator.push(
                     context,
@@ -224,20 +220,14 @@ class _ObucheniyaCardState extends State<ObucheniyaCard> {
                       builder: (context) =>
                           PDFViewer(pdfUrlForPDFViewer: pdfInAppUrl),
                     ));
-              }
-              else if (widget.linkPDF
-                                              .endsWith(".pdf")) {
-                                            Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      PDFViewer(
-                                                          pdfUrlForPDFViewer:
-                                                              widget.linkPDF),
-                                                ));
-                                          }
-               else {
-                log("Elsga tushdi");
+              } else if (widget.linkPDF.endsWith(".pdf")) {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) =>
+                          PDFViewer(pdfUrlForPDFViewer: widget.linkPDF),
+                    ));
+              } else {
                 String fullUrl = widget.link.startsWith("http")
                     ? widget.link
                     : "http://${widget.link}";
