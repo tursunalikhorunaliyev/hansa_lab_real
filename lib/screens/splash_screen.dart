@@ -9,6 +9,7 @@ import 'package:provider/provider.dart';
 
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
@@ -18,7 +19,8 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-  final box = Hive.box("savedUser");
+  // final box = Hive.box("savedUser");
+  final sharedP = SharedPreferences.getInstance();
 
   @override
   void initState() {
@@ -27,7 +29,7 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   checkUser() async {
-    if (box.get("isSaved") != null && box.get("isSaved")! as bool) {
+    /* if (box.get("isSaved") != null && box.get("isSaved")! as bool) {
       Map<String, dynamic> map =
           await login(box.get("username"), box.get("password"));
       await Future.delayed(const Duration(seconds: 1));
@@ -35,7 +37,19 @@ class _SplashScreenState extends State<SplashScreen> {
     } else {
       await Future.delayed(const Duration(seconds: 2));
       goToHansaZagruzka();
-    }
+    } */
+    sharedP.then((value) async {
+      if (value.containsKey('isSaved') && value.getBool('isSaved')!) {
+        final username = value.getString("username")!;
+        final password = value.getString("password")!;
+        Map<String, dynamic> map = await login(username, password);
+        await Future.delayed(const Duration(seconds: 1));
+        goToHome(await map["data"]["token"]);
+      } else {
+        await Future.delayed(const Duration(seconds: 2));
+        goToHansaZagruzka();
+      }
+    });
   }
 
   Future<Map<String, dynamic>> login(String username, String password) async {

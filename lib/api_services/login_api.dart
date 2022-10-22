@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:hive/hive.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginAction {
   String gate = "https://hansa-lab.ru/api/auth/login";
@@ -18,15 +19,26 @@ class LoginAction {
     bool hasToken = false;
     if (responseMap["status"].toString().endsWith("true")) {
       hasToken = true;
-      final box = Hive.box("savedUser");
+      // final box = Hive.box("savedUser");
+      final sharedP = SharedPreferences.getInstance();
       if (isSaved) {
-        box.put("username", username);
-        box.put("password", password);
-        box.put("isSaved", true);
+        // box.put("username", username);
+        // box.put("password", password);
+        // box.put("isSaved", true);
+        sharedP.then((value) {
+          value.setString("username", username);
+          value.setString("password", password);
+          value.setBool("isSaved", true);
+        });
       } else {
-        box.put("username", username);
-        box.put("password", password);
-        box.put("isSaved", false);
+        // box.put("username", username);
+        // box.put("password", password);
+        // box.put("isSaved", false);
+        sharedP.then((value) {
+          value.setString("username", username);
+          value.setString("password", password);
+          value.setBool("isSaved", false);
+        });
       }
 
       return [username, password, hasToken, responseMap["data"]["token"]];
