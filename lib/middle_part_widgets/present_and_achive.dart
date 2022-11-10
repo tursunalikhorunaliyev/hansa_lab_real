@@ -14,6 +14,7 @@ import 'package:sticky_headers/sticky_headers.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+
 class PresentArchive extends StatefulWidget {
   const PresentArchive({
     Key? key,
@@ -255,7 +256,6 @@ class _PresentArchiveState extends State<PresentArchive> {
                                                   top: isTablet ? 22.h : 15.h),
                                               child: InkWell(
                                                 onTap: () {
-                                                  log("https://${snapshot.data!.data.guides.dataGuides[index].pdfUrl}");
                                                   setState(() {
                                                     launched = _launchInBrowser(
                                                         Uri.parse(
@@ -297,7 +297,7 @@ class _PresentArchiveState extends State<PresentArchive> {
                                       buttonColor:
                                           const Color.fromARGB(255, 213, 0, 50),
                                       topButtonText: 'Скачать',
-                                      bottomButtonText: 'Читать',
+                                      bottomButtonText: 'Читатьv',
                                       isFavourite: snapshot.data!.data.guides
                                           .dataGuides[index].isFavourite,
                                       skachat: Container(
@@ -640,7 +640,7 @@ class _PresentArchiveState extends State<PresentArchive> {
   _launchInBrowser(Uri url) async {
     if (!await launchUrl(
       url,
-      mode: LaunchMode.externalApplication,
+      mode: LaunchMode.inAppWebView,
     )) {
       throw 'Could not launch $url';
     }

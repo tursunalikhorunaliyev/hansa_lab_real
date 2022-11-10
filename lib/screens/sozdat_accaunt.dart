@@ -2,6 +2,7 @@ import 'package:flip_card/flip_card_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class SozdatAccaunt extends StatefulWidget {
   const SozdatAccaunt({Key? key}) : super(key: key);
@@ -47,12 +48,18 @@ class _SozdatAccauntState extends State<SozdatAccaunt> {
                     style: GoogleFonts.montserrat(
                         fontSize: 11, color: Colors.grey),
                   ),
-                  Text(
-                    "Support@hansa-lab.ru",
-                    style: GoogleFonts.montserrat(
-                        fontSize: 11,
-                        color: Colors.grey,
-                        fontWeight: FontWeight.bold),
+                  GestureDetector(
+                    onTap: (){
+                      launchUrl(Uri.parse('support@hansa-lab.ru'));
+                      print('su');
+                    },
+                    child: Text(
+                      "Support@hansa-lab.ru",
+                      style: GoogleFonts.montserrat(
+                          fontSize: 11,
+                          color: Colors.grey,
+                          fontWeight: FontWeight.bold),
+                    ),
                   ),
                 ]),
               ),
@@ -61,5 +68,13 @@ class _SozdatAccauntState extends State<SozdatAccaunt> {
         ),
       ),
     );
+  }
+  _launchInBrowser(Uri url) async {
+    if (!await launchUrl(
+      url,
+      mode: LaunchMode.externalApplication,
+    )) {
+      throw 'Could not launch $url';
+    }
   }
 }

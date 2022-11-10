@@ -10,6 +10,7 @@ import 'package:hansa_lab/blocs/bloc_for_nastroyka.dart';
 import 'package:hansa_lab/drawer_widgets/text_icon.dart';
 import 'package:hansa_lab/drawer_widgets/toggle_switcher_one.dart';
 import 'package:hansa_lab/drawer_widgets/toggle_switcher_three.dart';
+import 'package:hansa_lab/extra/delete_account_dialog.dart';
 import 'package:hansa_lab/providers/provider_otpravit_rassilku.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -33,6 +34,7 @@ class _NastroykaWidgetState extends State<NastroykaWidget> {
   }
 
   int firstTime = 0;
+
   @override
   void initState() {
     firstTime = 1;
@@ -205,6 +207,21 @@ class _NastroykaWidgetState extends State<NastroykaWidget> {
                         ],
                       ),
                     ),
+                    const SizedBox(
+                      height: 38,
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        showDialog(
+                          context: context,
+                          builder: (context) =>
+                          const DeleteAccountDialog(),
+                        );
+                      },
+                      child: const Center(
+                        child: Text('Удалить Aккаунт',style: TextStyle(color: Colors.red,fontSize: 16)),
+                      ),
+                    )
                   ],
                 );
               } else {

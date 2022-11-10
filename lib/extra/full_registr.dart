@@ -20,9 +20,11 @@ import 'package:hansa_lab/providers/provider_for_flipping/flip_login_provider.da
 import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:provider/provider.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class FullRegistr extends StatefulWidget {
   const FullRegistr({Key? key}) : super(key: key);
+
   @override
   State<FullRegistr> createState() => _FullRegistrState();
 }
@@ -611,12 +613,42 @@ class _FullRegistrState extends State<FullRegistr> {
                     const SizedBox(
                       height: 6,
                     ),
-                    Text(
-                      "Support@hansa-lab.ru",
-                      style: GoogleFonts.montserrat(
-                          fontSize: 11,
-                          color: const Color(0xFF989a9d),
-                          fontWeight: FontWeight.w700),
+                    Row(
+                      children: [
+                        GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              launchUrl(
+                                  Uri.parse('https://support@hansa-lab.ru'));
+                            });
+                          },
+                          child: Text(
+                            "Support@hansa-lab.ru",
+                            style: GoogleFonts.montserrat(
+                                fontSize: 11,
+                                color: const Color(0xFF989a9d),
+                                fontWeight: FontWeight.w700),
+                          ),
+                        ),
+                        const SizedBox(
+                          width: 10,
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              launchUrl(Uri.parse(
+                                  'https://pages.flycricket.io/hansa-lab/privacy.html'));
+                            });
+                          },
+                          child: Text(
+                            "Privacy Policy",
+                            style: GoogleFonts.montserrat(
+                                fontSize: 11,
+                                color: const Color(0xFF989a9d),
+                                fontWeight: FontWeight.w700),
+                          ),
+                        ),
+                      ],
                     ),
                     const SizedBox(
                       height: 20,
@@ -750,5 +782,14 @@ class _FullRegistrState extends State<FullRegistr> {
       fontSize: isTablet ? 13 : 10,
       color: color,
     );
+  }
+
+  _launchInBrowser(Uri url) async {
+    if (!await launchUrl(
+      url,
+      mode: LaunchMode.externalApplication,
+    )) {
+      throw 'Could not launch $url';
+    }
   }
 }

@@ -72,16 +72,16 @@ class ArticleScreen extends StatelessWidget {
                             children: [
                               Padding(
                                 padding: const EdgeInsets.all(8.0),
-                                child: Text(
+                                child: SelectableText(
                                   snapshot.data!.article.title,
-                                  overflow: TextOverflow.clip,
+                                  // overflow: TextOverflow.clip,
                                   style: GoogleFonts.montserrat(
                                       fontWeight: FontWeight.bold,
                                       color: Colors.black,
                                       fontSize: 18),
                                 ),
                               ),
-                              Html(
+                              SelectableHtml(
                                 data: snapshot.data!.article.body,
                                 onLinkTap: (url, context, attributes, element) {
                                   _launchInBrowser(Uri.parse(url.toString()));

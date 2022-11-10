@@ -164,7 +164,6 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                               height: 5,
                             ),
                             Text(
-                              
                               "Профиль",
                                 textScaleFactor: 1.0,
                               style: TextStyle(

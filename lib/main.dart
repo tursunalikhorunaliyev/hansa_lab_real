@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flip_card/flip_card_controller.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hansa_lab/api_services/country_type_service.dart';
@@ -80,7 +81,10 @@ class MyApp extends StatelessWidget {
     final providerOtpravitPushUvodamleniya = ProviderOtpravitPushUvodamleniya();
     final providerSendListPopupGorod = ProviderOtpravitPushUvodamleniya();
     final providerNumberCountry = BlocNumberCountry();
-
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
+    ]);
     Size size = WidgetsBinding.instance.window.physicalSize;
     bool isTablet = (size.width / 3) > 500;
     Map<String, FlipCardController> map = {

@@ -92,111 +92,113 @@ class _PopupFullRegistrGorodState extends State<PopupFullRegistrGorod> {
                 ),
                 child: Padding(
                   padding: const EdgeInsets.only(left: 10, top: 12),
-                  child: Column(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(left: 5),
-                        child: Align(
-                            alignment: Alignment.centerLeft,
-                            child: Text(
-                              text,
-                              style: text == "Город"
-                                  ? GoogleFonts.montserrat(
-                                      fontSize: isTablet ? 13 : 10,
-                                      color: widget.hintColor)
-                                  : GoogleFonts.montserrat(
-                                      fontSize: isTablet ? 13 : 10,
-                                      fontWeight: FontWeight.w500,
-                                      color: Colors.black),
-                            )),
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      StreamBuilder<CountryModel>(
-                          stream: blocHansaCountry.stream,
-                          builder: (context, snapshotCountry) {
-                            if (snapshotCountry.hasData) {
-                              streamController.sink
-                                  .add(snapshotCountry.data!.data.list);
-                              return Visibility(
-                                visible: radius == 54 ? false : true,
-                                child: Column(
-                                  children: [
-                                    SizedBox(
-                                      height: 40,
-                                      child: Padding(
-                                        padding: const EdgeInsets.only(
-                                            right: 10, top: 5),
-                                        child: TextField(
-                                          style: const TextStyle(fontSize: 13),
-                                          controller: textEditingController,
-                                          onChanged: (value) => search(value),
-                                          decoration: InputDecoration(
-                                              contentPadding:
-                                                  const EdgeInsets.only(
-                                                      left: 10),
-                                              hintText: "Поиск",
-                                              hintStyle:
-                                                  const TextStyle(fontSize: 13),
-                                              border: OutlineInputBorder(
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          10))),
+                  child: SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(left: 5),
+                          child: Align(
+                              alignment: Alignment.centerLeft,
+                              child: Text(
+                                text,
+                                style: text == "Город"
+                                    ? GoogleFonts.montserrat(
+                                        fontSize: isTablet ? 13 : 10,
+                                        color: widget.hintColor)
+                                    : GoogleFonts.montserrat(
+                                        fontSize: isTablet ? 13 : 10,
+                                        fontWeight: FontWeight.w500,
+                                        color: Colors.black),
+                              )),
+                        ),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        StreamBuilder<CountryModel>(
+                            stream: blocHansaCountry.stream,
+                            builder: (context, snapshotCountry) {
+                              if (snapshotCountry.hasData) {
+                                streamController.sink
+                                    .add(snapshotCountry.data!.data.list);
+                                return Visibility(
+                                  visible: radius == 54 ? false : true,
+                                  child: Column(
+                                    children: [
+                                      SizedBox(
+                                        height: 40,
+                                        child: Padding(
+                                          padding: const EdgeInsets.only(
+                                              right: 10, top: 5),
+                                          child: TextField(
+                                            style: const TextStyle(fontSize: 13),
+                                            controller: textEditingController,
+                                            onChanged: (value) => search(value),
+                                            decoration: InputDecoration(
+                                                contentPadding:
+                                                    const EdgeInsets.only(
+                                                        left: 10),
+                                                hintText: "Поиск",
+                                                hintStyle:
+                                                    const TextStyle(fontSize: 13),
+                                                border: OutlineInputBorder(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            10))),
+                                          ),
                                         ),
                                       ),
-                                    ),
-                                    const SizedBox(
-                                      height: 10,
-                                    ),
-                                    SizedBox(
-                                      height: 165,
-                                      child: Padding(
-                                        padding:
-                                            const EdgeInsets.only(right: 10),
-                                        child: ListView.builder(
-                                          physics:
-                                              const BouncingScrollPhysics(),
-                                          itemCount: cities.length,
-                                          padding: const EdgeInsets.all(0),
-                                          itemBuilder: (context, index) {
-                                            final book = cities[index];
-                                            return InkWell(
-                                              onTap: () {
-                                                gorodTextEditingContyroller
-                                                    .text = book.id.toString();
-                                                text = book.name;
-                                                blocPopupDrawer.dataSink.add(
-                                                    snapshotSizeDrawer.data! ==
-                                                            38
-                                                        ? (isTablet ? 280  : 250)
-                                                        : 38);
-                                                radius = radius == 54 ? 10 : 54;
-                                              },
-                                              child: Padding(
-                                                padding:
-                                                    const EdgeInsets.all(8),
-                                                child: Text(
-                                                  book.name,
-                                                  textScaleFactor: 1.0,
-                                                  style: const TextStyle(
-                                                      color: Colors.black,
-                                                      fontSize: 10),
+                                      const SizedBox(
+                                        height: 10,
+                                      ),
+                                      SizedBox(
+                                        height: 165,
+                                        child: Padding(
+                                          padding:
+                                              const EdgeInsets.only(right: 10),
+                                          child: ListView.builder(
+                                            physics:
+                                                const BouncingScrollPhysics(),
+                                            itemCount: cities.length,
+                                            padding: const EdgeInsets.all(0),
+                                            itemBuilder: (context, index) {
+                                              final book = cities[index];
+                                              return InkWell(
+                                                onTap: () {
+                                                  gorodTextEditingContyroller
+                                                      .text = book.id.toString();
+                                                  text = book.name;
+                                                  blocPopupDrawer.dataSink.add(
+                                                      snapshotSizeDrawer.data! ==
+                                                              38
+                                                          ? (isTablet ? 280  : 250)
+                                                          : 38);
+                                                  radius = radius == 54 ? 10 : 54;
+                                                },
+                                                child: Padding(
+                                                  padding:
+                                                      const EdgeInsets.all(8),
+                                                  child: Text(
+                                                    book.name,
+                                                    textScaleFactor: 1.0,
+                                                    style: const TextStyle(
+                                                        color: Colors.black,
+                                                        fontSize: 10),
+                                                  ),
                                                 ),
-                                              ),
-                                            );
-                                          },
+                                              );
+                                            },
+                                          ),
                                         ),
                                       ),
-                                    ),
-                                  ],
-                                ),
-                              );
-                            } else {
-                              return const SizedBox();
-                            }
-                          })
-                    ],
+                                    ],
+                                  ),
+                                );
+                              } else {
+                                return const SizedBox();
+                              }
+                            })
+                      ],
+                    ),
                   ),
                 ),
               ),

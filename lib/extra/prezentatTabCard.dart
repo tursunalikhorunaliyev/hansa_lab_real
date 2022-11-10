@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hansa_lab/blocs/favourite_bloc.dart';
+import 'package:hansa_lab/screens/pdf_viewer.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';
@@ -11,17 +12,17 @@ import 'package:url_launcher/url_launcher.dart';
 class StackedStackPrezentatsiyaTab extends StatefulWidget {
   const StackedStackPrezentatsiyaTab(
       {Key? key,
-      required this.buttonColor,
-      required this.topButtonText,
-      required this.skachat,
-      required this.bottomButtonText,
-      required this.title,
-      required this.url,
-      required this.isFavourite,
-      required this.linkPDF,
-      required this.linkPDFSkachat,
-      required this.isFavouriteURL,
-      required this.buttonLink})
+        required this.buttonColor,
+        required this.topButtonText,
+        required this.skachat,
+        required this.bottomButtonText,
+        required this.title,
+        required this.url,
+        required this.isFavourite,
+        required this.linkPDF,
+        required this.linkPDFSkachat,
+        required this.isFavouriteURL,
+        required this.buttonLink})
       : super(key: key);
 
   final String url;
@@ -63,9 +64,49 @@ class _StackedStackPrezentatsiyaTabState
                 children: [
                   InkWell(
                     onTap: () {
-                      setState(() {
-                        launched = _launchInBrowser(Uri.parse(widget.linkPDF!));
-                      });
+                      if (widget.linkPDF!
+                          .contains(".pdf") &&
+                          widget.linkPDF!
+                              .contains(
+                              "google")) {
+                        String pdfInAppUrl =
+                        widget.linkPDF!
+                            .split("url=")[1]
+                            .split("&")[0];
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) =>
+                                  PDFViewer(
+                                      pdfUrlForPDFViewer:
+                                      pdfInAppUrl),
+                            ));
+                      }
+                      else if (widget.linkPDF!
+                          .endsWith(".pdf")) {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) =>
+                                  PDFViewer(
+                                      pdfUrlForPDFViewer:
+                                      widget.linkPDF!),
+                            ));
+                      }
+                      else {
+                        String fullUrl = widget.linkPDF!.startsWith("http")
+                            ? widget.linkPDF!
+                            : "http://${widget.linkPDF}";
+
+                        setState(() {
+                          launched =
+                              _launchInBrowser(
+                                  Uri.parse(
+                                      fullUrl));
+                        });
+                      }
+
+
                     },
                     child: SizedBox(
                         width: 410,
@@ -140,10 +181,49 @@ class _StackedStackPrezentatsiyaTabState
                                   padding: EdgeInsets.only(top: 4.h),
                                   child: InkWell(
                                     onTap: () {
-                                      setState(() {
-                                        launched = _launchInBrowser(
-                                            Uri.parse(widget.linkPDF!));
-                                      });
+                                      if (widget.linkPDF!
+                                          .contains(".pdf") &&
+                                          widget.linkPDF!
+                                              .contains(
+                                              "google")) {
+                                        String pdfInAppUrl =
+                                        widget.linkPDF!
+                                            .split("url=")[1]
+                                            .split("&")[0];
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) =>
+                                                  PDFViewer(
+                                                      pdfUrlForPDFViewer:
+                                                      pdfInAppUrl),
+                                            ));
+                                      }
+                                      else if (widget.linkPDF!
+                                          .endsWith(".pdf")) {
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) =>
+                                                  PDFViewer(
+                                                      pdfUrlForPDFViewer:
+                                                      widget.linkPDF!),
+                                            ));
+                                      }
+                                      else {
+                                        String fullUrl = widget.linkPDF!.startsWith("http")
+                                            ? widget.linkPDF!
+                                            : "http://${widget.linkPDF}";
+
+                                        setState(() {
+                                          launched =
+                                              _launchInBrowser(
+                                                  Uri.parse(
+                                                      fullUrl));
+                                        });
+                                      }
+
+
                                     },
                                     child: Container(
                                       alignment: Alignment.center,
@@ -152,7 +232,7 @@ class _StackedStackPrezentatsiyaTabState
                                       decoration: BoxDecoration(
                                           color: widget.buttonColor,
                                           borderRadius:
-                                              BorderRadius.circular(13.r)),
+                                          BorderRadius.circular(13.r)),
                                       child: Text(
                                         widget.bottomButtonText,
                                         style: GoogleFonts.montserrat(
@@ -191,22 +271,22 @@ class _StackedStackPrezentatsiyaTabState
                             showTopSnackBar(
                               reverseCurve: Curves.elasticOut,
                               animationDuration:
-                                  const Duration(milliseconds: 600),
+                              const Duration(milliseconds: 600),
                               displayDuration:
-                                  const Duration(milliseconds: 600),
+                              const Duration(milliseconds: 600),
                               context,
                               const CustomSnackBar.success(
                                 iconRotationAngle: 0,
                                 iconPositionLeft: 30,
-                               // messagePadding:
-                                  //  EdgeInsets.symmetric(horizontal: 80),
+                                // messagePadding:
+                                //  EdgeInsets.symmetric(horizontal: 80),
                                 icon: Icon(
                                   Icons.favorite,
                                   color: Colors.white,
                                   size: 30,
                                 ),
                                 backgroundColor:
-                                    Color.fromARGB(255, 213, 0, 50),
+                                Color.fromARGB(255, 213, 0, 50),
                                 message: "Сохранено в избранном",
                               ),
                             );
@@ -221,15 +301,15 @@ class _StackedStackPrezentatsiyaTabState
                               borderRadius: BorderRadius.circular(90.w)),
                           child: fav
                               ? const Icon(
-                                  Icons.favorite,
-                                  color: Color.fromARGB(255, 213, 0, 50),
-                                  size: 30,
-                                )
+                            Icons.favorite,
+                            color: Color.fromARGB(255, 213, 0, 50),
+                            size: 30,
+                          )
                               : const Icon(
-                                  Icons.favorite_border_sharp,
-                                  color: Color.fromARGB(255, 213, 0, 50),
-                                  size: 30,
-                                ),
+                            Icons.favorite_border_sharp,
+                            color: Color.fromARGB(255, 213, 0, 50),
+                            size: 30,
+                          ),
                         ),
                       ),
                     ),

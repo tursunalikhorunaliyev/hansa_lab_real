@@ -64,9 +64,9 @@ class EventCards extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Expanded(
-                      child: Text(
+                      child: SelectableText(
                         title,
-                        overflow: TextOverflow.fade,
+                        // overflow: TextOverflow.fade,
                         style: GoogleFonts.montserrat(
                             fontSize: isTablet ? 14 : 12,
                             fontWeight: FontWeight.w800),

@@ -103,89 +103,91 @@ class _PopUpFullRegistrNumberState extends State<PopUpFullRegistrNumber> {
               ),
               child: Padding(
                 padding: const EdgeInsets.only(left: 10, top: 12),
-                child: Column(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(left: 5),
-                      child: Align(
-                          alignment: Alignment.centerLeft,
-                          child: Text(
-                            text,
-                            style: text == "Страна"
-                                ? GoogleFonts.montserrat(
-                                    fontSize: isTablet ? 13 : 10,
-                                    color: widget.hintColor)
-                                : GoogleFonts.montserrat(
-                                    fontSize: isTablet ? 13 : 10,
-                                    fontWeight: FontWeight.w500,
-                                    color: Colors.black),
-                          )),
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    StreamBuilder<CountryModel>(
-                        stream: blocHansaCountry.stream,
-                        builder: (context, snapshotCountry) {
-                          if (snapshotCountry.hasData) {
-                            streamController.sink
-                                .add(snapshotCountry.data!.data.list);
-                            return Visibility(
-                              visible: radius == 54 ? false : true,
-                              child: Column(
-                                children: [
-                                  const SizedBox(
-                                    height: 5,
-                                  ),
-                                  SizedBox(
-                                    height: 100,
-                                    child: Padding(
-                                        padding:
-                                            const EdgeInsets.only(right: 260),
-                                        child: Column(
-                                            children: List.generate(
-                                          3,
-                                          (index) => Padding(
-                                            padding: const EdgeInsets.symmetric(
-                                                vertical: 8),
-                                            child: InkWell(
-                                                onTap: () {
-                                                  gorodTextEditingContyroller
-                                                      .text = ccs[index];
-                                                  text = ccs[index];
-                                                  blocPopupDrawer.dataSink.add(
-                                                      snapshotSizeDrawer
-                                                                  .data! ==
-                                                              38
-                                                          ? 140
-                                                          : 38);
-                                                  providerNumberCountry.sink
-                                                      .add(ecs[index]);
-                                                  radius =
-                                                      radius == 54 ? 10 : 54;
-                                                  setState(() {});
-                                                },
-                                                child: Row(
-                                                  children: [
-                                                    Text(
-                                                      ccs[index],
-                                                      style: const TextStyle(
-                                                          color: Colors.black,
-                                                          fontSize: 10),
-                                                    ),
-                                                  ],
-                                                )),
-                                          ),
-                                        ))),
-                                  ),
-                                ],
-                              ),
-                            );
-                          } else {
-                            return const SizedBox();
-                          }
-                        })
-                  ],
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(left: 5),
+                        child: Align(
+                            alignment: Alignment.centerLeft,
+                            child: Text(
+                              text,
+                              style: text == "Страна"
+                                  ? GoogleFonts.montserrat(
+                                      fontSize: isTablet ? 13 : 10,
+                                      color: widget.hintColor)
+                                  : GoogleFonts.montserrat(
+                                      fontSize: isTablet ? 13 : 10,
+                                      fontWeight: FontWeight.w500,
+                                      color: Colors.black),
+                            )),
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      StreamBuilder<CountryModel>(
+                          stream: blocHansaCountry.stream,
+                          builder: (context, snapshotCountry) {
+                            if (snapshotCountry.hasData) {
+                              streamController.sink
+                                  .add(snapshotCountry.data!.data.list);
+                              return Visibility(
+                                visible: radius == 54 ? false : true,
+                                child: Column(
+                                  children: [
+                                    const SizedBox(
+                                      height: 5,
+                                    ),
+                                    SizedBox(
+                                      height: 100,
+                                      child: Padding(
+                                          padding:
+                                              const EdgeInsets.only(right: 260),
+                                          child: Column(
+                                              children: List.generate(
+                                            3,
+                                            (index) => Padding(
+                                              padding: const EdgeInsets.symmetric(
+                                                  vertical: 8),
+                                              child: InkWell(
+                                                  onTap: () {
+                                                    gorodTextEditingContyroller
+                                                        .text = ccs[index];
+                                                    text = ccs[index];
+                                                    blocPopupDrawer.dataSink.add(
+                                                        snapshotSizeDrawer
+                                                                    .data! ==
+                                                                38
+                                                            ? 140
+                                                            : 38);
+                                                    providerNumberCountry.sink
+                                                        .add(ecs[index]);
+                                                    radius =
+                                                        radius == 54 ? 10 : 54;
+                                                    setState(() {});
+                                                  },
+                                                  child: Row(
+                                                    children: [
+                                                      Text(
+                                                        ccs[index],
+                                                        style: const TextStyle(
+                                                            color: Colors.black,
+                                                            fontSize: 10),
+                                                      ),
+                                                    ],
+                                                  )),
+                                            ),
+                                          ))),
+                                    ),
+                                  ],
+                                ),
+                              );
+                            } else {
+                              return const SizedBox();
+                            }
+                          })
+                    ],
+                  ),
                 ),
               ),
             ),

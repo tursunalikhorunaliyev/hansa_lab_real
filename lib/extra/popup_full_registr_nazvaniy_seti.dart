@@ -92,189 +92,191 @@ class _PopupFullRegistrNazvaniySetiState
                 ),
                 child: Padding(
                   padding: const EdgeInsets.only(left: 10, top: 12),
-                  child: Column(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(left: 5),
-                        child: Align(
-                          alignment: Alignment.centerLeft,
-                          child: Text(
-                            text,
-                            style: text == "Названия сети"
-                                ? GoogleFonts.montserrat(
-                                    fontSize: isTablet ? 13 : 10,
-                                    color: widget.hintColor)
-                                : GoogleFonts.montserrat(
-                                    fontSize: isTablet ? 13 : 10,
-                                    fontWeight: FontWeight.w500,
-                                    color: Colors.black),
+                  child: SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(left: 5),
+                          child: Align(
+                            alignment: Alignment.centerLeft,
+                            child: Text(
+                              text,
+                              style: text == "Названия сети"
+                                  ? GoogleFonts.montserrat(
+                                      fontSize: isTablet ? 13 : 10,
+                                      color: widget.hintColor)
+                                  : GoogleFonts.montserrat(
+                                      fontSize: isTablet ? 13 : 10,
+                                      fontWeight: FontWeight.w500,
+                                      color: Colors.black),
+                            ),
                           ),
                         ),
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      StreamBuilder<StoreModel>(
-                          stream: blocStoreData.stream,
-                          builder: (context, snapshotStore) {
-                            if (snapshotStore.hasData) {
-                              streamController.sink
-                                  .add(snapshotStore.data!.data.list);
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        StreamBuilder<StoreModel>(
+                            stream: blocStoreData.stream,
+                            builder: (context, snapshotStore) {
+                              if (snapshotStore.hasData) {
+                                streamController.sink
+                                    .add(snapshotStore.data!.data.list);
 
-                              return Visibility(
-                                visible: (radius > 50) ? false : true,
-                                child: Column(
-                                  children: [
-                                    SizedBox(
-                                      height: 40,
-                                      child: Padding(
-                                        padding: const EdgeInsets.only(
-                                            right: 10, top: 5),
-                                        child: TextField(
-                                          style: const TextStyle(fontSize: 13),
-                                          controller: newShopText,
-                                          decoration: InputDecoration(
-                                              focusedBorder:
-                                                  const OutlineInputBorder(
-                                                      borderRadius:
-                                                          BorderRadius.all(
-                                                              Radius.circular(
-                                                                  10)),
-                                                      borderSide: BorderSide(
-                                                          color: Colors.green)),
-                                              suffixIcon: ClipRRect(
-                                                borderRadius:
-                                                    const BorderRadius.only(
-                                                  topRight: Radius.circular(10),
-                                                  bottomRight:
-                                                      Radius.circular(10),
-                                                ),
-                                                child: MaterialButton(
-                                                  onPressed: () {
-                                                    if (newShopText
-                                                        .text.isNotEmpty) {
-                                                      newShop.setNewShop(
-                                                          newShopText.text);
-                                                      text = newShopText.text;
-                                                      nazvanieTextEditingController
-                                                          .text = "";
-                                                      blocPopupDrawer.dataSink
-                                                          .add(snapshotStore
-                                                                      .data! ==
-                                                                  38
-                                                              ? 200
-                                                              : 38);
-                                                      radius = radius == 54
-                                                          ? 10
-                                                          : 54;
-                                                    }
-                                                  },
-                                                  height: 30,
-                                                  minWidth: 30,
-                                                  color: Colors.green,
-                                                  child: Text(
-                                                    "OK",
-                                                    style:
-                                                        GoogleFonts.montserrat(
-                                                            fontSize: 10,
-                                                            color:
-                                                                Colors.white),
+                                return Visibility(
+                                  visible: (radius > 50) ? false : true,
+                                  child: Column(
+                                    children: [
+                                      SizedBox(
+                                        height: 40,
+                                        child: Padding(
+                                          padding: const EdgeInsets.only(
+                                              right: 10, top: 5),
+                                          child: TextField(
+                                            style: const TextStyle(fontSize: 13),
+                                            controller: newShopText,
+                                            decoration: InputDecoration(
+                                                focusedBorder:
+                                                    const OutlineInputBorder(
+                                                        borderRadius:
+                                                            BorderRadius.all(
+                                                                Radius.circular(
+                                                                    10)),
+                                                        borderSide: BorderSide(
+                                                            color: Colors.green)),
+                                                suffixIcon: ClipRRect(
+                                                  borderRadius:
+                                                      const BorderRadius.only(
+                                                    topRight: Radius.circular(10),
+                                                    bottomRight:
+                                                        Radius.circular(10),
+                                                  ),
+                                                  child: MaterialButton(
+                                                    onPressed: () {
+                                                      if (newShopText
+                                                          .text.isNotEmpty) {
+                                                        newShop.setNewShop(
+                                                            newShopText.text);
+                                                        text = newShopText.text;
+                                                        nazvanieTextEditingController
+                                                            .text = "";
+                                                        blocPopupDrawer.dataSink
+                                                            .add(snapshotStore
+                                                                        .data! ==
+                                                                    38
+                                                                ? 200
+                                                                : 38);
+                                                        radius = radius == 54
+                                                            ? 10
+                                                            : 54;
+                                                      }
+                                                    },
+                                                    height: 30,
+                                                    minWidth: 30,
+                                                    color: Colors.green,
+                                                    child: Text(
+                                                      "OK",
+                                                      style:
+                                                          GoogleFonts.montserrat(
+                                                              fontSize: 10,
+                                                              color:
+                                                                  Colors.white),
+                                                    ),
                                                   ),
                                                 ),
-                                              ),
-                                              contentPadding:
-                                                  const EdgeInsets.only(
-                                                      left: 10),
-                                              hintText: "Новый",
-                                              hintStyle:
-                                                  const TextStyle(fontSize: 13),
-                                              border: OutlineInputBorder(
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          10))),
+                                                contentPadding:
+                                                    const EdgeInsets.only(
+                                                        left: 10),
+                                                hintText: "Новый",
+                                                hintStyle:
+                                                    const TextStyle(fontSize: 13),
+                                                border: OutlineInputBorder(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            10))),
+                                          ),
                                         ),
                                       ),
-                                    ),
-                                    const SizedBox(
-                                      height: 10,
-                                    ),
-                                    SizedBox(
-                                      height: 40,
-                                      child: Padding(
-                                        padding: const EdgeInsets.only(
-                                            right: 10, top: 5),
-                                        child: TextField(
-                                          style: const TextStyle(fontSize: 13),
-                                          controller: textEditingController,
-                                          onChanged: (value) => search(value),
-                                          decoration: InputDecoration(
-                                              contentPadding:
-                                                  const EdgeInsets.only(
-                                                      left: 10),
-                                              hintText: "Поиск",
-                                              hintStyle:
-                                                  const TextStyle(fontSize: 13),
-                                              border: OutlineInputBorder(
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          10))),
+                                      const SizedBox(
+                                        height: 10,
+                                      ),
+                                      SizedBox(
+                                        height: 40,
+                                        child: Padding(
+                                          padding: const EdgeInsets.only(
+                                              right: 10, top: 5),
+                                          child: TextField(
+                                            style: const TextStyle(fontSize: 13),
+                                            controller: textEditingController,
+                                            onChanged: (value) => search(value),
+                                            decoration: InputDecoration(
+                                                contentPadding:
+                                                    const EdgeInsets.only(
+                                                        left: 10),
+                                                hintText: "Поиск",
+                                                hintStyle:
+                                                    const TextStyle(fontSize: 13),
+                                                border: OutlineInputBorder(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            10))),
+                                          ),
                                         ),
                                       ),
-                                    ),
-                                    const SizedBox(
-                                      height: 10,
-                                    ),
-                                    SizedBox(
-                                      height: 160,
-                                      child: Padding(
-                                        padding:
-                                            const EdgeInsets.only(right: 10),
-                                        child: ListView.builder(
-                                          physics:
-                                              const BouncingScrollPhysics(),
-                                          itemCount: one.length,
-                                          padding: const EdgeInsets.all(0),
-                                          itemBuilder: (context, index) {
-                                            final nazvanSeti = one[index];
-                                            return TextButton(
-                                              onPressed: () {
-                                                newShop.setNewShop(
-                                                    nazvanSeti.id.toString());
+                                      const SizedBox(
+                                        height: 10,
+                                      ),
+                                      SizedBox(
+                                        height: 160,
+                                        child: Padding(
+                                          padding:
+                                              const EdgeInsets.only(right: 10),
+                                          child: ListView.builder(
+                                            physics:
+                                                const BouncingScrollPhysics(),
+                                            itemCount: one.length,
+                                            padding: const EdgeInsets.all(0),
+                                            itemBuilder: (context, index) {
+                                              final nazvanSeti = one[index];
+                                              return TextButton(
+                                                onPressed: () {
+                                                  newShop.setNewShop(
+                                                      nazvanSeti.id.toString());
 
-                                                nazvanieTextEditingController
-                                                        .text =
-                                                    nazvanSeti.id.toString();
-                                                text = nazvanSeti.name;
+                                                  nazvanieTextEditingController
+                                                          .text =
+                                                      nazvanSeti.id.toString();
+                                                  text = nazvanSeti.name;
 
-                                                blocPopupDrawer.dataSink.add(
-                                                    nazvanSeti == 38
-                                                        ? 200
-                                                        : 38);
-                                                radius = radius == 54 ? 10 : 54;
-                                              },
-                                              child: Align(
-                                                alignment: Alignment.centerLeft,
-                                                child: Text(
-                                                  nazvanSeti.name,
-                                                  textScaleFactor: 1.0,
-                                                  style: const TextStyle(
-                                                      color: Colors.black,
-                                                      fontSize: 10),
+                                                  blocPopupDrawer.dataSink.add(
+                                                      nazvanSeti == 38
+                                                          ? 200
+                                                          : 38);
+                                                  radius = radius == 54 ? 10 : 54;
+                                                },
+                                                child: Align(
+                                                  alignment: Alignment.centerLeft,
+                                                  child: Text(
+                                                    nazvanSeti.name,
+                                                    textScaleFactor: 1.0,
+                                                    style: const TextStyle(
+                                                        color: Colors.black,
+                                                        fontSize: 10),
+                                                  ),
                                                 ),
-                                              ),
-                                            );
-                                          },
+                                              );
+                                            },
+                                          ),
                                         ),
                                       ),
-                                    ),
-                                  ],
-                                ),
-                              );
-                            } else {
-                              return const SizedBox();
-                            }
-                          })
-                    ],
+                                    ],
+                                  ),
+                                );
+                              } else {
+                                return const SizedBox();
+                              }
+                            })
+                      ],
+                    ),
                   ),
                 ),
               ),
