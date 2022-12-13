@@ -35,19 +35,24 @@ import 'package:video_player/video_player.dart';
 
 class VideoStream {
   final controller = StreamController<ChewieController>.broadcast();
+
   Stream<ChewieController> get stream => controller.stream;
+
   StreamSink<ChewieController> get streamSink => controller.sink;
 }
 
 class GetR {
   final String url;
   final String token;
+
   const GetR({required this.url, required this.token});
 }
 
 class GetRStream {
   final controller = StreamController<GetR>();
+
   StreamSink<GetR> get sink => controller.sink;
+
   Stream<GetR> get stream => controller.stream;
 }
 
@@ -113,16 +118,18 @@ class _TreningiVideoState extends State<TreningiVideo> {
     super.initState();
     getRStream.stream.listen((event) {
       log('${event.token} - ${event.url}');
-      TreningiVideoApi.getTreningiVideo(event.url, event.token).then((value) {
-        videoTitle = value.data.data.data.first.title;
-        videoInitialize(value.data.data.data.first.videoLink).then((value) {
-          value.videoPlayerController.addListener(() {
-            if (value.videoPlayerController.value.isInitialized) {
-              videoStream.streamSink.add(value);
-            }
+        TreningiVideoApi.getTreningiVideo(event.url, event.token).then((value) {
+          videoTitle = value.data.data.data.first.title;
+          videoInitialize(value.data.data.data.first.videoLink).then((value) {
+            value.videoPlayerController.addListener(() {
+              if (value.videoPlayerController.value.isInitialized) {
+                videoStream.streamSink.add(value);
+              }
+            });
           });
         });
-      });
+
+
     });
   }
 
@@ -184,6 +191,7 @@ class _TreningiVideoState extends State<TreningiVideo> {
   final blocDetectTap = BlocDetectTap();
   String videoTitle = '';
   String videoLink = "";
+
   @override
   Widget build(BuildContext context) {
     final isTablet = Provider.of<bool>(context);
@@ -210,19 +218,15 @@ class _TreningiVideoState extends State<TreningiVideo> {
                 ),
                 content: SizedBox(
                   width: double.infinity,
-                  child: StreamBuilder<ChewieController>(
-                      stream: videoStream.stream,
-                      builder: (context, snapshot) {
-                        if (snapshot.hasData) {
-                          final chVideo = snapshot.data!;
-                          return Column(
-                            children: [
-                              Row(),
-                              !isVideo.getIsVideo
-                                  ? isTablet
-                                      ? const TabletPhotosItem()
-                                      : const CustomTreningiPhotos()
-                                  : Padding(
+                  child: isVideo.getIsVideo
+                      ? StreamBuilder<ChewieController>(
+                          stream: videoStream.stream,
+                          builder: (context, snapshot) {
+                            if (snapshot.hasData) {
+                              final chVideo = snapshot.data!;
+                              return Column(
+                                children: [
+                                  Padding(
                                       padding: const EdgeInsets.only(
                                           bottom: 11, left: 25, right: 25),
                                       child: Column(
@@ -476,21 +480,24 @@ class _TreningiVideoState extends State<TreningiVideo> {
                                               }),
                                         ],
                                       )),
-                            ],
-                          );
-                        } else {
-                          return SizedBox(
-                            height: 250,
-                            child: Center(
-                              child: Lottie.asset(
-                                'assets/pre.json',
-                                height: 70,
-                                width: 70,
-                              ),
-                            ),
-                          );
-                        }
-                      }),
+                                ],
+                              );
+                            } else {
+                              return SizedBox(
+                                height: 250,
+                                child: Center(
+                                  child: Lottie.asset(
+                                    'assets/pre.json',
+                                    height: 70,
+                                    width: 70,
+                                  ),
+                                ),
+                              );
+                            }
+                          })
+                      : isTablet
+                          ? const TabletPhotosItem()
+                          : const CustomTreningiPhotos(),
                 ),
               ),
               !isVideo.getIsVideo

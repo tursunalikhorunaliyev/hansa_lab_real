@@ -114,10 +114,10 @@ class _PopUpFullRegistrNumberState extends State<PopUpFullRegistrNumber> {
                               text,
                               style: text == "Страна"
                                   ? GoogleFonts.montserrat(
-                                      fontSize: isTablet ? 13 : 10,
+                                      fontSize: isTablet ? 16 : 13,
                                       color: widget.hintColor)
                                   : GoogleFonts.montserrat(
-                                      fontSize: isTablet ? 13 : 10,
+                                      fontSize: isTablet ? 16 : 13,
                                       fontWeight: FontWeight.w500,
                                       color: Colors.black),
                             )),

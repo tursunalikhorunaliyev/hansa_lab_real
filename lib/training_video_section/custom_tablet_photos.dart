@@ -87,7 +87,8 @@ class _TabletPhotosItemState extends State<TabletPhotosItem> {
     final providerSendAnaliseDonwload =
         Provider.of<SendAnaliseDownload>(context);
     final treningiPhotos = Provider.of<TreningiPhotosProvider>(context);
-
+    print(TreningiPhotosApi.getdata(treningiPhotos.getUrl, token));
+    print('get url');
     return Padding(
       padding: const EdgeInsets.only(bottom: 11, left: 25, right: 25),
       child: SizedBox(

@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hansa_lab/api_models.dart/training_model.dart';
 import 'package:hansa_lab/api_services/training_api_bloc.dart';
+import 'package:hansa_lab/api_services/treningi_photos_api.dart';
 import 'package:hansa_lab/api_services/treningi_video_api.dart';
 import 'package:hansa_lab/blocs/menu_events_bloc.dart';
 import 'package:hansa_lab/drawer_widgets/izbrannoe.dart';
@@ -36,6 +37,7 @@ class Treningi extends StatefulWidget {
 
 class _TreningiState extends State<Treningi> {
   int i = 0;
+
   @override
   void dispose() {
     super.dispose();
@@ -53,6 +55,7 @@ class _TreningiState extends State<Treningi> {
     final index = Provider.of<VideoIndProvider>(context);
     final isVideo = Provider.of<IsVideoprovider>(context);
     final trainingBloc = TrainingAPIBloc();
+    final trainingVideo = TreningiVideoApi();
     final scroll = ScrollController();
     final eventTitleProvider = Provider.of<EventTitleProvider>(context);
     if (i == 0) {
@@ -517,7 +520,7 @@ class _TreningiState extends State<Treningi> {
                                       buttonText: "Смотреть",
                                       title:
                                           data.eventReports.list[index].title,
-                                      onTap: () {
+                                      onTap: () async {
                                         treningiPhotos.setUrl(
                                             data.eventReports.list[index].link);
                                         isVideo.setIsVideo(false);

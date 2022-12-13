@@ -103,10 +103,10 @@ class _PopupFullRegistrNazvaniySetiState
                               text,
                               style: text == "Названия сети"
                                   ? GoogleFonts.montserrat(
-                                      fontSize: isTablet ? 13 : 10,
+                                      fontSize: isTablet ? 16 : 13,
                                       color: widget.hintColor)
                                   : GoogleFonts.montserrat(
-                                      fontSize: isTablet ? 13 : 10,
+                                      fontSize: isTablet ? 16 : 13,
                                       fontWeight: FontWeight.w500,
                                       color: Colors.black),
                             ),

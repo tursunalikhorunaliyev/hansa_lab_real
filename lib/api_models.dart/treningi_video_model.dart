@@ -2,9 +2,10 @@ class TreningiVideoModel {
   bool status;
   TreningiVideoSplitter data;
   TreningiVideoModel({required this.data, required this.status});
+
   factory TreningiVideoModel.fromMap(Map<String, dynamic> map) {
     return TreningiVideoModel(
-      status: map['status'],
+      status: map['status'] as bool,
       data: TreningiVideoSplitter.fromMap(map['data']),
     );
   }
@@ -82,7 +83,7 @@ class TreningiVideoModelData {
     return TreningiVideoModelData(
       title: map['title'] as String,
       pictureLink: map['picture_link'] as String,
-      videoLink: map['video_link'] as String,
+      videoLink: map['video_link'] !=null ? map['video_link'].toString() : '',
     );
   }
 }

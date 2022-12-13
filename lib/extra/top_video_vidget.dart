@@ -32,6 +32,7 @@ class TopVideoVidget extends StatefulWidget {
 class _TopVideoVidgetState extends State<TopVideoVidget> {
   ChewieController chewieController = ChewieController(
       videoPlayerController: VideoPlayerController.network(''));
+
   initVideo() {
     chewieController = ChewieController(
       autoPlay: true,
@@ -167,15 +168,7 @@ class _TopVideoVidgetState extends State<TopVideoVidget> {
                 ),
               ),
             ),
-            GestureDetector(
-              onTap: () {
-                chewieController.videoPlayerController
-                  ..seekTo(const Duration(seconds: 0))
-                  ..pause();
-                setState(() {});
-                Navigator.pop(context);
-              },
-            ),
+
             Stack(
               children: [
                 Provider<ChewieController>.value(
@@ -184,11 +177,28 @@ class _TopVideoVidgetState extends State<TopVideoVidget> {
                             .videoPlayerController.value.size.aspectRatio !=
                         0.0)
                     ? Padding(
-                        padding: EdgeInsets.only(top:isTablet?150: 100),
+                        padding: EdgeInsets.only(top: isTablet ? 150 : 100),
                         child: SingleChildScrollView(
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
+                              const SizedBox(height: 10,),
+                              GestureDetector(
+                                onTap: () {
+                                  chewieController.videoPlayerController
+                                    ..seekTo(const Duration(seconds: 0))
+                                    ..pause();
+                                  setState(() {});
+                                  Navigator.pop(context);
+                                },
+                                child: const Padding(
+                                  padding: EdgeInsets.only(left: 40),
+                                  child: Align(
+                                      alignment: Alignment.bottomLeft,
+                                      child: Icon(Icons.arrow_back_ios,color: Colors.red,)),
+                                ),
+                              ),
+                              const SizedBox(height: 10,),
                               Row(),
                               SizedBox(
                                 width: isTablet ? 800 : 355,
@@ -282,6 +292,7 @@ class _TopVideoVidgetState extends State<TopVideoVidget> {
                       ),
               ],
             ),
+
           ],
         ),
       ),

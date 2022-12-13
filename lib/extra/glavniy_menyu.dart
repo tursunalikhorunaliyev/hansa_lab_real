@@ -634,7 +634,7 @@ class _GlavniyMenyuState extends State<GlavniyMenyu> {
                                     );
                                   },
                                   child: const TextIcon(
-                                    text: "Выход из акаунта",
+                                    text: "Выход из аккаунта",
                                     iconUrl: "assets/iconiu.png",
                                   ),
                                 ),

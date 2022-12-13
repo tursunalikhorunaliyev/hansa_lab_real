@@ -92,11 +92,47 @@ class _ArchiveCardState extends State<ArchiveCard> {
                             padding: EdgeInsets.only(top: 4.h),
                             child: InkWell(
                               onTap: () {
-                                setState(() {
-                                  log(widget.linkPDF);
-                                  launched = _launchInBrowser(
-                                      Uri.parse(widget.linkPDF));
-                                });
+                                if (widget.linkPDF
+                                    .contains(".pdf") &&
+                                    widget.linkPDF
+                                        .contains(
+                                        "google")) {
+                                  String pdfInAppUrl =
+                                  widget.linkPDF
+                                      .split("url=")[1]
+                                      .split("&")[0];
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            PDFViewer(
+                                                pdfUrlForPDFViewer:
+                                                pdfInAppUrl),
+                                      ));
+                                }
+                                else if (widget.linkPDF
+                                    .endsWith(".pdf")) {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            PDFViewer(
+                                                pdfUrlForPDFViewer:
+                                                widget.linkPDF),
+                                      ));
+                                }
+                                else {
+                                  String fullUrl = widget.linkPDF.startsWith("http")
+                                      ? widget.linkPDF
+                                      : "http://${widget.linkPDF}";
+
+                                  setState(() {
+                                    launched =
+                                        _launchInBrowser(
+                                            Uri.parse(
+                                                fullUrl));
+                                  });
+                                }
                               },
                               child: Container(
                                 alignment: Alignment.center,
@@ -125,10 +161,6 @@ class _ArchiveCardState extends State<ArchiveCard> {
           ),
           InkWell(
             onTap: () {
-              // setState(() {
-              //   launched = _launchInBrowser(Uri.parse(widget.linkPDF));
-              // });
-
               if (widget.linkPDF
                   .contains(".pdf") &&
                   widget.linkPDF

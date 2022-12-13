@@ -1,8 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
-
 import 'package:http/http.dart' as http;
-
 import 'package:hansa_lab/api_models.dart/treningi_video_model.dart';
 
 class TreningiVideoApi {

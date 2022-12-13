@@ -58,8 +58,7 @@ class _WelcomeWidgetState extends State<WelcomeWidget> {
             if (snapshot.hasData) {
               final data = snapshot.requireData;
               final videoLink = providerWelcomeApi.getVideoLink;
-              log(videoLink);
-             
+
               return isTablet
                   ? Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 25),

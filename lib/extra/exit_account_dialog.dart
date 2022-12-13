@@ -24,7 +24,7 @@ class ExitAccountDialog extends StatelessWidget {
               const Padding(
                 padding: EdgeInsets.all(10),
                 child: Text(
-                  "Вы уверены, что хотите выйти из аккаунт?",
+                  "Вы уверены, что хотите выйти из аккаунта?",
                   textAlign: TextAlign.center,
                   textScaleFactor: 1.0,
                   style: TextStyle(fontSize: 18),

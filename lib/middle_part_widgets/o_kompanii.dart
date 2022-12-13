@@ -14,6 +14,7 @@ import 'package:hansa_lab/providers/providers_for_video_title/video_title_provid
 import 'package:hansa_lab/video/bloc_video_api.dart';
 import 'package:hansa_lab/video/model_video.dart';
 import 'package:lottie/lottie.dart';
+import 'package:open_file/open_file.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -33,35 +34,10 @@ class _OKompaniiState extends State<OKompanii> {
   bool downloading = false;
   double progress = 0;
   bool isDownloaded = false;
-
-  Future<void> downloadFile(String url, String fileName) async {
-    await Permission.storage.request();
-    progress = 0;
-
-    String savePath = await getFilePath(fileName);
-    Dio dio = Dio();
-    dio.download(
-      url,
-      savePath,
-      onReceiveProgress: (recieved, total) {
-        progress = double.parse(((recieved / total) * 100).toStringAsFixed(0));
-        blocDownload.streamSink.add(progress);
-          if(progress == 100){
-            log("tugadi");
-          }
-          else{
-            log("hali tugamadi");
-          }
-      },
-      deleteOnError: true,
-      
-    );
-   
-  }
+  String path = "";
+  String dir = "";
 
   Future<String> getFilePath(uniqueFileName) async {
-    String path = "";
-    String dir = "";
     if (Platform.isIOS) {
       Directory directory = await getApplicationSupportDirectory();
       dir = directory.path;
@@ -83,6 +59,33 @@ class _OKompaniiState extends State<OKompanii> {
     final token = Provider.of<String>(context);
     final scroll = ScrollController();
     final blocVideoApi = BlocVideoApi();
+
+    Future<void> downloadFile(String url, String fileName) async {
+      await Permission.storage.request();
+      progress = 0;
+
+      String savePath = await getFilePath(fileName);
+      Dio dio = Dio();
+      dio.download(
+        url,
+        savePath,
+        onReceiveProgress: (recieved, total) {
+          progress =
+              double.parse(((recieved / total) * 100).toStringAsFixed(0));
+          blocDownload.streamSink.add(progress);
+          if (progress == 100) {
+            log("tugadi");
+          } else {
+            log("hali tugamadi");
+          }
+        },
+        deleteOnError: true,
+      ).then((value) async {
+        Navigator.pop(context);
+        OpenFile.open(path);
+      });
+    }
+
     return Expanded(
       child: Consumer<VideoIndexProvider>(builder: (context, value, child) {
         return SingleChildScrollView(
@@ -492,15 +495,16 @@ class _OKompaniiState extends State<OKompanii> {
                   );
                 } else {
                   return Center(
-                      child: Padding(
-                    padding: EdgeInsets.only(
-                        top: (MediaQuery.of(context).size.height / 2) - 135),
-                    child: Lottie.asset(
-                      'assets/pre.json',
-                      height: 70,
-                      width: 70,
+                    child: Padding(
+                      padding: EdgeInsets.only(
+                          top: (MediaQuery.of(context).size.height / 2) - 135),
+                      child: Lottie.asset(
+                        'assets/pre.json',
+                        height: 70,
+                        width: 70,
+                      ),
                     ),
-                  ));
+                  );
                 }
               }),
         );

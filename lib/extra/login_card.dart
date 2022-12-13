@@ -83,494 +83,502 @@ class _LoginCardState extends State<LoginCard> {
     final flip = Provider.of<Map<String, FlipCardController>>(context);
     final blocEmptySobshit = BlocEmptySobshit();
 
-    return ScreenUtilInit(
-      designSize: const Size(375, 812),
-      builder: (context, child) => GestureDetector(
-        onTap: () {
-          FocusManager.instance.primaryFocus?.unfocus();
-        },
-        child: Padding(
-          padding: EdgeInsets.only(top: isTablet ? 103.h : 25.h),
-          child: Center(
-            child: Stack(
-              alignment: Alignment.topCenter,
-              clipBehavior: Clip.none,
-              children: [
-                Container(
-                  decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(5.r)),
-                  width: isTablet ? 230.w : 346.w,
-                  height: isTablet ? 450.h : null,
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          Padding(
-                            padding: EdgeInsets.only(top: 7.h, right: 8.w),
-                            child: InkWell(
-                              onTap: () {
-                                flipLoginProvider.changeIsClosed(false);
-                                flip['login']!.toggleCard();
-                                flip["signin"]!.toggleCard();
-                                flip["toLogin"]!.toggleCard();
-                              },
-                              child: Icon(
-                                Icons.close_rounded,
-                                size: isTablet ? 18.sp : 24.sp,
-                                color: const Color(0xff8c8c8b),
-                              ),
-                            ),
-                          )
-                        ],
-                      ),
-                      Padding(
-                        padding: EdgeInsets.only(top: 50.h),
-                        child: Text('Вход в аккаунт',
-                            textScaleFactor: 1.0,
-                            style: GoogleFonts.montserrat(
-                                fontSize: isTablet ? 18.sp : 24.sp,
-                                fontWeight: FontWeight.w500)),
-                      ),
-                      Padding(
-                          padding: EdgeInsets.only(
-                              left: isTablet ? 16.w : 24.w,
-                              right: isTablet ? 16.w : 24.w,
-                              top: isTablet ? 25.h : 30.h),
-                          child: TextField(
-                            controller: usernameController,
-                            keyboardType: TextInputType.emailAddress,
-                            style: TextStyle(fontSize: isTablet ? 18 : null),
-                            decoration: InputDecoration(
-                                hintText: 'Ваш e-mail',
-                                hintStyle: GoogleFonts.montserrat(
-                                  fontWeight: FontWeight.w500,
-                                  color: const Color(0xffa1b7c2),
-                                ),
-                                suffixIcon: const Icon(
-                                  Icons.done,
-                                  color: Color(0xffa1b7c2),
-                                ),
-                                prefixIcon: const Icon(
-                                  CupertinoIcons.person_fill,
-                                  color: Color(0xffa2b8c3),
-                                )),
-                          )),
-                      Padding(
-                        padding: EdgeInsets.only(
-                            right: isTablet ? 16.w : 24.w,
-                            left: isTablet ? 16.w : 24.w,
-                            top: isTablet ? 20.h : 15.h),
-                        child: Consumer<PasswordVisibilityProvider>(
-                            builder: (context, value, child) {
-                          return TextField(
-                            controller: passwordController,
-                            style: TextStyle(fontSize: isTablet ? 18 : null),
-                            obscureText: (!value.getVisibility),
-                            decoration: InputDecoration(
-                                hintText: 'Ваш пароль',
-                                hintStyle: GoogleFonts.montserrat(
-                                  color: const Color(0xffa1b7c2),
-                                  fontWeight: FontWeight.w500,
-                                ),
-                                suffixIcon: GestureDetector(
-                                  onTap: () {
-                                    value.changeVisibility();
-                                  },
-                                  child: Icon(
-                                    !value.getVisibility
-                                        ? Icons.visibility
-                                        : Icons.visibility_off,
-                                    color: const Color(0xffa1b7c2),
-                                  ),
-                                ),
-                                prefixIcon: const Icon(
-                                  Icons.key,
-                                  color: Color(0xffa2b8c3),
-                                )),
-                          );
-                        }),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 20),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+    return AutofillGroup(
+      child: ScreenUtilInit(
+        designSize: const Size(375, 812),
+        builder: (context, child) => GestureDetector(
+          onTap: () {
+            FocusManager.instance.primaryFocus?.unfocus();
+          },
+          child: Padding(
+            padding: EdgeInsets.only(top: isTablet ? 103.h : 25.h),
+            child: Center(
+              child: Stack(
+                alignment: Alignment.topCenter,
+                clipBehavior: Clip.none,
+                children: [
+                  Container(
+                    decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(5.r)),
+                    width: isTablet ? 230.w : 346.w,
+                    height: isTablet ? 450.h : null,
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
                           children: [
-                            Text(
-                              ' Не выходить из приложения',
-                              textScaleFactor: 1.0,
-                              style: GoogleFonts.montserrat(
-                                  color: const Color(0xffa1b7c2),
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: isTablet ? 9.sp : 12.sp),
-                            ),
-                            MultiProvider(
-                              providers: [
-                                Provider(create: (context) => ""),
-                                Provider(
-                                    create: (context) =>
-                                        switchTextEditingController),
-                              ],
-                              child: ToggleSwitch(
-                                colorContainer: Colors.grey[300],
-                                colorCircle: Colors.green[600],
-                                tickerSize: isTablet ? 12.sp : 21.sp,
-                                handlerWidth: isTablet ? 22.w : 40.w,
-                                handlerHeight: isTablet ? 10.h : 12.h,
-                                onButton: () {},
+                            Padding(
+                              padding: EdgeInsets.only(top: 7.h, right: 8.w),
+                              child: InkWell(
+                                onTap: () {
+                                  flipLoginProvider.changeIsClosed(false);
+                                  flip['login']!.toggleCard();
+                                  flip["signin"]!.toggleCard();
+                                  flip["toLogin"]!.toggleCard();
+                                },
+                                child: Icon(
+                                  Icons.close_rounded,
+                                  size: isTablet ? 18.sp : 24.sp,
+                                  color: const Color(0xff8c8c8b),
+                                ),
                               ),
                             )
                           ],
                         ),
-                      ),
-                      Padding(
+                        Padding(
+                          padding: EdgeInsets.only(top: 50.h),
+                          child: Text('Вход в аккаунт',
+                              textScaleFactor: 1.0,
+                              style: GoogleFonts.montserrat(
+                                  fontSize: isTablet ? 18.sp : 24.sp,
+                                  fontWeight: FontWeight.w500)),
+                        ),
+                        Padding(
+                            padding: EdgeInsets.only(
+                                left: isTablet ? 16.w : 24.w,
+                                right: isTablet ? 16.w : 24.w,
+                                top: isTablet ? 25.h : 30.h),
+                            child: TextField(
+                              autofillHints: const [AutofillHints.email],
+                              controller: usernameController,
+                              keyboardType: TextInputType.emailAddress,
+                              style: TextStyle(fontSize: isTablet ? 18 : null),
+                              decoration: InputDecoration(
+                                  hintText: 'Ваш e-mail',
+                                  hintStyle: GoogleFonts.montserrat(
+                                    fontWeight: FontWeight.w500,
+                                    color: const Color(0xffa1b7c2),
+                                  ),
+                                  suffixIcon: const Icon(
+                                    Icons.done,
+                                    color: Color(0xffa1b7c2),
+                                  ),
+                                  prefixIcon: const Icon(
+                                    CupertinoIcons.person_fill,
+                                    color: Color(0xffa2b8c3),
+                                  )),
+                            )),
+                        Padding(
                           padding: EdgeInsets.only(
-                            bottom: isTablet ? 35.h : 23.h,
-                          ),
-                          child: StreamBuilder<bool>(
-                            stream: progressButtonBLoC.stream,
-                            initialData: false,
-                            builder: (context, snapshot) {
-                              return GestureDetector(
-                                onTap: () async {
-                                  usernameController.text.trim();
-                                  passwordController.text.trim();
-                                  if (usernameController.text.isNotEmpty &&
-                                      passwordController.text.isNotEmpty) {
-                                    try {
-                                      final response =
-                                          await InternetAddress.lookup(
-                                              'www.example.com');
-
-                                      if (response.isNotEmpty) {
-                                        log(snapshot.data!.toString());
-                                        log("sstatus 200");
-                                        progressButtonBLoC.sink.add(true);
-                                        FocusManager.instance.primaryFocus
-                                            ?.unfocus();
-                                        List isCorrectList = await LoginAction(
-                                                username: usernameController
-                                                    .text
-                                                    .trim(),
-                                                password: passwordController
-                                                    .text
-                                                    .trim(),
-                                                isSaved:
-                                                    switchTextEditingController
-                                                            .text
-                                                            .trim() ==
-                                                        "1")
-                                            .sendRequest();
-                                        NotificationToken().getToken();
-                                        pagerBloc.sink.add(isCorrectList);
-                                      }
-                                    } catch (xatoyuuu) {
-                                      log("status 400");
-                                      progressButtonBLoC.sink.add(false);
-                                      ScaffoldMessenger.of(context)
-                                          .showSnackBar(snackBar);
-
-                                      if (kDebugMode) {
-                                        print(xatoyuuu);
-                                      }
-                                    }
-                                  } else {
-                                    ScaffoldMessenger.of(context)
-                                        .showSnackBar(SnackBar(
-                                      content: Text(
-                                        usernameController.text.isEmpty
-                                            ? "Электронная почта пуста"
-                                            : passwordController.text.isEmpty
-                                                ? "Пароль пуст"
-                                                : "Пустой",
-                                        textScaleFactor: 1.0,
-                                      ),
-                                      backgroundColor:
-                                          const Color.fromARGB(255, 213, 0, 50),
-                                    ));
-                                  }
-                                },
-                                child: AnimatedContainer(
-                                  duration: const Duration(milliseconds: 300),
-                                  alignment: Alignment.center,
-                                  width: isTablet
-                                      ? snapshot.data!
-                                          ? 75
-                                          : 210.w
-                                      : snapshot.data!
-                                          ? 46
-                                          : 318.w,
-                                  height: isTablet ? 48.h : 46,
-                                  decoration: BoxDecoration(
-                                      boxShadow: [
-                                        BoxShadow(
-                                          color: Colors.grey.withOpacity(0.5),
-                                          spreadRadius: 5.r,
-                                          blurRadius: 7.r,
-                                          offset: Offset(0.w,
-                                              15.h), // changes position of shadow
-                                        ),
-                                      ],
-                                      color:
-                                          const Color.fromARGB(255, 213, 0, 50),
-                                      borderRadius: BorderRadius.circular(50)),
-                                  child: snapshot.data!
-                                      ? const CircularProgressIndicator(
-                                          color: Colors.white,
-                                        )
-                                      : Text(
-                                          'Войти',
-                                          textScaleFactor: 1.0,
-                                          style: GoogleFonts.montserrat(
-                                              color: Colors.white,
-                                              fontWeight: FontWeight.w500,
-                                              fontSize:
-                                                  isTablet ? 10.sp : 12.sp),
-                                        ),
-                                ),
-                              );
-                            },
-                          )),
-                      Padding(
-                        padding: EdgeInsets.only(bottom: 36.h),
-                        child: InkWell(
-                          onTap: () {
-                            textFieldController.text = "";
-                            showDialog(
-                              context: context,
-                              builder: (context) {
-                                return Padding(
-                                  padding: const EdgeInsets.all(20),
-                                  child: Center(
-                                    child: Container(
-                                      padding: const EdgeInsets.all(30),
-                                      height: 330,
-                                      width: 400,
-                                      decoration: BoxDecoration(
-                                          color: const Color(0xFFf2f2f2),
-                                          borderRadius:
-                                              BorderRadius.circular(20)),
-                                      child: Column(
-                                        children: [
-                                          Image.asset("assets/tepaLogo.png"),
-                                          SizedBox(
-                                            height: 30.h,
-                                          ),
-                                          StreamBuilder<bool>(
-                                              initialData: false,
-                                              stream:
-                                                  blocEmptySobshit.dataStream,
-                                              builder: (context, snapshot) {
-                                                if (snapshot.hasData) {
-                                                  return Material(
-                                                    child: SizedBox(
-                                                      height: 40.h,
-                                                      child: TextField(
-                                                        focusNode: FocusNode(),
-                                                        onChanged: (value) {
-                                                          blocEmptySobshit
-                                                              .dataSink
-                                                              .add(false);
-                                                        },
-                                                        controller:
-                                                            textFieldController,
-                                                        textAlign:
-                                                            TextAlign.left,
-                                                        decoration: InputDecoration(
-                                                            contentPadding:
-                                                                EdgeInsets.all(
-                                                                    4.h),
-                                                            hintText: "E-mail",
-                                                            hintStyle: const TextStyle(
-                                                                color: Color(
-                                                                    0xFFa0a0a0),
-                                                                fontSize: 14),
-                                                            enabledBorder: OutlineInputBorder(
-                                                                borderSide: BorderSide(
-                                                                    color: snapshot.data == true
-                                                                        ? const Color.fromARGB(
-                                                                            255,
-                                                                            213,
-                                                                            0,
-                                                                            50)
-                                                                        : Colors
-                                                                            .black)),
-                                                            focusedBorder: OutlineInputBorder(
-                                                                borderSide: BorderSide(
-                                                                    color: snapshot.data == true
-                                                                        ? const Color.fromARGB(255, 213, 0, 50)
-                                                                        : Colors.black))),
-                                                      ),
-                                                    ),
-                                                  );
-                                                } else {
-                                                  return const SizedBox();
-                                                }
-                                              }),
-                                          SizedBox(
-                                            height: 1.h,
-                                          ),
-                                          StreamBuilder<String>(
-                                              stream: blocText.dataStream,
-                                              builder: (context, snapshot) {
-                                                if (snapshot.hasData) {
-                                                  return Row(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .center,
-                                                    children: [
-                                                      Visibility(
-                                                          visible: snapshot
-                                                                  .data!
-                                                                  .contains(
-                                                                      "Письмо")
-                                                              ? true
-                                                              : false,
-                                                          child: const Icon(
-                                                            Icons.check,
-                                                            color: Color(
-                                                                0xFF25b049),
-                                                          )),
-                                                      SizedBox(
-                                                        width: 250,
-                                                        child: Text(
-                                                          snapshot.data!,
-                                                          maxLines: 2,
-                                                          textAlign:
-                                                              TextAlign.center,
-                                                          style: TextStyle(
-                                                            overflow:
-                                                                TextOverflow
-                                                                    .ellipsis,
-                                                            color: snapshot
-                                                                    .data!
-                                                                    .contains(
-                                                                        "Письмо")
-                                                                ? const Color(
-                                                                    0xFF25b049)
-                                                                : const Color
-                                                                        .fromARGB(
-                                                                    255,
-                                                                    213,
-                                                                    0,
-                                                                    50),
-                                                          ),
-                                                        ),
-                                                      ),
-                                                    ],
-                                                  );
-                                                } else {
-                                                  return const SizedBox();
-                                                }
-                                              }),
-                                          const SizedBox(
-                                            height: 20,
-                                          ),
-                                          GestureDetector(
-                                            onTap: () {
-                                              if (textFieldController
-                                                  .text.isNotEmpty) {
-                                                getData(textFieldController
-                                                        .text)
-                                                    .then((value) {
-                                                  if (value["status"] == true) {
-                                                    blocText.dataSink
-                                                        .add(value["data"]);
-                                                  }
-                                                  if (value["status"] ==
-                                                      false) {
-                                                    blocText.dataSink.add(
-                                                        value["message"]
-                                                            ["email"][0]);
-                                                  }
-                                                });
-                                              }
-                                              if (textFieldController
-                                                  .text.isEmpty) {
-                                                blocEmptySobshit.dataSink
-                                                    .add(true);
-                                              }
-                                            },
-                                            child: Container(
-                                              alignment: Alignment.center,
-                                              height: 40.h,
-                                              width: 250.w,
-                                              decoration: BoxDecoration(
-                                                  color: const Color.fromARGB(
-                                                      255, 213, 0, 50),
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          5.r)),
-                                              child: const Text(
-                                                "Отправить",
-                                                textScaleFactor: 1.0,
-                                                style: TextStyle(
-                                                  color: Color(0xFFf2f2f2),
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                          SizedBox(
-                                            height: 30.h,
-                                          ),
-                                          const Text(
-                                            "При возникновении проблем просьба обращаться в службу поддержки. Почта:",
-                                            textScaleFactor: 1.0,
-                                            textAlign: TextAlign.center,
-                                          ),
-                                          Material(
-                                            child: InkWell(
-                                              onTap: () {
-                                                log("SSSSSSSSSALOMMMD");
-                                                _launchUrl(Uri.parse(
-                                                    "http://support@hansa-lab.ru"));
-                                              },
-                                              child: const Text(
-                                                "support@hansa-lab.ru",
-                                                textScaleFactor: 1.0,
-                                                style: TextStyle(
-                                                    color: Color.fromARGB(
-                                                        255, 213, 0, 50),
-                                                    decoration: TextDecoration
-                                                        .underline,
-                                                    fontWeight:
-                                                        FontWeight.w500),
-                                                textAlign: TextAlign.center,
-                                              ),
-                                            ),
-                                          )
-                                        ],
-                                      ),
+                              right: isTablet ? 16.w : 24.w,
+                              left: isTablet ? 16.w : 24.w,
+                              top: isTablet ? 20.h : 15.h),
+                          child: Consumer<PasswordVisibilityProvider>(
+                              builder: (context, value, child) {
+                            return TextField(
+                              autofillHints: const [AutofillHints.password],
+                              controller: passwordController,
+                              style: TextStyle(fontSize: isTablet ? 18 : null),
+                              obscureText: (!value.getVisibility),
+                              decoration: InputDecoration(
+                                  hintText: 'Ваш пароль',
+                                  hintStyle: GoogleFonts.montserrat(
+                                    color: const Color(0xffa1b7c2),
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                  suffixIcon: GestureDetector(
+                                    onTap: () {
+                                      value.changeVisibility();
+                                    },
+                                    child: Icon(
+                                      !value.getVisibility
+                                          ? Icons.visibility_off
+                                          : Icons.visibility,
+                                      color: const Color(0xffa1b7c2),
                                     ),
+                                  ),
+                                  prefixIcon: const Icon(
+                                    Icons.key,
+                                    color: Color(0xffa2b8c3),
+                                  )),
+                            );
+                          }),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 20),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              Text(
+                                ' Не выходить из приложения',
+                                textScaleFactor: 1.0,
+                                style: GoogleFonts.montserrat(
+                                    color: const Color(0xffa1b7c2),
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: isTablet ? 9.sp : 12.sp),
+                              ),
+                              MultiProvider(
+                                providers: [
+                                  Provider(create: (context) => ""),
+                                  Provider(
+                                      create: (context) =>
+                                          switchTextEditingController),
+                                ],
+                                child: ToggleSwitch(
+                                  colorContainer: Colors.grey[300],
+                                  colorCircle: Colors.green[600],
+                                  tickerSize: isTablet ? 12.sp : 21.sp,
+                                  handlerWidth: isTablet ? 22.w : 40.w,
+                                  handlerHeight: isTablet ? 10.h : 12.h,
+                                  onButton: () {},
+                                ),
+                              )
+                            ],
+                          ),
+                        ),
+                        Padding(
+                            padding: EdgeInsets.only(
+                              bottom: isTablet ? 35.h : 23.h,
+                            ),
+                            child: StreamBuilder<bool>(
+                              stream: progressButtonBLoC.stream,
+                              initialData: false,
+                              builder: (context, snapshot) {
+                                return GestureDetector(
+                                  onTap: () async {
+                                    usernameController.text.trim();
+                                    passwordController.text.trim();
+                                    if (usernameController.text.isNotEmpty &&
+                                        passwordController.text.isNotEmpty) {
+                                      try {
+                                        final response =
+                                            await InternetAddress.lookup(
+                                                'www.example.com');
+
+                                        if (response.isNotEmpty) {
+                                          log(snapshot.data!.toString());
+                                          log("sstatus 200");
+                                          progressButtonBLoC.sink.add(true);
+                                          FocusManager.instance.primaryFocus
+                                              ?.unfocus();
+                                          List isCorrectList = await LoginAction(
+                                                  username: usernameController
+                                                      .text
+                                                      .trim(),
+                                                  password: passwordController
+                                                      .text
+                                                      .trim(),
+                                                  isSaved:
+                                                      switchTextEditingController
+                                                              .text
+                                                              .trim() ==
+                                                          "1")
+                                              .sendRequest();
+                                          NotificationToken().getToken();
+                                          pagerBloc.sink.add(isCorrectList);
+                                        }
+                                      } catch (xatoyuuu) {
+                                        log("status 400");
+                                        progressButtonBLoC.sink.add(false);
+                                        ScaffoldMessenger.of(context)
+                                            .showSnackBar(snackBar);
+
+                                        if (kDebugMode) {
+                                          print(xatoyuuu);
+                                        }
+                                      }
+                                    } else {
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(SnackBar(
+                                        content: Text(
+                                          usernameController.text.isEmpty
+                                              ? "Электронная почта пуста"
+                                              : passwordController.text.isEmpty
+                                                  ? "Пароль пуст"
+                                                  : "Пустой",
+                                          textScaleFactor: 1.0,
+                                        ),
+                                        backgroundColor: const Color.fromARGB(
+                                            255, 213, 0, 50),
+                                      ));
+                                    }
+                                  },
+                                  child: AnimatedContainer(
+                                    duration: const Duration(milliseconds: 300),
+                                    alignment: Alignment.center,
+                                    width: isTablet
+                                        ? snapshot.data!
+                                            ? 75
+                                            : 210.w
+                                        : snapshot.data!
+                                            ? 46
+                                            : 318.w,
+                                    height: isTablet ? 48.h : 46,
+                                    decoration: BoxDecoration(
+                                        boxShadow: [
+                                          BoxShadow(
+                                            color: Colors.grey.withOpacity(0.5),
+                                            spreadRadius: 5.r,
+                                            blurRadius: 7.r,
+                                            offset: Offset(0.w,
+                                                15.h), // changes position of shadow
+                                          ),
+                                        ],
+                                        color: const Color.fromARGB(
+                                            255, 213, 0, 50),
+                                        borderRadius:
+                                            BorderRadius.circular(50)),
+                                    child: snapshot.data!
+                                        ? const CircularProgressIndicator(
+                                            color: Colors.white,
+                                          )
+                                        : Text(
+                                            'Войти',
+                                            textScaleFactor: 1.0,
+                                            style: GoogleFonts.montserrat(
+                                                color: Colors.white,
+                                                fontWeight: FontWeight.w500,
+                                                fontSize:
+                                                    isTablet ? 10.sp : 12.sp),
+                                          ),
                                   ),
                                 );
                               },
-                            );
-                          },
-                          child: Text(
-                            'Забыли пароль?',
-                            textScaleFactor: 1.0,
-                            style: GoogleFonts.montserrat(
-                                fontSize: isTablet ? 10.sp : 12.sp,
-                                fontWeight: FontWeight.w500,
-                                color: const Color(0xffa1b7c2)),
+                            )),
+                        Padding(
+                          padding: EdgeInsets.only(bottom: 36.h),
+                          child: InkWell(
+                            onTap: () {
+                              textFieldController.text = "";
+                              showDialog(
+                                context: context,
+                                builder: (context) {
+                                  return Padding(
+                                    padding: const EdgeInsets.all(20),
+                                    child: Center(
+                                      child: Container(
+                                        padding: const EdgeInsets.all(30),
+                                        height: 330,
+                                        width: 400,
+                                        decoration: BoxDecoration(
+                                            color: const Color(0xFFf2f2f2),
+                                            borderRadius:
+                                                BorderRadius.circular(20)),
+                                        child: Column(
+                                          children: [
+                                            Image.asset("assets/tepaLogo.png"),
+                                            SizedBox(
+                                              height: 30.h,
+                                            ),
+                                            StreamBuilder<bool>(
+                                                initialData: false,
+                                                stream:
+                                                    blocEmptySobshit.dataStream,
+                                                builder: (context, snapshot) {
+                                                  if (snapshot.hasData) {
+                                                    return Material(
+                                                      child: SizedBox(
+                                                        height: 40.h,
+                                                        child: TextField(
+                                                          focusNode:
+                                                              FocusNode(),
+                                                          onChanged: (value) {
+                                                            blocEmptySobshit
+                                                                .dataSink
+                                                                .add(false);
+                                                          },
+                                                          controller:
+                                                              textFieldController,
+                                                          textAlign:
+                                                              TextAlign.left,
+                                                          decoration: InputDecoration(
+                                                              contentPadding:
+                                                                  EdgeInsets.all(
+                                                                      4.h),
+                                                              hintText:
+                                                                  "E-mail",
+                                                              hintStyle: const TextStyle(
+                                                                  color: Color(
+                                                                      0xFFa0a0a0),
+                                                                  fontSize: 14),
+                                                              enabledBorder: OutlineInputBorder(
+                                                                  borderSide: BorderSide(
+                                                                      color: snapshot.data == true
+                                                                          ? const Color.fromARGB(
+                                                                              255,
+                                                                              213,
+                                                                              0,
+                                                                              50)
+                                                                          : Colors
+                                                                              .black)),
+                                                              focusedBorder: OutlineInputBorder(
+                                                                  borderSide: BorderSide(
+                                                                      color: snapshot.data == true
+                                                                          ? const Color.fromARGB(255, 213, 0, 50)
+                                                                          : Colors.black))),
+                                                        ),
+                                                      ),
+                                                    );
+                                                  } else {
+                                                    return const SizedBox();
+                                                  }
+                                                }),
+                                            SizedBox(
+                                              height: 1.h,
+                                            ),
+                                            StreamBuilder<String>(
+                                                stream: blocText.dataStream,
+                                                builder: (context, snapshot) {
+                                                  if (snapshot.hasData) {
+                                                    return Row(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .center,
+                                                      children: [
+                                                        Visibility(
+                                                            visible: snapshot
+                                                                    .data!
+                                                                    .contains(
+                                                                        "Письмо")
+                                                                ? true
+                                                                : false,
+                                                            child: const Icon(
+                                                              Icons.check,
+                                                              color: Color(
+                                                                  0xFF25b049),
+                                                            )),
+                                                        SizedBox(
+                                                          width: 250,
+                                                          child: Text(
+                                                            snapshot.data!,
+                                                            maxLines: 2,
+                                                            textAlign: TextAlign
+                                                                .center,
+                                                            style: TextStyle(
+                                                              overflow:
+                                                                  TextOverflow
+                                                                      .ellipsis,
+                                                              color: snapshot
+                                                                      .data!
+                                                                      .contains(
+                                                                          "Письмо")
+                                                                  ? const Color(
+                                                                      0xFF25b049)
+                                                                  : const Color
+                                                                          .fromARGB(
+                                                                      255,
+                                                                      213,
+                                                                      0,
+                                                                      50),
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    );
+                                                  } else {
+                                                    return const SizedBox();
+                                                  }
+                                                }),
+                                            const SizedBox(
+                                              height: 20,
+                                            ),
+                                            GestureDetector(
+                                              onTap: () {
+                                                if (textFieldController
+                                                    .text.isNotEmpty) {
+                                                  getData(textFieldController
+                                                          .text)
+                                                      .then((value) {
+                                                    if (value["status"] ==
+                                                        true) {
+                                                      blocText.dataSink
+                                                          .add(value["data"]);
+                                                    }
+                                                    if (value["status"] ==
+                                                        false) {
+                                                      blocText.dataSink.add(
+                                                          value["message"]
+                                                              ["email"][0]);
+                                                    }
+                                                  });
+                                                }
+                                                if (textFieldController
+                                                    .text.isEmpty) {
+                                                  blocEmptySobshit.dataSink
+                                                      .add(true);
+                                                }
+                                              },
+                                              child: Container(
+                                                alignment: Alignment.center,
+                                                height: 40.h,
+                                                width: 250.w,
+                                                decoration: BoxDecoration(
+                                                    color: const Color.fromARGB(
+                                                        255, 213, 0, 50),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            5.r)),
+                                                child: const Text(
+                                                  "Отправить",
+                                                  textScaleFactor: 1.0,
+                                                  style: TextStyle(
+                                                    color: Color(0xFFf2f2f2),
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                            SizedBox(
+                                              height: 30.h,
+                                            ),
+                                            const Text(
+                                              "При возникновении проблем просьба обращаться в службу поддержки. Почта:",
+                                              textScaleFactor: 1.0,
+                                              textAlign: TextAlign.center,
+                                            ),
+                                            Material(
+                                              child: InkWell(
+                                                onTap: () {
+                                                  log("SSSSSSSSSALOMMMD");
+                                                  _launchUrl(Uri.parse(
+                                                      "http://support@hansa-lab.ru"));
+                                                },
+                                                child: const Text(
+                                                  "support@hansa-lab.ru",
+                                                  textScaleFactor: 1.0,
+                                                  style: TextStyle(
+                                                      color: Color.fromARGB(
+                                                          255, 213, 0, 50),
+                                                      decoration: TextDecoration
+                                                          .underline,
+                                                      fontWeight:
+                                                          FontWeight.w500),
+                                                  textAlign: TextAlign.center,
+                                                ),
+                                              ),
+                                            )
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  );
+                                },
+                              );
+                            },
+                            child: Text(
+                              'Забыли пароль?',
+                              textScaleFactor: 1.0,
+                              style: GoogleFonts.montserrat(
+                                  fontSize: isTablet ? 10.sp : 12.sp,
+                                  fontWeight: FontWeight.w500,
+                                  color: const Color(0xffa1b7c2)),
+                            ),
                           ),
-                        ),
-                      )
-                    ],
+                        )
+                      ],
+                    ),
                   ),
-                ),
-                Positioned(
-                  top: isTablet ? -60.h : -60.h,
-                  child: Image.asset(
-                    isTablet ? 'assets/tabletTumLogo.png' : 'assets/Logo.png',
-                    height: 134.h,
-                    width: 134.w,
+                  Positioned(
+                    top: isTablet ? -60.h : -60.h,
+                    child: Image.asset(
+                      isTablet ? 'assets/tabletTumLogo.png' : 'assets/Logo.png',
+                      height: 134.h,
+                      width: 134.w,
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ),

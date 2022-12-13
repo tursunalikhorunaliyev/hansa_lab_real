@@ -77,10 +77,10 @@ class _PopupFullRegistrDoljnostState extends State<PopupFullRegistrDoljnost> {
                               text,
                               style: text == "Должность"
                                   ? GoogleFonts.montserrat(
-                                      fontSize: isTablet ? 13 : 10,
+                                      fontSize: isTablet ? 16 : 13,
                                       color: widget.hintColor)
                                   : GoogleFonts.montserrat(
-                                      fontSize: isTablet ? 13 : 10,
+                                      fontSize: isTablet ? 16 : 13,
                                       fontWeight: FontWeight.w500,
                                       color: Colors.black),
                             )),

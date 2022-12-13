@@ -49,6 +49,7 @@ import 'package:hansa_lab/providers/treningi_video_changer_provider.dart';
 import 'package:hansa_lab/providers/treningi_videos_provider.dart';
 import 'package:hansa_lab/providers/video_ind_provider.dart';
 import 'package:hansa_lab/providers/video_tit_provider.dart';
+import 'package:hansa_lab/sentry_reporter.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:provider/provider.dart';
 
@@ -63,7 +64,7 @@ void main(List<String> args) async {
   initMessaging();
   listenForeground(channel);
   FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
-  runApp(const MyApp());
+  await SentryReporter.setup(const MyApp());
 }
 
 class MyApp extends StatelessWidget {

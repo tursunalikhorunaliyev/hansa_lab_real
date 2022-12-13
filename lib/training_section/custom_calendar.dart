@@ -44,8 +44,6 @@ class _CustomCalendarState extends State<CustomCalendar> {
         headerStyle: const DateRangePickerHeaderStyle(
             textStyle: TextStyle(color: Colors.white)),
         onSelectionChanged: (date) {
-          log(date.value.toString());
-          log(calendarController.selectedRange!.toStringShort());
         },
         monthCellStyle: DateRangePickerMonthCellStyle(
           cellDecoration: BoxDecoration(

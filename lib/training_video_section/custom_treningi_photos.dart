@@ -81,10 +81,8 @@ class _CustomTreningiPhotosState extends State<CustomTreningiPhotos> {
     final page = PageController(initialPage: 0);
     final token = Provider.of<String>(context);
     final treningiPhotos = Provider.of<TreningiPhotosProvider>(context);
-
     final providerSendAnaliseDonwload =
         Provider.of<SendAnaliseDownload>(context);
-
     return Padding(
       padding: const EdgeInsets.only(bottom: 11),
       child: SizedBox(

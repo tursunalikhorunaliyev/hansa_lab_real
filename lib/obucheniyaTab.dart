@@ -46,7 +46,7 @@ class _StackedStackObuchState extends State<StackedStackObuch> {
     bool fav = widget.isFavourite;
     return Center(
       child: SizedBox(
-        height: widget.link.isEmpty || widget.linkPDF.isEmpty? 365 : 390,
+        height: widget.link.isEmpty || widget.linkPDF.isEmpty ? 365 : 390,
         width: 430,
         child: Stack(
           children: [
@@ -57,20 +57,20 @@ class _StackedStackObuchState extends State<StackedStackObuch> {
                   InkWell(
                     onTap: () {
                       setState(() {
-                       String fullUrl;
-              if (widget.link.isNotEmpty) {
-                 fullUrl = widget.link.startsWith("http")
-                  ? widget.link
-                  : "http://${widget.link}";
-              } else {
-                fullUrl = widget.linkPDF.startsWith("http")
-                  ? widget.linkPDF
-                  : "http://${widget.linkPDF}";
-              }
+                        String fullUrl;
+                        if (widget.link.isNotEmpty) {
+                          fullUrl = widget.link.startsWith("http")
+                              ? widget.link
+                              : "http://${widget.link}";
+                        } else {
+                          fullUrl = widget.linkPDF.startsWith("http")
+                              ? widget.linkPDF
+                              : "http://${widget.linkPDF}";
+                        }
 
-              setState(() {
-                launched = _launchInBrowser(Uri.parse(fullUrl));
-              });
+                        setState(() {
+                          launched = _launchInBrowser(Uri.parse(fullUrl));
+                        });
                       });
                     },
                     child: SizedBox(
@@ -112,63 +112,75 @@ class _StackedStackObuchState extends State<StackedStackObuch> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 SizedBox(
-                                  height:widget.link.isEmpty || widget.linkPDF.isEmpty?0: 10,
+                                  height: widget.link.isEmpty ||
+                                          widget.linkPDF.isEmpty
+                                      ? 0
+                                      : 10,
                                 ),
-                                widget.link.isNotEmpty? InkWell(
-                                  onTap: () {
-                                    setState(() {
-                                      launched = _launchInBrowser(Uri.parse(
-                                          widget.link.startsWith("http")
-                  ? widget.link
-                  : "http://${widget.link}"));
-                                    });
-                                  },
-                                  child: Container(
-                                    alignment: Alignment.center,
-                                    width: 100,
-                                    height: 28,
-                                    decoration: BoxDecoration(
-                                        color: widget.buttonColor,
-                                        borderRadius:
-                                            BorderRadius.circular(13.r)),
-                                    child: Text(
-                                      "Смотреть",
-                                      style: GoogleFonts.montserrat(
-                                          fontSize: 12,
-                                          color: const Color(0xffffffff),
-                                          fontWeight: FontWeight.w500),
-                                    ),
-                                  ),
-                                ) : const SizedBox(),
+                                widget.link.isNotEmpty
+                                    ? InkWell(
+                                        onTap: () {
+                                          setState(() {
+                                            launched = _launchInBrowser(
+                                                Uri.parse(widget.link
+                                                        .startsWith("http")
+                                                    ? widget.link
+                                                    : "http://${widget.link}"));
+                                          });
+                                        },
+                                        child: Container(
+                                          alignment: Alignment.center,
+                                          width: 100,
+                                          height: 28,
+                                          decoration: BoxDecoration(
+                                              color: widget.buttonColor,
+                                              borderRadius:
+                                                  BorderRadius.circular(13.r)),
+                                          child: Text(
+                                            "Смотреть",
+                                            style: GoogleFonts.montserrat(
+                                                fontSize: 12,
+                                                color: const Color(0xffffffff),
+                                                fontWeight: FontWeight.w500),
+                                          ),
+                                        ),
+                                      )
+                                    : const SizedBox(),
                                 SizedBox(
-                                  height:widget.link.isEmpty || widget.linkPDF.isEmpty?0: 10,
+                                  height: widget.link.isEmpty ||
+                                          widget.linkPDF.isEmpty
+                                      ? 0
+                                      : 10,
                                 ),
-                                widget.linkPDF.isNotEmpty? InkWell(
-                                  onTap: () {
-                                    setState(() {
-                                      launched = _launchInBrowser(Uri.parse(
-                                          widget.linkPDF.startsWith("http")
-                  ? widget.linkPDF
-                  : "http://${widget.linkPDF}"));
-                                    });
-                                  },
-                                  child: Container(
-                                    alignment: Alignment.center,
-                                    width: 100,
-                                    height: 28,
-                                    decoration: BoxDecoration(
-                                        color: widget.buttonColor,
-                                        borderRadius:
-                                            BorderRadius.circular(13.r)),
-                                    child: Text(
-                                      widget.bottomButtonText,
-                                      style: GoogleFonts.montserrat(
-                                          fontSize: 12,
-                                          color: const Color(0xffffffff),
-                                          fontWeight: FontWeight.w500),
-                                    ),
-                                  ),
-                                ) : const SizedBox(),
+                                widget.linkPDF.isNotEmpty
+                                    ? InkWell(
+                                        onTap: () {
+                                          setState(() {
+                                            launched = _launchInBrowser(
+                                                Uri.parse(widget.linkPDF
+                                                        .startsWith("http")
+                                                    ? widget.linkPDF
+                                                    : "http://${widget.linkPDF}"));
+                                          });
+                                        },
+                                        child: Container(
+                                          alignment: Alignment.center,
+                                          width: 100,
+                                          height: 28,
+                                          decoration: BoxDecoration(
+                                              color: widget.buttonColor,
+                                              borderRadius:
+                                                  BorderRadius.circular(13.r)),
+                                          child: Text(
+                                            widget.bottomButtonText,
+                                            style: GoogleFonts.montserrat(
+                                                fontSize: 12,
+                                                color: const Color(0xffffffff),
+                                                fontWeight: FontWeight.w500),
+                                          ),
+                                        ),
+                                      )
+                                    : const SizedBox(),
                               ],
                             ),
                           )
@@ -189,31 +201,37 @@ class _StackedStackObuchState extends State<StackedStackObuch> {
                     child: Align(
                       alignment: Alignment.centerRight,
                       child: Padding(
-                        padding: const EdgeInsets.only(/* top: 115, right: 45*/),
+                        padding:
+                            const EdgeInsets.only(/* top: 115, right: 45*/),
                         child: InkWell(
                           onTap: () {
                             fav = !fav;
                             isFavouriteBLoC.sink.add(fav);
                             isFavouriteBLoC.getFavourite(
                                 token, widget.isFavouriteURL);
-                                if(fav){
+                            if (fav) {
                               showTopSnackBar(
-                              
-                              reverseCurve: Curves.elasticOut,
-                              animationDuration: const Duration(milliseconds: 600),
-                              displayDuration: const Duration(milliseconds: 600),
-                              context,
-                              const CustomSnackBar.success(
-                                iconRotationAngle: 0,
-                                iconPositionLeft: 30,
-                               // messagePadding: EdgeInsets.symmetric(horizontal: 20),
-                                icon: Icon(Icons.favorite, color: Colors.white, size: 30, ),
-                                backgroundColor: Color.fromARGB(255, 213, 0, 50),
-                                message:
-                                    "Сохранено в избранном",
-                              ),
-                            );
-                           }
+                                reverseCurve: Curves.elasticOut,
+                                animationDuration:
+                                    const Duration(milliseconds: 600),
+                                displayDuration:
+                                    const Duration(milliseconds: 600),
+                                context,
+                                const CustomSnackBar.success(
+                                  iconRotationAngle: 0,
+                                  iconPositionLeft: 30,
+                                  // messagePadding: EdgeInsets.symmetric(horizontal: 20),
+                                  icon: Icon(
+                                    Icons.favorite,
+                                    color: Colors.white,
+                                    size: 30,
+                                  ),
+                                  backgroundColor:
+                                      Color.fromARGB(255, 213, 0, 50),
+                                  message: "Сохранено в избранном",
+                                ),
+                              );
+                            }
                           },
                           child: Container(
                             alignment: Alignment.center,

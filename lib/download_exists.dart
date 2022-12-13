@@ -29,7 +29,7 @@ class _ExistsCheckState extends State<ExistsCheck> {
     String path = "";
     String dir = "";
     if (Platform.isIOS) {
-      Directory directory = await getApplicationSupportDirectory();
+      Directory directory = await getApplicationDocumentsDirectory();
       dir = directory.path;
     } else if (Platform.isAndroid) {
       dir = "/storage/emulated/0/Download/";

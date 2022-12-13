@@ -8,7 +8,6 @@ class TreningiPhotosApi {
   static Future<TreningiPhotosModel> getdata(url, token) async {
     http.Response response = await http
         .get(Uri.parse('http://hansa-lab.ru/$url'), headers: {'token': token});
-    log(jsonDecode(response.body).toString());
     return TreningiPhotosModel.fromMap(jsonDecode(response.body));
   }
 }

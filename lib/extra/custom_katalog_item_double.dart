@@ -4,6 +4,8 @@ import 'package:hansa_lab/extra/custom_double_clip_item.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../screens/pdf_viewer.dart';
+
 class CustomKatalogItemDouble extends StatefulWidget {
   const CustomKatalogItemDouble(
       {Key? key,
@@ -45,11 +47,51 @@ class _CustomKatalogItemDoubleState extends State<CustomKatalogItemDouble> {
         children: [
           InkWell(
             onTap: () {
-              setState(() {
-                launched = _launchInBrowser(
-                  Uri.parse(widget.linkPDF),
-                );
-              });
+              if (widget.linkPDF.contains(".pdf") &&
+                  widget.linkPDF.contains("google")) {
+                String pdfInAppUrl = widget.linkPDF
+                    .split("url=")[1]
+                    .split("&")[0];
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => PDFViewer(
+                          pdfUrlForPDFViewer:
+                          pdfInAppUrl),
+                    ));
+              } else if (widget.linkPDF
+                  .endsWith(".pdf")) {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => PDFViewer(
+                          pdfUrlForPDFViewer:
+                          widget.linkPDF),
+                    ));
+              } else {
+                String fullUrl =
+                widget.linkPDF.startsWith("https")
+                    ? widget.linkPDF
+                    : "https://${widget.linkPDF}";
+
+                setState(() {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => PDFViewer(
+                            pdfUrlForPDFViewer: fullUrl),
+                      ));
+                  // launched =
+                  //     _launchInBrowser(
+                  //         Uri.parse(
+                  //             fullUrl));
+                });
+              }
+              // setState(() {
+              //   launched = _launchInBrowser(
+              //     Uri.parse(widget.linkPDF),
+              //   );
+              // });
             },
             child: ClipRRect(
               borderRadius: BorderRadius.circular(6.r),

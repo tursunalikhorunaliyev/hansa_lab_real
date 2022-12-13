@@ -1,19 +1,30 @@
 import 'dart:developer';
+import 'dart:io';
 
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:dio/dio.dart';
+import 'package:path/path.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hansa_lab/api_models.dart/prezintatsi_model.dart';
-import 'package:hansa_lab/api_services/welcome_api.dart';
 import 'package:hansa_lab/blocs/prezintatsia_bloc.dart';
 import 'package:hansa_lab/classes/sned_url_prezent_otkrit.dart';
 import 'package:hansa_lab/extra/archive_card.dart';
 import 'package:hansa_lab/extra/prezentatTabCard.dart';
 import 'package:lottie/lottie.dart';
+import 'package:open_file/open_file.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:percent_indicator/linear_percent_indicator.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 import 'package:sticky_headers/sticky_headers.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:top_snackbar_flutter/custom_snack_bar.dart';
+import 'package:top_snackbar_flutter/top_snack_bar.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../blocs/download_progress_bloc.dart';
 
 class PresentArchive extends StatefulWidget {
   const PresentArchive({
@@ -25,6 +36,25 @@ class PresentArchive extends StatefulWidget {
 }
 
 class _PresentArchiveState extends State<PresentArchive> {
+  final blocDownload = DownloadProgressFileBloc();
+
+  bool downloading = false;
+  double progress = 0.0;
+  bool isDownloaded = false;
+  String path = "";
+  String dir = "";
+  Future<String> getFilePath(uniqueFileName) async {
+    if (Platform.isIOS) {
+      Directory directory = await getApplicationSupportDirectory();
+      dir = directory.path;
+      print(uniqueFileName);
+    } else if (Platform.isAndroid) {
+      dir = "/storage/emulated/0/Download/";
+    }
+    path = "$dir/$uniqueFileName";
+    return path;
+  }
+
   @override
   Widget build(BuildContext context) {
     final token = Provider.of<String>(context);
@@ -36,7 +66,34 @@ class _PresentArchiveState extends State<PresentArchive> {
     final scroll = ScrollController();
     final isTablet = Provider.of<bool>(context);
 
-    Future<void>? launched;
+    Future<void> downloadFile(String url, String fileName) async {
+      await Permission.storage.request();
+      progress = 0;
+
+      String savePath = await getFilePath(fileName);
+      Dio dio = Dio();
+      dio.download(
+        url,
+        savePath,
+        onReceiveProgress: (recieved, total) {
+          progress = double.parse(((recieved / total) * 100).toStringAsFixed(0));
+          blocDownload.streamSink.add(progress);
+          if (progress == 100) {
+            log("tugadi");
+          } else {
+            log("hali tugamadi");
+          }
+        },
+        deleteOnError: true,
+      ).then((value) async {
+        Navigator.pop(context);
+        OpenFile.open(path);
+      });
+    }
+
+
+
+
     return Expanded(
       child: FutureBuilder<PrezintatsiaModel>(
           future: bloc.getPrezintatsiyaData(
@@ -128,12 +185,114 @@ class _PresentArchiveState extends State<PresentArchive> {
                                                     top:
                                                         isTablet ? 22.h : 15.h),
                                                 child: InkWell(
-                                                  onTap: () {
-                                                    setState(() {
-                                                      launched = _launchInBrowser(
-                                                          Uri.parse(
-                                                              "https://${snapshot.data!.data.guides.dataGuides[index].pdfUrl}"));
-                                                    });
+                                                  onTap: () async {
+                                                    if (snapshot
+                                                            .data!
+                                                            .data
+                                                            .guides
+                                                            .dataGuides[index]
+                                                            .link
+                                                            .contains(".pdf") &&
+                                                        snapshot
+                                                            .data!
+                                                            .data
+                                                            .guides
+                                                            .dataGuides[index]
+                                                            .link
+                                                            .contains(
+                                                                "google")) {
+                                                      String pdfInAppUrl =
+                                                          snapshot
+                                                              .data!
+                                                              .data
+                                                              .guides
+                                                              .dataGuides[index]
+                                                              .link
+                                                              .split("url=")[1]
+                                                              .split("&")[0];
+                                                      await downloadFile(
+                                                        pdfInAppUrl,
+                                                        basename(pdfInAppUrl),
+
+                                                      );
+                                                      print(blocDownload
+                                                          .stream);
+                                                      showDialog(
+                                                        context: context,
+                                                        builder: (context) {
+                                                          return AlertDialog(
+                                                            actionsPadding:
+                                                                const EdgeInsets
+                                                                        .only(
+                                                                    bottom: 20,
+                                                                    right: 20),
+                                                            alignment: Alignment
+                                                                .center,
+                                                            content:
+                                                                StreamBuilder<
+                                                                    double>(
+                                                              stream:
+                                                                  blocDownload
+                                                                      .stream,
+                                                              initialData: 0,
+                                                              builder: (context,
+                                                                  snapshotDouble) {
+                                                                return SizedBox(
+                                                                  height: 50,
+                                                                  child: Column(
+                                                                    crossAxisAlignment:
+                                                                        CrossAxisAlignment
+                                                                            .center,
+                                                                    children: [
+                                                                      const SizedBox(
+                                                                        height:
+                                                                            10,
+                                                                      ),
+                                                                      LinearPercentIndicator(
+                                                                        alignment:
+                                                                            MainAxisAlignment.center,
+                                                                        padding:
+                                                                            const EdgeInsets.all(0),
+                                                                        barRadius:
+                                                                            const Radius.circular(5),
+                                                                        lineHeight:
+                                                                            15,
+                                                                        percent:
+                                                                            snapshotDouble.data! /
+                                                                                100,
+                                                                        center:
+                                                                            Text(
+                                                                          "${snapshotDouble.data}%",
+                                                                          style:
+                                                                              GoogleFonts.montserrat(
+                                                                            fontSize:
+                                                                                10,
+                                                                            color:
+                                                                                Colors.black,
+                                                                          ),
+                                                                        ),
+                                                                        backgroundColor:
+                                                                            Colors.transparent,
+                                                                        progressColor:
+                                                                            Colors.green,
+                                                                      ),
+                                                                      const SizedBox(
+                                                                        height:
+                                                                            10,
+                                                                      ),
+                                                                    ],
+                                                                  ),
+                                                                );
+                                                              },
+                                                            ),
+                                                          );
+                                                        },
+                                                      );
+                                                      print(progress);
+                                                      print('...');
+
+
+                                                    }
                                                   },
                                                   child: Container(
                                                     alignment: Alignment.center,
@@ -198,44 +357,7 @@ class _PresentArchiveState extends State<PresentArchive> {
                                             .dataGuides[index].title,
                                         url: snapshot.data!.data.guides
                                             .dataGuides[index].pictureLink,
-                                      ) /* StackedStackPrezentatsiyaTab(
-                                    isFavouriteURL: snapshot
-                                        .data!
-                                        .data
-                                        .guides
-                                        .dataGuides[index]
-                                        .favourite_link,
-                                    linkPDFSkachat: snapshot.data!.data
-                                        .guides.dataGuides[index].pdfUrl,
-                                    linkPDF: snapshot.data!.data.guides
-                                        .dataGuides[index].link,
-                                    buttonColor: const Color(0xffff163e),
-                                    topButtonText: 'Скачать',
-                                    bottomButtonText: 'Читать',
-                                    isFavourite: snapshot.data!.data.guides
-                                        .dataGuides[index].isFavourite,
-                                    skachat: Container(
-                                      alignment: Alignment.center,
-                                      width: 94,
-                                      height: 25,
-                                      decoration: BoxDecoration(
-                                          color: const Color(0xff31353b),
-                                          borderRadius:
-                                              BorderRadius.circular(13)),
-                                      child: Text(
-                                        'skachat',
-                                        style: GoogleFonts.montserrat(
-                                            fontSize: 10,
-                                            color: const Color(0xffffffff),
-                                            fontWeight: FontWeight.w500),
-                                      ),
-                                    ),
-                                    title: snapshot.data!.data.guides
-                                        .dataGuides[index].title,
-                                    url: snapshot.data!.data.guides
-                                        .dataGuides[index].picture_link,
-                                  ), */
-                                      );
+                                      ));
                                 }),
                               ),
                             )
@@ -255,12 +377,111 @@ class _PresentArchiveState extends State<PresentArchive> {
                                               padding: EdgeInsets.only(
                                                   top: isTablet ? 22.h : 15.h),
                                               child: InkWell(
-                                                onTap: () {
-                                                  setState(() {
-                                                    launched = _launchInBrowser(
-                                                        Uri.parse(
-                                                            "https://${snapshot.data!.data.guides.dataGuides[index].pdfUrl}"));
-                                                  });
+                                                onTap: () async {
+                                                  if (snapshot
+                                                          .data!
+                                                          .data
+                                                          .guides
+                                                          .dataGuides[index]
+                                                          .link
+                                                          .contains(".pdf") &&
+                                                      snapshot
+                                                          .data!
+                                                          .data
+                                                          .guides
+                                                          .dataGuides[index]
+                                                          .link
+                                                          .contains("google")) {
+                                                    String pdfInAppUrl =
+                                                        snapshot
+                                                            .data!
+                                                            .data
+                                                            .guides
+                                                            .dataGuides[index]
+                                                            .link
+                                                            .split("url=")[1]
+                                                            .split("&")[0];
+                                                    await downloadFile(
+                                                      pdfInAppUrl,
+                                                      basename(pdfInAppUrl),
+                                                    );
+                                                    await showDialog(
+                                                      context: context,
+                                                      builder: (context) {
+                                                        return AlertDialog(
+                                                          actionsPadding:
+                                                              const EdgeInsets
+                                                                      .only(
+                                                                  bottom: 20,
+                                                                  right: 20),
+                                                          alignment:
+                                                              Alignment.center,
+                                                          content:
+                                                              StreamBuilder<
+                                                                  double>(
+                                                            stream: blocDownload
+                                                                .stream,
+                                                            initialData: 0,
+                                                            builder: (context,
+                                                                snapshotDouble) {
+                                                              return SizedBox(
+                                                                height: 50,
+                                                                child: Column(
+                                                                  crossAxisAlignment:
+                                                                      CrossAxisAlignment
+                                                                          .center,
+                                                                  children: [
+                                                                    const SizedBox(
+                                                                      height:
+                                                                          10,
+                                                                    ),
+                                                                    LinearPercentIndicator(
+                                                                      alignment:
+                                                                          MainAxisAlignment
+                                                                              .center,
+                                                                      padding:
+                                                                          const EdgeInsets.all(
+                                                                              0),
+                                                                      barRadius:
+                                                                          const Radius.circular(
+                                                                              5),
+                                                                      lineHeight:
+                                                                          15,
+                                                                      percent:
+                                                                          snapshotDouble.data! /
+                                                                              100,
+                                                                      center:
+                                                                          Text(
+                                                                        "${snapshotDouble.data}%",
+                                                                        style: GoogleFonts
+                                                                            .montserrat(
+                                                                          fontSize:
+                                                                              10,
+                                                                          color:
+                                                                              Colors.black,
+                                                                        ),
+                                                                      ),
+                                                                      backgroundColor:
+                                                                          Colors
+                                                                              .transparent,
+                                                                      progressColor:
+                                                                          Colors
+                                                                              .green,
+                                                                    ),
+                                                                    const SizedBox(
+                                                                      height:
+                                                                          10,
+                                                                    ),
+                                                                  ],
+                                                                ),
+                                                              );
+                                                            },
+                                                          ),
+                                                        );
+                                                      },
+                                                    );
+
+                                                  }
                                                 },
                                                 child: Container(
                                                   alignment: Alignment.center,
@@ -297,7 +518,7 @@ class _PresentArchiveState extends State<PresentArchive> {
                                       buttonColor:
                                           const Color.fromARGB(255, 213, 0, 50),
                                       topButtonText: 'Скачать',
-                                      bottomButtonText: 'Читатьv',
+                                      bottomButtonText: 'Читать',
                                       isFavourite: snapshot.data!.data.guides
                                           .dataGuides[index].isFavourite,
                                       skachat: Container(
@@ -415,12 +636,110 @@ class _PresentArchiveState extends State<PresentArchive> {
                                               padding: EdgeInsets.only(
                                                   top: isTablet ? 22.h : 15.h),
                                               child: InkWell(
-                                                onTap: () {
-                                                  setState(() {
-                                                    launched = _launchInBrowser(
-                                                        Uri.parse(
-                                                            "https://${snapshot.data!.data.guidesArchive.dataGuidesArchive[index].pdfUrl}"));
-                                                  });
+                                                onTap: () async {
+                                                  if (snapshot
+                                                          .data!
+                                                          .data
+                                                          .guides
+                                                          .dataGuides[index]
+                                                          .link
+                                                          .contains(".pdf") &&
+                                                      snapshot
+                                                          .data!
+                                                          .data
+                                                          .guides
+                                                          .dataGuides[index]
+                                                          .link
+                                                          .contains("google")) {
+                                                    String pdfInAppUrl =
+                                                        snapshot
+                                                            .data!
+                                                            .data
+                                                            .guides
+                                                            .dataGuides[index]
+                                                            .link
+                                                            .split("url=")[1]
+                                                            .split("&")[0];
+                                                    await downloadFile(
+                                                      pdfInAppUrl,
+                                                      basename(pdfInAppUrl),
+                                                    );
+                                                    await showDialog(
+                                                      context: context,
+                                                      builder: (context) {
+                                                        return AlertDialog(
+                                                          actionsPadding:
+                                                              const EdgeInsets
+                                                                      .only(
+                                                                  bottom: 20,
+                                                                  right: 20),
+                                                          alignment:
+                                                              Alignment.center,
+                                                          content:
+                                                              StreamBuilder<
+                                                                  double>(
+                                                            stream: blocDownload
+                                                                .stream,
+                                                            initialData: 0,
+                                                            builder: (context,
+                                                                snapshotDouble) {
+                                                              return SizedBox(
+                                                                height: 50,
+                                                                child: Column(
+                                                                  crossAxisAlignment:
+                                                                      CrossAxisAlignment
+                                                                          .center,
+                                                                  children: [
+                                                                    const SizedBox(
+                                                                      height:
+                                                                          10,
+                                                                    ),
+                                                                    LinearPercentIndicator(
+                                                                      alignment:
+                                                                          MainAxisAlignment
+                                                                              .center,
+                                                                      padding:
+                                                                          const EdgeInsets.all(
+                                                                              0),
+                                                                      barRadius:
+                                                                          const Radius.circular(
+                                                                              5),
+                                                                      lineHeight:
+                                                                          15,
+                                                                      percent:
+                                                                          snapshotDouble.data! /
+                                                                              100,
+                                                                      center:
+                                                                          Text(
+                                                                        "${snapshotDouble.data}%",
+                                                                        style: GoogleFonts
+                                                                            .montserrat(
+                                                                          fontSize:
+                                                                              10,
+                                                                          color:
+                                                                              Colors.black,
+                                                                        ),
+                                                                      ),
+                                                                      backgroundColor:
+                                                                          Colors
+                                                                              .transparent,
+                                                                      progressColor:
+                                                                          Colors
+                                                                              .green,
+                                                                    ),
+                                                                    const SizedBox(
+                                                                      height:
+                                                                          10,
+                                                                    ),
+                                                                  ],
+                                                                ),
+                                                              );
+                                                            },
+                                                          ),
+                                                        );
+                                                      },
+                                                    );
+                                                  }
                                                 },
                                                 child: Container(
                                                   alignment: Alignment.center,
@@ -520,14 +839,111 @@ class _PresentArchiveState extends State<PresentArchive> {
                                                             ? 22.h
                                                             : 15.h),
                                                     child: InkWell(
-                                                      onTap: () {
-                                                        log("https://${snapshot.data!.data.guidesArchive.dataGuidesArchive[index].pdfUrl}");
-                                                        setState(() {
-                                                          launched =
-                                                              _launchInBrowser(
-                                                                  Uri.parse(
-                                                                      "https://${snapshot.data!.data.guidesArchive.dataGuidesArchive[index].pdfUrl}"));
-                                                        });
+                                                      onTap: () async {
+                                                        if (snapshot
+                                                            .data!
+                                                            .data
+                                                            .guidesArchive
+                                                            .dataGuidesArchive[index]
+                                                            .link
+                                                            .contains(".pdf") &&
+                                                            snapshot
+                                                                .data!
+                                                                .data
+                                                                .guidesArchive
+                                                                .dataGuidesArchive[index]
+                                                                .link
+                                                                .contains("google")) {
+                                                          String pdfInAppUrl =
+                                                          snapshot
+                                                              .data!
+                                                              .data
+                                                              .guidesArchive
+                                                              .dataGuidesArchive[index]
+                                                              .link
+                                                              .split("url=")[1]
+                                                              .split("&")[0];
+                                                          await downloadFile(
+                                                            pdfInAppUrl,
+                                                            basename(pdfInAppUrl),
+                                                          );
+                                                          await showDialog(
+                                                            context: context,
+                                                            builder: (context) {
+                                                              return AlertDialog(
+                                                                actionsPadding:
+                                                                const EdgeInsets
+                                                                    .only(
+                                                                    bottom: 20,
+                                                                    right: 20),
+                                                                alignment:
+                                                                Alignment.center,
+                                                                content:
+                                                                StreamBuilder<
+                                                                    double>(
+                                                                  stream: blocDownload
+                                                                      .stream,
+                                                                  initialData: 0,
+                                                                  builder: (context,
+                                                                      snapshotDouble) {
+                                                                    return SizedBox(
+                                                                      height: 40,
+                                                                      child: Column(
+                                                                        crossAxisAlignment:
+                                                                        CrossAxisAlignment
+                                                                            .center,
+                                                                        children: [
+                                                                          const SizedBox(
+                                                                            height:
+                                                                            10,
+                                                                          ),
+                                                                          LinearPercentIndicator(
+                                                                            alignment:
+                                                                            MainAxisAlignment
+                                                                                .center,
+                                                                            padding:
+                                                                            const EdgeInsets.all(
+                                                                                0),
+                                                                            barRadius:
+                                                                            const Radius.circular(
+                                                                                5),
+                                                                            lineHeight:
+                                                                            15,
+                                                                            percent:
+                                                                            snapshotDouble.data! /
+                                                                                100,
+                                                                            center:
+                                                                            Text(
+                                                                              "${snapshotDouble.data}%",
+                                                                              style: GoogleFonts
+                                                                                  .montserrat(
+                                                                                fontSize:
+                                                                                10,
+                                                                                color:
+                                                                                Colors.black,
+                                                                              ),
+                                                                            ),
+
+                                                                            backgroundColor:
+                                                                            Colors
+                                                                                .transparent,
+                                                                            progressColor:
+                                                                            Colors
+                                                                                .green,
+                                                                          ),
+                                                                          const SizedBox(
+                                                                            height:
+                                                                            10,
+                                                                          ),
+                                                                        ],
+                                                                      ),
+                                                                    );
+                                                                  },
+                                                                ),
+                                                              );
+                                                            },
+                                                          );
+                                                        }
                                                       },
                                                       child: Container(
                                                         alignment:

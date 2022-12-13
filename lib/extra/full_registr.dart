@@ -22,6 +22,8 @@ import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../screens/pdf_viewer.dart';
+
 class FullRegistr extends StatefulWidget {
   const FullRegistr({Key? key}) : super(key: key);
 
@@ -130,7 +132,7 @@ class _FullRegistrState extends State<FullRegistr> {
                         textEditingController: imyaTextEditingController,
                         text: "Имя",
                         height: isTablet ? 45 : 38,
-                        size: isTablet ? 13 : 10,
+                        size: isTablet ? 16 : 13,
                         weight:
                             isTablet ? FontWeight.normal : FontWeight.normal,
                         borderColor: nameIsEmpty
@@ -148,7 +150,7 @@ class _FullRegistrState extends State<FullRegistr> {
                         textEditingController: familiyaTextEditingController,
                         text: "Фамилия",
                         height: isTablet ? 45 : 38,
-                        size: isTablet ? 13 : 10,
+                        size: isTablet ? 16 : 13,
                         weight:
                             isTablet ? FontWeight.normal : FontWeight.normal,
                         borderColor: lastnameIsEmpty
@@ -166,7 +168,7 @@ class _FullRegistrState extends State<FullRegistr> {
                         textEditingController: emailTextFielController,
                         text: "Email",
                         height: isTablet ? 45 : 38,
-                        size: isTablet ? 13 : 10,
+                        size: isTablet ? 16 : 13,
                         weight:
                             isTablet ? FontWeight.normal : FontWeight.normal,
                         borderColor: emailIsEmpty
@@ -212,7 +214,7 @@ class _FullRegistrState extends State<FullRegistr> {
                                     },
                                     cursorHeight: 15,
                                     style: GoogleFonts.montserrat(
-                                        fontSize: isTablet ? 13 : 10,
+                                        fontSize: isTablet ? 16 : 13,
                                         fontWeight: FontWeight.w500,
                                         color: Colors.black),
                                     controller: phoneTextFieldController,
@@ -232,7 +234,7 @@ class _FullRegistrState extends State<FullRegistr> {
                                                       ? '+374 '
                                                       : '+7 ',
                                           style: TextStyle(
-                                            fontSize: 10,
+                                            fontSize: 12,
                                             color: phoneIsEmpty
                                                 ? const Color.fromARGB(
                                                     255, 213, 0, 50)
@@ -267,7 +269,7 @@ class _FullRegistrState extends State<FullRegistr> {
                                         fontWeight: isTablet
                                             ? FontWeight.normal
                                             : FontWeight.normal,
-                                        fontSize: isTablet ? 13 : 10,
+                                        fontSize: isTablet ? 16 : 13,
                                         color: dateIsEmpty
                                             ? const Color.fromARGB(
                                                 255, 213, 0, 50)
@@ -295,7 +297,7 @@ class _FullRegistrState extends State<FullRegistr> {
                             },
                             cursorHeight: 15,
                             style: GoogleFonts.montserrat(
-                                fontSize: isTablet ? 13 : 10,
+                                fontSize: isTablet ? 16 : 13,
                                 fontWeight: FontWeight.w500,
                                 color: Colors.black),
                             controller: dataRojdeniyaController,
@@ -324,7 +326,7 @@ class _FullRegistrState extends State<FullRegistr> {
                                 fontWeight: isTablet
                                     ? FontWeight.normal
                                     : FontWeight.normal,
-                                fontSize: isTablet ? 13 : 10,
+                                fontSize: isTablet ? 16 : 13,
                                 color: dateIsEmpty
                                     ? const Color.fromARGB(255, 213, 0, 50)
                                     : const Color(0xFF444444),
@@ -385,7 +387,7 @@ class _FullRegistrState extends State<FullRegistr> {
                             adresTorgoviySetTextFielController,
                         text: "Адрес торговой сети",
                         height: isTablet ? 45 : 38,
-                        size: isTablet ? 13 : 10,
+                        size: isTablet ? 16 : 13,
                         weight:
                             isTablet ? FontWeight.normal : FontWeight.normal,
                         borderColor: adressIsEmpty
@@ -410,7 +412,7 @@ class _FullRegistrState extends State<FullRegistr> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 textSwitch("Не выходить из приложения",
-                                    isTablet ? 16 : 11),
+                                    isTablet ? 16 : 13),
                                 Provider(
                                   create: (context) => firstToggle,
                                   child: ToggleSwitch(
@@ -431,7 +433,7 @@ class _FullRegistrState extends State<FullRegistr> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 textSwitch("Согласен на СМС и Email рассылку",
-                                    isTablet ? 16 : 11),
+                                    isTablet ? 16 : 13),
                                 Provider(
                                   create: (context) => secondToggle,
                                   child: ToggleSwitch(
@@ -452,7 +454,7 @@ class _FullRegistrState extends State<FullRegistr> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 textSwitch("Подтверждаю подлиность данных",
-                                    isTablet ? 16 : 11),
+                                    isTablet ? 16 : 13),
                                 Provider(
                                   create: (context) => thirdToggle,
                                   child: ToggleSwitch(
@@ -472,8 +474,31 @@ class _FullRegistrState extends State<FullRegistr> {
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                textSwitch("""Соглашаюсь на обработку 
-персональных данных""", isTablet ? 16 : 11),
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    textSwitch("Соглашаюсь на обработку",
+                                        isTablet ? 16 : 13),
+                                    GestureDetector(
+                                        onTap: () {
+                                          setState(() {
+                                            Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      const PDFViewer(
+                                                          pdfUrlForPDFViewer:
+                                                              "https://hansa-lab.ru/storage/privacy.pdf"),
+                                                ));
+                                          });
+                                        },
+                                        child: const Text(
+                                          "персональных данных",
+                                          style: TextStyle(
+                                              color: Colors.red, fontSize: 13),
+                                        )),
+                                  ],
+                                ),
                                 const SizedBox(
                                   width: 75,
                                 ),
@@ -575,7 +600,7 @@ class _FullRegistrState extends State<FullRegistr> {
                               child: Text(
                                 "Зарегистрироваться",
                                 style: GoogleFonts.montserrat(
-                                    fontSize: isTablet ? 18 : 12,
+                                    fontSize: isTablet ? 18 : 14,
                                     color: const Color(0xFFffffff)),
                               ),
                             ),
@@ -608,47 +633,24 @@ class _FullRegistrState extends State<FullRegistr> {
                     const Text(
                       "По всем вопросам пишите на",
                       textScaleFactor: 1.0,
-                      style: TextStyle(fontSize: 11, color: Color(0xFF989a9d)),
+                      style: TextStyle(fontSize: 12, color: Color(0xFF989a9d)),
                     ),
                     const SizedBox(
                       height: 6,
                     ),
-                    Row(
-                      children: [
-                        GestureDetector(
-                          onTap: () {
-                            setState(() {
-                              launchUrl(
-                                  Uri.parse('https://support@hansa-lab.ru'));
-                            });
-                          },
-                          child: Text(
-                            "Support@hansa-lab.ru",
-                            style: GoogleFonts.montserrat(
-                                fontSize: 11,
-                                color: const Color(0xFF989a9d),
-                                fontWeight: FontWeight.w700),
-                          ),
-                        ),
-                        const SizedBox(
-                          width: 10,
-                        ),
-                        GestureDetector(
-                          onTap: () {
-                            setState(() {
-                              launchUrl(Uri.parse(
-                                  'https://pages.flycricket.io/hansa-lab/privacy.html'));
-                            });
-                          },
-                          child: Text(
-                            "Privacy Policy",
-                            style: GoogleFonts.montserrat(
-                                fontSize: 11,
-                                color: const Color(0xFF989a9d),
-                                fontWeight: FontWeight.w700),
-                          ),
-                        ),
-                      ],
+                    GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          launchUrl(Uri.parse('https://support@hansa-lab.ru'));
+                        });
+                      },
+                      child: Text(
+                        "Support@hansa-lab.ru",
+                        style: GoogleFonts.montserrat(
+                            fontSize: 12,
+                            color: const Color(0xFF989a9d),
+                            fontWeight: FontWeight.w700),
+                      ),
                     ),
                     const SizedBox(
                       height: 20,
