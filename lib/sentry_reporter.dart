@@ -15,7 +15,8 @@ class SentryReporter {
         DefaultAssetBundle(
           bundle: SentryAssetBundle(enableStructuredDataTracing: true),
           child: child,
-        ),),
+        ),
+      ),
     );
   }
 }
