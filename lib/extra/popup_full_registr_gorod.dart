@@ -10,14 +10,17 @@ import 'package:hansa_lab/blocs/hansa_country_api.dart';
 import 'package:provider/provider.dart';
 
 class PopupFullRegistrGorod extends StatefulWidget {
+  String text;
   final Color borderColor;
   final Color hintColor;
   final VoidCallback onTap;
-  const PopupFullRegistrGorod(
+   PopupFullRegistrGorod(
       {Key? key,
       required this.borderColor,
       required this.hintColor,
-      required this.onTap})
+      required this.onTap,
+        this.text = "Город",
+      })
       : super(key: key);
 
   @override
@@ -34,7 +37,6 @@ class _PopupFullRegistrGorodState extends State<PopupFullRegistrGorod> {
   List<CountryModelData> cities = [];
 
   double radius = 54;
-  String text = "Город";
 
   listen() {
     streamController.stream.listen((event) {
@@ -60,7 +62,6 @@ class _PopupFullRegistrGorodState extends State<PopupFullRegistrGorod> {
 
     final gorodTextEditingContyroller =
         Provider.of<TextEditingController>(context);
-
     return StreamBuilder<double>(
         initialData: isTablet ? 40  : 38,
         stream: blocPopupDrawer.dataStream,
@@ -100,8 +101,8 @@ class _PopupFullRegistrGorodState extends State<PopupFullRegistrGorod> {
                           child: Align(
                               alignment: Alignment.centerLeft,
                               child: Text(
-                                text,
-                                style: text == "Город"
+                                widget.text,
+                                style: widget.text == "Город"
                                     ? GoogleFonts.montserrat(
                                         fontSize: isTablet ? 16 : 13,
                                         color: widget.hintColor)
@@ -166,7 +167,7 @@ class _PopupFullRegistrGorodState extends State<PopupFullRegistrGorod> {
                                                 onTap: () {
                                                   gorodTextEditingContyroller
                                                       .text = book.id.toString();
-                                                  text = book.name;
+                                                  widget.text = book.name;
                                                   blocPopupDrawer.dataSink.add(
                                                       snapshotSizeDrawer.data! ==
                                                               38

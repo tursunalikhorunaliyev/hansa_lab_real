@@ -59,11 +59,11 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions ios = FirebaseOptions(
     apiKey: 'AIzaSyCCWaaYe0VJhttn_cpLisonEfIoQNZOhi0',
-    appId: '1:31939218038:ios:c82fa9b86007649836ad57',
+    appId: '1:31939218038:ios:28878c291a6b4c2b36ad57',
     messagingSenderId: '31939218038',
     projectId: 'hansa-lab-14d4e',
     storageBucket: 'hansa-lab-14d4e.appspot.com',
     iosClientId: '31939218038-1m4gn3p37ooeq410f1qbmc87j41b3soe.apps.googleusercontent.com',
-    iosBundleId: 'com.hansa.hansaLab',
+    iosBundleId: ' com.hansa.hansahansalab',
   );
 }

@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:flutter_keychain/flutter_keychain.dart';
 import 'package:hive/hive.dart';
 import 'package:http/http.dart' as http;
 
@@ -7,6 +8,7 @@ class LoginAction {
   final String username;
   final String password;
   final bool isSaved;
+
   LoginAction(
       {required this.username, required this.password, required this.isSaved});
 
@@ -19,10 +21,14 @@ class LoginAction {
     if (responseMap["status"].toString().endsWith("true")) {
       hasToken = true;
       final box = Hive.box("savedUser");
+      final keyBox = Hive.box('keyChain');
       if (isSaved) {
         box.put("username", username);
         box.put("password", password);
         box.put("isSaved", true);
+        // userList.add(username);
+        keyBox.put("email", username);
+        keyBox.put("password", password);
       } else {
         box.put("username", username);
         box.put("password", password);

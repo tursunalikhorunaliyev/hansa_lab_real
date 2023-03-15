@@ -11,9 +11,8 @@ class ArticleBLoC {
   StreamSink<ArticleModel> get sink => controller.sink;
 
   Future<ArticleModel> getArticle(token, url) async {
-    print(url);
-    print('<.......>');
     print(token);
+    print(url);
     var headers = {'token': token.toString()};
     var request = http.Request('GET', Uri.parse("https://hansa-lab.ru/$url"));
     request.headers.addAll(headers);

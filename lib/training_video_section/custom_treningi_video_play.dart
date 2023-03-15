@@ -12,6 +12,7 @@ import 'package:video_player/video_player.dart';
 
 class CustomTreningiVideoPlay extends StatefulWidget {
   final ChewieController chewieController;
+
   const CustomTreningiVideoPlay({Key? key, required this.chewieController})
       : super(key: key);
 
@@ -41,8 +42,8 @@ class _CustomTreningiVideoPlayState extends State<CustomTreningiVideoPlay> {
       child: SizedBox(
         width: double.infinity,
         child: FutureBuilder<TreningiVideoModel>(
-          future:
-              TreningiVideoApi.getTreningiVideo(treningiVideos.getUrl, token),
+          future: TreningiVideoApi.getTreningiVideo(
+              treningiVideos.getUrl, token),
           builder: (context, snapshot) {
             if (snapshot.hasData) {
               ch = ChewieController(
@@ -125,8 +126,8 @@ class _CustomTreningiVideoPlayState extends State<CustomTreningiVideoPlay> {
                                     child: Container(
                                       height: 25,
                                       width: 95,
-                                      color:
-                                          const Color.fromARGB(255, 213, 0, 50),
+                                      color: const Color.fromARGB(
+                                          255, 213, 0, 50),
                                       child: Center(
                                         child: Text(
                                           "Скачать",

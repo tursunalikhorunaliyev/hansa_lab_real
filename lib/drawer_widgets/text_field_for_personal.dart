@@ -4,9 +4,11 @@ import 'package:provider/provider.dart';
 
 class TextFieldForPersonal extends StatefulWidget {
   final String? text;
+  final String? hintText;
   final TextEditingController? controller;
+  final TextInputType? keyboardType;
   const TextFieldForPersonal(
-      {Key? key, required this.text, required this.controller})
+      {Key? key, required this.text, this.keyboardType, required this.controller,this.hintText})
       : super(key: key);
 
   @override
@@ -25,7 +27,6 @@ class _TextFieldForPersonalState extends State<TextFieldForPersonal> {
           color: const Color(0xFF000000),
           borderRadius: BorderRadius.circular(54)),
       child: TextField(
-        
         onTap: () {
           setState(() {
             widget.controller!.text = "";
@@ -33,9 +34,12 @@ class _TextFieldForPersonalState extends State<TextFieldForPersonal> {
         },
         textDirection: TextDirection.rtl,
         controller: widget.controller!,
+        keyboardType: widget.keyboardType ?? TextInputType.text,
         style: GoogleFonts.montserrat(
             color: const Color(0xFFffffff), fontSize: isTablet ? 13  : 10),
         decoration: InputDecoration(
+          hintText: widget.hintText ?? '',
+          hintStyle: const TextStyle(color: Colors.white,fontSize: 12),
           prefixIcon: Padding(
             padding:  EdgeInsets.all( isTablet ? 15  : 10),
             child: Text(

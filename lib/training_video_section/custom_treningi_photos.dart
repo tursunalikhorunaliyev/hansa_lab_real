@@ -5,6 +5,7 @@ import 'dart:io';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:gallery_saver/gallery_saver.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hansa_lab/api_models.dart/treningi_photos_model.dart';
 import 'package:hansa_lab/api_services/treningi_photos_api.dart';
@@ -33,7 +34,7 @@ class _CustomTreningiPhotosState extends State<CustomTreningiPhotos> {
     String path = "";
     String dir = "";
     if (Platform.isIOS) {
-      Directory directory = await getApplicationSupportDirectory();
+      Directory directory = await getApplicationDocumentsDirectory();
       dir = directory.path;
     } else if (Platform.isAndroid) {
       dir = "/storage/emulated/0/Download/";
@@ -83,6 +84,7 @@ class _CustomTreningiPhotosState extends State<CustomTreningiPhotos> {
     final treningiPhotos = Provider.of<TreningiPhotosProvider>(context);
     final providerSendAnaliseDonwload =
         Provider.of<SendAnaliseDownload>(context);
+    print(treningiPhotos.getUrl);
     return Padding(
       padding: const EdgeInsets.only(bottom: 11),
       child: SizedBox(
@@ -260,8 +262,30 @@ class _CustomTreningiPhotosState extends State<CustomTreningiPhotos> {
                                           ).then((value) {
                                             providerSendAnaliseDonwload
                                                 .setAnalise(value);
+                                            if (Platform
+                                                .isIOS) {
+                                              GallerySaver
+                                                  .saveImage(
+                                                  snapshot
+                                                      .data!
+                                                      .data
+                                                      .data
+                                                      .list[sendIndexTreningPhoto
+                                                      .getIndex]
+                                                      .pictureLink);
+                                            } else if (Platform
+                                                .isAndroid){
+                                              GallerySaver
+                                                  .saveImage(
+                                                  snapshot
+                                                      .data!
+                                                      .data
+                                                      .data
+                                                      .list[sendIndexTreningPhoto
+                                                      .getIndex]
+                                                      .pictureLink);
+                                            }
                                           });
-                                          log("StreamSink");
                                         } else {}
                                       },
                                       child: ClipRRect(

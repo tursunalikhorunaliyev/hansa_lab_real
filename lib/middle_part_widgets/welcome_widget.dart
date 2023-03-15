@@ -24,10 +24,12 @@ class WelcomeWidget extends StatefulWidget {
 
 class _WelcomeWidgetState extends State<WelcomeWidget> {
   ChewieController chewieController = ChewieController(
-      videoPlayerController: VideoPlayerController.network("https://hansa-lab.ru/video/videoplayback_full2.webm"),
+      videoPlayerController: VideoPlayerController.network(
+          "https://hansa-lab.ru/video/videoplayback_full2.webm"),
       aspectRatio: 13.6 / 7.2,
       autoPlay: true)
     ..setVolume(0);
+
   @override
   void initState() {
     super.initState();
@@ -165,40 +167,43 @@ class _WelcomeWidgetState extends State<WelcomeWidget> {
                       child: Column(
                         children: [
                           Column(
-                            children: List.generate(data.length, (index) {
-                              return EventCards(
-                                index: index,
-                                imageOnTap: () async {
-                                  menuProvider.eventSink
-                                      .add(MenuActions.article);
-                                  ArticleModel statiModel =
-                                      await articleBLoC.getArticle(
-                                          token, snapshot.data![index].link);
-                                  articleBLoC.sink.add(statiModel);
-                                },
-                                isFavouriteURL:
-                                    snapshot.data![index].favoriteLink,
-                                onTap: () async {
-                                  menuProvider.eventSink
-                                      .add(MenuActions.article);
-                                  ArticleModel statiModel =
-                                      await articleBLoC.getArticle(
-                                          token, snapshot.data![index].link);
-                                  articleBLoC.sink.add(statiModel);
-                                },
-                                buttonColor:
-                                    const Color.fromARGB(255, 213, 0, 50),
-                                buttonText: 'Смотреть',
-                                isDate: true,
-                                month: toDateString(
-                                    snapshot.data![index].date.substring(5, 7)),
-                                day:
-                                    snapshot.data![index].date.substring(8, 10),
-                                title: data[index].title,
-                                url: data[index].pictureLink,
-                                isFavourite: data[index].isFavorite,
-                              );
-                            }),
+                            children: List.generate(
+                              data.length,
+                              (index) {
+                                return EventCards(
+                                  index: index,
+                                  imageOnTap: () async {
+                                    menuProvider.eventSink
+                                        .add(MenuActions.article);
+                                    ArticleModel statiModel =
+                                        await articleBLoC.getArticle(
+                                            token, snapshot.data![index].link);
+                                    articleBLoC.sink.add(statiModel);
+                                  },
+                                  isFavouriteURL:
+                                      snapshot.data![index].favoriteLink,
+                                  onTap: () async {
+                                    menuProvider.eventSink
+                                        .add(MenuActions.article);
+                                    ArticleModel statiModel =
+                                        await articleBLoC.getArticle(
+                                            token, snapshot.data![index].link);
+                                    articleBLoC.sink.add(statiModel);
+                                  },
+                                  buttonColor:
+                                      const Color.fromARGB(255, 213, 0, 50),
+                                  buttonText: 'Смотреть',
+                                  isDate: true,
+                                  month: toDateString(snapshot.data![index].date
+                                      .substring(5, 7)),
+                                  day: snapshot.data![index].date
+                                      .substring(8, 10),
+                                  title: data[index].title,
+                                  url: data[index].pictureLink,
+                                  isFavourite: data[index].isFavorite,
+                                );
+                              },
+                            ),
                           ),
                           Padding(
                             padding: const EdgeInsets.only(bottom: 10.0),

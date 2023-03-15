@@ -37,7 +37,6 @@ class ExitDialog extends StatelessWidget {
               const SizedBox(
                 height: 30,
               ),
-              //Salom
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [

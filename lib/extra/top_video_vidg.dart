@@ -65,7 +65,6 @@ class _TopVideoWidgState extends State<TopVideoWidg> {
     if (Platform.isIOS) {
       Directory directory = await getApplicationSupportDirectory();
       dir = directory.path;
-      log("${dir}kkkkkkkkkkkkk");
     } else if (Platform.isAndroid) {
       dir = "/storage/emulated/0/Download/";
     }
@@ -92,10 +91,7 @@ class _TopVideoWidgState extends State<TopVideoWidg> {
               double.parse(((recieved / total) * 100).toStringAsFixed(0));
           downloadProgressFileBloc.streamSink.add(progress);
           if (progress == 100) {
-            log("Download complate");
-          } else {
-            log("$progress %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
-          }
+          } else {}
         },
         deleteOnError: true,
       );
@@ -187,7 +183,17 @@ class _TopVideoWidgState extends State<TopVideoWidg> {
                           behavior: MyBehavior(),
                           child: SingleChildScrollView(
                             child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
+                                IconButton(
+                                    alignment: Alignment.centerLeft,
+                                    onPressed: () {
+                                      Navigator.pop(context);
+                                    },
+                                    icon: const Icon(
+                                      Icons.arrow_back_ios,
+                                      color: Colors.red,
+                                    )),
                                 Padding(
                                   padding: const EdgeInsets.only(top: 20),
                                   child: SizedBox(
@@ -236,45 +242,26 @@ class _TopVideoWidgState extends State<TopVideoWidg> {
                                                                     .data ==
                                                                 0) {
                                                           downloadFile(
-                                                            snapshot
-                                                                .data!
-                                                                .videoListData
-                                                                .list[value
-                                                                    .getIndex]
-                                                                .data
-                                                                .list[widget
-                                                                    .selectedIndex]
-                                                                .videoLink,
-                                                            snapshot
-                                                                .data!
-                                                                .videoListData
-                                                                .list[value
-                                                                    .getIndex]
-                                                                .data
-                                                                .list[widget
-                                                                    .selectedIndex]
-                                                                .title,
+                                                            widget.url,
+                                                            widget.title,
                                                             providerBlocProgress,
                                                           ).then((v) {
                                                             providerSendAnaliseDownload
                                                                 .setAnalise(v);
-                                                            log("Not download");
                                                             if (Platform
                                                                 .isIOS) {
-                                                              GallerySaver.saveVideo(snapshot
-                                                                  .data!
-                                                                  .videoListData
-                                                                  .list[value
-                                                                      .getIndex]
-                                                                  .data
-                                                                  .list[widget
-                                                                      .selectedIndex]
-                                                                  .videoLink);
+                                                              GallerySaver
+                                                                  .saveVideo(
+                                                                      widget
+                                                                          .url);
+                                                            } else {
+                                                              GallerySaver
+                                                                  .saveVideo(
+                                                                      widget
+                                                                          .url);
                                                             }
                                                           });
-                                                        } else {
-                                                          log("asdffffffffffff=----------------------------------------");
-                                                        }
+                                                        } else {}
                                                       },
                                                       title: widget.title,
                                                     );
@@ -298,7 +285,7 @@ class _TopVideoWidgState extends State<TopVideoWidg> {
                       child: CircularProgressIndicator(),
                     ),
             ],
-          )
+          ),
         ],
       ),
     );

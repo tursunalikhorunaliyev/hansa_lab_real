@@ -174,231 +174,233 @@ class _IzbrannoeState extends State<Izbrannoe> {
                                   padding: const EdgeInsets.only(
                                       left: 10, right: 10, top: 20),
                                   child: SizedBox(
-                                    child: Column(
-                                      children: [
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.start,
-                                          children: [
-                                            ClipRRect(
-                                              borderRadius:
-                                                  BorderRadius.circular(5),
-                                              child: SizedBox(
-                                                height: 65,
-                                                width: 120,
-                                                child: CachedNetworkImage(
-                                                  fit: BoxFit.cover,
-                                                  imageUrl: snapshot.data!.data
-                                                      .list[index].pictureLink,
-                                                  height: isTablet
-                                                      ? 110
-                                                      : 66.66666666666667,
-                                                  width: isTablet
-                                                      ? 150
-                                                      : 101.6666666666667,
-                                                ),
-                                              ),
-                                            ),
-                                            const SizedBox(
-                                              width: 11,
-                                            ),
-                                            Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                SizedBox(
-                                                  width: isTablet ? 240 : 140,
-                                                  child: Text(
-                                                    snapshot.data!.data
-                                                        .list[index].title,
-                                                    softWrap: true,
-                                                    maxLines: 3,
-                                                    overflow:
-                                                        TextOverflow.ellipsis,
-                                                    style: GoogleFonts.montserrat(
-                                                        color: const Color(
-                                                            0xFF272624),
-                                                        fontSize: isTablet
-                                                            ? 14
-                                                            : 9.666666666666667,
-                                                        fontWeight:
-                                                            FontWeight.bold),
+                                    child: SingleChildScrollView(
+                                      child: Column(
+                                        children: [
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.start,
+                                            children: [
+                                              ClipRRect(
+                                                borderRadius:
+                                                    BorderRadius.circular(5),
+                                                child: SizedBox(
+                                                  height: 65,
+                                                  width: 120,
+                                                  child: CachedNetworkImage(
+                                                    fit: BoxFit.cover,
+                                                    imageUrl: snapshot.data!.data
+                                                        .list[index].pictureLink,
+                                                    height: isTablet
+                                                        ? 110
+                                                        : 66.66666666666667,
+                                                    width: isTablet
+                                                        ? 150
+                                                        : 101.6666666666667,
                                                   ),
                                                 ),
-                                                const SizedBox(
-                                                  height: 16,
-                                                ),
-                                                Row(
-                                                  children: [
-                                                    isTablet
-                                                        ? SizedBox(
-                                                            width: snapshot
-                                                                        .data!
-                                                                        .data
-                                                                        .list[
-                                                                            index]
-                                                                        .link
-                                                                        .isNotEmpty &&
-                                                                    snapshot
-                                                                        .data!
-                                                                        .data
-                                                                        .list[
-                                                                            index]
-                                                                        .pdfUrl
-                                                                        .isNotEmpty
-                                                                ? 120
-                                                                : 200,
-                                                          )
-                                                        : SizedBox(
-                                                            width: snapshot
-                                                                        .data!
-                                                                        .data
-                                                                        .list[
-                                                                            index]
-                                                                        .link
-                                                                        .isNotEmpty &&
-                                                                    snapshot
-                                                                        .data!
-                                                                        .data
-                                                                        .list[
-                                                                            index]
-                                                                        .pdfUrl
-                                                                        .isEmpty
-                                                                ? 100
-                                                                : 30,
-                                                          ),
-                                                    snapshot
-                                                            .data!
-                                                            .data
-                                                            .list[index]
-                                                            .link
-                                                            .isNotEmpty
-                                                        ? InkWell(
-                                                            onTap: () async {
-                                                              setState(() {
-                                                                launched = launchInBrowser(
-                                                                    Uri.parse(snapshot
-                                                                        .data!
-                                                                        .data
-                                                                        .list[
-                                                                            index]
-                                                                        .link));
-                                                              });
-                                                            },
-                                                            child: Container(
-                                                              alignment:
-                                                                  Alignment
-                                                                      .center,
-                                                              height: isTablet
-                                                                  ? 22
-                                                                  : 21,
-                                                              width: isTablet
-                                                                  ? 74
-                                                                  : 63,
-                                                              decoration:
-                                                                  BoxDecoration(
-                                                                border: Border.all(
-                                                                    color: Colors
-                                                                        .transparent),
-                                                                borderRadius:
-                                                                    BorderRadius
-                                                                        .circular(
-                                                                            10.5),
-                                                                color: const Color(
-                                                                    0xFF313131),
-                                                              ),
-                                                              child: Text(
-                                                                "Смотреть",
-                                                                style: GoogleFonts
-                                                                    .montserrat(
-                                                                        color: const Color(
-                                                                            0xFFFFFFFF),
-                                                                        fontSize:
-                                                                            10),
-                                                              ),
-                                                            ),
-                                                          )
-                                                        : const SizedBox(),
-                                                    SizedBox(
-                                                      width: snapshot
-                                                                  .data!
-                                                                  .data
-                                                                  .list[index]
-                                                                  .link
-                                                                  .isNotEmpty &&
-                                                              snapshot
-                                                                  .data!
-                                                                  .data
-                                                                  .list[index]
-                                                                  .pdfUrl
-                                                                  .isNotEmpty
-                                                          ? 10
-                                                          : 0,
+                                              ),
+                                              const SizedBox(
+                                                width: 11,
+                                              ),
+                                              Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  SizedBox(
+                                                    width: isTablet ? 240 : 140,
+                                                    child: Text(
+                                                      snapshot.data!.data
+                                                          .list[index].title,
+                                                      softWrap: true,
+                                                      maxLines: 3,
+                                                      overflow:
+                                                          TextOverflow.ellipsis,
+                                                      style: GoogleFonts.montserrat(
+                                                          color: const Color(
+                                                              0xFF272624),
+                                                          fontSize: isTablet
+                                                              ? 14
+                                                              : 9.666666666666667,
+                                                          fontWeight:
+                                                              FontWeight.bold),
                                                     ),
-                                                    snapshot
-                                                            .data!
-                                                            .data
-                                                            .list[index]
-                                                            .pdfUrl
-                                                            .isNotEmpty
-                                                        ? InkWell(
-                                                            onTap: () {
-                                                              setState(() {
-                                                                launched = launchInBrowser(
-                                                                    Uri.parse(snapshot
-                                                                        .data!
-                                                                        .data
-                                                                        .list[
-                                                                            index]
-                                                                        .pdfUrl));
-                                                              });
-                                                            },
-                                                            child: Container(
-                                                              alignment:
-                                                                  Alignment
-                                                                      .center,
-                                                              height: isTablet
-                                                                  ? 22
-                                                                  : 21,
-                                                              width: isTablet
-                                                                  ? 74
-                                                                  : 63,
-                                                              decoration:
-                                                                  BoxDecoration(
-                                                                border: Border.all(
-                                                                    width: 2,
-                                                                    color: const Color(
-                                                                        0xFF313131)),
-                                                                borderRadius:
-                                                                    BorderRadius
-                                                                        .circular(
-                                                                            10.5),
-                                                                color: Colors
-                                                                    .white,
-                                                              ),
-                                                              child: Text(
-                                                                "Скачать",
-                                                                style: GoogleFonts
-                                                                    .montserrat(
-                                                                        color: const Color(
-                                                                            0xFF313131),
-                                                                        fontSize:
-                                                                            10),
-                                                              ),
+                                                  ),
+                                                  const SizedBox(
+                                                    height: 16,
+                                                  ),
+                                                  Row(
+                                                    children: [
+                                                      isTablet
+                                                          ? SizedBox(
+                                                              width: snapshot
+                                                                          .data!
+                                                                          .data
+                                                                          .list[
+                                                                              index]
+                                                                          .link
+                                                                          .isNotEmpty &&
+                                                                      snapshot
+                                                                          .data!
+                                                                          .data
+                                                                          .list[
+                                                                              index]
+                                                                          .pdfUrl
+                                                                          .isNotEmpty
+                                                                  ? 120
+                                                                  : 200,
+                                                            )
+                                                          : SizedBox(
+                                                              width: snapshot
+                                                                          .data!
+                                                                          .data
+                                                                          .list[
+                                                                              index]
+                                                                          .link
+                                                                          .isNotEmpty &&
+                                                                      snapshot
+                                                                          .data!
+                                                                          .data
+                                                                          .list[
+                                                                              index]
+                                                                          .pdfUrl
+                                                                          .isEmpty
+                                                                  ? 100
+                                                                  : 30,
                                                             ),
-                                                          )
-                                                        : const SizedBox(),
-                                                  ],
-                                                ),
-                                              ],
-                                            )
-                                          ],
-                                        ),
-                                        const Divider(
-                                          color: Color(0xFF8c8c8b),
-                                          thickness: 1,
-                                        )
-                                      ],
+                                                      snapshot
+                                                              .data!
+                                                              .data
+                                                              .list[index]
+                                                              .link
+                                                              .isNotEmpty
+                                                          ? InkWell(
+                                                              onTap: () async {
+                                                                setState(() {
+                                                                  launched = launchInBrowser(
+                                                                      Uri.parse(snapshot
+                                                                          .data!
+                                                                          .data
+                                                                          .list[
+                                                                              index]
+                                                                          .link));
+                                                                });
+                                                              },
+                                                              child: Container(
+                                                                alignment:
+                                                                    Alignment
+                                                                        .center,
+                                                                height: isTablet
+                                                                    ? 22
+                                                                    : 21,
+                                                                width: isTablet
+                                                                    ? 74
+                                                                    : 63,
+                                                                decoration:
+                                                                    BoxDecoration(
+                                                                  border: Border.all(
+                                                                      color: Colors
+                                                                          .transparent),
+                                                                  borderRadius:
+                                                                      BorderRadius
+                                                                          .circular(
+                                                                              10.5),
+                                                                  color: const Color(
+                                                                      0xFF313131),
+                                                                ),
+                                                                child: Text(
+                                                                  "Смотреть",
+                                                                  style: GoogleFonts
+                                                                      .montserrat(
+                                                                          color: const Color(
+                                                                              0xFFFFFFFF),
+                                                                          fontSize:
+                                                                              10),
+                                                                ),
+                                                              ),
+                                                            )
+                                                          : const SizedBox(),
+                                                      SizedBox(
+                                                        width: snapshot
+                                                                    .data!
+                                                                    .data
+                                                                    .list[index]
+                                                                    .link
+                                                                    .isNotEmpty &&
+                                                                snapshot
+                                                                    .data!
+                                                                    .data
+                                                                    .list[index]
+                                                                    .pdfUrl
+                                                                    .isNotEmpty
+                                                            ? 10
+                                                            : 0,
+                                                      ),
+                                                      snapshot
+                                                              .data!
+                                                              .data
+                                                              .list[index]
+                                                              .pdfUrl
+                                                              .isNotEmpty
+                                                          ? InkWell(
+                                                              onTap: () {
+                                                                setState(() {
+                                                                  launched = launchInBrowser(
+                                                                      Uri.parse(snapshot
+                                                                          .data!
+                                                                          .data
+                                                                          .list[
+                                                                              index]
+                                                                          .pdfUrl));
+                                                                });
+                                                              },
+                                                              child: Container(
+                                                                alignment:
+                                                                    Alignment
+                                                                        .center,
+                                                                height: isTablet
+                                                                    ? 22
+                                                                    : 21,
+                                                                width: isTablet
+                                                                    ? 74
+                                                                    : 63,
+                                                                decoration:
+                                                                    BoxDecoration(
+                                                                  border: Border.all(
+                                                                      width: 2,
+                                                                      color: const Color(
+                                                                          0xFF313131)),
+                                                                  borderRadius:
+                                                                      BorderRadius
+                                                                          .circular(
+                                                                              10.5),
+                                                                  color: Colors
+                                                                      .white,
+                                                                ),
+                                                                child: Text(
+                                                                  "Скачать",
+                                                                  style: GoogleFonts
+                                                                      .montserrat(
+                                                                          color: const Color(
+                                                                              0xFF313131),
+                                                                          fontSize:
+                                                                              10),
+                                                                ),
+                                                              ),
+                                                            )
+                                                          : const SizedBox(),
+                                                    ],
+                                                  ),
+                                                ],
+                                              )
+                                            ],
+                                          ),
+                                          const Divider(
+                                            color: Color(0xFF8c8c8b),
+                                            thickness: 1,
+                                          )
+                                        ],
+                                      ),
                                     ),
                                   ),
                                 ),

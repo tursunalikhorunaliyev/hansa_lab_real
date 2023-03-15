@@ -8,6 +8,7 @@ import 'dart:io';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:gallery_saver/gallery_saver.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hansa_lab/api_models.dart/treningi_photos_model.dart';
 import 'package:hansa_lab/api_services/treningi_photos_api.dart';
@@ -87,8 +88,6 @@ class _TabletPhotosItemState extends State<TabletPhotosItem> {
     final providerSendAnaliseDonwload =
         Provider.of<SendAnaliseDownload>(context);
     final treningiPhotos = Provider.of<TreningiPhotosProvider>(context);
-    print(TreningiPhotosApi.getdata(treningiPhotos.getUrl, token));
-    print('get url');
     return Padding(
       padding: const EdgeInsets.only(bottom: 11, left: 25, right: 25),
       child: SizedBox(
@@ -247,9 +246,7 @@ class _TabletPhotosItemState extends State<TabletPhotosItem> {
                                     builder: (context, snapshotProgress) {
                                       return GestureDetector(
                                         onTap: () {
-                                          log("${sendIndexTreningPhoto.getIndex} Uzbekistan");
                                           blocDetectTap.dataSink.add(true);
-
                                           if (snapshotProgress.data == null ||
                                               snapshotProgress.data == 0) {
                                             downloadFile(
@@ -273,6 +270,24 @@ class _TabletPhotosItemState extends State<TabletPhotosItem> {
                                             ).then((value) {
                                               providerSendAnaliseDonwload
                                                   .setAnalise(value);
+                                              if (Platform
+                                                  .isIOS) {
+                                                GallerySaver.saveImage(snapshot
+                                                    .data!
+                                                    .data
+                                                    .data
+                                                    .list[sendIndexTreningPhoto
+                                                    .getIndex]
+                                                    .pictureLink);
+                                              } else if (Platform.isAndroid){
+                                                GallerySaver.saveImage(snapshot
+                                                    .data!
+                                                    .data
+                                                    .data
+                                                    .list[sendIndexTreningPhoto
+                                                    .getIndex]
+                                                    .pictureLink);
+                                              }
                                             });
                                             log("StreamSink");
                                           } else {}

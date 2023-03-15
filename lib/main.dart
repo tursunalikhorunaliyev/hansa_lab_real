@@ -1,3 +1,5 @@
+import 'dart:io';
+import 'dart:ui';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
@@ -52,18 +54,42 @@ import 'package:hansa_lab/providers/video_tit_provider.dart';
 import 'package:hansa_lab/sentry_reporter.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:provider/provider.dart';
+import 'package:device_information/device_information.dart';
 
-void main(List<String> args) async {
+@pragma('vm:entry-point')
+Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+}
+
+dynamic platformVersion;
+
+Future<void> main(List<String> args) async {
   WidgetsFlutterBinding.ensureInitialized();
   Provider.debugCheckInvalidValueType = null;
   await Hive.initFlutter();
   await Hive.openBox("savedUser");
+  await Hive.openBox('keyChain');
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  initMessaging();
-  listenForeground(channel);
-  FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
+  requestMessaging();
+  print('1');
+  await initMessaging();
+  print('2');
+  await listenForeground();
+  print('3');
+  FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
+
+  if (Platform.isAndroid) {
+    try {
+      platformVersion = await DeviceInformation.apiLevel;
+    } on PlatformException {
+      platformVersion = 'Failed to get platform version.';
+    }
+  }
+
   await SentryReporter.setup(const MyApp());
 }
 
@@ -174,9 +200,26 @@ class MyApp extends StatelessWidget {
           supportedLocales: const [Locale("en"), Locale("ru"), Locale("ar")],
           locale: const Locale("ru"),
           debugShowCheckedModeBanner: false,
-          home: const PermissionHandlerScreen(),
+          home: PermissionHandlerScreen(
+            androidVersion: platformVersion,
+          ),
         ),
       ),
     );
   }
 }
+
+// class MyApp extends StatelessWidget {
+//   const MyApp({Key? key}) : super(key: key);
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return MaterialApp(
+//       home: Scaffold(
+//         appBar: AppBar(
+//           title: Text('data'),
+//         ),
+//       ),
+//     );
+//   }
+// }

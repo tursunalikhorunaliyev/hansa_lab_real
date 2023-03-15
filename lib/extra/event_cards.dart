@@ -132,32 +132,35 @@ class EventCards extends StatelessWidget {
                             Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                Container(
-                                  padding: const EdgeInsets.all(12),
-                                  height: 67,
-                                  width: 67,
-                                  decoration: const BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    color: Colors.white,
-                                  ),
-                                  child: Column(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceEvenly,
-                                    children: [
-                                      Text(
-                                        day,
-                                        textScaleFactor: 1.0,
-                                        style:  TextStyle(
-                                            fontSize: 9.sp),
-                                      ),
-                                      Text(
-                                        month,
-                                        textScaleFactor: 1.0,
-                                        textAlign: TextAlign.center,
-                                        style: TextStyle(
-                                            fontSize: 8.sp),
-                                      ),
-                                    ],
+                                GestureDetector(
+                                  onTap: imageOnTap,
+                                  child: Container(
+                                    padding: const EdgeInsets.all(12),
+                                    height: 90,
+                                    width: 90,
+                                    decoration: const BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      color: Colors.white,
+                                    ),
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceEvenly,
+                                      children: [
+                                        Text(
+                                          day,
+                                          textScaleFactor: 1.0,
+                                          style:  TextStyle(
+                                              fontSize: 10.sp),
+                                        ),
+                                        Text(
+                                          month,
+                                          textScaleFactor: 1.0,
+                                          textAlign: TextAlign.center,
+                                          style: TextStyle(
+                                              fontSize: 8.sp),
+                                        ),
+                                      ],
+                                    ),
                                   ),
                                 ),
                               ],

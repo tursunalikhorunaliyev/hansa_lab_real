@@ -8,7 +8,6 @@ import 'package:hansa_lab/blocs/bloc_number_country.dart';
 import 'package:hansa_lab/blocs/bloc_sign.dart';
 import 'package:hansa_lab/blocs/data_burn_text_changer_bloc.dart';
 import 'package:hansa_lab/blocs/hansa_country_api.dart';
-import 'package:hansa_lab/classes/number_coubtry.dart';
 import 'package:hansa_lab/drawer_widgets/toggle_switcher.dart';
 import 'package:hansa_lab/extra/popup_full_registr_doljnost.dart';
 import 'package:hansa_lab/extra/popup_full_registr_gorod.dart';
@@ -17,7 +16,6 @@ import 'package:hansa_lab/extra/popup_full_registr_number.dart';
 import 'package:hansa_lab/extra/text_field_for_full_reg.dart';
 import 'package:hansa_lab/providers/new_shop_provider.dart';
 import 'package:hansa_lab/providers/provider_for_flipping/flip_login_provider.dart';
-import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -41,6 +39,7 @@ class _FullRegistrState extends State<FullRegistr> {
   bool doljnostIsEmpty = false;
   bool gorodIsEmpty = false;
   bool adressIsEmpty = false;
+  dynamic fourTogglehas = '';
 
   final imyaTextEditingController = TextEditingController();
   final familiyaTextEditingController = TextEditingController();
@@ -57,6 +56,7 @@ class _FullRegistrState extends State<FullRegistr> {
   final thirdToggle = TextEditingController(text: "0");
   final fourthToggle = TextEditingController(text: "0");
   final dateBurnBloC = DateBornTextBloC();
+  bool? isTap;
   FocusNode node = FocusNode();
 
   bool isHintDate = true;
@@ -74,8 +74,6 @@ class _FullRegistrState extends State<FullRegistr> {
     final newShop = Provider.of<NewShopProvider>(context);
     final providerFlip = Provider.of<Map<String, FlipCardController>>(context);
     final providerNumberCountry = Provider.of<BlocNumberCountry>(context);
-
-    log("SignUp build");
     final blocCity = HansaCountryBloC(1);
     blocCity.eventSink.add(CityEnum.city);
     return SingleChildScrollView(
@@ -129,24 +127,6 @@ class _FullRegistrState extends State<FullRegistr> {
                         height: 18,
                       ),
                       TextFieldForFullRegister(
-                        textEditingController: imyaTextEditingController,
-                        text: "Имя",
-                        height: isTablet ? 45 : 38,
-                        size: isTablet ? 16 : 13,
-                        weight:
-                            isTablet ? FontWeight.normal : FontWeight.normal,
-                        borderColor: nameIsEmpty
-                            ? const Color.fromARGB(255, 213, 0, 50)
-                            : const Color(0xFF000000),
-                        hintColor: nameIsEmpty
-                            ? const Color.fromARGB(255, 213, 0, 50)
-                            : const Color(0xFF444444),
-                        onTap: () => setState(() => nameIsEmpty = false),
-                      ),
-                      const SizedBox(
-                        height: 4,
-                      ),
-                      TextFieldForFullRegister(
                         textEditingController: familiyaTextEditingController,
                         text: "Фамилия",
                         height: isTablet ? 45 : 38,
@@ -163,6 +143,24 @@ class _FullRegistrState extends State<FullRegistr> {
                       ),
                       const SizedBox(
                         height: 5,
+                      ),
+                      TextFieldForFullRegister(
+                        textEditingController: imyaTextEditingController,
+                        text: "Имя",
+                        height: isTablet ? 45 : 38,
+                        size: isTablet ? 16 : 13,
+                        weight:
+                            isTablet ? FontWeight.normal : FontWeight.normal,
+                        borderColor: nameIsEmpty
+                            ? const Color.fromARGB(255, 213, 0, 50)
+                            : const Color(0xFF000000),
+                        hintColor: nameIsEmpty
+                            ? const Color.fromARGB(255, 213, 0, 50)
+                            : const Color(0xFF444444),
+                        onTap: () => setState(() => nameIsEmpty = false),
+                      ),
+                      const SizedBox(
+                        height: 4,
                       ),
                       TextFieldForFullRegister(
                         textEditingController: emailTextFielController,
@@ -182,17 +180,108 @@ class _FullRegistrState extends State<FullRegistr> {
                       const SizedBox(
                         height: 4,
                       ),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 11, right: 9),
+                        child: Container(
+                          height: isTablet ? 45 : 38,
+                          decoration: BoxDecoration(
+                            color: const Color(0xFFffffff),
+                            borderRadius: BorderRadius.circular(54),
+                          ),
+                          child: TextField(
+                            inputFormatters: [dateFormatter],
+                            onTap: () {
+                              setState(() => dateIsEmpty = false);
+                            },
+                            cursorHeight: 15,
+                            style: GoogleFonts.montserrat(
+                                fontSize: isTablet ? 16 : 13,
+                                fontWeight: FontWeight.w500,
+                                color: Colors.black),
+                            controller: dataRojdeniyaController,
+                            decoration: InputDecoration(
+                              hintText: "Дата рождения",
+                              focusedBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  width: 0.9,
+                                  color: dateIsEmpty
+                                      ? const Color.fromARGB(255, 213, 0, 50)
+                                      : const Color(0xFF000000),
+                                ),
+                                borderRadius: BorderRadius.circular(54),
+                              ),
+                              enabledBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    width: dateIsEmpty ? 0.9 : 0.1,
+                                    color: dateIsEmpty
+                                        ? const Color.fromARGB(255, 213, 0, 50)
+                                        : const Color(0xFF000000),
+                                  ),
+                                  borderRadius: BorderRadius.circular(54)),
+                              contentPadding: const EdgeInsets.symmetric(
+                                  vertical: 2, horizontal: 13),
+                              hintStyle: GoogleFonts.montserrat(
+                                fontWeight: isTablet
+                                    ? FontWeight.normal
+                                    : FontWeight.normal,
+                                fontSize: isTablet ? 16 : 13,
+                                color: dateIsEmpty
+                                    ? const Color.fromARGB(255, 213, 0, 50)
+                                    : const Color(0xFF444444),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 4,
+                      ),
                       Provider(
-                          create: (context) => numberCountryaController,
-                          child: PopUpFullRegistrNumber(
-                            borderColor: gorodIsEmpty
+                          create: (context) => doljnostTextFieldController,
+                          child: PopupFullRegistrDoljnost(
+                            borderColor: doljnostIsEmpty
                                 ? const Color.fromARGB(255, 213, 0, 50)
                                 : Colors.black,
-                            hintColor: gorodIsEmpty
+                            hintColor: doljnostIsEmpty
                                 ? const Color.fromARGB(255, 213, 0, 50)
                                 : const Color(0xff444444),
-                            onTap: () => setState(() => gorodIsEmpty = false),
+                            onTap: () =>
+                                setState(() => doljnostIsEmpty = false),
                           )),
+                      const SizedBox(
+                        height: 4,
+                      ),
+                      Provider(
+                          create: (context) => nazvaniyaTextFieldController,
+                          child: PopupFullRegistrNazvaniySeti(
+                            borderColor: nazvaniyaIsEmpty
+                                ? const Color.fromARGB(255, 213, 0, 50)
+                                : Colors.black,
+                            hintColor: nazvaniyaIsEmpty
+                                ? const Color.fromARGB(255, 213, 0, 50)
+                                : const Color(0xff444444),
+                            onTap: () =>
+                                setState(() => nazvaniyaIsEmpty = false),
+                          )),
+                      const SizedBox(
+                        height: 4,
+                      ),
+                      TextFieldForFullRegister(
+                        textEditingController:
+                            adresTorgoviySetTextFielController,
+                        text: "Адрес торговой сети",
+                        height: isTablet ? 45 : 38,
+                        size: isTablet ? 16 : 13,
+                        weight:
+                            isTablet ? FontWeight.normal : FontWeight.normal,
+                        borderColor: adressIsEmpty
+                            ? const Color.fromARGB(255, 213, 0, 50)
+                            : const Color(0xFF000000),
+                        hintColor: adressIsEmpty
+                            ? const Color.fromARGB(255, 213, 0, 50)
+                            : const Color(0xFF444444),
+                        onTap: () => setState(() => adressIsEmpty = false),
+                      ),
                       const SizedBox(
                         height: 4,
                       ),
@@ -282,88 +371,21 @@ class _FullRegistrState extends State<FullRegistr> {
                       const SizedBox(
                         height: 4,
                       ),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 11, right: 9),
-                        child: Container(
-                          height: isTablet ? 45 : 38,
-                          decoration: BoxDecoration(
-                            color: const Color(0xFFffffff),
-                            borderRadius: BorderRadius.circular(54),
-                          ),
-                          child: TextField(
-                            inputFormatters: [dateFormatter],
+                      Provider(
+                          create: (context) => numberCountryaController,
+                          child: PopUpFullRegistrNumber(
+                            borderColor: gorodIsEmpty
+                                ? const Color.fromARGB(255, 213, 0, 50)
+                                : Colors.black,
+                            hintColor: gorodIsEmpty
+                                ? const Color.fromARGB(255, 213, 0, 50)
+                                : const Color(0xff444444),
                             onTap: () {
-                              setState(() => dateIsEmpty = false);
+                              setState(() {
+                                gorodIsEmpty = false;
+                              });
                             },
-                            cursorHeight: 15,
-                            style: GoogleFonts.montserrat(
-                                fontSize: isTablet ? 16 : 13,
-                                fontWeight: FontWeight.w500,
-                                color: Colors.black),
-                            controller: dataRojdeniyaController,
-                            decoration: InputDecoration(
-                              hintText: "Дата рождения",
-                              focusedBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                  width: 0.9,
-                                  color: dateIsEmpty
-                                      ? const Color.fromARGB(255, 213, 0, 50)
-                                      : const Color(0xFF000000),
-                                ),
-                                borderRadius: BorderRadius.circular(54),
-                              ),
-                              enabledBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                    width: dateIsEmpty ? 0.9 : 0.1,
-                                    color: dateIsEmpty
-                                        ? const Color.fromARGB(255, 213, 0, 50)
-                                        : const Color(0xFF000000),
-                                  ),
-                                  borderRadius: BorderRadius.circular(54)),
-                              contentPadding: const EdgeInsets.symmetric(
-                                  vertical: 2, horizontal: 13),
-                              hintStyle: GoogleFonts.montserrat(
-                                fontWeight: isTablet
-                                    ? FontWeight.normal
-                                    : FontWeight.normal,
-                                fontSize: isTablet ? 16 : 13,
-                                color: dateIsEmpty
-                                    ? const Color.fromARGB(255, 213, 0, 50)
-                                    : const Color(0xFF444444),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 4,
-                      ),
-                      Provider(
-                          create: (context) => nazvaniyaTextFieldController,
-                          child: PopupFullRegistrNazvaniySeti(
-                            borderColor: nazvaniyaIsEmpty
-                                ? const Color.fromARGB(255, 213, 0, 50)
-                                : Colors.black,
-                            hintColor: nazvaniyaIsEmpty
-                                ? const Color.fromARGB(255, 213, 0, 50)
-                                : const Color(0xff444444),
-                            onTap: () =>
-                                setState(() => nazvaniyaIsEmpty = false),
-                          )),
-                      const SizedBox(
-                        height: 4,
-                      ),
-                      Provider(
-                          create: (context) => doljnostTextFieldController,
-                          child: PopupFullRegistrDoljnost(
-                            borderColor: doljnostIsEmpty
-                                ? const Color.fromARGB(255, 213, 0, 50)
-                                : Colors.black,
-                            hintColor: doljnostIsEmpty
-                                ? const Color.fromARGB(255, 213, 0, 50)
-                                : const Color(0xff444444),
-                            onTap: () =>
-                                setState(() => doljnostIsEmpty = false),
+                            // text: ,
                           )),
                       const SizedBox(
                         height: 4,
@@ -377,32 +399,13 @@ class _FullRegistrState extends State<FullRegistr> {
                             hintColor: gorodIsEmpty
                                 ? const Color.fromARGB(255, 213, 0, 50)
                                 : const Color(0xff444444),
-                            onTap: () => setState(() => gorodIsEmpty = false),
+                            onTap: () => setState(() {
+                              gorodIsEmpty = false;
+                            }),
+                            // text: ,
                           )),
                       const SizedBox(
-                        height: 4,
-                      ),
-                      TextFieldForFullRegister(
-                        textEditingController:
-                            adresTorgoviySetTextFielController,
-                        text: "Адрес торговой сети",
-                        height: isTablet ? 45 : 38,
-                        size: isTablet ? 16 : 13,
-                        weight:
-                            isTablet ? FontWeight.normal : FontWeight.normal,
-                        borderColor: adressIsEmpty
-                            ? const Color.fromARGB(255, 213, 0, 50)
-                            : const Color(0xFF000000),
-                        hintColor: adressIsEmpty
-                            ? const Color.fromARGB(255, 213, 0, 50)
-                            : const Color(0xFF444444),
-                        onTap: () => setState(() => adressIsEmpty = false),
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      const SizedBox(
-                        height: 14,
+                        height: 24,
                       ),
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -471,49 +474,68 @@ class _FullRegistrState extends State<FullRegistr> {
                             const SizedBox(
                               height: 17,
                             ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    textSwitch("Соглашаюсь на обработку",
-                                        isTablet ? 16 : 13),
-                                    GestureDetector(
-                                        onTap: () {
-                                          setState(() {
-                                            Navigator.push(
+                            Container(
+                              padding: const EdgeInsets.all(8),
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(24),
+                                  border: Border.all(
+                                      color: fourTogglehas == 1
+                                          ? Colors.red
+                                          : Colors.white24)),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      textSwitch("Соглашаюсь на обработку",
+                                          isTablet ? 16 : 13),
+                                      GestureDetector(
+                                          onTap: () {
+                                            setState(() {
+                                              Navigator.push(
                                                 context,
                                                 MaterialPageRoute(
                                                   builder: (context) =>
                                                       const PDFViewer(
                                                           pdfUrlForPDFViewer:
                                                               "https://hansa-lab.ru/storage/privacy.pdf"),
-                                                ));
-                                          });
-                                        },
-                                        child: const Text(
-                                          "персональных данных",
-                                          style: TextStyle(
-                                              color: Colors.red, fontSize: 13),
-                                        )),
-                                  ],
-                                ),
-                                const SizedBox(
-                                  width: 75,
-                                ),
-                                Provider(
-                                  create: (context) => fourthToggle,
-                                  child: ToggleSwitch(
-                                    handlerWidth: 40,
-                                    handlerHeight: 12,
-                                    tickerSize: 21,
-                                    colorCircle: Colors.green[600],
-                                    colorContainer: Colors.grey[300],
-                                    onButton: () {},
+                                                ),
+                                              );
+                                            });
+                                          },
+                                          child: const Text(
+                                            "персональных данных",
+                                            style: TextStyle(
+                                                color: Colors.red,
+                                                fontSize: 13),
+                                          )),
+                                    ],
                                   ),
-                                ),
-                              ],
+                                  const SizedBox(
+                                    width: 75,
+                                  ),
+                                  Provider(
+                                    create: (context) => fourthToggle,
+                                    child: ToggleSwitch(
+                                      handlerWidth: 40,
+                                      handlerHeight: 12,
+                                      tickerSize: 21,
+                                      colorCircle: Colors.green[600],
+                                      colorContainer: Colors.grey[300],
+                                      onButton: () => setState(() {
+                                        if (int.parse(fourthToggle.text) == 1) {
+                                          fourTogglehas = 0;
+                                        } else {
+                                          fourTogglehas = 1;
+                                        }
+                                      }),
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
                           ],
                         ),
@@ -538,6 +560,11 @@ class _FullRegistrState extends State<FullRegistr> {
                                 year =
                                     dataRojdeniyaController.text.substring(6);
                               }
+                              if (int.parse(fourthToggle.text) == 1) {
+                                fourTogglehas = 0;
+                              } else {
+                                fourTogglehas = 1;
+                              }
 
                               toSignUp(
                                 lastname: familiyaTextEditingController.text,
@@ -556,30 +583,6 @@ class _FullRegistrState extends State<FullRegistr> {
                                 isAgreePersonal: fourthToggle.text,
                                 providerFlip: providerFlip,
                               );
-
-                              log(familiyaTextEditingController.text + "last");
-                              log(imyaTextEditingController.text + "first");
-                              log(emailTextFielController.text + "email");
-                              log("$day.$month.$year bornedat");
-                              log(doljnostTextFieldController.text + "jobid");
-                              log(nazvaniyaTextFieldController.text +
-                                  "storeid");
-                              log(newShop.getNewShop.toString() + "shopnet");
-                              log(adresTorgoviySetTextFielController.text +
-                                  "shop adress");
-                              log(phoneTextFieldController.text + "phone");
-                              log(gorodTextFieldController.text + "cityid");
-                              log(secondToggle.text + "isagreesms");
-                              log(thirdToggle.text + "isagreeidenty");
-                              log(fourthToggle.text + "isagreepersonal");
-                              log(dateIsEmpty.toString() +
-                                  "  -0-09--09-09-09-09-09--9-09");
-
-                              log(day.toString() + " day");
-                              log(month.toString() + " month");
-                              log(year.toString() + " year");
-
-                              log("$day.$month.$year kkkkkkkkkkkkkkkkkkkkkk");
                             },
                             child: Container(
                               alignment: Alignment.center,
@@ -710,7 +713,8 @@ class _FullRegistrState extends State<FullRegistr> {
         (storeId.isNotEmpty || shopnet.isNotEmpty) &&
         jobId.isNotEmpty &&
         cityId.isNotEmpty &&
-        shopadress.isNotEmpty) {
+        shopadress.isNotEmpty &&
+        fourthToggle.text != 1) {
       BlocSignUp()
           .signUp(
         lastname,

@@ -11,6 +11,7 @@ import 'package:hansa_lab/api_services/read_stati_send_comment_service.dart';
 import 'package:hansa_lab/classes/send_link.dart';
 import 'package:hansa_lab/extra/custom_title.dart';
 import 'package:hansa_lab/read_statie_section/stati_comment.dart';
+import 'package:keyboard_dismisser/keyboard_dismisser.dart';
 import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
@@ -40,9 +41,6 @@ class _ReadStatiState extends State<ReadStati> {
     var headers = {'token': token};
     http.Response response =
         await http.get(Uri.parse("http://hansa-lab.ru/$url"), headers: headers);
-    log("${response.statusCode} KELDI");
-    log("${response.body} Body");
-    log(url + " QALESAN");
     return ReadStatiModel.fromMap(jsonDecode(response.body));
   }
 
@@ -56,14 +54,12 @@ class _ReadStatiState extends State<ReadStati> {
               "rating": rating,
             },
             headers: headers);
-    log(response.statusCode.toString() + " change rating");
 
     return jsonDecode(response.body);
   }
 
   @override
   Widget build(BuildContext context) {
-    log("--------------------------------------------------------");
     final isTablet = Provider.of<bool>(context);
     final providerToken = Provider.of<String>(context);
 
@@ -73,7 +69,6 @@ class _ReadStatiState extends State<ReadStati> {
         future: getData(providerToken, statieSendLinkProvider.getLInk),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
-            
             return Expanded(
               child: Stack(
                 children: [
@@ -121,44 +116,52 @@ class _ReadStatiState extends State<ReadStati> {
                                   topRight: Radius.circular(5.333333333333333)),
                               color: Color(0xFFffffff)),
                           child: Wrap(children: [
-                            Align(
-                              alignment: Alignment.topCenter,
-                              child: Padding(
-                                padding: const EdgeInsets.only(top: 26),
-                                child: RatingBar.builder(
-                                  unratedColor: Colors.grey[300],
-                                  initialRating: snapshot
-                                      .data!.data.article.rating
-                                      .toDouble(),
-                                  itemCount: 5,
-                                  itemSize: 24,
-                                  itemBuilder: (context, index) {
-                                    return const Icon(
-                                      Icons.star,
-                                      color: Colors.amber,
-                                    );
-                                  },
-                                  onRatingUpdate: (value) {
-                                    log(value.toString());
-                                    Timer(
-                                      const Duration(seconds: 3),
-                                      () {
-                                        changeRating(
-                                            providerToken,
-                                            statieSendLinkProvider.getLInk
-                                                .substring(
-                                                    statieSendLinkProvider
-                                                            .getLInk.length -
-                                                        2),
-                                            value.toString()).then((value) {
-                                              setState(() {
-                                                
-                                              });
-                                            });
-                                      },
-                                    );
-                                  },
-                                ),
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Expanded(
+                                    flex: 4,
+                                    child: Text(
+                                      snapshot.data!.data.article.title,
+                                      style: TextStyle(
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                      textAlign: TextAlign.start,
+                                    ),
+                                  ),
+                                  Expanded(
+                                    child: Container(
+                                      height: 32.22333333333333,
+                                      width: 82.40333333333333,
+                                      decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.circular(
+                                              11.66666666666667),
+                                          color: const Color.fromARGB(
+                                              255, 213, 0, 50)),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceEvenly,
+                                        children: [
+                                          Text(
+                                            snapshot.data!.data.article.rating
+                                                .toString(),
+                                            style: GoogleFonts.montserrat(
+                                              color: Colors.white,
+                                            ),
+                                          ),
+                                          const Icon(
+                                            Icons.star,
+                                            size: 14,
+                                            color: Colors.white,
+                                          )
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ],
                               ),
                             ),
                             Html(
@@ -167,7 +170,6 @@ class _ReadStatiState extends State<ReadStati> {
                                 launchUrl(Uri.parse(url!));
                               },
                             ),
-                          
                             Padding(
                               padding:
                                   const EdgeInsets.symmetric(horizontal: 10.0),
@@ -262,6 +264,7 @@ class _ReadStatiState extends State<ReadStati> {
                                           right: 10,
                                         ),
                                         child: TextField(
+                                          autofocus: false,
                                           controller: textFieldController,
                                           maxLines: 7,
                                           decoration: InputDecoration(
@@ -275,7 +278,9 @@ class _ReadStatiState extends State<ReadStati> {
                                         ),
                                       ),
                                     ),
-                                  const  SizedBox(height: 40,),
+                                    const SizedBox(
+                                      height: 10,
+                                    ),
                                     Container(
                                       height: 54.66666666666667,
                                       width: double.infinity,
@@ -354,9 +359,49 @@ class _ReadStatiState extends State<ReadStati> {
                                         ],
                                       ),
                                     ),
-                                    
+                                    Align(
+                                        alignment: Alignment.topCenter,
+                                        child: Padding(
+                                          padding:
+                                          const EdgeInsets.only(top: 16),
+                                          child: RatingBar.builder(
+                                            unratedColor: Colors.grey[300],
+                                            initialRating: snapshot
+                                                .data!.data.article.rating
+                                                .toDouble(),
+                                            itemCount: 5,
+                                            itemSize: 24,
+                                            itemBuilder: (context, index) {
+                                              return const Icon(
+                                                Icons.star,
+                                                color: Colors.amber,
+                                              );
+                                            },
+                                            onRatingUpdate: (value) {
+                                              log(value.toString());
+                                              Timer(
+                                                const Duration(seconds: 3),
+                                                    () {
+                                                  changeRating(
+                                                      providerToken,
+                                                      statieSendLinkProvider
+                                                          .getLInk
+                                                          .substring(
+                                                          statieSendLinkProvider
+                                                              .getLInk
+                                                              .length -
+                                                              2),
+                                                      value.toString())
+                                                      .then((value) {
+                                                    setState(() {});
+                                                  });
+                                                },
+                                              );
+                                            },
+                                          ),
+                                        )),
                                     const SizedBox(
-                                      height: 19.33333333333333,
+                                      height: 10,
                                     ),
                                     Column(
                                       children: List.generate(
@@ -402,8 +447,6 @@ class _ReadStatiState extends State<ReadStati> {
                                         );
                                       }),
                                     ),
-                                    
-                                    
                                   ]),
                             ),
                           ]),

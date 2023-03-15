@@ -28,6 +28,9 @@ import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
 import 'package:sticky_headers/sticky_headers.dart';
 
+import '../extra/exit_dialog.dart';
+import '../extra/thansk_dialog.dart';
+
 class Treningi extends StatefulWidget {
   const Treningi({Key? key}) : super(key: key);
 
@@ -305,6 +308,12 @@ class _TreningiState extends State<Treningi> {
                                                     if (value
                                                             .getTitles[index] ==
                                                         "Записаться") {
+                                                      showDialog(
+                                                        context: context,
+                                                        builder: (context) {
+                                                          return const ThanksDialog();
+                                                        },
+                                                      );
                                                       value.changeTitles(
                                                           "Отписаться", index);
                                                     } else {

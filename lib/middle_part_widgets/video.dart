@@ -91,14 +91,16 @@ class Video extends StatelessWidget {
           child: Row(
             children: List.generate(
               itemCount,
-              (index) => Padding(
-                padding: EdgeInsets.only(left: (index == 0) ? 30 : 0),
-                child: CustomVideoListItem(
-                  index: index,
-                  indexMain: indexMain,
-                  selectedTitle: selectedTitle,
-                ),
-              ),
+              (index) {
+               return Padding(
+                  padding: EdgeInsets.only(left: (index == 0) ? 30 : 0),
+                  child: CustomVideoListItem(
+                    index: index,
+                    indexMain: indexMain,
+                    selectedTitle: selectedTitle,
+                  ),
+                );
+              }
             ),
           ),
         ),

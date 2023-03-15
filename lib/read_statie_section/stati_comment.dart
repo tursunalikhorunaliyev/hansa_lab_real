@@ -46,27 +46,27 @@ class _StatiCommentState extends State<StatiComment> {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Align(
-                    alignment: Alignment.topCenter,
-                    child: Padding(
-                      padding: const EdgeInsets.only(top: 0),
-                      child: RatingBar.builder(
-                        unratedColor: Colors.grey[300],
-                        initialRating: widget.initialRating,
-                        itemCount: 5,
-                        itemSize: 12,
-                        itemBuilder: (context, index) {
-                          return const Icon(
-                            Icons.star,
-                            color: Colors.red,
-                          );
-                        },
-                        onRatingUpdate: (value) {
-                          log(value.toString());
-                        },
-                      ),
-                    ),
-                  ),
+                  // Align(
+                  //   alignment: Alignment.topCenter,
+                  //   child: Padding(
+                  //     padding: const EdgeInsets.only(top: 0),
+                  //     child: RatingBar.builder(
+                  //       unratedColor: Colors.grey[300],
+                  //       initialRating: widget.initialRating,
+                  //       itemCount: 5,
+                  //       itemSize: 12,
+                  //       itemBuilder: (context, index) {
+                  //         return const Icon(
+                  //           Icons.star,
+                  //           color: Colors.red,
+                  //         );
+                  //       },
+                  //       onRatingUpdate: (value) {
+                  //         log(value.toString());
+                  //       },
+                  //     ),
+                  //   ),
+                  // ),
                   const SizedBox(
                     height: 7,
                   ),

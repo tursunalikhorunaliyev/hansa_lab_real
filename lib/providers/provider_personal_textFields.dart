@@ -8,12 +8,16 @@ class ProviderPersonalTextFields{
   final doljnostController = TextEditingController();
   final gorodController = TextEditingController();
   final addressController = TextEditingController();
+  final newPasswordController = TextEditingController();
+  final newRePasswordController = TextEditingController();
+  final oldPasswordController = TextEditingController();
   final storeName = TextEditingController();
+  bool isEdit = true;
+  String errorText = "";
   String countryTypeId = "";
   String cityId = "";
   String jobId = "";
   String storeId = "";
-  
 
   TextEditingController get getImyaController => imyaController;
   TextEditingController get getFamiliyaController => familiyaController;
@@ -22,6 +26,8 @@ class ProviderPersonalTextFields{
   TextEditingController get getDoljnostController => doljnostController;
   TextEditingController get getGorodController => gorodController;
   TextEditingController get getAddressController => addressController;
+  TextEditingController get getPasswordController => newPasswordController;
+  TextEditingController get getRePasswordController => newRePasswordController;
   TextEditingController get getStoreName => storeName;
   String get getCountryTypeId => countryTypeId;
   String get getCityId => cityId;

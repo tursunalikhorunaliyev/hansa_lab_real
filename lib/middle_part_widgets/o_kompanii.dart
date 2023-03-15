@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:gallery_saver/gallery_saver.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hansa_lab/blocs/download_progress_bloc.dart';
 import 'package:hansa_lab/extra/custom_okompanii_item.dart';
@@ -37,16 +38,16 @@ class _OKompaniiState extends State<OKompanii> {
   String path = "";
   String dir = "";
 
-  Future<String> getFilePath(uniqueFileName) async {
-    if (Platform.isIOS) {
-      Directory directory = await getApplicationSupportDirectory();
-      dir = directory.path;
-    } else if (Platform.isAndroid) {
-      dir = "/storage/emulated/0/Download/";
-    }
-    path = "$dir/$uniqueFileName";
-    return path;
-  }
+  // Future<String> getFilePath(uniqueFileName) async {
+  //   if (Platform.isIOS) {
+  //     Directory directory = await getApplicationSupportDirectory();
+  //     dir = directory.path;
+  //   } else if (Platform.isAndroid) {
+  //     dir = "/storage/emulated/0/Download/";
+  //   }
+  //   path = "$dir/$uniqueFileName";
+  //   return path;
+  // }
 
   @override
   void initState() {
@@ -59,32 +60,84 @@ class _OKompaniiState extends State<OKompanii> {
     final token = Provider.of<String>(context);
     final scroll = ScrollController();
     final blocVideoApi = BlocVideoApi();
+    bool hasVideo = false;
+    double progress = 0;
 
-    Future<void> downloadFile(String url, String fileName) async {
-      await Permission.storage.request();
+    Future<String> getFilePath(uniqueFileName) async {
+      String path = "";
+      String dir = "";
+      if (Platform.isIOS) {
+        Directory directory = await getApplicationSupportDirectory();
+        dir = directory.path;
+      } else if (Platform.isAndroid) {
+        dir = "/storage/emulated/0/Download/";
+      }
+      path = "$dir/$uniqueFileName.mp4";
+      return path;
+    }
+
+    Future<bool> downloadFile(String url, String fileName) async {
       progress = 0;
 
       String savePath = await getFilePath(fileName);
-      Dio dio = Dio();
-      dio.download(
-        url,
-        savePath,
-        onReceiveProgress: (recieved, total) {
-          progress =
-              double.parse(((recieved / total) * 100).toStringAsFixed(0));
-          blocDownload.streamSink.add(progress);
-          if (progress == 100) {
-            log("tugadi");
-          } else {
-            log("hali tugamadi");
-          }
-        },
-        deleteOnError: true,
-      ).then((value) async {
-        Navigator.pop(context);
-        OpenFile.open(path);
-      });
+      if (await File(savePath).exists()) {
+        log("exists");
+        setState(() {});
+        hasVideo = true;
+        return false;
+      } else {
+        progress = 0;
+        Dio dio = Dio();
+        dio.download(
+          url,
+          savePath,
+          onReceiveProgress: (recieved, total) {
+            progress =
+                double.parse(((recieved / total) * 100).toStringAsFixed(0));
+            blocDownload.streamSink.add(progress);
+            if (progress == 100) {
+              // log("Download complate");
+            } else {
+              // log("$progress %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
+            }
+          },
+          deleteOnError: true,
+        );
+        return true;
+      }
     }
+
+    // Future<void> downloadFile(String url, String fileName) async {
+    //   await Permission.storage.request();
+    //   progress = 0;
+    //
+    //   String savePath = await getFilePath(fileName);
+    //   Dio dio = Dio();
+    //   dio.download(
+    //     url,
+    //     savePath,
+    //     onReceiveProgress: (recieved, total) {
+    //       progress =
+    //           double.parse(((recieved / total) * 100).toStringAsFixed(0));
+    //       blocDownload.streamSink.add(progress);
+    //       if (progress == 100) {
+    //         log("tugadi");
+    //       } else {
+    //         log("hali tugamadi");
+    //       }
+    //     },
+    //     deleteOnError: true,
+    //   ).then((value) async {
+    //     if (Platform
+    //         .isIOS) {
+    //       GallerySaver.saveVideo(widget.url);
+    //     } else {
+    //       GallerySaver.saveVideo(widget.url);
+    //     }
+    //     // Navigator.pop(context);
+    //     // OpenFile.open(path);
+    //   });
+    // }
 
     return Expanded(
       child: Consumer<VideoIndexProvider>(builder: (context, value, child) {
@@ -316,20 +369,39 @@ class _OKompaniiState extends State<OKompanii> {
                                       .title,
                                   onDownload: () {
                                     downloadFile(
-                                        snapshot
+                                            snapshot
+                                                .data!
+                                                .videoListData
+                                                .list[value.getIndex]
+                                                .data
+                                                .list[index]
+                                                .videoLink,
+                                            snapshot
+                                                .data!
+                                                .videoListData
+                                                .list[value.getIndex]
+                                                .data
+                                                .list[index]
+                                                .title)
+                                        .then((values) {
+                                      if (Platform.isIOS) {
+                                        GallerySaver.saveVideo(snapshot
                                             .data!
                                             .videoListData
                                             .list[value.getIndex]
                                             .data
                                             .list[index]
-                                            .videoLink,
-                                        snapshot
+                                            .videoLink);
+                                      } else {
+                                        GallerySaver.saveVideo(snapshot
                                             .data!
                                             .videoListData
                                             .list[value.getIndex]
                                             .data
                                             .list[index]
-                                            .title);
+                                            .videoLink);
+                                      }
+                                    });
 
                                     showDialog(
                                       context: context,
@@ -369,35 +441,53 @@ class _OKompaniiState extends State<OKompanii> {
                                                     const SizedBox(
                                                       height: 10,
                                                     ),
-                                                    LinearPercentIndicator(
-                                                      alignment:
-                                                          MainAxisAlignment
-                                                              .center,
-                                                      padding:
-                                                          const EdgeInsets.all(
-                                                              0),
-                                                      barRadius:
-                                                          const Radius.circular(
-                                                              5),
-                                                      lineHeight: 15,
-                                                      //width: 325,
-                                                      percent:
-                                                          snapshotDouble.data! /
-                                                              100,
-                                                      center: Text(
-                                                        "${snapshotDouble.data}%",
-                                                        style: GoogleFonts
-                                                            .montserrat(
-                                                          fontSize: 10,
-                                                          color: Colors.black,
+                                                    if (!hasVideo)
+                                                      LinearPercentIndicator(
+                                                        alignment:
+                                                            MainAxisAlignment
+                                                                .center,
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .all(0),
+                                                        barRadius: const Radius
+                                                            .circular(5),
+                                                        lineHeight: 15,
+                                                        //width: 325,
+                                                        percent: snapshotDouble
+                                                                .data! /
+                                                            100,
+                                                        center: Text(
+                                                          "${snapshotDouble.data}%",
+                                                          style: GoogleFonts
+                                                              .montserrat(
+                                                            fontSize: 10,
+                                                            color: Colors.black,
+                                                          ),
                                                         ),
-                                                      ),
 
-                                                      backgroundColor:
-                                                          Colors.transparent,
-                                                      progressColor:
-                                                          Colors.green,
-                                                    ),
+                                                        backgroundColor:
+                                                            Colors.transparent,
+                                                        progressColor:
+                                                            Colors.green,
+                                                      )
+                                                    else
+                                                      Row(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .center,
+                                                        children: [
+                                                          Text(
+                                                            "Этот файл уже скачан",
+                                                            style: GoogleFonts
+                                                                .montserrat(
+                                                              fontSize: 10,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold,
+                                                            ),
+                                                          ),
+                                                        ],
+                                                      ),
                                                     const SizedBox(
                                                       height: 10,
                                                     ),
@@ -437,6 +527,7 @@ class _OKompaniiState extends State<OKompanii> {
                                         .list[index];
                                     showDialog(
                                       context: context,
+                                      barrierDismissible: false,
                                       builder: (context) {
                                         return Scaffold(
                                           backgroundColor: Colors.transparent,

@@ -19,7 +19,6 @@ import 'package:hansa_lab/video/model_video.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:video_player/video_player.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class TopVideoWidget extends StatefulWidget {
   final String url;
@@ -56,6 +55,7 @@ class _TopVideoWidgetState extends State<TopVideoWidget> {
   bool downloading = false;
   double progress = 0;
   bool isDownloaded = false;
+  bool hasVideo = false;
 
   Future<String> getFilePath(uniqueFileName) async {
     String path = "";
@@ -63,7 +63,6 @@ class _TopVideoWidgetState extends State<TopVideoWidget> {
     if (Platform.isIOS) {
       Directory directory = await getApplicationSupportDirectory();
       dir = directory.path;
-      log("${dir}kkkkkkkkkkkkk");
     } else if (Platform.isAndroid) {
       dir = "/storage/emulated/0/Download/";
     }
@@ -76,9 +75,9 @@ class _TopVideoWidgetState extends State<TopVideoWidget> {
     progress = 0;
 
     String savePath = await getFilePath(fileName);
-
     if (await File(savePath).exists()) {
       log("exists");
+      hasVideo = true;
       return false;
     } else {
       Dio dio = Dio();
@@ -90,9 +89,9 @@ class _TopVideoWidgetState extends State<TopVideoWidget> {
               double.parse(((recieved / total) * 100).toStringAsFixed(0));
           downloadProgressFileBloc.streamSink.add(progress);
           if (progress == 100) {
-            log("Download complate");
+            // log("Download complate");
           } else {
-            log("$progress %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
+            // log("$progress %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
           }
         },
         deleteOnError: true,
@@ -143,7 +142,7 @@ class _TopVideoWidgetState extends State<TopVideoWidget> {
     final index = Provider.of<VideoIndexProvider>(context);
     final providerBlocProgress = Provider.of<DownloadProgressFileBloc>(context);
     final token = Provider.of<String>(context);
-     final providerSendAnaliseDownload =
+    final providerSendAnaliseDownload =
         Provider.of<SendAnaliseDownload>(context);
     return SafeArea(
       child: Stack(
@@ -179,7 +178,7 @@ class _TopVideoWidgetState extends State<TopVideoWidget> {
               (chewieController.videoPlayerController.value.size.aspectRatio !=
                       0.0)
                   ? Padding(
-                      padding:   EdgeInsets.only(top: isTablet ? 130 : 100),
+                      padding: EdgeInsets.only(top: isTablet ? 130 : 100),
                       child: SingleChildScrollView(
                         child: Column(
                           children: [
@@ -284,75 +283,50 @@ class _TopVideoWidgetState extends State<TopVideoWidget> {
                                         future:
                                             blocVideoApi.getData(token: token),
                                         builder: (context, snapshot) {
-                                          if(snapshot.hasData){
+                                          if (snapshot.hasData) {
                                             return Provider(
-                                            create: (context) => blocDetectTap,
-                                            child: StreamBuilder<double>(
-                                                stream:
-                                                    providerBlocProgress.stream,
-                                                builder: (context,
-                                                    snapshotProgress) {
-                                                  return CustomTreningiVideo(
-                                                    onTap: () {
-                                                      blocDetectTap.dataSink
-                                                          .add(true);
-                                                      if (snapshotProgress
-                                                                  .data ==
-                                                              null ||
-                                                          snapshotProgress
-                                                                  .data ==
-                                                              0) {
-                                                        downloadFile(
-                                                          snapshot
-                                                              .data!
-                                                              .videoListData
-                                                              .list[value
-                                                                  .getIndex]
-                                                              .data
-                                                              .list[widget
-                                                                  .selectedIndex]
-                                                              .videoLink,
-                                                          snapshot
-                                                              .data!
-                                                              .videoListData
-                                                              .list[value
-                                                                  .getIndex]
-                                                              .data
-                                                              .list[widget
-                                                                  .selectedIndex]
-                                                              .title,
-                                                          providerBlocProgress,
-                                                        ).then((v) {
-                                                          providerSendAnaliseDownload
+                                              create: (context) =>
+                                                  blocDetectTap,
+                                              child: StreamBuilder<double>(
+                                                  stream: providerBlocProgress
+                                                      .stream,
+                                                  builder: (context,
+                                                      snapshotProgress) {
+                                                    return CustomTreningiVideo(
+                                                      onTap: () {
+                                                        blocDetectTap.dataSink
+                                                            .add(true);
+                                                        if (snapshotProgress
+                                                                    .data ==
+                                                                null ||
+                                                            snapshotProgress
+                                                                    .data ==
+                                                                0) {
+                                                          downloadFile(
+                                                            widget.url,
+                                                            widget.title,
+                                                            providerBlocProgress,
+                                                          ).then((v) {
+                                                              providerSendAnaliseDownload
                                                                   .setAnalise(
-                                                                      v);
-                                                          log("Not download");
-                                                          if (Platform.isIOS) {
-                                                            GallerySaver.saveVideo(snapshot
-                                                                .data!
-                                                                .videoListData
-                                                                .list[value
-                                                                    .getIndex]
-                                                                .data
-                                                                .list[widget
-                                                                    .selectedIndex]
-                                                                .videoLink);
-                                                          }
-                                                        });
-                                                      } else {
-                                                        log("asdffffffffffff=----------------------------------------");
-                                                      }
-                                                    },
-                                                    title: widget.title,
-                                                  );
-                                                }),
-                                          );
+                                                                  v);
+                                                              if (Platform
+                                                                  .isIOS) {
+                                                                GallerySaver.saveVideo(widget.url);
+                                                              } else if (Platform.isAndroid){
+                                                                GallerySaver.saveVideo(widget.url);
+                                                              }
 
-                                          }
-                                          else{
+                                                          });
+                                                        } else {}
+                                                      },
+                                                      title: widget.title,
+                                                    );
+                                                  }),
+                                            );
+                                          } else {
                                             return const SizedBox();
                                           }
-                                          
                                         },
                                       );
                                     },

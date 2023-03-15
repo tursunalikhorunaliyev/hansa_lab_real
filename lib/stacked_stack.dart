@@ -77,9 +77,9 @@ class StackedStack extends StatelessWidget {
                                           MainAxisAlignment.center,
                                       children: [
                                         Container(
-                                          padding: const EdgeInsets.all(12),
-                                          height: 65,
-                                          width: 65,
+                                          padding: const EdgeInsets.all(10),
+                                          height: 77,
+                                          width: 77,
                                           decoration: const BoxDecoration(
                                             shape: BoxShape.circle,
                                             color: Colors.white,
@@ -92,14 +92,14 @@ class StackedStack extends StatelessWidget {
                                                 day,
                                                 textScaleFactor: 1.0,
                                                 style: const TextStyle(
-                                                    fontSize: 11),
+                                                    fontSize: 14),
                                               ),
                                               Text(
                                                 month,
                                                 textScaleFactor: 1.0,
                                                 textAlign: TextAlign.center,
                                                 style: const TextStyle(
-                                                    fontSize: 9),
+                                                    fontSize: 12),
                                               ),
                                             ],
                                           ),

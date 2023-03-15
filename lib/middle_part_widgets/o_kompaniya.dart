@@ -120,7 +120,7 @@ class Okompaniya extends StatelessWidget {
                         borderRadius: BorderRadius.circular(16)),
                     child: StreamBuilder<ModelOKompaniyaMain>(
                         stream: blocOKompaniya.dataStream,
-                        builder: (context, snapshot) {
+                          builder: (context, snapshot) {
                           if (snapshot.hasData) {
                             return Column(
                               children: [

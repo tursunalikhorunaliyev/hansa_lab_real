@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:developer';
 
+import 'package:hansa_lab/api_models.dart/question_day_model.dart';
 import 'package:hansa_lab/api_models.dart/welcome_model.dart';
 import 'package:hansa_lab/api_services/api_urls.dart';
 import 'package:http/http.dart';
@@ -10,12 +11,17 @@ enum WelcomeApiAction { fetch, update }
 
 class WelcomeApi {
   final dataController = StreamController<List<WelcomeModelData>>.broadcast();
+
   StreamSink<List<WelcomeModelData>> get dataSink => dataController.sink;
+
   Stream<List<WelcomeModelData>> get dataStream => dataController.stream;
   final eventController = StreamController<List>.broadcast();
+
   StreamSink<List> get eventSink => eventController.sink;
+
   Stream<List> get eventStream => eventController.stream;
   String videoLink = "";
+
   String get getVideoLink => videoLink;
   List<WelcomeModelData> list = [];
 
