@@ -205,9 +205,9 @@ class _ReadStatiState extends State<ReadStati> {
                                           const Spacer(),
                                           IconButton(
                                               onPressed: () {
-                                                log("FGFGGFGGFGFGG");
                                                 if (textFieldController
                                                     .text.isNotEmpty) {
+
                                                   ReadStatiSendCommentService
                                                       .getData(
                                                           providerToken,
@@ -230,8 +230,6 @@ class _ReadStatiState extends State<ReadStati> {
                                                           .clear();
                                                       setState(() {});
                                                     }
-                                                    log(value["status"]
-                                                        .toString());
                                                     getData(
                                                         providerToken,
                                                         statieSendLinkProvider

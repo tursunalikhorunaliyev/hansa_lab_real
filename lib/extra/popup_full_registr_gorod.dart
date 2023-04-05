@@ -10,18 +10,16 @@ import 'package:hansa_lab/blocs/hansa_country_api.dart';
 import 'package:provider/provider.dart';
 
 class PopupFullRegistrGorod extends StatefulWidget {
-  String text;
   final Color borderColor;
   final Color hintColor;
   final VoidCallback onTap;
-   PopupFullRegistrGorod(
-      {Key? key,
-      required this.borderColor,
-      required this.hintColor,
-      required this.onTap,
-        this.text = "Город",
-      })
-      : super(key: key);
+
+  PopupFullRegistrGorod({
+    Key? key,
+    required this.borderColor,
+    required this.hintColor,
+    required this.onTap,
+  }) : super(key: key);
 
   @override
   State<PopupFullRegistrGorod> createState() => _PopupFullRegistrGorodState();
@@ -37,6 +35,7 @@ class _PopupFullRegistrGorodState extends State<PopupFullRegistrGorod> {
   List<CountryModelData> cities = [];
 
   double radius = 54;
+  String text = "Город";
 
   listen() {
     streamController.stream.listen((event) {
@@ -63,14 +62,16 @@ class _PopupFullRegistrGorodState extends State<PopupFullRegistrGorod> {
     final gorodTextEditingContyroller =
         Provider.of<TextEditingController>(context);
     return StreamBuilder<double>(
-        initialData: isTablet ? 40  : 38,
+        initialData: isTablet ? 40 : 38,
         stream: blocPopupDrawer.dataStream,
         builder: (context, snapshotSizeDrawer) {
           return InkWell(
             onTap: () {
               widget.onTap();
-              blocPopupDrawer.dataSink
-                  .add(snapshotSizeDrawer.data! == (isTablet ? 40  : 38) ? (isTablet ? 280  : 250) : (isTablet ? 40  : 38));
+              blocPopupDrawer.dataSink.add(
+                  snapshotSizeDrawer.data! == (isTablet ? 40 : 38)
+                      ? (isTablet ? 280 : 250)
+                      : (isTablet ? 40 : 38));
               radius = radius == 54 ? 10 : 54;
             },
             child: Padding(
@@ -101,8 +102,8 @@ class _PopupFullRegistrGorodState extends State<PopupFullRegistrGorod> {
                           child: Align(
                               alignment: Alignment.centerLeft,
                               child: Text(
-                                widget.text,
-                                style: widget.text == "Город"
+                                text,
+                                style: text == "Город"
                                     ? GoogleFonts.montserrat(
                                         fontSize: isTablet ? 16 : 13,
                                         color: widget.hintColor)
@@ -131,7 +132,8 @@ class _PopupFullRegistrGorodState extends State<PopupFullRegistrGorod> {
                                           padding: const EdgeInsets.only(
                                               right: 10, top: 5),
                                           child: TextField(
-                                            style: const TextStyle(fontSize: 13),
+                                            style:
+                                                const TextStyle(fontSize: 13),
                                             controller: textEditingController,
                                             onChanged: (value) => search(value),
                                             decoration: InputDecoration(
@@ -139,8 +141,8 @@ class _PopupFullRegistrGorodState extends State<PopupFullRegistrGorod> {
                                                     const EdgeInsets.only(
                                                         left: 10),
                                                 hintText: "Поиск",
-                                                hintStyle:
-                                                    const TextStyle(fontSize: 13),
+                                                hintStyle: const TextStyle(
+                                                    fontSize: 13),
                                                 border: OutlineInputBorder(
                                                     borderRadius:
                                                         BorderRadius.circular(
@@ -166,14 +168,19 @@ class _PopupFullRegistrGorodState extends State<PopupFullRegistrGorod> {
                                               return InkWell(
                                                 onTap: () {
                                                   gorodTextEditingContyroller
-                                                      .text = book.id.toString();
-                                                  widget.text = book.name;
+                                                          .text =
+                                                      book.id.toString();
+                                                  text = book.name;
                                                   blocPopupDrawer.dataSink.add(
-                                                      snapshotSizeDrawer.data! ==
+                                                      snapshotSizeDrawer
+                                                                  .data! ==
                                                               38
-                                                          ? (isTablet ? 280  : 250)
+                                                          ? (isTablet
+                                                              ? 280
+                                                              : 250)
                                                           : 38);
-                                                  radius = radius == 54 ? 10 : 54;
+                                                  radius =
+                                                      radius == 54 ? 10 : 54;
                                                 },
                                                 child: Padding(
                                                   padding:

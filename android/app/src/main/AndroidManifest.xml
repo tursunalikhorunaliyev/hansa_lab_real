@@ -59,7 +59,7 @@
                 <!-- Accepts URIs that begin with YOUR_SCHEME://YOUR_HOST -->
                 <data
                     android:scheme="https"
-                    android:host="hansa-lab.ru" />
+                    android:host="hansahansalab.page.link" />
             </intent-filter>
 
             <!-- App Links -->
@@ -69,7 +69,7 @@
                 <category android:name="android.intent.category.BROWSABLE" />
                 <data
                     android:scheme="https"
-                    android:host="hansa-lab.ru" />
+                    android:host="hansahansalab.page.link" />
             </intent-filter>
         </activity>
 

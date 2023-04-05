@@ -8,11 +8,9 @@ class ReadStatiSendCommentService {
       String token, String url, Map<String, dynamic> body) async {
     var headers = {'token': token.toString()};
     http.Response response = await http.post(
-        Uri.parse("http://hansa-lab.ru/$url"),
+        Uri.parse("https://hansa-lab.ru/$url"),
         headers: headers,
         body: body);
-    log(response.statusCode.toString());
-    log("${response.body} BODYYYYYYYYYYY");
     return jsonDecode(response.body);
   }
 }

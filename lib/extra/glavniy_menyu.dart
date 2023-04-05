@@ -7,6 +7,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:http/http.dart' as http;
@@ -104,7 +105,7 @@ class _GlavniyMenyuState extends State<GlavniyMenyu> {
     final providerTapFavorite = Provider.of<TapFavorite>(context);
     final fullname = Provider.of<FullnameProvider>(context);
     final blocGlavniyMenuUserInfo = BlocGlavniyMenuUserInfo(providerToken);
-
+    print(providerToken);
     blocGlavniyMenuUserInfo.eventSink.add(EnumActionView.view);
     final scafforlKeyProvider = Provider.of<GlobalKey<ScaffoldState>>(context);
     final providerSendDataPersonalUpdate =
@@ -183,6 +184,7 @@ class _GlavniyMenyuState extends State<GlavniyMenyu> {
                                       return CachedNetworkImage(
                                         imageUrl: snapshot.data!.data.link,
                                         fit: BoxFit.cover,
+                                        errorWidget: (ctx, url, error) => SvgPicture.network(snapshot.data!.data.link),
                                         placeholder: (context, url) {
                                           return const CircularProgressIndicator(
                                             color:
@@ -741,7 +743,7 @@ class _GlavniyMenyuState extends State<GlavniyMenyu> {
                         children: [
                           Container(
                             decoration: BoxDecoration(
-                                color: Colors.green,
+                                color: Color.fromRGBO(37, 176, 73, 1,),
                                 borderRadius: BorderRadius.only(
                                   topLeft: Radius.circular(12),
                                   topRight: Radius.circular(12),
@@ -764,7 +766,7 @@ class _GlavniyMenyuState extends State<GlavniyMenyu> {
                             height: 1,
                           ),
                           Container(
-                            color: Colors.white.withOpacity(0.8),
+                            color: Color.fromRGBO(234, 244, 255, 1,).withOpacity(0.9),
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Row(
@@ -797,7 +799,7 @@ class _GlavniyMenyuState extends State<GlavniyMenyu> {
                             height: 1,
                           ),
                           Container(
-                            color: Colors.white.withOpacity(0.8),
+                            color: Color.fromRGBO(234, 244, 255, 1,).withOpacity(0.9),
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Row(
@@ -829,7 +831,7 @@ class _GlavniyMenyuState extends State<GlavniyMenyu> {
                             height: 1,
                           ),
                           Container(
-                            color: Colors.white.withOpacity(0.8),
+                            color: Color.fromRGBO(234, 244, 255, 1,).withOpacity(0.9),
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Row(
@@ -861,7 +863,7 @@ class _GlavniyMenyuState extends State<GlavniyMenyu> {
                             height: 1,
                           ),
                           Container(
-                            color: Colors.white.withOpacity(0.8),
+                            color: Color.fromRGBO(234, 244, 255, 1,).withOpacity(0.9),
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Row(
@@ -893,7 +895,7 @@ class _GlavniyMenyuState extends State<GlavniyMenyu> {
                             height: 1,
                           ),
                           Container(
-                            color: Colors.white.withOpacity(0.8),
+                            color: Color.fromRGBO(234, 244, 255, 1,).withOpacity(0.9),
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Row(
@@ -923,7 +925,7 @@ class _GlavniyMenyuState extends State<GlavniyMenyu> {
                             height: 1,
                           ),
                           Container(
-                            color: Colors.white.withOpacity(0.8),
+                            color: Color.fromRGBO(234, 244, 255, 1,).withOpacity(0.9),
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Row(
@@ -954,7 +956,7 @@ class _GlavniyMenyuState extends State<GlavniyMenyu> {
                             height: 1,
                           ),
                           Container(
-                            color: Colors.white.withOpacity(0.8),
+                            color: Color.fromRGBO(234, 244, 255, 1,).withOpacity(0.9),
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Row(
@@ -984,7 +986,7 @@ class _GlavniyMenyuState extends State<GlavniyMenyu> {
                             height: 1,
                           ),
                           Container(
-                            color: Colors.white.withOpacity(0.8),
+                            color: Color.fromRGBO(234, 244, 255, 1,).withOpacity(0.9),
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Row(
@@ -1014,7 +1016,13 @@ class _GlavniyMenyuState extends State<GlavniyMenyu> {
                             height: 1,
                           ),
                           Container(
-                            color: Colors.white.withOpacity(0.8),
+                            decoration: BoxDecoration(
+                              color: Color.fromRGBO(234, 244, 255, 1,).withOpacity(0.9),
+                              borderRadius: BorderRadius.only(
+                                bottomLeft: Radius.circular(12),
+                                bottomRight: Radius.circular(12),
+                              ),
+                            ),
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Row(
@@ -1118,7 +1126,7 @@ class DrawTriangleShape extends CustomPainter {
   DrawTriangleShape() {
 
     painter = Paint()
-      ..color = Colors.green
+      ..color = Color.fromRGBO(37, 176, 73, 1,)
       ..style = PaintingStyle.fill;
 
   }

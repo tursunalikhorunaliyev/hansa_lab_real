@@ -390,7 +390,7 @@ packages:
     source: hosted
     version: "5.1.0"
   flutter_svg:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: flutter_svg
       url: "https://pub.dartlang.org"
@@ -483,6 +483,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "3.0.1"
+  gradient_borders:
+    dependency: "direct main"
+    description:
+      name: gradient_borders
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.0"
   hive:
     dependency: "direct main"
     description:

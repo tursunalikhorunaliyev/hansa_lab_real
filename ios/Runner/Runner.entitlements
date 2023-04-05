@@ -4,9 +4,5 @@
 <dict>
 	<key>aps-environment</key>
 	<string>development</string>
-	 <key>com.apple.developer.associated-domains</key>
-      <array>
-        <string>applinks:https://apps.apple.com/uz/app/hansa-lab/id6444158285</string>
-      </array>
 </dict>
 </plist>

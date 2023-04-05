@@ -113,7 +113,7 @@ class Okompaniya extends StatelessWidget {
                     top: isTablet ? 405 : 184,
                   ),
                   child: Container(
-                    height: isTablet ? 621 : 360,
+                    height: isTablet ? 700 : 520,
                     width: isTablet ? 800 : 342,
                     decoration: BoxDecoration(
                         color: const Color.fromARGB(255, 213, 0, 50),
@@ -135,7 +135,7 @@ class Okompaniya extends StatelessWidget {
                                       textAlign: TextAlign.center,
                                       overflow: TextOverflow.fade,
                                       style: GoogleFonts.montserrat(
-                                        fontSize: isTablet ? 26 : 16,
+                                        fontSize: isTablet ? 30 : 20,
                                         color: const Color(0xFFffffff),
                                         fontWeight: FontWeight.bold,
                                       ),
@@ -149,7 +149,7 @@ class Okompaniya extends StatelessWidget {
                                     snapshot.data!.data.list[0],
                                     textScaleFactor: 1.0,
                                     style: TextStyle(
-                                      fontSize: isTablet ? 21 : 11,
+                                      fontSize: isTablet ? 24 : 14,
                                       color: const Color(0xFFffffff),
                                     ),
                                   ),
@@ -163,7 +163,7 @@ class Okompaniya extends StatelessWidget {
                                     snapshot.data!.data.list[1],
                                     textScaleFactor: 1.0,
                                     style: TextStyle(
-                                      fontSize: isTablet ? 21 : 11,
+                                      fontSize: isTablet ? 24 : 14,
                                       color: const Color(0xFFffffff),
                                     ),
                                   ),
@@ -177,7 +177,7 @@ class Okompaniya extends StatelessWidget {
                                     snapshot.data!.data.list[2],
                                     textScaleFactor: 1.0,
                                     style: TextStyle(
-                                      fontSize: isTablet ? 21 : 11,
+                                      fontSize: isTablet ? 24 : 14,
                                       color: const Color(0xFFffffff),
                                     ),
                                   ),
@@ -223,7 +223,7 @@ class Okompaniya extends StatelessWidget {
                                         child: Text(
                                           "Написать разработчику",
                                           style: GoogleFonts.montserrat(
-                                              fontSize: isTablet ? 19 : 10,
+                                              fontSize: isTablet ? 22 : 13,
                                               color: const Color(0xFFffffff)),
                                         ),
                                       ),
