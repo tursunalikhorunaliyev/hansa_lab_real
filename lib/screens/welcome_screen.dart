@@ -99,16 +99,19 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
             Scaffold(
               drawerEnableOpenDragGesture: false,
               resizeToAvoidBottomInset: false,
-              drawer: MultiProvider(providers: [
-                Provider(create: (context) => ProviderPersonalTextFields()),
-                Provider(create: (context) => providerScaffoldKey),
-                Provider<WelcomeApi>(
-                  create: (context) => welcomeApi,
-                ),
-                Provider<BlocObucheniya>(
-                  create: (context) => bloc,
-                )
-              ], child: const GlavniyMenyu()),
+              drawer: MultiProvider(
+                providers: [
+                  Provider(create: (context) => ProviderPersonalTextFields()),
+                  Provider(create: (context) => providerScaffoldKey),
+                  Provider<WelcomeApi>(
+                    create: (context) => welcomeApi,
+                  ),
+                  Provider<BlocObucheniya>(
+                    create: (context) => bloc,
+                  )
+                ],
+                child: const GlavniyMenyu(),
+              ),
               key: providerScaffoldKey,
               bottomNavigationBar: StreamBuilder<MenuActions>(
                   initialData: (not) ? MenuActions.stati : MenuActions.welcome,
@@ -671,10 +674,11 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                                                       width: double.infinity,
                                                       decoration: BoxDecoration(
                                                         borderRadius:
-                                                             BorderRadius
-                                                                    .all(
+                                                            BorderRadius.all(
                                                                 Radius.circular(
-                                                                    isTablet ? 50 : 30)),
+                                                                    isTablet
+                                                                        ? 50
+                                                                        : 30)),
                                                         // gradient: LinearGradient(
                                                         //   begin: Alignment.topCenter,
                                                         //   end: Alignment.bottomCenter,
