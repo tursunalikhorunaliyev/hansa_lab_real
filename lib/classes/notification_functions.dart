@@ -1,14 +1,13 @@
 import 'dart:developer';
-import 'package:firebase_crashlytics/firebase_crashlytics.dart';
-import 'package:flutter/cupertino.dart';
+
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_app_badger/flutter_app_badger.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:firebase_core/firebase_core.dart';
+import 'package:hansa_lab/blocs/fcm_article_bloc.dart';
 import 'package:hansa_lab/firebase_options.dart';
 
-FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
-    FlutterLocalNotificationsPlugin();
+FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
 
 const AndroidNotificationChannel channel = AndroidNotificationChannel(
   'high_importance_channel',
@@ -18,10 +17,9 @@ const AndroidNotificationChannel channel = AndroidNotificationChannel(
   playSound: true,
 );
 
-initMessaging() async {
+initMessaging(FcmArticleBloC fcmArticleBloc) async {
   log("FirebaseMessaging initializing...");
-  var androidInit =
-      const AndroidInitializationSettings("@mipmap/launcher_icon");
+  var androidInit = const AndroidInitializationSettings("@mipmap/launcher_icon");
   var iosInitializationSettings = const DarwinInitializationSettings();
   var initSettings = InitializationSettings(
     android: androidInit,
@@ -35,28 +33,32 @@ initMessaging() async {
   );
   // FlutterAppBadger.updateBadgeCount(1);
 
-  flutterLocalNotificationsPlugin.initialize(initSettings,
-      onDidReceiveNotificationResponse: onDidReceiveNotificationResponse);
-  FirebaseMessaging.onMessageOpenedApp.listen((event) {
-    print(event);
+  flutterLocalNotificationsPlugin.initialize(
+    initSettings,
+    onDidReceiveNotificationResponse: onDidReceiveNotificationResponse,
+    onDidReceiveBackgroundNotificationResponse: onDidReceiveNotificationResponse,
+  );
 
-    print('event');
-  });
+  FirebaseMessaging.onMessageOpenedApp.listen(
+    (event) {
+      final data = event.data;
+      if (data.containsKey('news_id')) {
+        fcmArticleBloc.articleId = data['news_id'];
+      }
+    },
+  );
   // FlutterAppBadger.updateBadgeCount(1);
   //
   await flutterLocalNotificationsPlugin
-      .resolvePlatformSpecificImplementation<
-          IOSFlutterLocalNotificationsPlugin>()
+      .resolvePlatformSpecificImplementation<IOSFlutterLocalNotificationsPlugin>()
       ?.requestPermissions(alert: true, badge: true, sound: true);
   await flutterLocalNotificationsPlugin
-      .resolvePlatformSpecificImplementation<
-          AndroidFlutterLocalNotificationsPlugin>()
+      .resolvePlatformSpecificImplementation<AndroidFlutterLocalNotificationsPlugin>()
       ?.createNotificationChannel(channel);
   // FlutterAppBadger.updateBadgeCount(1);
 }
 
-void onDidReceiveNotificationResponse(
-    NotificationResponse notificationResponse) async {
+void onDidReceiveNotificationResponse(NotificationResponse notificationResponse) async {
   FlutterAppBadger.updateBadgeCount(1);
   final String? payload = notificationResponse.payload;
   if (notificationResponse.payload != null) {
@@ -99,13 +101,10 @@ listenForeground() {
       priority: Priority.high,
     );
     var iosDetails = const DarwinNotificationDetails();
-    var notificationDetails =
-        NotificationDetails(android: androidDetails, iOS: iosDetails);
-    if (message.notification != null &&
-        androidNotification != null &&
-        appleNotification != null) {
-      flutterLocalNotificationsPlugin.show(notification.hashCode,
-          notification.title, notification.body, notificationDetails);
+    var notificationDetails = NotificationDetails(android: androidDetails, iOS: iosDetails);
+    if (message.notification != null && androidNotification != null && appleNotification != null) {
+      flutterLocalNotificationsPlugin.show(
+          notification.hashCode, notification.title, notification.body, notificationDetails);
     }
   });
 }
@@ -129,8 +128,7 @@ requestMessaging() async {
     sound: true,
   );
   flutterLocalNotificationsPlugin
-      .resolvePlatformSpecificImplementation<
-          AndroidFlutterLocalNotificationsPlugin>()!
-      .requestPermission();
+      .resolvePlatformSpecificImplementation<AndroidFlutterLocalNotificationsPlugin>()
+      ?.requestPermission();
   // FlutterAppBadger.updateBadgeCount(1);
 }
