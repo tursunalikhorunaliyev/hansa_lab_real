@@ -2,7 +2,6 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
-import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:flip_card/flip_card_controller.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
@@ -52,15 +51,7 @@ class _LoginCardState extends State<LoginCard> {
     backgroundColor: Colors.red,
   );
 
-  FirebaseDynamicLinks dynamicLinks = FirebaseDynamicLinks.instance;
 
-  Future initDynamicLinks() async {
-    dynamicLinks.onLink.listen((event) {
-
-    }).onError((error){
-     print(error);
-    });
-  }
   chekNet() async {
     try {
       final response = await InternetAddress.lookup('www.example.com');
