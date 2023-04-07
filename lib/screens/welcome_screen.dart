@@ -1,6 +1,5 @@
 import 'dart:developer';
 
-import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -39,16 +38,6 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
   late final MenuEventsBloC _menuProvider;
   late final ArticleBLoC _articleBloc;
   late final FcmArticleBloC _fcmArticleBloc;
-  FirebaseDynamicLinks dynamicLinks = FirebaseDynamicLinks.instance;
-
-  Future initDynamicLinks() async {
-    dynamicLinks.onLink.listen((event) {
-      print(event);
-      print('event');
-    }).onError((error) {
-      print(error);
-    });
-  }
 
   bool isShowDialog = false;
   int? isRight;
@@ -60,7 +49,6 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
 
   @override
   void initState() {
-    initDynamicLinks();
     // notificationServices.requestNotificationPermission();
     // notificationServices.firebaseInit(context);
     // notificationServices.setupInteractMessage(context);
