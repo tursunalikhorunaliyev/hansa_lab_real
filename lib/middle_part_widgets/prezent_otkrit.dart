@@ -23,6 +23,7 @@ class PrezentOtkrit extends StatefulWidget {
 
 class _PrezentOtkritState extends State<PrezentOtkrit> {
   final sendUrlPrezentOtkrit = SendUrlPrezentOtkrit();
+
   @override
   Widget build(BuildContext context) {
     final providerMenuEventsBloc = Provider.of<MenuEventsBloC>(context);
@@ -150,8 +151,6 @@ class _PrezentOtkritState extends State<PrezentOtkrit> {
                                       onTap: () {
                                         providerMenuEventsBloc.eventSink
                                             .add(MenuActions.prezentFav);
-                                        log(providerSendUrlPrezentOtkrit
-                                            .getUrl);
                                         providerSendUrlPrezentOtkrit.setUrl(
                                             snapshot
                                                 .data!

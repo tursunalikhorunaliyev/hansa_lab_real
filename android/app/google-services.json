@@ -14,6 +14,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "31939218038-ci5lfvpvdoa834i2gfdq4gvh99h21brg.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.hansa.hansa_lab",
+            "certificate_hash": "fa760e8df15df91efd1711a76f0069c5b094ea04"
+          }
+        },
+        {
           "client_id": "31939218038-lj0qtla0jefa2tokhkergiapgpgjvmim.apps.googleusercontent.com",
           "client_type": 3
         }
@@ -29,6 +37,13 @@
             {
               "client_id": "31939218038-lj0qtla0jefa2tokhkergiapgpgjvmim.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "31939218038-1m4gn3p37ooeq410f1qbmc87j41b3soe.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.hansa.hansaLab"
+              }
             }
           ]
         }

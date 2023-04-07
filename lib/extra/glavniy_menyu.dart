@@ -7,6 +7,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:http/http.dart' as http;
@@ -104,7 +105,7 @@ class _GlavniyMenyuState extends State<GlavniyMenyu> {
     final providerTapFavorite = Provider.of<TapFavorite>(context);
     final fullname = Provider.of<FullnameProvider>(context);
     final blocGlavniyMenuUserInfo = BlocGlavniyMenuUserInfo(providerToken);
-
+    print(providerToken);
     blocGlavniyMenuUserInfo.eventSink.add(EnumActionView.view);
     final scafforlKeyProvider = Provider.of<GlobalKey<ScaffoldState>>(context);
     final providerSendDataPersonalUpdate =
@@ -183,6 +184,9 @@ class _GlavniyMenyuState extends State<GlavniyMenyu> {
                                       return CachedNetworkImage(
                                         imageUrl: snapshot.data!.data.link,
                                         fit: BoxFit.cover,
+                                        errorWidget: (ctx, url, error) =>
+                                            SvgPicture.network(
+                                                snapshot.data!.data.link),
                                         placeholder: (context, url) {
                                           return const CircularProgressIndicator(
                                             color:
@@ -288,12 +292,18 @@ class _GlavniyMenyuState extends State<GlavniyMenyu> {
                                     alignment: Alignment.center,
                                     width: isTablet ? double.infinity : 200,
                                     child: Text(
-                                      snapshot.data!.data.fullname,
+                                      snapshot.data!.data.fullname.contains(
+                                              "<b>«Руководитель отдела обучения Hansa»</b>")
+                                          ? snapshot.data!.data.fullname.replaceAll(
+                                              '<b>«Руководитель отдела обучения Hansa»</b>',
+                                              '«Руководитель отдела обучения Hansa»')
+                                          : snapshot.data!.data.fullname,
+                                      textAlign: TextAlign.center,
                                       textScaleFactor: 1.0,
                                       maxLines: 2,
                                       overflow: TextOverflow.ellipsis,
                                       style: TextStyle(
-                                          fontSize: isTablet ? 23 : 16,
+                                          fontSize: isTablet ? 23 : 14,
                                           color: const Color(0xFFffffff)),
                                     ),
                                   );
@@ -329,7 +339,6 @@ class _GlavniyMenyuState extends State<GlavniyMenyu> {
                                               255, 213, 0, 50),
                                           fontWeight: FontWeight.bold),
                                     ),
-
                                   ],
                                 );
                               } else {
@@ -362,7 +371,11 @@ class _GlavniyMenyuState extends State<GlavniyMenyu> {
                                 decoration: BoxDecoration(
                                     color: Colors.green,
                                     borderRadius: BorderRadius.circular(12)),
-                                child: Icon(Icons.question_mark,color: Colors.white,size: 14,),
+                                child: Icon(
+                                  Icons.question_mark,
+                                  color: Colors.white,
+                                  size: 14,
+                                ),
                               ),
                             )
                           ],
@@ -734,18 +747,22 @@ class _GlavniyMenyuState extends State<GlavniyMenyu> {
                       margin: EdgeInsets.symmetric(
                           horizontal: 20.w, vertical: isTablet ? 60 : 40),
                       decoration: BoxDecoration(
-                        // color: Colors.white,
-                        borderRadius: BorderRadius.circular(12)
-                      ),
+                          // color: Colors.white,
+                          borderRadius: BorderRadius.circular(12)),
                       child: Column(
                         children: [
                           Container(
                             decoration: BoxDecoration(
-                                color: Colors.green,
-                                borderRadius: BorderRadius.only(
-                                  topLeft: Radius.circular(12),
-                                  topRight: Radius.circular(12),
-                                ),
+                              color: Color.fromRGBO(
+                                37,
+                                176,
+                                73,
+                                1,
+                              ),
+                              borderRadius: BorderRadius.only(
+                                topLeft: Radius.circular(12),
+                                topRight: Radius.circular(12),
+                              ),
                             ),
                             height: 50,
                             padding: EdgeInsets.all(8),
@@ -753,27 +770,47 @@ class _GlavniyMenyuState extends State<GlavniyMenyu> {
                               children: [
                                 Expanded(
                                     flex: 3,
-                                    child: Text('Действие',style: TextStyle(fontSize: 14,color: Colors.white))),
-                                Expanded(child: Container(width: 88, child: Text('Кол-во балл',style: TextStyle(fontSize: 14,color: Colors.white)))),
+                                    child: Text('Действие',
+                                        style: TextStyle(
+                                            fontSize: 14,
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.w300))),
+                                Expanded(
+                                    child: Container(
+                                        width: 88,
+                                        child: Text('Кол-во балл',
+                                            style: TextStyle(
+                                                fontSize: 14,
+                                                color: Colors.white,
+                                                fontWeight: FontWeight.w300)))),
                               ],
                             ),
                           ),
                           Container(
                             width: double.infinity,
-                            color: Colors.black,
+                            color: Color.fromRGBO(
+                              170,
+                              170,
+                              170,
+                              1,
+                            ),
                             height: 1,
                           ),
                           Container(
-                            color: Colors.white.withOpacity(0.8),
+                            color: Color.fromRGBO(234, 244, 255, 1)
+                                .withOpacity(0.9),
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
                                 children: [
                                   Expanded(
                                       flex: 3,
                                       child: Text(
-                                          'Вопрос дня (ответить правильно на вопрос дня)',style: TextStyle(fontSize: 13),)),
+                                        'Вопрос дня (ответить правильно на вопрос дня)',
+                                        style: TextStyle(fontSize: 13),
+                                      )),
                                   // Spacer(),
                                   SizedBox(
                                     width: 10,
@@ -781,7 +818,12 @@ class _GlavniyMenyuState extends State<GlavniyMenyu> {
                                   Container(
                                     height: 30,
                                     width: 1,
-                                    color: Colors.black,
+                                    color: Color.fromRGBO(
+                                      170,
+                                      170,
+                                      170,
+                                      1,
+                                    ),
                                   ),
                                   SizedBox(
                                     width: 10,
@@ -793,27 +835,44 @@ class _GlavniyMenyuState extends State<GlavniyMenyu> {
                           ),
                           Container(
                             width: double.infinity,
-                            color: Colors.black,
+                            color: Color.fromRGBO(
+                              170,
+                              170,
+                              170,
+                              1,
+                            ),
                             height: 1,
                           ),
                           Container(
-                            color: Colors.white.withOpacity(0.8),
+                            color: Color.fromRGBO(
+                              234,
+                              244,
+                              255,
+                              1,
+                            ).withOpacity(0.9),
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
                                 children: [
                                   Expanded(
                                       flex: 3,
                                       child: Text(
-                                          'Презентации (прочитать и корректно ответить на вопросы тестирования)',style: TextStyle(fontSize: 13))),
+                                          'Презентации (прочитать и корректно ответить на вопросы тестирования)',
+                                          style: TextStyle(fontSize: 13))),
                                   SizedBox(
                                     width: 10,
                                   ),
                                   Container(
                                     height: 30,
                                     width: 1,
-                                    color: Colors.black,
+                                    color: Color.fromRGBO(
+                                      170,
+                                      170,
+                                      170,
+                                      1,
+                                    ),
                                   ),
                                   SizedBox(
                                     width: 10,
@@ -825,27 +884,44 @@ class _GlavniyMenyuState extends State<GlavniyMenyu> {
                           ),
                           Container(
                             width: double.infinity,
-                            color: Colors.black,
+                            color: Color.fromRGBO(
+                              170,
+                              170,
+                              170,
+                              1,
+                            ),
                             height: 1,
                           ),
                           Container(
-                            color: Colors.white.withOpacity(0.8),
+                            color: Color.fromRGBO(
+                              234,
+                              244,
+                              255,
+                              1,
+                            ).withOpacity(0.9),
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
                                 children: [
                                   Expanded(
                                       flex: 3,
                                       child: Text(
-                                          'Обучающие материалы (прочитать и корректно ответить на вопросы тестирования)',style: TextStyle(fontSize: 13))),
+                                          'Обучающие материалы (прочитать и корректно ответить на вопросы тестирования)',
+                                          style: TextStyle(fontSize: 13))),
                                   SizedBox(
                                     width: 10,
                                   ),
                                   Container(
                                     height: 30,
                                     width: 1,
-                                    color: Colors.black,
+                                    color: Color.fromRGBO(
+                                      170,
+                                      170,
+                                      170,
+                                      1,
+                                    ),
                                   ),
                                   SizedBox(
                                     width: 10,
@@ -857,27 +933,44 @@ class _GlavniyMenyuState extends State<GlavniyMenyu> {
                           ),
                           Container(
                             width: double.infinity,
-                            color: Colors.black,
+                            color: Color.fromRGBO(
+                              170,
+                              170,
+                              170,
+                              1,
+                            ),
                             height: 1,
                           ),
                           Container(
-                            color: Colors.white.withOpacity(0.8),
+                            color: Color.fromRGBO(
+                              234,
+                              244,
+                              255,
+                              1,
+                            ).withOpacity(0.9),
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
                                 children: [
                                   Expanded(
                                       flex: 3,
                                       child: Text(
-                                          'Видео обучающее (посмотреть видео 100% длины)',style: TextStyle(fontSize: 13))),
+                                          'Видео обучающее (посмотреть видео 100% длины)',
+                                          style: TextStyle(fontSize: 13))),
                                   SizedBox(
                                     width: 10,
                                   ),
                                   Container(
                                     height: 30,
                                     width: 1,
-                                    color: Colors.black,
+                                    color: Color.fromRGBO(
+                                      170,
+                                      170,
+                                      170,
+                                      1,
+                                    ),
                                   ),
                                   SizedBox(
                                     width: 10,
@@ -889,25 +982,41 @@ class _GlavniyMenyuState extends State<GlavniyMenyu> {
                           ),
                           Container(
                             width: double.infinity,
-                            color: Colors.black,
+                            color: Color.fromRGBO(
+                              170,
+                              170,
+                              170,
+                              1,
+                            ),
                             height: 1,
                           ),
                           Container(
-                            color: Colors.white.withOpacity(0.8),
+                            color: Color.fromRGBO(
+                              234,
+                              244,
+                              255,
+                              1,
+                            ).withOpacity(0.9),
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Row(
                                 children: [
                                   Expanded(
                                       flex: 3,
-                                      child: Text('Новости (открыть новость)',style: TextStyle(fontSize: 13))),
+                                      child: Text('Новости (открыть новость)',
+                                          style: TextStyle(fontSize: 13))),
                                   SizedBox(
                                     width: 10,
                                   ),
                                   Container(
                                     height: 30,
                                     width: 1,
-                                    color: Colors.black,
+                                    color: Color.fromRGBO(
+                                      170,
+                                      170,
+                                      170,
+                                      1,
+                                    ),
                                   ),
                                   SizedBox(
                                     width: 10,
@@ -919,11 +1028,21 @@ class _GlavniyMenyuState extends State<GlavniyMenyu> {
                           ),
                           Container(
                             width: double.infinity,
-                            color: Colors.black,
+                            color: Color.fromRGBO(
+                              170,
+                              170,
+                              170,
+                              1,
+                            ),
                             height: 1,
                           ),
                           Container(
-                            color: Colors.white.withOpacity(0.8),
+                            color: Color.fromRGBO(
+                              234,
+                              244,
+                              255,
+                              1,
+                            ).withOpacity(0.9),
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Row(
@@ -931,14 +1050,20 @@ class _GlavniyMenyuState extends State<GlavniyMenyu> {
                                   Expanded(
                                       flex: 3,
                                       child: Text(
-                                          'Комментарии (написать комментарий к любому материалу)',style: TextStyle(fontSize: 13))),
+                                          'Комментарии (написать комментарий к любому материалу)',
+                                          style: TextStyle(fontSize: 13))),
                                   SizedBox(
                                     width: 10,
                                   ),
                                   Container(
                                     height: 30,
                                     width: 1,
-                                    color: Colors.black,
+                                    color: Color.fromRGBO(
+                                      170,
+                                      170,
+                                      170,
+                                      1,
+                                    ),
                                   ),
                                   SizedBox(
                                     width: 10,
@@ -950,25 +1075,42 @@ class _GlavniyMenyuState extends State<GlavniyMenyu> {
                           ),
                           Container(
                             width: double.infinity,
-                            color: Colors.black,
+                            color: Color.fromRGBO(
+                              170,
+                              170,
+                              170,
+                              1,
+                            ),
                             height: 1,
                           ),
                           Container(
-                            color: Colors.white.withOpacity(0.8),
+                            color: Color.fromRGBO(
+                              234,
+                              244,
+                              255,
+                              1,
+                            ).withOpacity(0.9),
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Row(
                                 children: [
                                   Expanded(
                                       flex: 3,
-                                      child: Text('Авторизация по приглашению друга',style: TextStyle(fontSize: 13))),
+                                      child: Text(
+                                          'Авторизация по приглашению друга',
+                                          style: TextStyle(fontSize: 13))),
                                   SizedBox(
                                     width: 10,
                                   ),
                                   Container(
                                     height: 30,
                                     width: 1,
-                                    color: Colors.black,
+                                    color: Color.fromRGBO(
+                                      170,
+                                      170,
+                                      170,
+                                      1,
+                                    ),
                                   ),
                                   SizedBox(
                                     width: 10,
@@ -980,25 +1122,42 @@ class _GlavniyMenyuState extends State<GlavniyMenyu> {
                           ),
                           Container(
                             width: double.infinity,
-                            color: Colors.black,
+                            color: Color.fromRGBO(
+                              170,
+                              170,
+                              170,
+                              1,
+                            ),
                             height: 1,
                           ),
                           Container(
-                            color: Colors.white.withOpacity(0.8),
+                            color: Color.fromRGBO(
+                              234,
+                              244,
+                              255,
+                              1,
+                            ).withOpacity(0.9),
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Row(
                                 children: [
                                   Expanded(
                                       flex: 3,
-                                      child: Text('Регистрация нового пользователя',style: TextStyle(fontSize: 13))),
+                                      child: Text(
+                                          'Регистрация нового пользователя',
+                                          style: TextStyle(fontSize: 13))),
                                   SizedBox(
                                     width: 10,
                                   ),
                                   Container(
                                     height: 30,
                                     width: 1,
-                                    color: Colors.black,
+                                    color: Color.fromRGBO(
+                                      170,
+                                      170,
+                                      170,
+                                      1,
+                                    ),
                                   ),
                                   SizedBox(
                                     width: 10,
@@ -1010,25 +1169,48 @@ class _GlavniyMenyuState extends State<GlavniyMenyu> {
                           ),
                           Container(
                             width: double.infinity,
-                            color: Colors.black,
+                            color: Color.fromRGBO(
+                              170,
+                              170,
+                              170,
+                              1,
+                            ),
                             height: 1,
                           ),
                           Container(
-                            color: Colors.white.withOpacity(0.8),
+                            decoration: BoxDecoration(
+                              color: Color.fromRGBO(
+                                234,
+                                244,
+                                255,
+                                1,
+                              ).withOpacity(0.9),
+                              borderRadius: BorderRadius.only(
+                                bottomLeft: Radius.circular(12),
+                                bottomRight: Radius.circular(12),
+                              ),
+                            ),
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Row(
                                 children: [
                                   Expanded(
                                       flex: 3,
-                                      child: Text('Регистрация по реферальной ссылке',style: TextStyle(fontSize: 13))),
+                                      child: Text(
+                                          'Регистрация по реферальной ссылке',
+                                          style: TextStyle(fontSize: 13))),
                                   SizedBox(
                                     width: 10,
                                   ),
                                   Container(
                                     height: 30,
                                     width: 1,
-                                    color: Colors.black,
+                                    color: Color.fromRGBO(
+                                      170,
+                                      170,
+                                      170,
+                                      1,
+                                    ),
                                   ),
                                   SizedBox(
                                     width: 10,
@@ -1046,7 +1228,7 @@ class _GlavniyMenyuState extends State<GlavniyMenyu> {
                       left: 66,
                       right: 5,
                       child: Padding(
-                        padding:  EdgeInsets.only(top: isTablet ? 30 : 10),
+                        padding: EdgeInsets.only(top: isTablet ? 30 : 10),
                         child: Center(
                           child: CustomPaint(
                             size: Size(40, 40),
@@ -1055,7 +1237,6 @@ class _GlavniyMenyuState extends State<GlavniyMenyu> {
                         ),
                       ),
                     ),
-
                   ],
                 ),
               ),
@@ -1112,25 +1293,26 @@ class _GlavniyMenyuState extends State<GlavniyMenyu> {
 }
 
 class DrawTriangleShape extends CustomPainter {
-
   Paint? painter;
 
   DrawTriangleShape() {
-
     painter = Paint()
-      ..color = Colors.green
+      ..color = Color.fromRGBO(
+        37,
+        176,
+        73,
+        1,
+      )
       ..style = PaintingStyle.fill;
-
   }
 
   @override
   void paint(Canvas canvas, Size size) {
-
     var path = Path();
 
-    path.moveTo(size.width/2, 0);
+    path.moveTo(size.width / 2, 0);
     path.lineTo(0, size.height);
-    path.lineTo(size.height, size.width/1.2);
+    path.lineTo(size.height, size.width / 1.2);
     path.close();
 
     canvas.drawPath(path, painter!);

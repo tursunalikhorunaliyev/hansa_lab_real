@@ -315,7 +315,7 @@ class _TreningiState extends State<Treningi> {
                                                         },
                                                       );
                                                       value.changeTitles(
-                                                          "Отписаться", index);
+                                                          "Отписация", index);
                                                     } else {
                                                       value.changeTitles(
                                                           "Записаться", index);

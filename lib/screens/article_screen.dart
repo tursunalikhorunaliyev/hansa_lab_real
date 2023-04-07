@@ -60,6 +60,7 @@ class ArticleScreen extends StatelessWidget {
                         width: double.infinity,
                       ),
                       Container(
+                        padding: EdgeInsets.all(16),
                         width: double.infinity,
                         decoration: const BoxDecoration(
                             borderRadius: BorderRadius.only(

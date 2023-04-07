@@ -25,10 +25,10 @@ class PrezintatsiaBLoC {
 
   Future<PrezintatsiaModel> getPrezintatsiyaData(token, String url) async {
     http.Response response = await http.post(
-      Uri.parse("http://hansa-lab.ru/$url"),
+      Uri.parse("https://hansa-lab.ru/$url"),
       headers: {"token": token},
     );
-
+    print(jsonDecode(response.body));
     return PrezintatsiaModel.fromMap(jsonDecode(response.body));
   }
 }

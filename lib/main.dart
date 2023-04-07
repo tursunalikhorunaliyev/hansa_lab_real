@@ -81,7 +81,6 @@ Future<void> main(List<String> args) async {
   await initMessaging(fcmArticleBloc);
   print('2');
   await listenForeground();
-  print('3');
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
 
   if (Platform.isAndroid) {
@@ -184,20 +183,30 @@ class MyApp extends StatelessWidget {
             create: (context) => VideoIndProvider(),
           ),
         ],
-        child: MaterialApp(
-          builder: (context, child) {
-            return MediaQuery(data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0), child: child!);
-          },
-          localizationsDelegates: const [
-            GlobalMaterialLocalizations.delegate,
-            GlobalCupertinoLocalizations.delegate,
-            GlobalWidgetsLocalizations.delegate,
-          ],
-          supportedLocales: const [Locale("en"), Locale("ru"), Locale("ar")],
-          locale: const Locale("ru"),
-          debugShowCheckedModeBanner: false,
-          home: PermissionHandlerScreen(
-            androidVersion: platformVersion,
+        child: AnnotatedRegion<SystemUiOverlayStyle>(
+          value: SystemUiOverlayStyle(
+            statusBarColor: Colors.white, //set as per your  status bar color
+            systemNavigationBarColor: Colors.white, //set as per your navigation bar color
+            statusBarIconBrightness: Brightness.dark, //set as per your status bar icons' color
+            systemNavigationBarIconBrightness: Brightness.dark,
+          ),
+          child: MaterialApp(
+            builder: (context, child) {
+              return MediaQuery(
+                  data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),
+                  child: child!);
+            },
+            localizationsDelegates: const [
+              GlobalMaterialLocalizations.delegate,
+              GlobalCupertinoLocalizations.delegate,
+              GlobalWidgetsLocalizations.delegate,
+            ],
+            supportedLocales: const [Locale("en"), Locale("ru"), Locale("ar")],
+            locale: const Locale("ru"),
+            debugShowCheckedModeBanner: false,
+            home: PermissionHandlerScreen(
+              androidVersion: platformVersion,
+            ),
           ),
         ),
       ),

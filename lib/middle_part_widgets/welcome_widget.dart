@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:chewie/chewie.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -44,7 +42,6 @@ class _WelcomeWidgetState extends State<WelcomeWidget> {
 
   @override
   Widget build(BuildContext context) {
-    int snapshotCount = 0;
     final scroll = ScrollController();
     final isTablet = Provider.of<bool>(context);
     final token = Provider.of<String>(context);
@@ -59,8 +56,6 @@ class _WelcomeWidgetState extends State<WelcomeWidget> {
           builder: (context, snapshot) {
             if (snapshot.hasData) {
               final data = snapshot.requireData;
-              final videoLink = providerWelcomeApi.getVideoLink;
-
               return isTablet
                   ? Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 25),
@@ -254,29 +249,29 @@ class _WelcomeWidgetState extends State<WelcomeWidget> {
 
   String toDateString(String m) {
     if (m == "01") {
-      return "Январь";
+      return "Января";
     } else if (m == "02") {
-      return "Февраль";
+      return "Февраля";
     } else if (m == "03") {
-      return "Март";
+      return "Марта";
     } else if (m == "04") {
-      return "Апрель";
+      return "Апреля";
     } else if (m == "05") {
-      return "Май";
+      return "Мая";
     } else if (m == "06") {
-      return "Июнь";
+      return "Июня";
     } else if (m == "07") {
-      return "Июль";
+      return "Июля";
     } else if (m == "08") {
-      return "Август";
+      return "Августа";
     } else if (m == "09") {
-      return "Сентябрь";
+      return "Сентября";
     } else if (m == "10") {
-      return "Октябрь";
+      return "Октября";
     } else if (m == "11") {
-      return "Ноябрь";
+      return "Ноября";
     } else {
-      return "Декабрь";
+      return "Декабря";
     }
   }
 }

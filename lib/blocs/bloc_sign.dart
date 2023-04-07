@@ -36,12 +36,9 @@ class BlocSignUp {
       "isAgreePersonal": isAgreePersonal
     };
     http.Response response = await http.post(
-      Uri.parse("http://hansa-lab.ru/api/auth/signup"),
+      Uri.parse("https://hansa-lab.ru/api/auth/signup"),
       body: body,
     );
-    log("=======================================");
-    log("================ ${jsonDecode(response.body)}================");
-    log("=======================================");
     return jsonDecode(response.body);
   }
 }
