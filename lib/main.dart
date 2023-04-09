@@ -76,10 +76,8 @@ Future<void> main(List<String> args) async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
   requestMessaging();
-  print('1');
   final fcmArticleBloc = FcmArticleBloC();
   await initMessaging(fcmArticleBloc);
-  print('2');
   await listenForeground();
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
 

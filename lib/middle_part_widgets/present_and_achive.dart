@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dio/dio.dart';
+import 'package:open_filex/open_filex.dart';
 import 'package:path/path.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -13,7 +14,6 @@ import 'package:hansa_lab/classes/sned_url_prezent_otkrit.dart';
 import 'package:hansa_lab/extra/archive_card.dart';
 import 'package:hansa_lab/extra/prezentatTabCard.dart';
 import 'package:lottie/lottie.dart';
-import 'package:open_file/open_file.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -88,7 +88,7 @@ class _PresentArchiveState extends State<PresentArchive> {
         deleteOnError: true,
       ).then((value) async {
         Navigator.pop(context);
-        OpenFile.open(path);
+        OpenFilex.open(path);
       });
     }
 
