@@ -15,7 +15,6 @@ import 'package:hansa_lab/providers/providers_for_video_title/video_title_provid
 import 'package:hansa_lab/video/bloc_video_api.dart';
 import 'package:hansa_lab/video/model_video.dart';
 import 'package:lottie/lottie.dart';
-import 'package:open_file/open_file.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:permission_handler/permission_handler.dart';

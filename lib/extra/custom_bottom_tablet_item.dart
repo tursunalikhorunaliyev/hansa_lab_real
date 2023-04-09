@@ -3,7 +3,7 @@ import 'dart:developer';
 import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
-import 'package:open_file/open_file.dart';
+import 'package:open_filex/open_filex.dart';
 import 'package:path/path.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -69,7 +69,7 @@ class _TabletKatalogBottomItemState extends State<TabletKatalogBottomItem> {
         blocDownload.streamSink.add(progress);
         if (progress == 100) {
           log("tugadi");
-          OpenFile.open(path);
+          OpenFilex.open(path);
         } else {
           log("hali tugamadi");
         }

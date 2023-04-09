@@ -6,14 +6,15 @@ import FlutterMacOS
 import Foundation
 
 import audio_session
+import device_info_plus
 import firebase_core
 import firebase_crashlytics
 import firebase_messaging
 import flutter_app_badger
 import flutter_local_notifications
 import just_audio
-import package_info_plus_macos
-import path_provider_macos
+import package_info_plus
+import path_provider_foundation
 import sentry_flutter
 import share_plus_macos
 import sqflite
@@ -23,6 +24,7 @@ import wakelock_macos
 
 func RegisterGeneratedPlugins(registry: FlutterPluginRegistry) {
   AudioSessionPlugin.register(with: registry.registrar(forPlugin: "AudioSessionPlugin"))
+  DeviceInfoPlusMacosPlugin.register(with: registry.registrar(forPlugin: "DeviceInfoPlusMacosPlugin"))
   FLTFirebaseCorePlugin.register(with: registry.registrar(forPlugin: "FLTFirebaseCorePlugin"))
   FLTFirebaseCrashlyticsPlugin.register(with: registry.registrar(forPlugin: "FLTFirebaseCrashlyticsPlugin"))
   FLTFirebaseMessagingPlugin.register(with: registry.registrar(forPlugin: "FLTFirebaseMessagingPlugin"))

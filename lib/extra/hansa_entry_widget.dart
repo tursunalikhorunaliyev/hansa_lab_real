@@ -15,7 +15,7 @@ class HansaEntry extends StatefulWidget {
 }
 
 class _HansaEntryState extends State<HansaEntry> {
-  double pos = 420;
+  double pos = 920;
 
   @override
   void initState() {
@@ -27,7 +27,7 @@ class _HansaEntryState extends State<HansaEntry> {
     Timer.periodic(const Duration(seconds: 2), (timer) {
       if (timer.tick == 1) {
         setState(() {
-          pos = 200;
+          pos = 500;
         });
         timer.cancel();
       }
@@ -38,9 +38,9 @@ class _HansaEntryState extends State<HansaEntry> {
   Widget build(BuildContext context) {
     final isTablet = Provider.of<bool>(context);
     return ScreenUtilInit(
-      designSize: const Size(375, 812),
+      designSize: Size(375, 812),
       builder: (context, child) => Stack(
-        alignment: Alignment.center,
+        alignment: Alignment.bottomCenter,
         clipBehavior: Clip.none,
         children: [
           Container(
@@ -62,7 +62,6 @@ class _HansaEntryState extends State<HansaEntry> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        
                         "#Увидимся",
                         textScaleFactor: 1.0,
                         style: GoogleFonts.montserrat(
@@ -72,7 +71,7 @@ class _HansaEntryState extends State<HansaEntry> {
                       ),
                       Text(
                         "на",
-                          textScaleFactor: 1.0,
+                        textScaleFactor: 1.0,
                         style: GoogleFonts.montserrat(
                             color: const Color.fromARGB(255, 59, 59, 59),
                             fontSize: isTablet ? 16.sp : 25.sp,
@@ -80,7 +79,7 @@ class _HansaEntryState extends State<HansaEntry> {
                       ),
                       Text(
                         "кухне",
-                          textScaleFactor: 1.0,
+                        textScaleFactor: 1.0,
                         style: GoogleFonts.montserrat(
                             color: const Color.fromARGB(255, 59, 59, 59),
                             fontSize: isTablet ? 16.sp : 25.sp,
@@ -92,9 +91,9 @@ class _HansaEntryState extends State<HansaEntry> {
               ],
             ),
           ),
-          pos == 420
+          pos == 920
               ? Positioned(
-                  top: 240.h,
+                  top: 640.h,
                   left: 27.w,
                   right: 27.w,
                   child:
@@ -102,21 +101,21 @@ class _HansaEntryState extends State<HansaEntry> {
                 )
               : const SizedBox(),
           Positioned(
-            top: isTablet ? -90  : -58,
+            top: isTablet ? 305.h : 314.6666666666667.h,
             child: isTablet
                 ? Image.asset("assets/tabletTumLogo.png")
                 : Image.asset(
-                    "assets/Logo.png",
-                    height: 133,
-                    width: 133,
-                  ),
+              "assets/Logo.png",
+              height: 133,
+              width: 133,
+            ),
           ),
           AnimatedPositioned(
             duration: const Duration(milliseconds: 200),
             top: pos.h,
             bottom: isTablet ? 25.h : 20.h,
             child: const VoytiIliSozdatAccaunt(),
-          ),
+          )
         ],
       ),
     );

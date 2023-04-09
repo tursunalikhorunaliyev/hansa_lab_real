@@ -8,7 +8,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hansa_lab/api_models.dart/favourite_model.dart';
 import 'package:hansa_lab/blocs/favourite_bloc.dart';
-import 'package:open_file/open_file.dart';
+import 'package:open_filex/open_filex.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -99,7 +99,7 @@ class _ObucheniyaCardState extends State<ObucheniyaCard> {
         deleteOnError: true,
       ).then((value) async {
         Navigator.pop(context);
-        OpenFile.open(path);
+        OpenFilex.open(path);
       });
     }
 

@@ -89,7 +89,7 @@ class HansaZagruzka extends StatelessWidget {
                             ? SingleChildScrollView(
                                 physics: const BouncingScrollPhysics(),
                                 child: Padding(
-                                  padding: const EdgeInsets.only(top: 200),
+                                  padding: const EdgeInsets.only(top: 100),
                                   child: MultiProvider(providers: [
                                     ChangeNotifierProvider(
                                       create: (context) =>
