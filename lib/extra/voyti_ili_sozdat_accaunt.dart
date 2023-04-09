@@ -83,7 +83,7 @@ class VoytiIliSozdatAccaunt extends StatelessWidget {
               ),
             ),
             SizedBox(
-              height: 27.66666666666667.h,
+              height: 27.66666666666667.h
             ),
             GestureDetector(
               onTap: () {
