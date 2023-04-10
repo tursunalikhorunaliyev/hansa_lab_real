@@ -39,14 +39,7 @@ initMessaging(FcmArticleBloC fcmArticleBloc) async {
     onDidReceiveBackgroundNotificationResponse: onDidReceiveNotificationResponse,
   );
 
-  FirebaseMessaging.onMessageOpenedApp.listen(
-    (event) {
-      final data = event.data;
-      if (data.containsKey('news_id')) {
-        fcmArticleBloc.articleId = data['news_id'];
-      }
-    },
-  );
+  FirebaseMessaging.onMessageOpenedApp.listen(fcmArticleBloc.getNewsIdFromFCM);
   // FlutterAppBadger.updateBadgeCount(1);
   //
   await flutterLocalNotificationsPlugin
@@ -83,12 +76,13 @@ onBackground() {
   });
 }
 
-listenForeground() {
+listenForeground(FcmArticleBloC fcmArticleBloc) {
   // FlutterAppBadger.updateBadgeCount(1);
   // FlutterAppBadger.removeBadge();
   FirebaseMessaging.onMessage.listen((RemoteMessage message) {
     log("FirebaseMessaging listened...");
     log(message.notification!.title ?? "Notification not received...");
+    fcmArticleBloc.getNewsIdFromFCM(message);
     RemoteNotification notification = message.notification!;
     AndroidNotification? androidNotification = message.notification!.android;
     AppleNotification? appleNotification = message.notification!.apple;
