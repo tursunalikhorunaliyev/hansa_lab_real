@@ -78,8 +78,9 @@ Future<void> main(List<String> args) async {
   requestMessaging();
   final fcmArticleBloc = FcmArticleBloC();
   await initMessaging(fcmArticleBloc);
-  await listenForeground();
+  await listenForeground(fcmArticleBloc);
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
+  FirebaseMessaging.instance.getInitialMessage().then(fcmArticleBloc.getNewsIdFromFCM);
 
   if (Platform.isAndroid) {
     try {
@@ -190,9 +191,7 @@ class MyApp extends StatelessWidget {
           ),
           child: MaterialApp(
             builder: (context, child) {
-              return MediaQuery(
-                  data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),
-                  child: child!);
+              return MediaQuery(data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0), child: child!);
             },
             localizationsDelegates: const [
               GlobalMaterialLocalizations.delegate,

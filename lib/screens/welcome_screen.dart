@@ -3,7 +3,6 @@ import 'dart:developer';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:hansa_lab/api_models.dart/question_day_model.dart';
 import 'package:hansa_lab/api_services/welcome_api.dart';
 import 'package:hansa_lab/blocs/article_bloc.dart';
@@ -62,13 +61,15 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
     _articleBloc = Provider.of<ArticleBLoC>(context, listen: false);
     _fcmArticleBloc = Provider.of<FcmArticleBloC>(context, listen: false);
     _fcmArticleBloc.addListener(_fetchNewArticle);
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      _fetchNewArticle();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      Future.delayed(const Duration(seconds: 1), _fetchNewArticle);
     });
     super.initState();
   }
 
   void _fetchNewArticle() async {
+    if (_fcmArticleBloc.empty) return;
     final link = _fcmArticleBloc.articleLink;
     final articleModel = await _articleBloc.getArticle(_token, link);
     _menuProvider.eventSink.add(MenuActions.article);
@@ -133,7 +134,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                     return SizedBox(
                       height: 70.h,
                       child: Container(
-                        padding: EdgeInsets.only(bottom: 8.0),
+                        padding: const EdgeInsets.only(bottom: 8.0),
                         color: const Color(0xffffffff),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -157,9 +158,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                                     Text(
                                       "Назад",
                                       textScaleFactor: 1.0,
-                                      style: TextStyle(
-                                          color: Colors.grey[700],
-                                          fontSize: 12),
+                                      style: TextStyle(color: Colors.grey[700], fontSize: 12),
                                     )
                                   ],
                                 ),
@@ -380,7 +379,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                                               width: double.infinity,
                                               height: 150.h,
                                               alignment: Alignment.center,
-                                              margin: EdgeInsets.all(16),
+                                              margin: const EdgeInsets.all(16),
                                               // padding: EdgeInsets.all(12),
                                               decoration: BoxDecoration(
                                                   color: Colors.red
@@ -427,36 +426,25 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                                           if (isRight == null) ...[
                                             Padding(
                                               padding: EdgeInsets.only(
-                                                  left: isTablet ? 28 : 18,
-                                                  right: isTablet ? 28 : 18,
-                                                  top: 24),
+                                                  left: isTablet ? 28 : 18, right: isTablet ? 28 : 18, top: 24),
                                               child: Stack(
                                                 children: [
                                                   Container(
                                                     height: 180.h,
-                                                    padding: EdgeInsets.all(1),
+                                                    padding: const EdgeInsets.all(1),
                                                     decoration: BoxDecoration(
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(20),
-                                                        image: DecorationImage(
-                                                            fit: BoxFit
-                                                                .fitHeight,
-                                                            image: AssetImage(
-                                                                'assets/quizz.png'))),
+                                                        borderRadius: BorderRadius.circular(20),
+                                                        image: const DecorationImage(
+                                                            fit: BoxFit.fitHeight,
+                                                            image: AssetImage('assets/quizz.png'))),
                                                     child: Container(
-                                                      height: isTablet
-                                                          ? 200
-                                                          : 179.h,
+                                                      height: isTablet ? 200 : 179.h,
                                                       decoration: BoxDecoration(
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(20),
+                                                        borderRadius: BorderRadius.circular(20),
                                                         // gradient: LinearGradient(colors: [Color(0xFF6071C9),Color(0xFF6071C9),])
-                                                        image: DecorationImage(
+                                                        image: const DecorationImage(
                                                           fit: BoxFit.fitHeight,
-                                                          image: AssetImage(
-                                                              'assets/ssss.png'),
+                                                          image: AssetImage('assets/ssss.png'),
                                                         ),
                                                       ),
                                                     ),
@@ -465,42 +453,27 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                                                     height: 178.h,
                                                     alignment: Alignment.center,
                                                     decoration: BoxDecoration(
-                                                        color:
-                                                            Colors.transparent,
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(12)),
+                                                        color: Colors.transparent,
+                                                        borderRadius: BorderRadius.circular(12)),
                                                     child: Padding(
-                                                      padding:
-                                                          const EdgeInsets.all(
-                                                              20),
+                                                      padding: const EdgeInsets.all(20),
                                                       child: Column(
-                                                        crossAxisAlignment:
-                                                            CrossAxisAlignment
-                                                                .center,
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .center,
+                                                        crossAxisAlignment: CrossAxisAlignment.center,
+                                                        mainAxisAlignment: MainAxisAlignment.center,
                                                         children: [
-                                                          Text(
+                                                          const Text(
                                                             'ВОПРОС ДНЯ ',
                                                             style: TextStyle(
-                                                                color: Colors
-                                                                    .white,
+                                                                color: Colors.white,
                                                                 fontSize: 24,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .normal),
+                                                                fontWeight: FontWeight.normal),
                                                           ),
                                                           const Text(
                                                             '. . .',
                                                             style: TextStyle(
-                                                                color: Colors
-                                                                    .white,
+                                                                color: Colors.white,
                                                                 fontSize: 20,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w500),
+                                                                fontWeight: FontWeight.w500),
                                                           ),
                                                           const SizedBox(
                                                             height: 2,
@@ -590,24 +563,19 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                                             Container(
                                               width: 44,
                                               height: 44,
-                                              margin: const EdgeInsets.only(
-                                                  left: 24, bottom: 18, top: 8),
+                                              margin: const EdgeInsets.only(left: 24, bottom: 18, top: 8),
                                               decoration: BoxDecoration(
-                                                color: Color(0xFFB7D6F9),
-                                                borderRadius:
-                                                    BorderRadius.circular(22),
+                                                color: const Color(0xFFB7D6F9),
+                                                borderRadius: BorderRadius.circular(22),
                                               ),
                                               child: Container(
                                                 width: 20,
                                                 height: 20,
                                                 margin: const EdgeInsets.all(8),
                                                 decoration: BoxDecoration(
-                                                    color: Color(0xFFB7D6F9),
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            16),
-                                                    border: Border.all(
-                                                        color: Colors.black)),
+                                                    color: const Color(0xFFB7D6F9),
+                                                    borderRadius: BorderRadius.circular(16),
+                                                    border: Border.all(color: Colors.black)),
                                                 child: const Icon(
                                                   Icons.question_mark,
                                                   size: 20,
@@ -618,17 +586,15 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                                           ]
                                         ],
                                       ),
-                                      SizedBox(
+                                      const SizedBox(
                                         height: 16,
                                       ),
                                       ListView.builder(
-                                          physics:
-                                              NeverScrollableScrollPhysics(),
+                                          physics: const NeverScrollableScrollPhysics(),
                                           itemCount: testVariant.length,
                                           shrinkWrap: true,
                                           padding: EdgeInsets.zero,
-                                          itemBuilder: (BuildContext context,
-                                              int index) {
+                                          itemBuilder: (BuildContext context, int index) {
                                             return GestureDetector(
                                               onTap: () {
                                                 isRight ??= snapshot.data!.data
@@ -651,47 +617,31 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                                               },
                                               child: Padding(
                                                 padding: EdgeInsets.only(
-                                                    bottom: 6,
-                                                    left: isTablet ? 38 : 18,
-                                                    right: isTablet ? 38 : 18),
+                                                    bottom: 6, left: isTablet ? 38 : 18, right: isTablet ? 38 : 18),
                                                 child: Stack(
                                                   children: [
                                                     Container(
-                                                      height:
-                                                          isTablet ? 76 : 55,
-                                                      padding: EdgeInsets.all(
-                                                          isTablet ? 4 : 2),
-                                                      decoration: BoxDecoration(
+                                                      height: isTablet ? 76 : 55,
+                                                      padding: EdgeInsets.all(isTablet ? 4 : 2),
+                                                      decoration: const BoxDecoration(
                                                           image: DecorationImage(
-                                                              fit: BoxFit.fill,
-                                                              image: AssetImage(
-                                                                  'assets/quizz.png'))),
+                                                              fit: BoxFit.fill, image: AssetImage('assets/quizz.png'))),
                                                       child: Container(
                                                         height: 55,
-                                                        decoration:
-                                                            BoxDecoration(
-                                                          image:
-                                                              DecorationImage(
+                                                        decoration: const BoxDecoration(
+                                                          image: DecorationImage(
                                                             fit: BoxFit.fill,
-                                                            image: AssetImage(
-                                                                'assets/ssss.png'),
+                                                            image: AssetImage('assets/ssss.png'),
                                                           ),
                                                         ),
                                                       ),
                                                     ),
                                                     Container(
-                                                      padding: EdgeInsets.all(
-                                                          isTablet
-                                                              ? 14.0
-                                                              : 4.0),
+                                                      padding: EdgeInsets.all(isTablet ? 14.0 : 4.0),
                                                       width: double.infinity,
                                                       decoration: BoxDecoration(
                                                         borderRadius:
-                                                            BorderRadius.all(
-                                                                Radius.circular(
-                                                                    isTablet
-                                                                        ? 50
-                                                                        : 30)),
+                                                            BorderRadius.all(Radius.circular(isTablet ? 50 : 30)),
                                                         // gradient: LinearGradient(
                                                         //   begin: Alignment.topCenter,
                                                         //   end: Alignment.bottomCenter,
@@ -704,63 +654,29 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                                                         //
                                                         //   ],
                                                         // ),
-                                                        color: isRight ==
-                                                                    null ||
-                                                                isNumber !=
-                                                                    snapshot
-                                                                        .data!
-                                                                        .data
-                                                                        .answers[
-                                                                            index]
-                                                                        .number
+                                                        color: isRight == null ||
+                                                                isNumber != snapshot.data!.data.answers[index].number
                                                             ? Colors.transparent
-                                                            : snapshot
-                                                                        .data!
-                                                                        .data
-                                                                        .answers[
-                                                                            index]
-                                                                        .isRight ==
-                                                                    1
-                                                                ? Colors.green
-                                                                    .withOpacity(
-                                                                        0.5)
-                                                                : Colors.red
-                                                                    .withOpacity(
-                                                                        0.5),
+                                                            : snapshot.data!.data.answers[index].isRight == 1
+                                                                ? Colors.green.withOpacity(0.5)
+                                                                : Colors.red.withOpacity(0.5),
                                                       ),
                                                       child: Row(
                                                         children: [
                                                           Container(
-                                                            alignment: Alignment
-                                                                .center,
-                                                            height: isTablet
-                                                                ? 40
-                                                                : 33,
-                                                            width: isTablet
-                                                                ? 40
-                                                                : 32,
-                                                            padding:
-                                                                EdgeInsets.all(
-                                                                    6),
-                                                            margin:
-                                                                EdgeInsets.all(
-                                                                    6),
+                                                            alignment: Alignment.center,
+                                                            height: isTablet ? 40 : 33,
+                                                            width: isTablet ? 40 : 32,
+                                                            padding: const EdgeInsets.all(6),
+                                                            margin: const EdgeInsets.all(6),
                                                             decoration: BoxDecoration(
-                                                                color: Color(
-                                                                    0xFFB7D6F9),
+                                                                color: const Color(0xFFB7D6F9),
                                                                 borderRadius:
-                                                                    BorderRadius.circular(
-                                                                        isTablet
-                                                                            ? 35
-                                                                            : 15)),
+                                                                    BorderRadius.circular(isTablet ? 35 : 15)),
                                                             child: Text(
-                                                              testVariant[
-                                                                  index],
-                                                              style: TextStyle(
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .bold,
-                                                                  fontSize: 16),
+                                                              testVariant[index],
+                                                              style: const TextStyle(
+                                                                  fontWeight: FontWeight.bold, fontSize: 16),
                                                             ),
                                                           ),
                                                           const SizedBox(
@@ -768,15 +684,8 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                                                           ),
                                                           Expanded(
                                                             child: Text(
-                                                              snapshot
-                                                                  .data!
-                                                                  .data
-                                                                  .answers[
-                                                                      index]
-                                                                  .text,
-                                                              style: const TextStyle(
-                                                                  color: Colors
-                                                                      .white),
+                                                              snapshot.data!.data.answers[index].text,
+                                                              style: const TextStyle(color: Colors.white),
                                                             ),
                                                           ),
                                                           const SizedBox(
@@ -793,8 +702,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                                     ],
                                   ),
                                   Padding(
-                                    padding: const EdgeInsets.only(
-                                        left: 80, right: 20, top: 80),
+                                    padding: const EdgeInsets.only(left: 80, right: 20, top: 80),
                                     child: Align(
                                       alignment: Alignment.topRight,
                                       child: IconButton(
