@@ -62,7 +62,9 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
     _articleBloc = Provider.of<ArticleBLoC>(context, listen: false);
     _fcmArticleBloc = Provider.of<FcmArticleBloC>(context, listen: false);
     _fcmArticleBloc.addListener(_fetchNewArticle);
-    _fetchNewArticle();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      _fetchNewArticle();
+    });
     super.initState();
   }
 
@@ -95,7 +97,9 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
 
     return WillPopScope(
       onWillPop: () async {
-        providerSendCheckSwitcher.getBool == true ? backPressedTrue(menuProvider) : backPressed(menuProvider);
+        providerSendCheckSwitcher.getBool == true
+            ? backPressedTrue(menuProvider)
+            : backPressed(menuProvider);
         return false;
       },
       child: KeyboardDismisser(
@@ -178,7 +182,8 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                                   Text(
                                     "Домой",
                                     textScaleFactor: 1.0,
-                                    style: TextStyle(color: Colors.grey[700], fontSize: 12),
+                                    style: TextStyle(
+                                        color: Colors.grey[700], fontSize: 12),
                                   )
                                 ],
                               ),
@@ -203,7 +208,8 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                                   Text(
                                     "Избранное",
                                     textScaleFactor: 1.0,
-                                    style: TextStyle(color: Colors.grey[700], fontSize: 12),
+                                    style: TextStyle(
+                                        color: Colors.grey[700], fontSize: 12),
                                   )
                                 ],
                               ),
@@ -227,7 +233,8 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                                   Text(
                                     "Профиль",
                                     textScaleFactor: 1.0,
-                                    style: TextStyle(color: Colors.grey[700], fontSize: 12),
+                                    style: TextStyle(
+                                        color: Colors.grey[700], fontSize: 12),
                                   )
                                 ],
                               ),
@@ -247,7 +254,8 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                         width: double.infinity,
                         height: 100.h,
                         child: Padding(
-                          padding: EdgeInsets.only(top: 25.h, left: 20, right: 24),
+                          padding:
+                              EdgeInsets.only(top: 25.h, left: 20, right: 24),
                           child: Row(
                             mainAxisSize: MainAxisSize.max,
                             crossAxisAlignment: CrossAxisAlignment.center,
@@ -256,12 +264,14 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                               IconButton(
                                   onPressed: () {
                                     providerTapFavorite.setInt(0);
-                                    providerScaffoldKey.currentState!.openDrawer();
+                                    providerScaffoldKey.currentState!
+                                        .openDrawer();
                                   },
                                   icon: const HamburgerIcon()),
                               InkWell(
                                 onTap: () {
-                                  menuProvider.eventSink.add(MenuActions.welcome);
+                                  menuProvider.eventSink
+                                      .add(MenuActions.welcome);
                                 },
                                 child: Image.asset(
                                   'assets/tepaLogo.png',
@@ -272,7 +282,8 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                               InkWell(
                                 onTap: () {
                                   log("${providerSendCheckSwitcher.getBool} SEARCH");
-                                  Navigator.of(context).push(SlideTransitionBottom(
+                                  Navigator.of(context)
+                                      .push(SlideTransitionBottom(
                                     Provider.value(
                                       value: token,
                                       child: const SearchScreen(),
@@ -318,7 +329,8 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                               body: Stack(
                                 children: [
                                   Column(
-                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
                                       Stack(
@@ -331,23 +343,33 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                                               margin: const EdgeInsets.all(16),
                                               padding: const EdgeInsets.all(12),
                                               decoration: BoxDecoration(
-                                                  color: Colors.green.withOpacity(0.7),
-                                                  borderRadius: BorderRadius.circular(12)),
+                                                  color: Colors.green
+                                                      .withOpacity(0.7),
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          12)),
                                               child: Column(
-                                                crossAxisAlignment: CrossAxisAlignment.center,
-                                                mainAxisAlignment: MainAxisAlignment.center,
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.center,
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.center,
                                                 children: const [
                                                   Text(
                                                     'ПРАВИЛЬНО!',
                                                     style: TextStyle(
-                                                        color: Colors.white, fontSize: 30, fontWeight: FontWeight.w500),
+                                                        color: Colors.white,
+                                                        fontSize: 30,
+                                                        fontWeight:
+                                                            FontWeight.w500),
                                                   ),
                                                   SizedBox(
                                                     height: 10,
                                                   ),
                                                   Text(
                                                     'ВАМ БУДЕТ ЗАЧИСЛЕНО 100 БАЛЛОВ',
-                                                    style: TextStyle(color: Colors.white, fontSize: 10),
+                                                    style: TextStyle(
+                                                        color: Colors.white,
+                                                        fontSize: 10),
                                                   ),
                                                 ],
                                               ),
@@ -361,30 +383,42 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                                               margin: EdgeInsets.all(16),
                                               // padding: EdgeInsets.all(12),
                                               decoration: BoxDecoration(
-                                                  color: Colors.red.withOpacity(0.9),
-                                                  borderRadius: BorderRadius.circular(12)),
+                                                  color: Colors.red
+                                                      .withOpacity(0.9),
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          12)),
                                               child: Column(
-                                                crossAxisAlignment: CrossAxisAlignment.center,
-                                                mainAxisAlignment: MainAxisAlignment.center,
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.center,
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.center,
                                                 children: const [
                                                   Text(
                                                     'НЕ ВЕРНО',
                                                     style: TextStyle(
-                                                        color: Colors.white, fontSize: 30, fontWeight: FontWeight.w500),
+                                                        color: Colors.white,
+                                                        fontSize: 30,
+                                                        fontWeight:
+                                                            FontWeight.w500),
                                                   ),
                                                   SizedBox(
                                                     height: 10,
                                                   ),
                                                   Text(
                                                     'ЗАВТРА БУДЕТ НОВЫЙ ВОПРОС',
-                                                    style: TextStyle(color: Colors.white, fontSize: 10),
+                                                    style: TextStyle(
+                                                        color: Colors.white,
+                                                        fontSize: 10),
                                                   ),
                                                   SizedBox(
                                                     height: 10,
                                                   ),
                                                   Text(
                                                     'ТЫ ТОЧНО СПРАВИШЬСЯ',
-                                                    style: TextStyle(color: Colors.white, fontSize: 10),
+                                                    style: TextStyle(
+                                                        color: Colors.white,
+                                                        fontSize: 10),
                                                   ),
                                                 ],
                                               ),
@@ -477,10 +511,10 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                                                             style: const TextStyle(
                                                                 color: Colors
                                                                     .white,
-                                                                fontSize: 16),
+                                                                fontSize: 14),
                                                           ),
                                                           const SizedBox(
-                                                            height: 10,
+                                                            height: 16,
                                                           ),
                                                         ],
                                                       ),
@@ -494,19 +528,26 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                                             Container(
                                               width: 48,
                                               height: 48,
-                                              margin: const EdgeInsets.only(left: 24, bottom: 8),
+                                              margin: const EdgeInsets.only(
+                                                  left: 24, bottom: 8),
                                               decoration: BoxDecoration(
-                                                color: Colors.green.withOpacity(0.8),
-                                                borderRadius: BorderRadius.circular(22),
+                                                color: Colors.green
+                                                    .withOpacity(0.8),
+                                                borderRadius:
+                                                    BorderRadius.circular(22),
                                               ),
                                               child: Container(
                                                 width: 20,
                                                 height: 20,
                                                 margin: const EdgeInsets.all(8),
                                                 decoration: BoxDecoration(
-                                                    color: Colors.green.withOpacity(0.8),
-                                                    borderRadius: BorderRadius.circular(16),
-                                                    border: Border.all(color: Colors.white)),
+                                                    color: Colors.green
+                                                        .withOpacity(0.8),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            16),
+                                                    border: Border.all(
+                                                        color: Colors.white)),
                                                 child: const Icon(
                                                   Icons.done,
                                                   color: Colors.white,
@@ -518,19 +559,26 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                                             Container(
                                               width: 48,
                                               height: 48,
-                                              margin: const EdgeInsets.only(left: 24, bottom: 8),
+                                              margin: const EdgeInsets.only(
+                                                  left: 24, bottom: 8),
                                               decoration: BoxDecoration(
-                                                color: Colors.red.withOpacity(0.8),
-                                                borderRadius: BorderRadius.circular(22),
+                                                color:
+                                                    Colors.red.withOpacity(0.8),
+                                                borderRadius:
+                                                    BorderRadius.circular(22),
                                               ),
                                               child: Container(
                                                 width: 20,
                                                 height: 20,
                                                 margin: const EdgeInsets.all(8),
                                                 decoration: BoxDecoration(
-                                                    color: Colors.red.withOpacity(0.8),
-                                                    borderRadius: BorderRadius.circular(16),
-                                                    border: Border.all(color: Colors.white)),
+                                                    color: Colors.red
+                                                        .withOpacity(0.8),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            16),
+                                                    border: Border.all(
+                                                        color: Colors.white)),
                                                 child: const Icon(
                                                   Icons.close,
                                                   color: Colors.white,
@@ -583,11 +631,19 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                                               int index) {
                                             return GestureDetector(
                                               onTap: () {
-                                                isRight ??= snapshot.data!.data.answers[index].isRight;
-                                                isNumber ??= snapshot.data!.data.answers[index].number;
-                                                isQuestionId ??= snapshot.data!.data.question.id;
-                                                getQuestionApi.setQuestion(token, isNumber!, isQuestionId!);
-                                                Future.delayed(const Duration(seconds: 3)).then((value) {
+                                                isRight ??= snapshot.data!.data
+                                                    .answers[index].isRight;
+                                                isNumber ??= snapshot.data!.data
+                                                    .answers[index].number;
+                                                isQuestionId ??= snapshot
+                                                    .data!.data.question.id;
+                                                getQuestionApi.setQuestion(
+                                                    token,
+                                                    isNumber!,
+                                                    isQuestionId!);
+                                                Future.delayed(const Duration(
+                                                        seconds: 3))
+                                                    .then((value) {
                                                   isShowDialog = true;
                                                   setState(() {});
                                                 });
@@ -768,8 +824,10 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
 
   backPressed(MenuEventsBloC menuProvider) {
     if (menuProvider.list.length > 1) {
-      menuProvider.eventSink.add(menuProvider.list.elementAt(menuProvider.list.length - 2));
-      menuProvider.list.remove(menuProvider.list.elementAt(menuProvider.list.length - 1));
+      menuProvider.eventSink
+          .add(menuProvider.list.elementAt(menuProvider.list.length - 2));
+      menuProvider.list
+          .remove(menuProvider.list.elementAt(menuProvider.list.length - 1));
     } else {
       showDialog(
         context: context,
@@ -782,8 +840,10 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
 
   backPressedTrue(MenuEventsBloC menuProvider) {
     if (menuProvider.list.length > 1) {
-      menuProvider.eventSink.add(menuProvider.list.elementAt(menuProvider.list.length - 2));
-      menuProvider.list.remove(menuProvider.list.elementAt(menuProvider.list.length - 1));
+      menuProvider.eventSink
+          .add(menuProvider.list.elementAt(menuProvider.list.length - 2));
+      menuProvider.list
+          .remove(menuProvider.list.elementAt(menuProvider.list.length - 1));
     } else {
       MoveToBackground.moveTaskToBack();
     }

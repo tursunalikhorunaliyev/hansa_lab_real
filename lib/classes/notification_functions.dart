@@ -44,6 +44,7 @@ initMessaging(FcmArticleBloC fcmArticleBloc) async {
       final data = event.data;
       if (data.containsKey('news_id')) {
         fcmArticleBloc.articleId = data['news_id'];
+        print('news_id: ${data['news_id']}');
       }
     },
   );
