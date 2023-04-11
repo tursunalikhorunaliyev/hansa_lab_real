@@ -68,13 +68,14 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
   }
 
   void _fetchNewArticle() async {
-    if (_fcmArticleBloc.empty) return;
-    final link = _fcmArticleBloc.articleLink;
+    if (_fcmArticleBloc.articleIds.isEmpty) return;
+    final newsId = _fcmArticleBloc.articleIds.first;
+    final link = 'api/site/article?id=$newsId';
     final articleModel = await _articleBloc.getArticle(_token, link);
     _menuProvider.eventSink.add(MenuActions.article);
     Future.delayed(const Duration(seconds: 2), () {
       _articleBloc.sink.add(articleModel);
-      _fcmArticleBloc.articleId = null;
+      _fcmArticleBloc.articleIds.remove(newsId);
     });
   }
 

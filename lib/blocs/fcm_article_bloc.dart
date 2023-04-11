@@ -4,30 +4,26 @@ import 'package:flutter/material.dart';
 // Listens FCM notifications. If there is [articleId] in the data.
 // It captures  [articleId] and notifies its listeners
 class FcmArticleBloC extends ChangeNotifier {
-  String? _articleId;
+  FcmArticleBloC._();
+  static final FcmArticleBloC _instance = FcmArticleBloC._();
+  factory FcmArticleBloC() => _instance;
 
-  String get articleLink => 'api/site/article?id=$_articleId';
-  bool get hasArticleId => _articleId != null;
-  bool get empty => _articleId == null;
+  final Set<int> articleIds = {};
+  final Map<String, String> logs = {};
 
-  // notifies if articleId is not null
-  set articleId(String? articleId) {
-    _articleId = articleId;
-    if (_articleId != null) {
-      notifyListeners();
-    }
-  }
-
-  String? get articleId {
-    return _articleId;
-  }
-
-  void getNewsIdFromFCM(RemoteMessage? message) {
+  void getNewsIdFromMsg(RemoteMessage? message) {
     if (message == null) return;
     final data = message.data;
     if (data.containsKey('news_id')) {
-      _articleId = data['news_id'];
+      final id = int.tryParse(data['news_id']);
+      if (id == null) return;
+      if (articleIds.contains(id)) return;
+      articleIds.add(id);
       notifyListeners();
     }
+  }
+
+  void log(String key, String val) {
+    logs[key] = val;
   }
 }

@@ -59,6 +59,9 @@ import 'package:provider/provider.dart';
 
 @pragma('vm:entry-point')
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+  final fcmArticleBloc = FcmArticleBloC();
+  fcmArticleBloc.getNewsIdFromMsg(message);
+  fcmArticleBloc.logs.addAll({'_firebaseMessagingBackgroundHandler': '${message.data}'});
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
@@ -80,7 +83,6 @@ Future<void> main(List<String> args) async {
   await initMessaging(fcmArticleBloc);
   await listenForeground(fcmArticleBloc);
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
-  FirebaseMessaging.instance.getInitialMessage().then(fcmArticleBloc.getNewsIdFromFCM);
 
   if (Platform.isAndroid) {
     try {
@@ -183,7 +185,7 @@ class MyApp extends StatelessWidget {
           ),
         ],
         child: AnnotatedRegion<SystemUiOverlayStyle>(
-          value: SystemUiOverlayStyle(
+          value: const SystemUiOverlayStyle(
             statusBarColor: Colors.white, //set as per your  status bar color
             systemNavigationBarColor: Colors.white, //set as per your navigation bar color
             statusBarIconBrightness: Brightness.dark, //set as per your status bar icons' color
