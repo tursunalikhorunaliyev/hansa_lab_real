@@ -1,6 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
+import 'package:flutter_widget_from_html_core/flutter_widget_from_html_core.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hansa_lab/api_models.dart/article_model.dart';
 import 'package:hansa_lab/blocs/article_bloc.dart';
@@ -82,7 +82,18 @@ class ArticleScreen extends StatelessWidget {
                               ),
                             ),
                             HtmlWidget(
-                               snapshot.data!.article.body,
+                              snapshot.data!.article.body,
+                              onTapUrl: (url) async {
+                                print(url);
+                                if (await canLaunch(url)) {
+                                  await launch(
+                                    url,
+                                  );
+                                } else {
+                                  throw 'Could not launch $url';
+                                }
+                                return true;
+                              },
                               // onLinkTap: (url, context, attributes, element) {
                               //   _launchInBrowser(
                               //     Uri.parse(

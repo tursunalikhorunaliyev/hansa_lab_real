@@ -1,7 +1,5 @@
 import 'dart:async';
-import 'dart:convert';
-import 'dart:developer';
-
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hansa_lab/api_models.dart/country_model.dart';
@@ -10,15 +8,17 @@ import 'package:hansa_lab/blocs/hansa_country_api.dart';
 import 'package:provider/provider.dart';
 
 class PopupFullRegistrGorod extends StatefulWidget {
+  final int id;
   final Color borderColor;
   final Color hintColor;
   final VoidCallback onTap;
 
-  PopupFullRegistrGorod({
+  const PopupFullRegistrGorod({
     Key? key,
     required this.borderColor,
     required this.hintColor,
     required this.onTap,
+    required this.id,
   }) : super(key: key);
 
   @override
@@ -55,10 +55,8 @@ class _PopupFullRegistrGorodState extends State<PopupFullRegistrGorod> {
   @override
   Widget build(BuildContext context) {
     final isTablet = Provider.of<bool>(context);
-    final blocHansaCountry = HansaCountryBloC(1);
-
+    final blocHansaCountry = HansaCountryBloC(widget.id);
     blocHansaCountry.eventSink.add(CityEnum.city);
-
     final gorodTextEditingContyroller =
         Provider.of<TextEditingController>(context);
     return StreamBuilder<double>(
@@ -167,6 +165,7 @@ class _PopupFullRegistrGorodState extends State<PopupFullRegistrGorod> {
                                               final book = cities[index];
                                               return InkWell(
                                                 onTap: () {
+                                                  setState(() {});
                                                   gorodTextEditingContyroller
                                                           .text =
                                                       book.id.toString();

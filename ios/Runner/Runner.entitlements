@@ -6,7 +6,7 @@
 	<string>development</string>
 	<key>com.apple.developer.associated-domains</key>
 	<array>
-		<string>applinks:hansa-lab.ru</string>
+		<string>applinks:service.hansa-lab.ru</string>
 	</array>
 </dict>
 </plist>

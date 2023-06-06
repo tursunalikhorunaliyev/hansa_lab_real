@@ -2,7 +2,9 @@ import 'dart:async';
 import 'dart:developer';
 
 import 'package:flip_card/flip_card_controller.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hansa_lab/blocs/bloc_number_country.dart';
 import 'package:hansa_lab/blocs/bloc_sign.dart';
@@ -45,9 +47,11 @@ class _FullRegistrState extends State<FullRegistr> {
   final familiyaTextEditingController = TextEditingController();
   final emailTextFielController = TextEditingController();
   final phoneTextFieldController = TextEditingController();
-  final adresTorgoviySetTextFielController = TextEditingController();
+
+  // final adresTorgoviySetTextFielController = TextEditingController();
   final nazvaniyaTextFieldController = TextEditingController();
-  final doljnostTextFieldController = TextEditingController();
+
+  // final doljnostTextFieldController = TextEditingController();
   final gorodTextFieldController = TextEditingController();
   final dataRojdeniyaController = TextEditingController();
   final numberCountryaController = TextEditingController();
@@ -57,6 +61,7 @@ class _FullRegistrState extends State<FullRegistr> {
   final fourthToggle = TextEditingController(text: "0");
   final dateBurnBloC = DateBornTextBloC();
   bool? isTap;
+  int? regionId;
   FocusNode node = FocusNode();
 
   bool isHintDate = true;
@@ -74,7 +79,7 @@ class _FullRegistrState extends State<FullRegistr> {
     final newShop = Provider.of<NewShopProvider>(context);
     final providerFlip = Provider.of<Map<String, FlipCardController>>(context);
     final providerNumberCountry = Provider.of<BlocNumberCountry>(context);
-    final blocCity = HansaCountryBloC(1);
+    final blocCity = HansaCountryBloC(null);
     blocCity.eventSink.add(CityEnum.city);
     return SingleChildScrollView(
       controller: scrollController,
@@ -236,21 +241,21 @@ class _FullRegistrState extends State<FullRegistr> {
                       const SizedBox(
                         height: 4,
                       ),
-                      Provider(
-                          create: (context) => doljnostTextFieldController,
-                          child: PopupFullRegistrDoljnost(
-                            borderColor: doljnostIsEmpty
-                                ? const Color.fromARGB(255, 213, 0, 50)
-                                : Colors.black,
-                            hintColor: doljnostIsEmpty
-                                ? const Color.fromARGB(255, 213, 0, 50)
-                                : const Color(0xff444444),
-                            onTap: () =>
-                                setState(() => doljnostIsEmpty = false),
-                          )),
-                      const SizedBox(
-                        height: 4,
-                      ),
+                      // Provider(
+                      //     create: (context) => doljnostTextFieldController,
+                      //     child: PopupFullRegistrDoljnost(
+                      //       borderColor: doljnostIsEmpty
+                      //           ? const Color.fromARGB(255, 213, 0, 50)
+                      //           : Colors.black,
+                      //       hintColor: doljnostIsEmpty
+                      //           ? const Color.fromARGB(255, 213, 0, 50)
+                      //           : const Color(0xff444444),
+                      //       onTap: () =>
+                      //           setState(() => doljnostIsEmpty = false),
+                      //     )),
+                      // const SizedBox(
+                      //   height: 4,
+                      // ),
                       Provider(
                           create: (context) => nazvaniyaTextFieldController,
                           child: PopupFullRegistrNazvaniySeti(
@@ -266,25 +271,25 @@ class _FullRegistrState extends State<FullRegistr> {
                       const SizedBox(
                         height: 4,
                       ),
-                      TextFieldForFullRegister(
-                        textEditingController:
-                            adresTorgoviySetTextFielController,
-                        text: "Адрес торговой сети",
-                        height: isTablet ? 45 : 38,
-                        size: isTablet ? 16 : 13,
-                        weight:
-                            isTablet ? FontWeight.normal : FontWeight.normal,
-                        borderColor: adressIsEmpty
-                            ? const Color.fromARGB(255, 213, 0, 50)
-                            : const Color(0xFF000000),
-                        hintColor: adressIsEmpty
-                            ? const Color.fromARGB(255, 213, 0, 50)
-                            : const Color(0xFF444444),
-                        onTap: () => setState(() => adressIsEmpty = false),
-                      ),
-                      const SizedBox(
-                        height: 4,
-                      ),
+                      // TextFieldForFullRegister(
+                      //   textEditingController:
+                      //       adresTorgoviySetTextFielController,
+                      //   text: "Адрес торговой сети",
+                      //   height: isTablet ? 45 : 38,
+                      //   size: isTablet ? 16 : 13,
+                      //   weight:
+                      //       isTablet ? FontWeight.normal : FontWeight.normal,
+                      //   borderColor: adressIsEmpty
+                      //       ? const Color.fromARGB(255, 213, 0, 50)
+                      //       : const Color(0xFF000000),
+                      //   hintColor: adressIsEmpty
+                      //       ? const Color.fromARGB(255, 213, 0, 50)
+                      //       : const Color(0xFF444444),
+                      //   onTap: () => setState(() => adressIsEmpty = false),
+                      // ),
+                      // const SizedBox(
+                      //   height: 4,
+                      // ),
                       Padding(
                         padding: const EdgeInsets.only(left: 11, right: 9),
                         child: Container(
@@ -380,30 +385,41 @@ class _FullRegistrState extends State<FullRegistr> {
                             hintColor: gorodIsEmpty
                                 ? const Color.fromARGB(255, 213, 0, 50)
                                 : const Color(0xff444444),
-                            onTap: () {
+                            id: (id) {
+                              setState(() {
+                                regionId = id;
+                              });
+                            },
+                            onClick: () {
+                              setState(() {
+                                numberCountryaController.clear();
+                              });
+                            },
+                            onTap: (val) {
                               setState(() {
                                 gorodIsEmpty = false;
                               });
                             },
-                            // text: ,
                           )),
                       const SizedBox(
                         height: 4,
                       ),
-                      Provider(
-                          create: (context) => gorodTextFieldController,
-                          child: PopupFullRegistrGorod(
-                            borderColor: gorodIsEmpty
-                                ? const Color.fromARGB(255, 213, 0, 50)
-                                : Colors.black,
-                            hintColor: gorodIsEmpty
-                                ? const Color.fromARGB(255, 213, 0, 50)
-                                : const Color(0xff444444),
-                            onTap: () => setState(() {
-                              gorodIsEmpty = false;
-                            }),
-                            // text: ,
-                          )),
+                      if (numberCountryaController.text.isNotEmpty)
+                        Provider(
+                            create: (context) => gorodTextFieldController,
+                            child: PopupFullRegistrGorod(
+                              id: regionId!,
+                              borderColor: gorodIsEmpty
+                                  ? const Color.fromARGB(255, 213, 0, 50)
+                                  : Colors.black,
+                              hintColor: gorodIsEmpty
+                                  ? const Color.fromARGB(255, 213, 0, 50)
+                                  : const Color(0xff444444),
+                              onTap: () => setState(() {
+                                gorodIsEmpty = false;
+                              }),
+                              // text: ,
+                            )),
                       const SizedBox(
                         height: 24,
                       ),
@@ -475,7 +491,6 @@ class _FullRegistrState extends State<FullRegistr> {
                               height: 17,
                             ),
                             Container(
-                              padding: const EdgeInsets.all(8),
                               decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(24),
                                   border: Border.all(
@@ -565,17 +580,17 @@ class _FullRegistrState extends State<FullRegistr> {
                               } else {
                                 fourTogglehas = 1;
                               }
-
                               toSignUp(
                                 lastname: familiyaTextEditingController.text,
                                 firstname: imyaTextEditingController.text,
                                 email: emailTextFielController.text,
                                 bornedAt: "$day.$month.$year",
-                                jobId: doljnostTextFieldController.text,
+                                // jobId: doljnostTextFieldController.text,//commented
+                                jobId: " ",
                                 storeId: nazvaniyaTextFieldController.text,
                                 shopnet: newShop.getNewShop.toString(),
-                                shopadress:
-                                    adresTorgoviySetTextFielController.text,
+                                // shopadress: adresTorgoviySetTextFielController.text, // commented
+                                shopadress: " ",
                                 phone: phoneTextFieldController.text,
                                 cityId: gorodTextFieldController.text,
                                 isAgreeSms: secondToggle.text,

@@ -48,7 +48,6 @@ class _PresentArchiveState extends State<PresentArchive> {
     if (Platform.isIOS) {
       Directory directory = await getApplicationSupportDirectory();
       dir = directory.path;
-      print(uniqueFileName);
     } else if (Platform.isAndroid) {
       dir = "/storage/emulated/0/Download/";
     }
@@ -62,7 +61,6 @@ class _PresentArchiveState extends State<PresentArchive> {
     final providerSendUrlPrezentOtkrit =
         Provider.of<SendUrlPrezentOtkrit>(context);
     final bloc = PrezintatsiaBLoC(token, providerSendUrlPrezentOtkrit.getUrl);
-    log(providerSendUrlPrezentOtkrit.getUrl);
     bloc.sinkAction.add(PrezintatsiaAction.show);
     final scroll = ScrollController();
     final isTablet = Provider.of<bool>(context);
@@ -98,7 +96,6 @@ class _PresentArchiveState extends State<PresentArchive> {
               token, providerSendUrlPrezentOtkrit.getUrl),
           builder: (context, snapshot) {
             if (snapshot.hasData) {
-              print(snapshot.data!.data);
               return SingleChildScrollView(
                 physics: const BouncingScrollPhysics(),
                 child: Column(children: [
@@ -146,7 +143,7 @@ class _PresentArchiveState extends State<PresentArchive> {
                                 ),
                               ),
                               Text(
-                                'Презентации ',
+                                'Презентации',
                                 style: GoogleFonts.montserrat(
                                     fontSize: isTablet ? 25 : 20,
                                     fontWeight: FontWeight.bold,

@@ -14,7 +14,8 @@ enum MenuActions {
   trainingVideo,
   oKompanii,
   article,
-  prezentFav
+  prezentFav,
+  qrCode,
 }
 
 class MenuEventsBloC {

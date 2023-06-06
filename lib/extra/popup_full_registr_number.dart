@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:developer';
 
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -16,11 +17,16 @@ import 'package:provider/provider.dart';
 class PopUpFullRegistrNumber extends StatefulWidget {
   final Color borderColor;
   final Color hintColor;
-  final VoidCallback onTap;
+  final Function(String) onTap;
+  final Function onClick;
+  final Function(int) id;
+
   const PopUpFullRegistrNumber(
       {required this.borderColor,
       required this.hintColor,
       required this.onTap,
+      required this.id,
+      required this.onClick,
       super.key});
 
   @override
@@ -36,7 +42,6 @@ class _PopUpFullRegistrNumberState extends State<PopUpFullRegistrNumber> {
   List<CountryModelData> allCities = [];
   List<CountryModelData> cities = [];
 
-  List<String> ccs = ['Россия', 'Армения', 'Казахстан'];
   List<EnumCuntryNumber> ecs = [
     EnumCuntryNumber.rus,
     EnumCuntryNumber.armen,
@@ -66,7 +71,7 @@ class _PopUpFullRegistrNumberState extends State<PopUpFullRegistrNumber> {
     //  final blocNumberCountry = BlocNumberCountry();
     final providerNumberCountry = Provider.of<BlocNumberCountry>(context);
     final isTablet = Provider.of<bool>(context);
-    final blocHansaCountry = HansaCountryBloC(1);
+    final blocHansaCountry = HansaCountryBloC(null);
 
     blocHansaCountry.eventSink.add(CityEnum.city);
 
@@ -78,7 +83,8 @@ class _PopUpFullRegistrNumberState extends State<PopUpFullRegistrNumber> {
       builder: (context, snapshotSizeDrawer) {
         return InkWell(
           onTap: () {
-            widget.onTap();
+            widget.onClick();
+            text = "Страна";
             blocPopupDrawer.dataSink
                 .add(snapshotSizeDrawer.data! == 38 ? 140 : 38);
             radius = radius == 54 ? 10 : 54;
@@ -145,17 +151,25 @@ class _PopUpFullRegistrNumberState extends State<PopUpFullRegistrNumber> {
                                               const EdgeInsets.only(right: 260),
                                           child: Column(
                                               children: List.generate(
-                                            3,
+                                            cities.length,
                                             (index) => Padding(
-                                              padding: const EdgeInsets.symmetric(
-                                                  vertical: 8),
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                      vertical: 8),
                                               child: InkWell(
                                                   onTap: () {
                                                     gorodTextEditingContyroller
-                                                        .text = ccs[index];
-                                                    text = ccs[index];
-                                                    blocPopupDrawer.dataSink.add(
-                                                        snapshotSizeDrawer
+                                                            .text =
+                                                        cities[index].name;
+                                                    widget.onTap(
+                                                        gorodTextEditingContyroller
+                                                            .text);
+                                                    blocHansaCountry.getData(
+                                                        cities[index].id);
+                                                    widget.id(cities[index].id);
+                                                    text = cities[index].name;
+                                                    blocPopupDrawer.dataSink
+                                                        .add(snapshotSizeDrawer
                                                                     .data! ==
                                                                 38
                                                             ? 140
@@ -164,12 +178,11 @@ class _PopUpFullRegistrNumberState extends State<PopUpFullRegistrNumber> {
                                                         .add(ecs[index]);
                                                     radius =
                                                         radius == 54 ? 10 : 54;
-                                                    setState(() {});
                                                   },
                                                   child: Row(
                                                     children: [
                                                       Text(
-                                                        ccs[index],
+                                                        cities[index].name,
                                                         style: const TextStyle(
                                                             color: Colors.black,
                                                             fontSize: 10),

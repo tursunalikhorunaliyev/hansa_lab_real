@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
 
@@ -29,6 +30,9 @@ class GetQuestionApi {
   }
 
   Future<QuestionDay> getQuestion(String token) async {
+    if (kDebugMode) {
+      print("token: $token");
+    }
     Response response = await get(
       Uri.parse("https://hansa-lab.ru/api/question/day"),
       headers: {"token": token},

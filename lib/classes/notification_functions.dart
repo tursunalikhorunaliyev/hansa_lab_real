@@ -33,7 +33,6 @@ initMessaging(FcmArticleBloC fcmArticleBloc) async {
     badge: true,
     sound: true,
   );
-  // FlutterAppBadger.updateBadgeCount(1);
 
   flutterLocalNotificationsPlugin.initialize(
     initSettings,
@@ -52,7 +51,6 @@ initMessaging(FcmArticleBloC fcmArticleBloc) async {
       .resolvePlatformSpecificImplementation<
           AndroidFlutterLocalNotificationsPlugin>()
       ?.createNotificationChannel(channel);
-  // FlutterAppBadger.updateBadgeCount(1);
 }
 
 void onDidReceiveNotificationResponse(
@@ -60,7 +58,6 @@ void onDidReceiveNotificationResponse(
   FlutterAppBadger.updateBadgeCount(1);
   final String? payload = notificationResponse.payload;
   if (notificationResponse.payload != null) {
-    print('notification payload: $payload');
   }
   // await Navigator.push(
   //   context,
@@ -72,12 +69,10 @@ Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   FlutterAppBadger.updateBadgeCount(1);
   log("FirebaseMessaging working on background...");
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-  print("Handling a background message: ${message.messageId}");
 }
 
 onBackground() {
   FirebaseMessaging.onMessageOpenedApp.listen((event) {
-    print('listenong');
   });
 }
 
@@ -114,12 +109,6 @@ listenForeground(FcmArticleBloC fcmArticleBloc) {
 requestMessaging() async {
   log("FirebaseMessaging requesting...");
   FirebaseMessaging messaging = FirebaseMessaging.instance;
-  // await messaging.setForegroundNotificationPresentationOptions(
-  //   alert: true,
-  //   badge: true,
-  //   sound: true,
-  // );
-  // FlutterAppBadger.updateBadgeCount(1);
   await messaging.requestPermission(
     alert: true,
     announcement: false,
@@ -133,5 +122,4 @@ requestMessaging() async {
       .resolvePlatformSpecificImplementation<
           AndroidFlutterLocalNotificationsPlugin>()
       ?.requestPermission();
-  // FlutterAppBadger.updateBadgeCount(1);
 }

@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:flutter/foundation.dart';
 import 'package:hansa_lab/api_models.dart/article_model.dart';
 import 'package:http/http.dart' as http;
 
@@ -11,8 +12,12 @@ class ArticleBLoC {
   StreamSink<ArticleModel> get sink => controller.sink;
 
   Future<ArticleModel> getArticle(token, url) async {
-    print(token);
-    print(url);
+    if (kDebugMode) {
+      print(token);
+    }
+    if (kDebugMode) {
+      print(url);
+    }
     var headers = {'token': token.toString()};
     var request = http.Request('GET', Uri.parse("https://hansa-lab.ru/$url"));
     request.headers.addAll(headers);

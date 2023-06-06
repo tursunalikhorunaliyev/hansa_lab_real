@@ -151,12 +151,12 @@ class _PrezentOtkritState extends State<PrezentOtkrit> {
                                       onTap: () {
                                         providerMenuEventsBloc.eventSink
                                             .add(MenuActions.prezentFav);
-                                        providerSendUrlPrezentOtkrit.setUrl(
-                                            snapshot
-                                                .data!
-                                                .modelPrezentOtkritList
-                                                .list[index]
-                                                .link);
+                                          providerSendUrlPrezentOtkrit.setUrl(
+                                              snapshot
+                                                  .data!
+                                                  .modelPrezentOtkritList
+                                                  .list[index]
+                                                  .link);
                                       },
                                       imageUrl: snapshot
                                           .data!

@@ -9,6 +9,7 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:hansa_lab/screens/qr_code_page.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:http/http.dart' as http;
 import 'package:http_parser/http_parser.dart';
@@ -34,6 +35,7 @@ import 'package:hansa_lab/extra/sobshit_o_problem.dart';
 import 'package:hansa_lab/providers/fullname_provider.dart';
 import 'package:hansa_lab/providers/provider_otpravit_rassilku.dart';
 import 'package:hansa_lab/providers/provider_personal_textFields.dart';
+import 'package:qr_code_scanner/qr_code_scanner.dart';
 
 class GlavniyMenyu extends StatefulWidget {
   const GlavniyMenyu({Key? key}) : super(key: key);
@@ -44,6 +46,22 @@ class GlavniyMenyu extends StatefulWidget {
 
 class _GlavniyMenyuState extends State<GlavniyMenyu> {
   GlobalKey<ScaffoldState> keyScaffold = GlobalKey();
+
+  final GlobalKey qrKey = GlobalKey(debugLabel: 'QR');
+  Barcode? result;
+  QRViewController? controller;
+
+  // In order to get hot reload to work we need to pause the camera if the platform
+  // is android, or resume the camera if the platform is iOS.
+  @override
+  void reassemble() {
+    super.reassemble();
+    if (Platform.isAndroid) {
+      controller!.pauseCamera();
+    } else if (Platform.isIOS) {
+      controller!.resumeCamera();
+    }
+  }
 
   bool isFavourite = false;
   bool isShowTable = false;
@@ -100,12 +118,11 @@ class _GlavniyMenyuState extends State<GlavniyMenyu> {
     final providerToken = Provider.of<String>(context);
     final providerPersonalDannieTextFilelds =
         Provider.of<ProviderPersonalTextFields>(context);
-
+    final providerMenuEventsBloc = Provider.of<MenuEventsBloC>(context);
     final menuProvider = Provider.of<MenuEventsBloC>(context);
     final providerTapFavorite = Provider.of<TapFavorite>(context);
     final fullname = Provider.of<FullnameProvider>(context);
     final blocGlavniyMenuUserInfo = BlocGlavniyMenuUserInfo(providerToken);
-    print(providerToken);
     blocGlavniyMenuUserInfo.eventSink.add(EnumActionView.view);
     final scafforlKeyProvider = Provider.of<GlobalKey<ScaffoldState>>(context);
     final providerSendDataPersonalUpdate =
@@ -236,47 +253,82 @@ class _GlavniyMenyuState extends State<GlavniyMenyu> {
                         padding: EdgeInsets.only(
                             top: isTablet ? 70 : 52,
                             left: isTablet ? 320 : 247),
-                        child: StreamBuilder<ActionChange>(
-                            initialData: ActionChange.textIconCard,
-                            stream: blocChangeProfileProvider.dataStream,
-                            builder: (context, snapshot) {
-                              return GestureDetector(
-                                onTap: () {
-                                  scrollController.animateTo(0,
-                                      duration:
-                                          const Duration(milliseconds: 400),
-                                      curve: Curves.fastLinearToSlowEaseIn);
-                                  snapshot.data == ActionChange.izboreny ||
-                                          providerTapFavorite.getInt == 1
-                                      ? blocChangeProfileProvider.dataSink
-                                          .add(ActionChange.textIconCard)
-                                      : blocChangeProfileProvider.dataSink
-                                          .add(ActionChange.izboreny);
-                                  providerTapFavorite.setInt(0);
-                                },
-                                child: Container(
-                                  height: isTablet ? 60 : 46,
-                                  width: isTablet ? 60 : 46,
-                                  decoration: const BoxDecoration(
-                                    color: Color(0xFF686868),
-                                    shape: BoxShape.circle,
-                                    boxShadow: [
-                                      BoxShadow(
-                                        color: Color(0xFF2d2d2d),
-                                        spreadRadius: 5,
-                                        blurRadius: 7,
-                                        offset: Offset(0, 3),
+                        child: Column(
+                          children: [
+                            StreamBuilder<ActionChange>(
+                                initialData: ActionChange.textIconCard,
+                                stream: blocChangeProfileProvider.dataStream,
+                                builder: (context, snapshot) {
+                                  return GestureDetector(
+                                    onTap: () {
+                                      scrollController.animateTo(0,
+                                          duration:
+                                              const Duration(milliseconds: 400),
+                                          curve: Curves.fastLinearToSlowEaseIn);
+                                      snapshot.data == ActionChange.izboreny ||
+                                              providerTapFavorite.getInt == 1
+                                          ? blocChangeProfileProvider.dataSink
+                                              .add(ActionChange.textIconCard)
+                                          : blocChangeProfileProvider.dataSink
+                                              .add(ActionChange.izboreny);
+                                      providerTapFavorite.setInt(0);
+                                    },
+                                    child: Container(
+                                      height: isTablet ? 60 : 46,
+                                      width: isTablet ? 60 : 46,
+                                      decoration: const BoxDecoration(
+                                        color: Color(0xFF686868),
+                                        shape: BoxShape.circle,
+                                        boxShadow: [
+                                          BoxShadow(
+                                            color: Color(0xFF2d2d2d),
+                                            spreadRadius: 5,
+                                            blurRadius: 7,
+                                            offset: Offset(0, 3),
+                                          ),
+                                        ],
                                       ),
-                                    ],
-                                  ),
-                                  child: Icon(
-                                    Icons.favorite,
-                                    color: const Color(0xFFffffff),
-                                    size: isTablet ? 40 : 20,
-                                  ),
+                                      child: Icon(
+                                        Icons.favorite,
+                                        color: const Color(0xFFffffff),
+                                        size: isTablet ? 40 : 20,
+                                      ),
+                                    ),
+                                  );
+                                }),
+                            SizedBox(
+                              height: 12,
+                            ),
+                            Container(
+                                height: isTablet ? 60 : 46,
+                                width: isTablet ? 60 : 46,
+                                decoration: const BoxDecoration(
+                                  color: Color(0xFF686868),
+                                  shape: BoxShape.circle,
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Color(0xFF2d2d2d),
+                                      spreadRadius: 5,
+                                      blurRadius: 7,
+                                      offset: Offset(0, 3),
+                                    ),
+                                  ],
                                 ),
-                              );
-                            }),
+                                child: IconButton(
+                                    onPressed: () {
+                                      // providerMenuEventsBloc.eventSink
+                                      //     .add(MenuActions.qrCode);
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (_) => QrCodePage(token: providerToken,)));
+                                    },
+                                    icon: const Icon(
+                                      Icons.qr_code_2,
+                                      color: Colors.white,
+                                    )))
+                          ],
+                        ),
                       ),
                       Align(
                         alignment: Alignment.center,

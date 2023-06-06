@@ -40,6 +40,10 @@
 	<string>Access to your photo library is required to attach photos to change profile images</string>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
+	<key>io.flutter.embedded_views_preview</key>
+    <true/>
+    <key>NSCameraUsageDescription</key>
+    <string>This app needs camera access to scan QR codes</string>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>fetch</string>
