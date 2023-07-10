@@ -15,9 +15,6 @@ class ArticleScreenTab extends StatelessWidget {
   Widget build(BuildContext context) {
     final ScrollController listViewController =
         ScrollController(keepScrollOffset: true);
-
-    double positionDouble = 240.6666666666667;
-
     final articleBloc = Provider.of<ArticleBLoC>(context);
     return StreamBuilder<ArticleModel>(
       stream: articleBloc.stream,

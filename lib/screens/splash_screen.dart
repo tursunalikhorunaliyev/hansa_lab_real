@@ -10,6 +10,11 @@ import 'package:provider/provider.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:http/http.dart' as http;
 
+import '../api_services/welcome_api.dart';
+import '../blocs/article_bloc.dart';
+import '../blocs/menu_events_bloc.dart';
+import '../firebase_dynamiclinks.dart';
+
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
 
@@ -94,6 +99,7 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   goToHome(token) {
+
     Navigator.push(
         context,
         MaterialPageRoute(

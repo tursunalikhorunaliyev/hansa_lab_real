@@ -1,8 +1,5 @@
 import 'dart:async';
 import 'dart:convert';
-import 'dart:developer';
-
-import 'package:hansa_lab/api_models.dart/question_day_model.dart';
 import 'package:hansa_lab/api_models.dart/welcome_model.dart';
 import 'package:hansa_lab/api_services/api_urls.dart';
 import 'package:http/http.dart';
@@ -48,13 +45,11 @@ class WelcomeApi {
     for (var i = 0; i < list.length; i++) {
       if (list[i].isFavorite == favourite && list[i].link == snapshotlink) {
         list[i].setBool(false);
-        log(list[i].title);
       }
     }
   }
 
   Future<WelcomeModel> getWelcome({required String token, int i = 1}) async {
-    log(i.toString());
     Response response = await get(
       Uri.parse(APIUrls().getWelcomeUrl + i.toString()),
       headers: {"token": token},

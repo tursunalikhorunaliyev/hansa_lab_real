@@ -26,12 +26,29 @@
 	<string>$(FLUTTER_BUILD_NAME)</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLName</key>
+			<string>com.hansa.hansahansalab</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>applinks:hansalabru.page.link</string>
+			</array>
+		</dict>
+	</array>
 	<key>CFBundleVersion</key>
 	<string>$(FLUTTER_BUILD_NUMBER)</string>
 	<key>FirebaseAppDelegateProxyEnabled</key>
 	<string>true</string>
+	<key>FlutterDeepLinkingEnabled</key>
+	<true/>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSCameraUsageDescription</key>
+	<string>This app needs camera access to scan QR codes</string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>This app does not require access to the microphone.</string>
 	<key>NSPhotoLibraryAddUsageDescription</key>
@@ -40,10 +57,6 @@
 	<string>Access to your photo library is required to attach photos to change profile images</string>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
-	<key>io.flutter.embedded_views_preview</key>
-    <true/>
-    <key>NSCameraUsageDescription</key>
-    <string>This app needs camera access to scan QR codes</string>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>fetch</string>
@@ -69,5 +82,11 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
+	<key>com.apple.developer.associated-domains</key>
+	<array>
+		<string>applinks:hansalabru.page.link</string>
+	</array>
+	<key>io.flutter.embedded_views_preview</key>
+	<true/>
 </dict>
 </plist>

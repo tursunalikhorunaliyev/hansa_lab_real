@@ -1,6 +1,3 @@
-import 'dart:io';
-
-import 'package:device_information/device_information.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flip_card/flip_card_controller.dart';
@@ -9,6 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hansa_lab/api_services/country_type_service.dart';
+import 'package:hansa_lab/api_services/my_firebase.dart';
 import 'package:hansa_lab/blocs/article_bloc.dart';
 import 'package:hansa_lab/blocs/bloc_change_profile.dart';
 import 'package:hansa_lab/blocs/bloc_change_title.dart';
@@ -32,8 +30,8 @@ import 'package:hansa_lab/classes/send_data_personal_update.dart';
 import 'package:hansa_lab/classes/send_link.dart';
 import 'package:hansa_lab/classes/sned_url_prezent_otkrit.dart';
 import 'package:hansa_lab/classes/tap_favorite.dart';
+import 'package:hansa_lab/di.dart';
 import 'package:hansa_lab/firebase_options.dart';
-import 'package:hansa_lab/middle_part_widgets/permission_handler_screen.dart';
 import 'package:hansa_lab/providers/check_click.dart';
 import 'package:hansa_lab/providers/dialog_video_provider.dart';
 import 'package:hansa_lab/providers/event_title_provider.dart';
@@ -61,13 +59,12 @@ import 'package:provider/provider.dart';
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   final fcmArticleBloc = FcmArticleBloC();
   fcmArticleBloc.getNewsIdFromMsg(message);
-  fcmArticleBloc.logs.addAll({'_firebaseMessagingBackgroundHandler': '${message.data}'});
+  fcmArticleBloc.logs
+      .addAll({'_firebaseMessagingBackgroundHandler': '${message.data}'});
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
 }
-
-dynamic platformVersion;
 
 Future<void> main(List<String> args) async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -82,22 +79,17 @@ Future<void> main(List<String> args) async {
   final fcmArticleBloc = FcmArticleBloC();
   await initMessaging(fcmArticleBloc);
   await listenForeground(fcmArticleBloc);
+  await MyFirebase.ensureInitialized();
+  await setup();
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
 
-  if (Platform.isAndroid) {
-    try {
-      platformVersion = await DeviceInformation.apiLevel;
-    } on PlatformException {
-      platformVersion = 'Failed to get platform version.';
-    }
-  }
-
-  await SentryReporter.setup(MyApp(fcmArticleBloc: fcmArticleBloc));
+  await SentryReporter.setup(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  final FcmArticleBloC fcmArticleBloc;
-  const MyApp({Key? key, required this.fcmArticleBloc}) : super(key: key);
+  const MyApp({
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -129,10 +121,11 @@ class MyApp extends StatelessWidget {
           Provider(create: (context) => NotificationToken()),
           Provider(create: (context) => SendCheckSwitcher()),
           Provider(create: (context) => DownloadProgressFileBloc()),
-          Provider(create: (context) => fcmArticleBloc),
+          Provider(create: (context) => FcmArticleBloC()),
           ChangeNotifierProvider(create: (context) => EventTitleProvider()),
           ChangeNotifierProvider(create: (context) => StatiIdProvider()),
-          ChangeNotifierProvider(create: (context) => TreningiVideoChangerProvider()),
+          ChangeNotifierProvider(
+              create: (context) => TreningiVideoChangerProvider()),
           ChangeNotifierProvider(create: (context) => NewShopProvider()),
           ChangeNotifierProvider(create: (context) => FlipProvider()),
           ChangeNotifierProvider(create: (context) => LoginClickedProvider()),
@@ -143,7 +136,8 @@ class MyApp extends StatelessWidget {
           ChangeNotifierProvider(create: (context) => VideoTitleProvider()),
           ChangeNotifierProvider(create: (context) => VideoIndexProvider()),
           ChangeNotifierProvider(create: (context) => TreningiPhotosProvider()),
-          ChangeNotifierProvider(create: (context) => FullRegisterDataProvider()),
+          ChangeNotifierProvider(
+              create: (context) => FullRegisterDataProvider()),
           Provider(create: (context) => CountryTypeService().getCountryTypes()),
           Provider(create: (context) => ToggleSwitcherBloc()),
           Provider<bool>(create: (context) => isTablet),
@@ -151,7 +145,8 @@ class MyApp extends StatelessWidget {
           Provider(create: (context) => BlocChangeTitleIndex()),
           Provider(create: (context) => map),
           Provider(create: (context) => VoytiIliSozdatBloC()),
-          Provider<BlocNumberCountry>(create: (context) => providerNumberCountry),
+          Provider<BlocNumberCountry>(
+              create: (context) => providerNumberCountry),
           Provider(create: (context) => ReadStatiBLoC()),
           Provider(create: (context) => MenuEventsBloC()),
           Provider(create: (context) => ArticleBLoC()),
@@ -163,10 +158,13 @@ class MyApp extends StatelessWidget {
           Provider(create: (context) => scaffoldKey),
           Provider(create: (context) => FullnameProvider()),
           ChangeNotifierProvider(create: (context) => SendLink()),
-          Provider<SendUrlPrezentOtkrit>(create: (context) => sendUrlPrezentOtkrit),
+          Provider<SendUrlPrezentOtkrit>(
+              create: (context) => sendUrlPrezentOtkrit),
           Provider<TapFavorite>(create: (context) => tapFavorite),
-          Provider<SendDataPersonalUpdate>(create: (context) => sendDataPersonalUpdate),
-          ChangeNotifierProvider<SendAnaliseDownload>(create: (context) => sendAnaliseDownload),
+          Provider<SendDataPersonalUpdate>(
+              create: (context) => sendDataPersonalUpdate),
+          ChangeNotifierProvider<SendAnaliseDownload>(
+              create: (context) => sendAnaliseDownload),
           Provider<BlocDetectTap>(create: (context) => blocDetectTap),
           Provider<SendCheckSwitcher>(create: (context) => sendCheckSwitcher),
           ChangeNotifierProvider<ProviderOtpravitPushUvodamleniya>(
@@ -186,14 +184,19 @@ class MyApp extends StatelessWidget {
         ],
         child: AnnotatedRegion<SystemUiOverlayStyle>(
           value: const SystemUiOverlayStyle(
-            statusBarColor: Colors.white, //set as per your  status bar color
-            systemNavigationBarColor: Colors.white, //set as per your navigation bar color
-            statusBarIconBrightness: Brightness.dark, //set as per your status bar icons' color
+            statusBarColor: Colors.white,
+            //set as per your  status bar color
+            systemNavigationBarColor: Colors.white,
+            //set as per your navigation bar color
+            statusBarIconBrightness: Brightness.dark,
+            //set as per your status bar icons' color
             systemNavigationBarIconBrightness: Brightness.dark,
           ),
           child: MaterialApp(
             builder: (context, child) {
-              return MediaQuery(data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0), child: child!);
+              return MediaQuery(
+                  data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),
+                  child: child!);
             },
             localizationsDelegates: const [
               GlobalMaterialLocalizations.delegate,
@@ -203,13 +206,10 @@ class MyApp extends StatelessWidget {
             supportedLocales: const [Locale("en"), Locale("ru"), Locale("ar")],
             locale: const Locale("ru"),
             debugShowCheckedModeBanner: false,
-            home: PermissionHandlerScreen(
-              androidVersion: platformVersion,
-            ),
+            home: home,
           ),
         ),
       ),
     );
   }
 }
-

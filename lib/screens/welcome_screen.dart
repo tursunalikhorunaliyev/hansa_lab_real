@@ -15,6 +15,7 @@ import 'package:hansa_lab/extra/exit_dialog.dart';
 import 'package:hansa_lab/extra/glavniy_menyu.dart';
 import 'package:hansa_lab/extra/hamburger.dart';
 import 'package:hansa_lab/extra/ui_changer.dart';
+import 'package:hansa_lab/firebase_dynamiclinks.dart';
 import 'package:hansa_lab/page_routes/bottom_slide_page_route.dart';
 import 'package:hansa_lab/providers/provider_personal_textFields.dart';
 import 'package:hansa_lab/screens/search_screen.dart';
@@ -40,11 +41,13 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
   bool isShowDialog = false;
   bool isTips = false;
   int? isRight;
+  int? isCorrectAnswer;
   int? isNumber;
   int? isQuestionId;
-  int? selectedAnswerIndex;
   bool isShowDialogs = false;
+  int? selectedAnswerIndex;
   List<String> testVariant = ["A", "B", "C", "D"];
+  DynamicLinkHelper dHelper = DynamicLinkHelper();
 
   @override
   void initState() {
@@ -53,7 +56,6 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
     _articleBloc = Provider.of<ArticleBLoC>(context, listen: false);
     _fcmArticleBloc = Provider.of<FcmArticleBloC>(context, listen: false);
     _fcmArticleBloc.addListener(_fetchNewArticle);
-
     WidgetsBinding.instance.addPostFrameCallback((_) {
       Future.delayed(const Duration(seconds: 1), _fetchNewArticle);
     });
@@ -87,6 +89,16 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
     final providerNotificationToken = Provider.of<NotificationToken>(context);
     providerNotificationToken.getToken().then((value) => log("$value token"));
     getQuestionApi.eventSink.add(GetQuestionEnum.get);
+    dHelper.initDynamicLinks(
+        context, token, _articleBloc, menuProvider, welcomeApi);
+    dynamic desiredPadding;
+    final screenWidth = MediaQuery.of(context).size.height;
+
+    if (screenWidth > 800) {
+      desiredPadding = 90.0;
+    } else {
+      desiredPadding = 20.0;
+    }
 
     return WillPopScope(
       onWillPop: () async {
@@ -468,7 +480,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                                                     child: Padding(
                                                       padding:
                                                           const EdgeInsets.all(
-                                                              20),
+                                                              16),
                                                       child: Column(
                                                         crossAxisAlignment:
                                                             CrossAxisAlignment
@@ -482,23 +494,20 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                                                             style: TextStyle(
                                                                 color: Colors
                                                                     .white,
-                                                                fontSize: 24,
+                                                                fontSize: 22,
                                                                 fontWeight:
                                                                     FontWeight
-                                                                        .normal),
+                                                                        .w600),
                                                           ),
                                                           const Text(
                                                             '. . .',
                                                             style: TextStyle(
                                                                 color: Colors
                                                                     .white,
-                                                                fontSize: 20,
+                                                                fontSize: 16,
                                                                 fontWeight:
                                                                     FontWeight
                                                                         .w500),
-                                                          ),
-                                                          const SizedBox(
-                                                            height: 2,
                                                           ),
                                                           Text(
                                                             snapshot.data!.data
@@ -507,9 +516,6 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                                                                 color: Colors
                                                                     .white,
                                                                 fontSize: 14),
-                                                          ),
-                                                          const SizedBox(
-                                                            height: 2,
                                                           ),
                                                         ],
                                                       ),
@@ -634,9 +640,16 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                                           itemCount: testVariant.length,
                                           shrinkWrap: true,
                                           padding: EdgeInsets.zero,
-                                          itemBuilder: (BuildContext context, int index) {
+                                          itemBuilder: (BuildContext context,
+                                              int index) {
+                                            if (snapshot.data!.data
+                                                    .answers[index].isRight ==
+                                                1) {
+                                              isCorrectAnswer = index;
+                                            }
                                             return GestureDetector(
                                               onTap: () {
+                                                selectedAnswerIndex = index;
                                                 isRight ??= snapshot.data!.data
                                                     .answers[index].isRight;
                                                 isNumber ??= snapshot.data!.data
@@ -692,27 +705,15 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                                                               : 4.0),
                                                       width: double.infinity,
                                                       decoration: BoxDecoration(
-                                                        borderRadius:
-                                                            BorderRadius.all(Radius.circular(isTablet ? 50 : 30)),
-                                                        // gradient: LinearGradient(
-                                                        //   begin: Alignment.topCenter,
-                                                        //   end: Alignment.bottomCenter,
-                                                        //   colors: [
-                                                        //     Color(0xFF2C3757),
-                                                        //     Color(0xFF1E2336),
-                                                        //     // Color(0xFF252b3d),
-                                                        //     // Color(0xFF000000).withOpacity(0.8),
-                                                        //
-                                                        //
-                                                        //   ],
-                                                        // ),
-                                                        color: isRight == null ||
-                                                                isNumber != snapshot.data!.data.answers[index].number
-                                                            ? Colors.transparent
-                                                            : snapshot.data!.data.answers[index].isRight == 1
-                                                                ? Colors.green.withOpacity(0.5)
-                                                                : Colors.red.withOpacity(0.5),
-                                                      ),
+                                                          borderRadius:
+                                                              BorderRadius.all(
+                                                                  Radius.circular(
+                                                                      isTablet
+                                                                          ? 50
+                                                                          : 30)),
+                                                          color:
+                                                              _getColorForOption(
+                                                                  index)),
                                                       child: Row(
                                                         children: [
                                                           Container(
@@ -779,8 +780,10 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                                   ),
                                   if (isTips == true)
                                     Padding(
-                                      padding: const EdgeInsets.only(
-                                          left: 50, right: 40, top: 90),
+                                      padding: EdgeInsets.only(
+                                          left: 50,
+                                          right: 40,
+                                          top: desiredPadding),
                                       child: Container(
                                         height: 110,
                                         width: 220,
@@ -839,6 +842,19 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
         ),
       ),
     );
+  }
+
+  Color _getColorForOption(int index) {
+    if (selectedAnswerIndex != null) {
+      if (index == selectedAnswerIndex) {
+        return (index == isCorrectAnswer)
+            ? Colors.green.withOpacity(0.5)
+            : Colors.red.withOpacity(0.5);
+      } else if (index == isCorrectAnswer) {
+        return Colors.green.withOpacity(0.5);
+      }
+    }
+    return Colors.transparent;
   }
 
   backPressed(MenuEventsBloC menuProvider) {

@@ -3,6 +3,8 @@ import 'dart:io';
 import 'package:device_information/device_information.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:hansa_lab/api_services/my_firebase.dart';
+import 'package:hansa_lab/firebase_dynamiclinks.dart';
 import 'package:hansa_lab/screens/splash_screen.dart';
 import 'package:permission_handler/permission_handler.dart';
 
@@ -37,7 +39,6 @@ class _PermissionHandlerScreenState extends State<PermissionHandlerScreen> {
     var permissionIos = await Permission.notification.request();
     if (Platform.isIOS) {
       isPlatform = !permissionIos.isGranted;
-      print(isPlatform);
     } else if (Platform.isAndroid) {
       if (widget.androidVersion! >= 33) {
         isPlatform = !permissioAndroid.isGranted;
