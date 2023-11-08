@@ -65,6 +65,7 @@ class _TopVideoVidgetState extends State<TopVideoVidget> {
 
   @override
   void initState() {
+    print("initga kirdi");
     super.initState();
     initVideo();
   }

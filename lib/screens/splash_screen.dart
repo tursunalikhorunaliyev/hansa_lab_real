@@ -1,19 +1,13 @@
 import 'dart:convert';
-
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hansa_lab/screens/hansa_zagruzka.dart';
 import 'package:hansa_lab/screens/welcome_screen.dart';
 import 'package:hive/hive.dart';
 import 'package:provider/provider.dart';
-
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:http/http.dart' as http;
-
-import '../api_services/welcome_api.dart';
-import '../blocs/article_bloc.dart';
-import '../blocs/menu_events_bloc.dart';
-import '../firebase_dynamiclinks.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
@@ -32,12 +26,25 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   checkUser() async {
-    if (box.get("isSaved") != null && box.get("isSaved")! as bool) {
-      Map<String, dynamic> map =
-          await login(box.get("username"), box.get("password"));
-      await Future.delayed(const Duration(seconds: 1));
-      goToHome(await map["data"]["token"]);
+    if (box.get("username") != null && box.get("password") != null) {
+      try {
+        Map<String, dynamic> map =
+            await login(box.get("username"), box.get("password"));
+        if (map["status"] != false) {
+          await Future.delayed(const Duration(seconds: 1));
+          goToHome(await map["data"]["token"]);
+        } else {
+          box.clear();
+          await Future.delayed(const Duration(seconds: 2));
+          goToHansaZagruzka();
+        }
+      } catch (e) {
+        if (kDebugMode) {
+          print(e);
+        }
+      }
     } else {
+      Hive.box("savedUser").clear();
       await Future.delayed(const Duration(seconds: 2));
       goToHansaZagruzka();
     }
@@ -99,7 +106,6 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   goToHome(token) {
-
     Navigator.push(
         context,
         MaterialPageRoute(

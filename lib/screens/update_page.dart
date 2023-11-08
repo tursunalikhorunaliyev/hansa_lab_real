@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class UpdatePage extends StatefulWidget {
@@ -28,13 +29,9 @@ class _UpdatePageState extends State<UpdatePage> {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Image.asset(
-                'assets/update.png',
-                color: Color.fromARGB(255, 213, 0, 50),
-                height: MediaQuery.of(context).size.width * 0.6,
-              ),
+              SvgPicture.asset("assets/updates.svg",color: Color.fromARGB(255, 213, 0, 50),height: 150,width: 150,),
               SizedBox(
-                height: 10,
+                height: 40,
               ),
               const Text(
                 'В программе есть обновление.',
@@ -79,7 +76,7 @@ class _UpdatePageState extends State<UpdatePage> {
                     borderRadius: BorderRadius.circular(16),
                   ),
                   child: const Text(
-                    'Обновлять!',
+                    'Обновить!',
                     style: TextStyle(
                         fontWeight: FontWeight.w600,
                         fontSize: 16.0,
@@ -116,7 +113,7 @@ class _UpdatePageState extends State<UpdatePage> {
                           borderRadius: BorderRadius.circular(16),
                         ),
                         child: const Text(
-                          'Keyingi safar ▶️',
+                          'Позже ▶️',
                           textAlign: TextAlign.center,
                         ),
                       ),

@@ -67,12 +67,16 @@
                 android:value="true" />
             <intent-filter android:autoVerify="true">
                 <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
 
                 <data
-                    android:host="https://hansalabru.page.link"
+                    android:host="hansalabru.page.link"
                     android:pathPrefix="/"
+                    android:scheme="https" />
+                <data
+                    android:pathPattern="/.."
                     android:scheme="https" />
             </intent-filter>
         </activity>

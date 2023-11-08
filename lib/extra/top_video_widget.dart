@@ -23,8 +23,8 @@ import 'package:video_player/video_player.dart';
 class TopVideoWidget extends StatefulWidget {
   final String url;
   final String title;
-  final int selectedIndex;
-  final String selectedTitle;
+  final int? selectedIndex;
+  final String? selectedTitle;
 
   const TopVideoWidget(
       {Key? key,
@@ -221,9 +221,9 @@ class _TopVideoWidgetState extends State<TopVideoWidget> {
                                           menuEventsBloCProvider.eventSink
                                               .add(MenuActions.oKompanii);
                                           title.changeTitle(
-                                              widget.selectedTitle);
+                                              widget.selectedTitle!);
                                           index.changeIndex(
-                                              widget.selectedIndex);
+                                              widget.selectedIndex!);
                                         },
                                         child: ClipRRect(
                                           borderRadius:

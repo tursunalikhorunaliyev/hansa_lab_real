@@ -43,8 +43,6 @@ class _CustomCalendarState extends State<CustomCalendar> {
         backgroundColor: const Color(0xFF232323),
         headerStyle: const DateRangePickerHeaderStyle(
             textStyle: TextStyle(color: Colors.white)),
-        onSelectionChanged: (date) {
-        },
         monthCellStyle: DateRangePickerMonthCellStyle(
           cellDecoration: BoxDecoration(
               color: const Color.fromARGB(255, 213, 0, 50),
@@ -60,7 +58,6 @@ class _CustomCalendarState extends State<CustomCalendar> {
         initialDisplayDate: listDate.first,
         selectableDayPredicate: (date) {
           if (listDate.contains(date)) {
-            log("data bosildi");
             return true;
           } else {
             return false;

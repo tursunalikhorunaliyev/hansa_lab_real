@@ -1,0 +1,268 @@
+import 'dart:developer';
+import 'dart:io';
+
+import 'package:chewie/chewie.dart';
+import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:hansa_lab/blocs/bloc_detect_tap.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:hansa_lab/blocs/download_progress_bloc.dart';
+import 'package:hansa_lab/classes/send_analise_download.dart';
+import 'package:hansa_lab/extra/custom_black_appbar.dart';
+import 'package:hansa_lab/providers/providers_for_video_title/video_index_provider.dart';
+import 'package:hansa_lab/training_section/custom_treningi_video.dart';
+import 'package:hansa_lab/video/bloc_video_api.dart';
+import 'package:hansa_lab/video/model_video.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:provider/provider.dart';
+import 'package:video_player/video_player.dart';
+
+class ArticleVideoVidget extends StatefulWidget {
+  final String url;
+  final String title;
+
+  const ArticleVideoVidget({Key? key, required this.url, required this.title})
+      : super(key: key);
+
+  @override
+  State<ArticleVideoVidget> createState() => _ArticleVideoVidgetState();
+}
+
+class _ArticleVideoVidgetState extends State<ArticleVideoVidget> {
+  ChewieController chewieController = ChewieController(
+      videoPlayerController: VideoPlayerController.network(''));
+
+  initVideo() {
+    chewieController = ChewieController(
+      autoPlay: true,
+      allowedScreenSleep: false,
+      autoInitialize: true,
+      deviceOrientationsOnEnterFullScreen: [
+        DeviceOrientation.landscapeLeft,
+        DeviceOrientation.landscapeRight
+      ],
+      deviceOrientationsAfterFullScreen: [
+        DeviceOrientation.portraitDown,
+        DeviceOrientation.portraitUp
+      ],
+      allowMuting: false,
+      videoPlayerController: VideoPlayerController.network(widget.url),
+      cupertinoProgressColors: ChewieProgressColors(
+        backgroundColor: const Color(0xff090909),
+        bufferedColor: const Color(0xff090909),
+        playedColor: const Color.fromARGB(255, 213, 0, 50),
+        handleColor: const Color.fromARGB(255, 213, 0, 50),
+      ),
+      materialProgressColors: ChewieProgressColors(
+        backgroundColor: const Color(0xff090909),
+        bufferedColor: const Color(0xff090909),
+        playedColor: const Color.fromARGB(255, 213, 0, 50),
+        handleColor: const Color.fromARGB(255, 213, 0, 50),
+      ),
+    );
+  }
+
+  @override
+  void initState() {
+    print("initga kirdi");
+    super.initState();
+    initVideo();
+  }
+
+  @override
+  void dispose() {
+    chewieController.dispose();
+    chewieController.videoPlayerController.dispose();
+    super.dispose();
+  }
+
+  final blocVideoApi = BlocVideoApi();
+  final blocDetectTap = BlocDetectTap();
+  bool downloading = false;
+  double progress = 0;
+  bool isDownloaded = false;
+  bool isINit = false;
+
+  Future<String> getFilePath(uniqueFileName) async {
+    String path = "";
+    String dir = "";
+    if (Platform.isIOS) {
+      Directory directory = await getApplicationSupportDirectory();
+      dir = directory.path;
+    } else if (Platform.isAndroid) {
+      dir = "/storage/emulated/0/Download/";
+    }
+    path = "$dir/$uniqueFileName.mp4";
+    return path;
+  }
+
+  Future<bool> downloadFile(String url, String fileName,
+      DownloadProgressFileBloc downloadProgressFileBloc) async {
+    progress = 0;
+
+    String savePath = await getFilePath(fileName);
+
+    if (await File(savePath).exists()) {
+      log("exists");
+      return false;
+    } else {
+      Dio dio = Dio();
+      dio.download(
+        url,
+        savePath,
+        onReceiveProgress: (recieved, total) {
+          progress =
+              double.parse(((recieved / total) * 100).toStringAsFixed(0));
+          downloadProgressFileBloc.streamSink.add(progress);
+
+          if (progress == 100) {
+            log("tugadi");
+          } else {
+            log("$progress download progress");
+          }
+        },
+        deleteOnError: true,
+      );
+      if (progress == 100) {
+        log("yuklab olish 100000000");
+      }
+      return true;
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    chewieController.videoPlayerController.addListener(() {
+      if (!isINit) {
+        setState(() {});
+        isINit = true;
+      }
+    });
+    final providerBlocProgress = Provider.of<DownloadProgressFileBloc>(context);
+    final token = Provider.of<String>(context);
+    // final providerIndex = Provider.of<int>(context);
+    final isTablet = Provider.of<bool>(context);
+    final providerSendAnaliseDownload =
+        Provider.of<SendAnaliseDownload>(context);
+    return WillPopScope(
+      onWillPop: () async {
+        chewieController
+          ..seekTo(Duration.zero)
+          ..pause();
+        Navigator.pop(context);
+        return false;
+      },
+      child: SafeArea(
+        child: Stack(
+          children: [
+            Container(
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  colors: [
+                    Colors.black.withOpacity(.9),
+                    Colors.black.withOpacity(.9),
+                    Colors.transparent,
+                  ],
+                ),
+              ),
+            ),
+            Stack(
+              children: [
+                Provider<ChewieController>.value(
+                    value: chewieController, child: const CustomBlackAppBar()),
+                (chewieController
+                            .videoPlayerController.value.size.aspectRatio !=
+                        0.0)
+                    ? Padding(
+                        padding: EdgeInsets.only(top: isTablet ? 150 : 100),
+                        child: SingleChildScrollView(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              const SizedBox(
+                                height: 10,
+                              ),
+                              GestureDetector(
+                                onTap: () {
+                                  chewieController.videoPlayerController
+                                    ..seekTo(const Duration(seconds: 0))
+                                    ..pause();
+                                  setState(() {});
+                                  Navigator.pop(context);
+                                },
+                                child: const Padding(
+                                  padding: EdgeInsets.only(left: 40),
+                                  child: Align(
+                                      alignment: Alignment.bottomLeft,
+                                      child: Icon(
+                                        Icons.arrow_back_ios,
+                                        color: Colors.red,
+                                      )),
+                                ),
+                              ),
+                              const SizedBox(
+                                height: 10,
+                              ),
+                              Row(),
+                              SizedBox(
+                                width: isTablet ? 800 : 355,
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(15),
+                                  child: AspectRatio(
+                                      aspectRatio: chewieController
+                                          .videoPlayerController
+                                          .value
+                                          .size
+                                          .aspectRatio,
+                                      child:
+                                          Chewie(controller: chewieController)),
+                                ),
+                              ),
+                              StreamBuilder<bool>(
+                                  stream: blocDetectTap.dataStream,
+                                  builder: (context, snapshotDetectTap) {
+                                    return StreamBuilder<double>(
+                                        stream: providerBlocProgress.stream,
+                                        builder: (context, snapshotProgress) {
+                                          return CustomTreningiVideo(
+                                            onTap: () {
+                                              blocDetectTap.dataSink.add(true);
+
+                                              if (snapshotProgress.data ==
+                                                      null ||
+                                                  snapshotProgress.data == 0) {
+                                                downloadFile(
+                                                  widget.url,
+                                                  widget.title,
+                                                  providerBlocProgress,
+                                                ).then((value) {
+                                                  log("$value download status");
+                                                  providerSendAnaliseDownload
+                                                      .setAnalise(value);
+                                                });
+                                              } else {
+                                                log("asdffffffffffff=----------------------------------------");
+                                              }
+                                            },
+                                            title: widget.title,
+                                          );
+                                        });
+                                  })
+                            ],
+                          ),
+                        ),
+                      )
+                    : const Center(
+                        child: CircularProgressIndicator(),
+                      ),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}

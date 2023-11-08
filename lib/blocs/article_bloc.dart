@@ -19,7 +19,9 @@ class ArticleBLoC {
       print(url);
     }
     var headers = {'token': token.toString()};
+    print(headers);
     var request = http.Request('GET', Uri.parse("https://hansa-lab.ru/$url"));
+    print(request);
     request.headers.addAll(headers);
     http.StreamedResponse response = await request.send();
     Map<String, dynamic>? map;

@@ -43,6 +43,7 @@ import 'package:hansa_lab/providers/provider_for_flipping/flip_login_provider.da
 import 'package:hansa_lab/providers/provider_for_flipping/login_clicked_provider.dart';
 import 'package:hansa_lab/providers/provider_for_flipping/provider_for_flipping.dart';
 import 'package:hansa_lab/providers/provider_otpravit_push_uvodamleniya.dart';
+import 'package:hansa_lab/providers/providers_for_video_title/article_video_Provider.dart';
 import 'package:hansa_lab/providers/providers_for_video_title/video_index_provider.dart';
 import 'package:hansa_lab/providers/providers_for_video_title/video_title_provider.dart';
 import 'package:hansa_lab/providers/stati_id_provider.dart';
@@ -135,6 +136,7 @@ class MyApp extends StatelessWidget {
           ChangeNotifierProvider(create: (context) => IsVideoprovider()),
           ChangeNotifierProvider(create: (context) => VideoTitleProvider()),
           ChangeNotifierProvider(create: (context) => VideoIndexProvider()),
+          ChangeNotifierProvider(create: (context) => ArticleTitleProvider()),
           ChangeNotifierProvider(create: (context) => TreningiPhotosProvider()),
           ChangeNotifierProvider(
               create: (context) => FullRegisterDataProvider()),

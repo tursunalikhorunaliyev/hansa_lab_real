@@ -18,6 +18,7 @@ import 'package:hansa_lab/middle_part_widgets/treningi_video.dart';
 import 'package:hansa_lab/middle_part_widgets/video.dart';
 import 'package:hansa_lab/screens/article_screen.dart';
 import 'package:hansa_lab/screens/article_screen_tab.dart';
+import 'package:hansa_lab/screens/article_video_screen.dart';
 import 'package:hansa_lab/screens/qr_code_page.dart';
 import 'package:hansa_lab/screens/read_stati.dart';
 import 'package:lottie/lottie.dart';
@@ -109,6 +110,8 @@ class _UIChangerState extends State<UIChanger> {
                 return const OKompanii();
               } else if (snapshot.data == MenuActions.prezentFav) {
                 return const PresentArchive();
+              } else if (snapshot.data == MenuActions.articleVideo) {
+                return const ArticleVideoScreen();
               } else if (snapshot.data == MenuActions.prezentFav) {
                 return const QrCodePage();
               } else {

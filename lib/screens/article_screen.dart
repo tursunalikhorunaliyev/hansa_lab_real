@@ -4,15 +4,30 @@ import 'package:flutter_widget_from_html_core/flutter_widget_from_html_core.dart
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hansa_lab/api_models.dart/article_model.dart';
 import 'package:hansa_lab/blocs/article_bloc.dart';
+import 'package:hansa_lab/blocs/menu_events_bloc.dart';
+import 'package:hansa_lab/screens/web_view_video.dart';
 import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
+
+import '../extra/top_video_vidget.dart';
+import '../firebase_dynamiclinks.dart';
+import '../providers/providers_for_video_title/article_video_Provider.dart';
+import '../video/article_video_api.dart';
+import '../video/article_video_model.dart';
+import 'article_video_screen.dart';
+import 'article_video_widget.dart';
 
 class ArticleScreen extends StatelessWidget {
   const ArticleScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final title = Provider.of<ArticleTitleProvider>(context);
+    final blocVideoApi = ArticleVideoApi();
+    final munuchangerProvider = Provider.of<MenuEventsBloC>(context);
+    final scafforlKeyProvider = Provider.of<GlobalKey<ScaffoldState>>(context);
+    final token = Provider.of<String>(context);
     final ScrollController listViewController =
         ScrollController(keepScrollOffset: true);
 
@@ -70,6 +85,16 @@ class ArticleScreen extends StatelessWidget {
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
+                            // Align(
+                            //   alignment: Alignment.topRight,
+                            //   child: GestureDetector(
+                            //       onTap: () async {
+                            //         final dynamicLink = await DynamicLinkHelper.createDynamicLink('341');
+                            //         print('Generated Dynamic Link: $dynamicLink');
+                            //         // Now you can share the dynamicLink with users
+                            //       },
+                            //       child: Image.asset("assets/share.png",height: 25,width: 25,)),
+                            // ),
                             Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: SelectableText(
@@ -84,8 +109,75 @@ class ArticleScreen extends StatelessWidget {
                             HtmlWidget(
                               snapshot.data!.article.body,
                               onTapUrl: (url) async {
-                                print(url);
-                                if (await canLaunch(url)) {
+                                if (url.contains("training")) {
+                                  munuchangerProvider.eventSink
+                                      .add(MenuActions.trening);
+                                  scafforlKeyProvider.currentState!
+                                      .closeDrawer();
+                                } else if (url.contains("catalog")) {
+                                  munuchangerProvider.eventSink
+                                      .add(MenuActions.katalog);
+                                  scafforlKeyProvider.currentState!
+                                      .closeDrawer();
+                                } else if (url.contains("video")) {
+                                  final uri = Uri.parse(url);
+                                  final fragment = uri.fragment;
+                                  final filename = fragment.split('#').last;
+                                  title.changeTitle(filename);
+                                  showDialog(
+                                    context: context,
+                                    barrierDismissible: false,
+                                    builder: (context) {
+                                      return Scaffold(
+                                        backgroundColor: Colors.transparent,
+                                        body: Consumer<ArticleTitleProvider>(
+                                            builder: (context, value, child) {
+                                          return FutureBuilder<
+                                                  ArticleVideoModel>(
+                                              future: blocVideoApi.getData(
+                                                  token: token,
+                                                  videoName: filename),
+                                              builder: (context, snapshot) {
+                                                if (snapshot.hasData) {
+                                                  return MultiProvider(
+                                                    providers: [
+                                                      Provider(
+                                                        create: (context) =>
+                                                            token,
+                                                      ),
+                                                    ],
+                                                    child: ArticleVideoVidget(
+                                                      url: snapshot.data!.data!
+                                                          .videoLink!,
+                                                      title: snapshot
+                                                          .data!.data!.title!,
+                                                    ),
+                                                  );
+                                                }
+                                                return Center(
+                                                  child: Padding(
+                                                    padding: EdgeInsets.only(
+                                                        top: (MediaQuery.of(
+                                                                        context)
+                                                                    .size
+                                                                    .height /
+                                                                2) -
+                                                            135),
+                                                    child: Lottie.asset(
+                                                      'assets/pre.json',
+                                                      height: 70,
+                                                      width: 70,
+                                                    ),
+                                                  ),
+                                                );
+                                              });
+                                        }),
+                                      );
+                                    },
+                                  );
+                                  scafforlKeyProvider.currentState!
+                                      .closeDrawer();
+                                } else if (await canLaunch(url)) {
                                   await launch(
                                     url,
                                   );

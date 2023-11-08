@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:hansa_lab/middle_part_widgets/permission_handler_screen.dart';
+import 'package:hansa_lab/screens/splash_screen.dart';
 import 'api_services/my_firebase.dart';
 
 Future<void> setup({Widget? firstPage}) async {
@@ -17,5 +17,5 @@ Future<void> _registerHome() async {
 }
 
 // Widget home = const MainPage();
-Widget home = PermissionHandlerScreen();
+Widget home = SplashScreen();
 // Widget home = SmsVerify();

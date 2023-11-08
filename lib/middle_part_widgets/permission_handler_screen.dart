@@ -24,6 +24,7 @@ class _PermissionHandlerScreenState extends State<PermissionHandlerScreen> {
   @override
   void initState() {
     getPermission().then((value) {
+      print(value);
       if (value) {
         Navigator.pushReplacement(context,
             MaterialPageRoute(builder: (context) => const SplashScreen()));

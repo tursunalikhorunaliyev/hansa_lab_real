@@ -66,7 +66,7 @@ class _TreningiState extends State<Treningi> {
         List list = value.data.futureEvents.list;
         for (var i = 0; i < list.length; i++) {
           (value.data.futureEvents.list[i].checked == true)
-              ? eventTitleProvider.addTitles("Отписация")
+              ? eventTitleProvider.addTitles("Отписаться")
               : eventTitleProvider.addTitles("Записаться");
         }
       });
@@ -268,7 +268,7 @@ class _TreningiState extends State<Treningi> {
                                                             .getTitles[index] ==
                                                         "Записаться") {
                                                       value.changeTitles(
-                                                          "Отписация", index);
+                                                          "Отписаться", index);
                                                     } else {
                                                       value.changeTitles(
                                                           "Записаться", index);
@@ -315,7 +315,7 @@ class _TreningiState extends State<Treningi> {
                                                         },
                                                       );
                                                       value.changeTitles(
-                                                          "Отписация", index);
+                                                          "Отписаться", index);
                                                     } else {
                                                       value.changeTitles(
                                                           "Записаться", index);

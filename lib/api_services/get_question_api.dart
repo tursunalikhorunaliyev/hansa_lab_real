@@ -34,7 +34,7 @@ class GetQuestionApi {
       print("token: $token");
     }
     Response response = await get(
-      Uri.parse("https://hansa-lab.ru/api/question/day"),
+      Uri.parse("https://hansa-lab.ru/api/v2/question/day"),
       headers: {"token": token},
     );
     return QuestionDay.fromJson(jsonDecode(response.body));

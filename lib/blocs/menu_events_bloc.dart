@@ -13,6 +13,7 @@ enum MenuActions {
   chitatStati,
   trainingVideo,
   oKompanii,
+  articleVideo,
   article,
   prezentFav,
   qrCode,

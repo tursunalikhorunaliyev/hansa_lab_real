@@ -94,10 +94,10 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
     dynamic desiredPadding;
     final screenWidth = MediaQuery.of(context).size.height;
 
-    if (screenWidth > 800) {
-      desiredPadding = 90.0;
+    if (screenWidth > 777) {
+      desiredPadding = 145.0;
     } else {
-      desiredPadding = 20.0;
+      desiredPadding = 80.0;
     }
 
     return WillPopScope(
@@ -328,140 +328,358 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                   stream: getQuestionApi.getQuestionData,
                   builder: (context, snapshot) {
                     if (snapshot.hasData) {
-                      return snapshot.data!.data.show == true
-                          ? Scaffold(
-                              backgroundColor: Colors.black54,
-                              body: Stack(
-                                children: [
-                                  Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Stack(
-                                        children: [
-                                          if (isRight == 1) ...[
-                                            Container(
-                                              width: double.infinity,
-                                              height: 150.h,
-                                              alignment: Alignment.center,
-                                              margin: const EdgeInsets.all(16),
-                                              padding: const EdgeInsets.all(12),
-                                              decoration: BoxDecoration(
-                                                  color: Colors.green
-                                                      .withOpacity(0.7),
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          12)),
-                                              child: const Column(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.center,
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.center,
-                                                children: [
-                                                  Text(
-                                                    'ПРАВИЛЬНО!',
-                                                    style: TextStyle(
-                                                        color: Colors.white,
-                                                        fontSize: 30,
-                                                        fontWeight:
-                                                            FontWeight.w500),
-                                                  ),
-                                                  SizedBox(
-                                                    height: 10,
-                                                  ),
-                                                  Text(
-                                                    'ВАМ БУДЕТ ЗАЧИСЛЕНО 100 БАЛЛОВ',
-                                                    style: TextStyle(
-                                                        color: Colors.white,
-                                                        fontSize: 10),
-                                                  ),
-                                                ],
-                                              ),
+                      if (snapshot.data!.data.show == true) {
+                        return Scaffold(
+                          backgroundColor: Colors.black54,
+                          body: StatefulBuilder(builder:
+                              (BuildContext context, StateSetter setBuild) {
+                            return Stack(
+                              children: [
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Stack(
+                                      children: [
+                                        if (isRight == 1) ...[
+                                          Container(
+                                            width: double.infinity,
+                                            height: 150.h,
+                                            alignment: Alignment.center,
+                                            margin: const EdgeInsets.all(16),
+                                            padding: const EdgeInsets.all(12),
+                                            decoration: BoxDecoration(
+                                                color: Colors.green
+                                                    .withOpacity(0.7),
+                                                borderRadius:
+                                                    BorderRadius.circular(12)),
+                                            child: const Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.center,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              children: [
+                                                Text(
+                                                  'ПРАВИЛЬНО!',
+                                                  style: TextStyle(
+                                                      color: Colors.white,
+                                                      fontSize: 30,
+                                                      fontWeight:
+                                                          FontWeight.w500),
+                                                ),
+                                                SizedBox(
+                                                  height: 10,
+                                                ),
+                                                Text(
+                                                  'ВАМ БУДЕТ ЗАЧИСЛЕНО 100 БАЛЛОВ',
+                                                  style: TextStyle(
+                                                      color: Colors.white,
+                                                      fontSize: 10),
+                                                ),
+                                              ],
                                             ),
-                                          ],
-                                          if (isRight == 0) ...[
-                                            Container(
-                                              width: double.infinity,
-                                              height: 150.h,
-                                              alignment: Alignment.center,
-                                              margin: const EdgeInsets.all(16),
-                                              // padding: EdgeInsets.all(12),
-                                              decoration: BoxDecoration(
-                                                  color: Colors.red
-                                                      .withOpacity(0.9),
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          12)),
-                                              child: const Column(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.center,
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.center,
-                                                children: [
-                                                  Text(
-                                                    'НЕ ВЕРНО',
-                                                    style: TextStyle(
-                                                        color: Colors.white,
-                                                        fontSize: 30,
-                                                        fontWeight:
-                                                            FontWeight.w500),
-                                                  ),
-                                                  SizedBox(
-                                                    height: 10,
-                                                  ),
-                                                  Text(
-                                                    'ЗАВТРА БУДЕТ НОВЫЙ ВОПРОС',
-                                                    style: TextStyle(
-                                                        color: Colors.white,
-                                                        fontSize: 10),
-                                                  ),
-                                                  SizedBox(
-                                                    height: 10,
-                                                  ),
-                                                  Text(
-                                                    'ТЫ ТОЧНО СПРАВИШЬСЯ',
-                                                    style: TextStyle(
-                                                        color: Colors.white,
-                                                        fontSize: 10),
-                                                  ),
-                                                ],
-                                              ),
+                                          ),
+                                        ],
+                                        if (isRight == 0) ...[
+                                          Container(
+                                            width: double.infinity,
+                                            height: 150.h,
+                                            alignment: Alignment.center,
+                                            margin: const EdgeInsets.all(16),
+                                            // padding: EdgeInsets.all(12),
+                                            decoration: BoxDecoration(
+                                                color:
+                                                    Colors.red.withOpacity(0.9),
+                                                borderRadius:
+                                                    BorderRadius.circular(12)),
+                                            child: const Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.center,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              children: [
+                                                Text(
+                                                  'НЕ ВЕРНО',
+                                                  style: TextStyle(
+                                                      color: Colors.white,
+                                                      fontSize: 30,
+                                                      fontWeight:
+                                                          FontWeight.w500),
+                                                ),
+                                                SizedBox(
+                                                  height: 10,
+                                                ),
+                                                Text(
+                                                  'ЗАВТРА БУДЕТ НОВЫЙ ВОПРОС',
+                                                  style: TextStyle(
+                                                      color: Colors.white,
+                                                      fontSize: 10),
+                                                ),
+                                                SizedBox(
+                                                  height: 10,
+                                                ),
+                                                Text(
+                                                  'ТЫ ТОЧНО СПРАВИШЬСЯ',
+                                                  style: TextStyle(
+                                                      color: Colors.white,
+                                                      fontSize: 10),
+                                                ),
+                                              ],
                                             ),
-                                          ],
-                                          if (isRight == null) ...[
-                                            Padding(
-                                              padding: EdgeInsets.only(
-                                                  left: isTablet ? 28 : 18,
-                                                  right: isTablet ? 28 : 18,
-                                                  top: 24),
-                                              child: Stack(
-                                                children: [
-                                                  Container(
-                                                    height: 180.h,
-                                                    padding:
-                                                        const EdgeInsets.all(1),
+                                          ),
+                                        ],
+                                        if (isRight == null) ...[
+                                          Padding(
+                                            padding: EdgeInsets.only(
+                                                left: isTablet ? 28 : 18,
+                                                right: isTablet ? 28 : 18,
+                                                top: 24),
+                                            child: Stack(
+                                              children: [
+                                                Container(
+                                                  height: 180.h,
+                                                  padding:
+                                                      const EdgeInsets.all(1),
+                                                  decoration: BoxDecoration(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            20),
+                                                    image: const DecorationImage(
+                                                        fit: BoxFit.fitHeight,
+                                                        image: AssetImage(
+                                                            'assets/quizz.png')),
+                                                  ),
+                                                  child: Container(
+                                                    height:
+                                                        isTablet ? 200 : 179.h,
                                                     decoration: BoxDecoration(
                                                       borderRadius:
                                                           BorderRadius.circular(
                                                               20),
-                                                      image: const DecorationImage(
-                                                          fit: BoxFit.fitHeight,
-                                                          image: AssetImage(
-                                                              'assets/quizz.png')),
+                                                      // gradient: LinearGradient(colors: [Color(0xFF6071C9),Color(0xFF6071C9),])
+                                                      image:
+                                                          const DecorationImage(
+                                                        fit: BoxFit.fitHeight,
+                                                        image: AssetImage(
+                                                            'assets/ssss.png'),
+                                                      ),
                                                     ),
+                                                  ),
+                                                ),
+                                                Container(
+                                                  height: 178.h,
+                                                  alignment: Alignment.center,
+                                                  decoration: BoxDecoration(
+                                                      color: Colors.transparent,
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              12)),
+                                                  child: Padding(
+                                                    padding:
+                                                        const EdgeInsets.all(
+                                                            16),
+                                                    child: Column(
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .center,
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .center,
+                                                      children: [
+                                                        const Text(
+                                                          'ВОПРОС ДНЯ ',
+                                                          style: TextStyle(
+                                                              color:
+                                                                  Colors.white,
+                                                              fontSize: 22,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w600),
+                                                        ),
+                                                        const Text(
+                                                          '. . .',
+                                                          style: TextStyle(
+                                                              color:
+                                                                  Colors.white,
+                                                              fontSize: 16,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w500),
+                                                        ),
+                                                        Text(
+                                                          snapshot.data!.data
+                                                              .question.text,
+                                                          style:
+                                                              const TextStyle(
+                                                                  color: Colors
+                                                                      .white,
+                                                                  fontSize: 14),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          )
+                                        ],
+                                        if (isRight == 1) ...[
+                                          Container(
+                                            width: 48,
+                                            height: 48,
+                                            margin: const EdgeInsets.only(
+                                                left: 24, bottom: 8),
+                                            decoration: BoxDecoration(
+                                              color:
+                                                  Colors.green.withOpacity(0.8),
+                                              borderRadius:
+                                                  BorderRadius.circular(22),
+                                            ),
+                                            child: Container(
+                                              width: 20,
+                                              height: 20,
+                                              margin: const EdgeInsets.all(8),
+                                              decoration: BoxDecoration(
+                                                  color: Colors.green
+                                                      .withOpacity(0.8),
+                                                  borderRadius:
+                                                      BorderRadius.circular(16),
+                                                  border: Border.all(
+                                                      color: Colors.white)),
+                                              child: const Icon(
+                                                Icons.done,
+                                                color: Colors.white,
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                        if (isRight == 0) ...[
+                                          Container(
+                                            width: 48,
+                                            height: 48,
+                                            margin: const EdgeInsets.only(
+                                                left: 24, bottom: 8),
+                                            decoration: BoxDecoration(
+                                              color:
+                                                  Colors.red.withOpacity(0.8),
+                                              borderRadius:
+                                                  BorderRadius.circular(22),
+                                            ),
+                                            child: Container(
+                                              width: 20,
+                                              height: 20,
+                                              margin: const EdgeInsets.all(8),
+                                              decoration: BoxDecoration(
+                                                  color: Colors.red
+                                                      .withOpacity(0.8),
+                                                  borderRadius:
+                                                      BorderRadius.circular(16),
+                                                  border: Border.all(
+                                                      color: Colors.white)),
+                                              child: const Icon(
+                                                Icons.close,
+                                                color: Colors.white,
+                                              ),
+                                            ),
+                                          )
+                                        ],
+                                        if (isRight == null) ...[
+                                          GestureDetector(
+                                            onTap: () {
+                                              setBuild(() {
+                                                isTips = !isTips;
+                                              });
+                                            },
+                                            child: Container(
+                                              width: 44,
+                                              height: 44,
+                                              margin: const EdgeInsets.only(
+                                                  left: 24, bottom: 18, top: 8),
+                                              decoration: BoxDecoration(
+                                                color: const Color(0xFFB7D6F9),
+                                                borderRadius:
+                                                    BorderRadius.circular(22),
+                                              ),
+                                              child: Container(
+                                                width: 20,
+                                                height: 20,
+                                                margin: const EdgeInsets.all(8),
+                                                decoration: BoxDecoration(
+                                                    color:
+                                                        const Color(0xFFB7D6F9),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            16),
+                                                    border: Border.all(
+                                                        color: Colors.black)),
+                                                child: const Icon(
+                                                  Icons.question_mark,
+                                                  size: 20,
+                                                  color: Colors.black,
+                                                ),
+                                              ),
+                                            ),
+                                          )
+                                        ]
+                                      ],
+                                    ),
+                                    const SizedBox(
+                                      height: 16,
+                                    ),
+                                    ListView.builder(
+                                        physics:
+                                            const NeverScrollableScrollPhysics(),
+                                        itemCount: testVariant.length,
+                                        shrinkWrap: true,
+                                        padding: EdgeInsets.zero,
+                                        itemBuilder:
+                                            (BuildContext context, int index) {
+                                          if (snapshot.data!.data.answers[index]
+                                                  .isRight ==
+                                              1) {
+                                            isCorrectAnswer = index;
+                                          }
+                                          return GestureDetector(
+                                            onTap: () async {
+                                              selectedAnswerIndex = index;
+                                              isRight ??= snapshot.data!.data
+                                                  .answers[index].isRight;
+                                              isNumber ??= snapshot.data!.data
+                                                  .answers[index].number;
+                                              isQuestionId ??= snapshot
+                                                  .data!.data.question.id;
+                                              getQuestionApi.setQuestion(token,
+                                                  isNumber!, isQuestionId!);
+                                              Future.delayed(
+                                                      Duration(seconds: 5))
+                                                  .then((value) {
+                                                setState(() {});
+                                                isShowDialog = true;
+                                              });
+                                              setBuild(() {});
+                                            },
+                                            child: Padding(
+                                              padding: EdgeInsets.only(
+                                                  bottom: 6,
+                                                  left: isTablet ? 38 : 18,
+                                                  right: isTablet ? 38 : 18),
+                                              child: Stack(
+                                                children: [
+                                                  Container(
+                                                    height: isTablet ? 76 : 55,
+                                                    padding: EdgeInsets.all(
+                                                        isTablet ? 4 : 2),
+                                                    decoration: const BoxDecoration(
+                                                        image: DecorationImage(
+                                                            fit: BoxFit.fill,
+                                                            image: AssetImage(
+                                                                'assets/quizz.png'))),
                                                     child: Container(
-                                                      height: isTablet
-                                                          ? 200
-                                                          : 179.h,
-                                                      decoration: BoxDecoration(
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(20),
-                                                        // gradient: LinearGradient(colors: [Color(0xFF6071C9),Color(0xFF6071C9),])
-                                                        image:
-                                                            const DecorationImage(
-                                                          fit: BoxFit.fitHeight,
+                                                      height: 55,
+                                                      decoration:
+                                                          const BoxDecoration(
+                                                        image: DecorationImage(
+                                                          fit: BoxFit.fill,
                                                           image: AssetImage(
                                                               'assets/ssss.png'),
                                                         ),
@@ -469,372 +687,146 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                                                     ),
                                                   ),
                                                   Container(
-                                                    height: 178.h,
-                                                    alignment: Alignment.center,
+                                                    padding: EdgeInsets.all(
+                                                        isTablet ? 14.0 : 4.0),
+                                                    width: double.infinity,
                                                     decoration: BoxDecoration(
-                                                        color:
-                                                            Colors.transparent,
                                                         borderRadius:
-                                                            BorderRadius
-                                                                .circular(12)),
-                                                    child: Padding(
-                                                      padding:
-                                                          const EdgeInsets.all(
-                                                              16),
-                                                      child: Column(
-                                                        crossAxisAlignment:
-                                                            CrossAxisAlignment
-                                                                .center,
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .center,
-                                                        children: [
-                                                          const Text(
-                                                            'ВОПРОС ДНЯ ',
-                                                            style: TextStyle(
-                                                                color: Colors
-                                                                    .white,
-                                                                fontSize: 22,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w600),
-                                                          ),
-                                                          const Text(
-                                                            '. . .',
-                                                            style: TextStyle(
-                                                                color: Colors
-                                                                    .white,
-                                                                fontSize: 16,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w500),
-                                                          ),
-                                                          Text(
-                                                            snapshot.data!.data
-                                                                .question.text,
+                                                            BorderRadius.all(
+                                                                Radius.circular(
+                                                                    isTablet
+                                                                        ? 50
+                                                                        : 30)),
+                                                        color:
+                                                            _getColorForOption(
+                                                                index)),
+                                                    child: Row(
+                                                      children: [
+                                                        Container(
+                                                          alignment:
+                                                              Alignment.center,
+                                                          height: isTablet
+                                                              ? 40
+                                                              : 33,
+                                                          width: isTablet
+                                                              ? 40
+                                                              : 32,
+                                                          padding:
+                                                              const EdgeInsets
+                                                                  .all(6),
+                                                          margin:
+                                                              const EdgeInsets
+                                                                  .all(6),
+                                                          decoration: BoxDecoration(
+                                                              color: const Color(
+                                                                  0xFFB7D6F9),
+                                                              borderRadius:
+                                                                  BorderRadius.circular(
+                                                                      isTablet
+                                                                          ? 35
+                                                                          : 15)),
+                                                          child: Text(
+                                                            testVariant[index],
                                                             style: const TextStyle(
-                                                                color: Colors
-                                                                    .white,
-                                                                fontSize: 14),
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold,
+                                                                fontSize: 16),
                                                           ),
-                                                        ],
-                                                      ),
+                                                        ),
+                                                        const SizedBox(
+                                                          width: 20,
+                                                        ),
+                                                        Expanded(
+                                                          child: Text(
+                                                            snapshot
+                                                                .data!
+                                                                .data
+                                                                .answers[index]
+                                                                .text,
+                                                            style:
+                                                                const TextStyle(
+                                                                    color: Colors
+                                                                        .white),
+                                                          ),
+                                                        ),
+                                                        const SizedBox(
+                                                          width: 20,
+                                                        ),
+                                                      ],
                                                     ),
                                                   ),
                                                 ],
                                               ),
-                                            )
-                                          ],
-                                          if (isRight == 1) ...[
-                                            Container(
-                                              width: 48,
-                                              height: 48,
-                                              margin: const EdgeInsets.only(
-                                                  left: 24, bottom: 8),
-                                              decoration: BoxDecoration(
-                                                color: Colors.green
-                                                    .withOpacity(0.8),
-                                                borderRadius:
-                                                    BorderRadius.circular(22),
-                                              ),
-                                              child: Container(
-                                                width: 20,
-                                                height: 20,
-                                                margin: const EdgeInsets.all(8),
-                                                decoration: BoxDecoration(
-                                                    color: Colors.green
-                                                        .withOpacity(0.8),
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            16),
-                                                    border: Border.all(
-                                                        color: Colors.white)),
-                                                child: const Icon(
-                                                  Icons.done,
-                                                  color: Colors.white,
-                                                ),
-                                              ),
                                             ),
-                                          ],
-                                          if (isRight == 0) ...[
-                                            Container(
-                                              width: 48,
-                                              height: 48,
-                                              margin: const EdgeInsets.only(
-                                                  left: 24, bottom: 8),
-                                              decoration: BoxDecoration(
-                                                color:
-                                                    Colors.red.withOpacity(0.8),
-                                                borderRadius:
-                                                    BorderRadius.circular(22),
-                                              ),
-                                              child: Container(
-                                                width: 20,
-                                                height: 20,
-                                                margin: const EdgeInsets.all(8),
-                                                decoration: BoxDecoration(
-                                                    color: Colors.red
-                                                        .withOpacity(0.8),
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            16),
-                                                    border: Border.all(
-                                                        color: Colors.white)),
-                                                child: const Icon(
-                                                  Icons.close,
-                                                  color: Colors.white,
-                                                ),
-                                              ),
-                                            )
-                                          ],
-                                          if (isRight == null) ...[
-                                            GestureDetector(
-                                              onTap: () {
-                                                setState(() {
-                                                  isTips = !isTips;
-                                                });
-                                              },
-                                              child: Container(
-                                                width: 44,
-                                                height: 44,
-                                                margin: const EdgeInsets.only(
-                                                    left: 24,
-                                                    bottom: 18,
-                                                    top: 8),
-                                                decoration: BoxDecoration(
-                                                  color:
-                                                      const Color(0xFFB7D6F9),
-                                                  borderRadius:
-                                                      BorderRadius.circular(22),
-                                                ),
-                                                child: Container(
-                                                  width: 20,
-                                                  height: 20,
-                                                  margin:
-                                                      const EdgeInsets.all(8),
-                                                  decoration: BoxDecoration(
-                                                      color: const Color(
-                                                          0xFFB7D6F9),
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              16),
-                                                      border: Border.all(
-                                                          color: Colors.black)),
-                                                  child: const Icon(
-                                                    Icons.question_mark,
-                                                    size: 20,
-                                                    color: Colors.black,
-                                                  ),
-                                                ),
-                                              ),
-                                            )
-                                          ]
+                                          );
+                                        })
+                                  ],
+                                ),
+                                if (isTips == true)
+                                  Padding(
+                                    padding: EdgeInsets.only(
+                                        left: 50,
+                                        right: 50,
+                                        top: desiredPadding),
+                                    child: Container(
+                                      height: 40,
+                                      width: 200,
+                                      padding: const EdgeInsets.all(6.0),
+                                      decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(12),
+                                          image: const DecorationImage(
+                                              fit: BoxFit.fitWidth,
+                                              image: AssetImage(
+                                                  "assets/tips.png"))),
+                                      child: const Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            "ОТВЕТЬ ПРАВИЛЬНО И ПОЛУЧИ 100 БАЛЛОВ",
+                                            style: TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 8),
+                                          ),
+                                          SizedBox(
+                                            height: 4,
+                                          ),
+                                          Text(
+                                            "НА СВОЙ СЧЕТ ",
+                                            style: TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 8),
+                                          ),
                                         ],
                                       ),
-                                      const SizedBox(
-                                        height: 16,
-                                      ),
-                                      ListView.builder(
-                                          physics:
-                                              const NeverScrollableScrollPhysics(),
-                                          itemCount: testVariant.length,
-                                          shrinkWrap: true,
-                                          padding: EdgeInsets.zero,
-                                          itemBuilder: (BuildContext context,
-                                              int index) {
-                                            if (snapshot.data!.data
-                                                    .answers[index].isRight ==
-                                                1) {
-                                              isCorrectAnswer = index;
-                                            }
-                                            return GestureDetector(
-                                              onTap: () {
-                                                selectedAnswerIndex = index;
-                                                isRight ??= snapshot.data!.data
-                                                    .answers[index].isRight;
-                                                isNumber ??= snapshot.data!.data
-                                                    .answers[index].number;
-                                                isQuestionId ??= snapshot
-                                                    .data!.data.question.id;
-                                                getQuestionApi.setQuestion(
-                                                    token,
-                                                    isNumber!,
-                                                    isQuestionId!);
-                                                Future.delayed(const Duration(
-                                                        seconds: 2))
-                                                    .then((value) {
-                                                  isShowDialog = true;
-                                                  setState(() {});
-                                                });
-                                                setState(() {});
-                                              },
-                                              child: Padding(
-                                                padding: EdgeInsets.only(
-                                                    bottom: 6,
-                                                    left: isTablet ? 38 : 18,
-                                                    right: isTablet ? 38 : 18),
-                                                child: Stack(
-                                                  children: [
-                                                    Container(
-                                                      height:
-                                                          isTablet ? 76 : 55,
-                                                      padding: EdgeInsets.all(
-                                                          isTablet ? 4 : 2),
-                                                      decoration: const BoxDecoration(
-                                                          image: DecorationImage(
-                                                              fit: BoxFit.fill,
-                                                              image: AssetImage(
-                                                                  'assets/quizz.png'))),
-                                                      child: Container(
-                                                        height: 55,
-                                                        decoration:
-                                                            const BoxDecoration(
-                                                          image:
-                                                              DecorationImage(
-                                                            fit: BoxFit.fill,
-                                                            image: AssetImage(
-                                                                'assets/ssss.png'),
-                                                          ),
-                                                        ),
-                                                      ),
-                                                    ),
-                                                    Container(
-                                                      padding: EdgeInsets.all(
-                                                          isTablet
-                                                              ? 14.0
-                                                              : 4.0),
-                                                      width: double.infinity,
-                                                      decoration: BoxDecoration(
-                                                          borderRadius:
-                                                              BorderRadius.all(
-                                                                  Radius.circular(
-                                                                      isTablet
-                                                                          ? 50
-                                                                          : 30)),
-                                                          color:
-                                                              _getColorForOption(
-                                                                  index)),
-                                                      child: Row(
-                                                        children: [
-                                                          Container(
-                                                            alignment: Alignment
-                                                                .center,
-                                                            height: isTablet
-                                                                ? 40
-                                                                : 33,
-                                                            width: isTablet
-                                                                ? 40
-                                                                : 32,
-                                                            padding:
-                                                                const EdgeInsets
-                                                                    .all(6),
-                                                            margin:
-                                                                const EdgeInsets
-                                                                    .all(6),
-                                                            decoration: BoxDecoration(
-                                                                color: const Color(
-                                                                    0xFFB7D6F9),
-                                                                borderRadius:
-                                                                    BorderRadius.circular(
-                                                                        isTablet
-                                                                            ? 35
-                                                                            : 15)),
-                                                            child: Text(
-                                                              testVariant[
-                                                                  index],
-                                                              style: const TextStyle(
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .bold,
-                                                                  fontSize: 16),
-                                                            ),
-                                                          ),
-                                                          const SizedBox(
-                                                            width: 20,
-                                                          ),
-                                                          Expanded(
-                                                            child: Text(
-                                                              snapshot
-                                                                  .data!
-                                                                  .data
-                                                                  .answers[
-                                                                      index]
-                                                                  .text,
-                                                              style: const TextStyle(
-                                                                  color: Colors
-                                                                      .white),
-                                                            ),
-                                                          ),
-                                                          const SizedBox(
-                                                            width: 20,
-                                                          ),
-                                                        ],
-                                                      ),
-                                                    ),
-                                                  ],
-                                                ),
-                                              ),
-                                            );
-                                          })
-                                    ],
-                                  ),
-                                  if (isTips == true)
-                                    Padding(
-                                      padding: EdgeInsets.only(
-                                          left: 50,
-                                          right: 40,
-                                          top: desiredPadding),
-                                      child: Container(
-                                        height: 110,
-                                        width: 220,
-                                        padding: const EdgeInsets.all(12),
-                                        decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(12),
-                                            image: const DecorationImage(
-                                                image: AssetImage(
-                                                    "assets/tips.png"))),
-                                        child: const Column(
-                                          children: [
-                                            Text(
-                                              "ОТВЕТЬ ПРАВИЛЬНО И ПОЛУЧИ 100 БАЛЛОВ В НА СВОЙ СЧЕТ ",
-                                              style: TextStyle(
-                                                  color: Colors.white,
-                                                  fontSize: 10),
-                                            ),
-                                            SizedBox(
-                                              height: 10,
-                                            ),
-                                            Text(
-                                                "Рыбатекст поможет дизайнеру, верстальщику, вебмастеру сгенерировать несколько абзацев более менее осмысленного текста рыбы на русском языке.",
-                                                style: TextStyle(
-                                                    color: Colors.white,
-                                                    fontSize: 8)),
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                  Padding(
-                                    padding: const EdgeInsets.only(
-                                        left: 80, right: 20, top: 80),
-                                    child: Align(
-                                      alignment: Alignment.topRight,
-                                      child: IconButton(
-                                          onPressed: () {
-                                            setState(() {
-                                              isShowDialog = true;
-                                            });
-                                          },
-                                          icon: const Icon(
-                                            Icons.close,
-                                            color: Colors.white,
-                                          )),
                                     ),
                                   ),
-                                ],
-                              ),
-                            )
-                          : const SizedBox();
+                                Padding(
+                                  padding: const EdgeInsets.only(
+                                      left: 80, right: 20, top: 80),
+                                  child: Align(
+                                    alignment: Alignment.topRight,
+                                    child: IconButton(
+                                        onPressed: () {
+                                          setState(() {
+                                            isShowDialog = true;
+                                          });
+                                        },
+                                        icon: const Icon(
+                                          Icons.close,
+                                          color: Colors.white,
+                                        )),
+                                  ),
+                                ),
+                              ],
+                            );
+                          }),
+                        );
+                      } else {
+                        return const SizedBox();
+                      }
                     }
                     return const SizedBox();
                   }),
@@ -858,19 +850,8 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
   }
 
   backPressed(MenuEventsBloC menuProvider) {
-    if (menuProvider.list.length > 1) {
-      menuProvider.eventSink
-          .add(menuProvider.list.elementAt(menuProvider.list.length - 2));
-      menuProvider.list
-          .remove(menuProvider.list.elementAt(menuProvider.list.length - 1));
-    } else {
-      showDialog(
-        context: context,
-        builder: (context) {
-          return const ExitDialog();
-        },
-      );
-    }
+    menuProvider.eventSink.add(MenuActions.welcome);
+    menuProvider.list.clear();
   }
 
   backPressedTrue(MenuEventsBloC menuProvider) {

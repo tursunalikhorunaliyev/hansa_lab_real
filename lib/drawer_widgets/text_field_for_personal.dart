@@ -19,7 +19,7 @@ class _TextFieldForPersonalState extends State<TextFieldForPersonal> {
   @override
   Widget build(BuildContext context) {
     final isTablet = Provider.of<bool>(context);
-
+    print(widget.controller);
     return Container(
       height: isTablet ? 45 : 36,
       width: isTablet ? 350 : 269,

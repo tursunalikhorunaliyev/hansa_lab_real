@@ -106,38 +106,6 @@ class _OKompaniiState extends State<OKompanii> {
       }
     }
 
-    // Future<void> downloadFile(String url, String fileName) async {
-    //   await Permission.storage.request();
-    //   progress = 0;
-    //
-    //   String savePath = await getFilePath(fileName);
-    //   Dio dio = Dio();
-    //   dio.download(
-    //     url,
-    //     savePath,
-    //     onReceiveProgress: (recieved, total) {
-    //       progress =
-    //           double.parse(((recieved / total) * 100).toStringAsFixed(0));
-    //       blocDownload.streamSink.add(progress);
-    //       if (progress == 100) {
-    //         log("tugadi");
-    //       } else {
-    //         log("hali tugamadi");
-    //       }
-    //     },
-    //     deleteOnError: true,
-    //   ).then((value) async {
-    //     if (Platform
-    //         .isIOS) {
-    //       GallerySaver.saveVideo(widget.url);
-    //     } else {
-    //       GallerySaver.saveVideo(widget.url);
-    //     }
-    //     // Navigator.pop(context);
-    //     // OpenFile.open(path);
-    //   });
-    // }
-
     return Expanded(
       child: Consumer<VideoIndexProvider>(builder: (context, value, child) {
         return SingleChildScrollView(

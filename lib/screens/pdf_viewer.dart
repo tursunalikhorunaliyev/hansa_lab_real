@@ -14,9 +14,9 @@ class PDFViewer extends StatefulWidget {
 
 class _PDFViewerState extends State<PDFViewer> {
   bool isBackButton = false;
+
   @override
   Widget build(BuildContext context) {
-    log(widget.pdfUrlForPDFViewer);
     return Scaffold(
       body: SafeArea(
         child: Stack(

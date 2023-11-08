@@ -321,7 +321,9 @@ class _GlavniyMenyuState extends State<GlavniyMenyu> {
                                       Navigator.push(
                                           context,
                                           MaterialPageRoute(
-                                              builder: (_) => QrCodePage(token: providerToken,)));
+                                              builder: (_) => QrCodePage(
+                                                    token: providerToken,
+                                                  )));
                                     },
                                     icon: const Icon(
                                       Icons.qr_code_2,
@@ -474,10 +476,6 @@ class _GlavniyMenyuState extends State<GlavniyMenyu> {
                                             .getAddressController.text);
                                     editPassword(
                                         providerToken,
-                                        providerPersonalDannieTextFilelds
-                                            .getPasswordController.text);
-                                    Hive.box("savedUser").put(
-                                        "password",
                                         providerPersonalDannieTextFilelds
                                             .getPasswordController.text);
                                     providerPersonalDannieTextFilelds
@@ -1332,6 +1330,7 @@ class _GlavniyMenyuState extends State<GlavniyMenyu> {
     String token,
     String newPassword,
   ) async {
+    await Hive.box("savedUser").put("password", newPassword);
     http.Response response = await http.post(
         Uri.parse("https://hansa-lab.ru/api/auth/change-password"),
         headers: {

@@ -31,8 +31,6 @@ class _CustomVideoListItemState extends State<CustomVideoListItem> {
     final isTablet = Provider.of<bool>(context);
     final token = Provider.of<String>(context);
     final blocVideoApi = BlocVideoApi();
-    print(token);
-    print('token');
     return Padding(
       padding: const EdgeInsets.only(top: 15, bottom: 12, right: 10),
       child: ClipRRect(
@@ -67,8 +65,6 @@ class _CustomVideoListItemState extends State<CustomVideoListItem> {
                               ),
                               InkWell(
                                 onTap: () {
-                                  print(widget.indexMain);
-                                  print(widget.index);
                                   final VideoDetails video = snapshot
                                       .data!
                                       .videoListData

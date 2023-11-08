@@ -7,6 +7,7 @@ import 'package:provider/provider.dart';
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+
 class EventCards extends StatelessWidget {
   const EventCards(
       {Key? key,
@@ -149,15 +150,13 @@ class EventCards extends StatelessWidget {
                                         Text(
                                           day,
                                           textScaleFactor: 1.0,
-                                          style:  TextStyle(
-                                              fontSize: 10.sp),
+                                          style: TextStyle(fontSize: 10.sp),
                                         ),
                                         Text(
                                           month,
                                           textScaleFactor: 1.0,
                                           textAlign: TextAlign.center,
-                                          style: TextStyle(
-                                              fontSize: 8.sp),
+                                          style: TextStyle(fontSize: 8.sp),
                                         ),
                                       ],
                                     ),
@@ -184,29 +183,34 @@ class EventCards extends StatelessWidget {
                     stream: isFavouriteBLoC.stream,
                     builder: (context, snapshot) {
                       return InkWell(
-                        onTap: () {
+                        onTap: () async {
                           fav = !fav;
                           isFavouriteBLoC.sink.add(fav);
                           providerWelcomeApi.list[index].setBool(fav);
                           isFavouriteBLoC.getFavourite(token, isFavouriteURL);
-                         if(fav){
+                          if (fav) {
                             showTopSnackBar(
-                            
-                            reverseCurve: Curves.elasticOut,
-                            animationDuration: const Duration(milliseconds: 600),
-                            displayDuration: const Duration(milliseconds: 600),
-                            context,
-                            const CustomSnackBar.success(
-                              iconRotationAngle: 0,
-                              iconPositionLeft: 30,
-                             // messagePadding: EdgeInsets.symmetric(horizontal: 80),
-                              icon: Icon(Icons.favorite, color: Colors.white, size: 30, ),
-                              backgroundColor: Color.fromARGB(255, 213, 0, 50),
-                              message:
-                                  "Сохранено в избранном",
-                            ),
-                          );
-                         }
+                              reverseCurve: Curves.elasticOut,
+                              animationDuration:
+                                  const Duration(milliseconds: 600),
+                              displayDuration:
+                                  const Duration(milliseconds: 600),
+                              context,
+                              const CustomSnackBar.success(
+                                iconRotationAngle: 0,
+                                iconPositionLeft: 30,
+                                // messagePadding: EdgeInsets.symmetric(horizontal: 80),
+                                icon: Icon(
+                                  Icons.favorite,
+                                  color: Colors.white,
+                                  size: 30,
+                                ),
+                                backgroundColor:
+                                    Color.fromARGB(255, 213, 0, 50),
+                                message: "Сохранено в избранном",
+                              ),
+                            );
+                          }
                         },
                         child: Container(
                           alignment: Alignment.center,

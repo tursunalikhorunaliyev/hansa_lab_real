@@ -214,12 +214,12 @@ class _NastroykaWidgetState extends State<NastroykaWidget> {
                       onTap: () {
                         showDialog(
                           context: context,
-                          builder: (context) =>
-                          const DeleteAccountDialog(),
+                          builder: (context) => const DeleteAccountDialog(),
                         );
                       },
                       child: const Center(
-                        child: Text('Удалить Aккаунт',style: TextStyle(color: Colors.red,fontSize: 16)),
+                        child: Text('Удалить Aккаунт',
+                            style: TextStyle(color: Colors.red, fontSize: 16)),
                       ),
                     )
                   ],
