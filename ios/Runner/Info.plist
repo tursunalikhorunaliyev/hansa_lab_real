@@ -32,12 +32,11 @@
 			<key>CFBundleTypeRole</key>
 			<string>Editor</string>
 			<key>CFBundleURLName</key>
-			<string>com.hansa.hansahansalab</string>
+			<string></string>
 			<key>CFBundleURLSchemes</key>
-			<array>
-				<string>applinks:hansalabru.page.link</string>
-			</array>
+			<array/>
 		</dict>
+		<dict/>
 	</array>
 	<key>CFBundleVersion</key>
 	<string>$(FLUTTER_BUILD_NUMBER)</string>
