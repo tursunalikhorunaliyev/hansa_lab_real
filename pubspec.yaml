@@ -51,7 +51,7 @@ dependencies:
   mask_text_input_formatter: ^2.4.0
   open_filex:
   sentry_flutter:
-  tap_debouncer: ^2.2.0
+#  tap_debouncer: ^2.2.0
   keyboard_dismisser: ^3.0.0
   device_information: ^0.0.4
   flutter_app_badger: ^1.5.0
@@ -64,7 +64,6 @@ dependencies:
   qr_code_scanner: ^1.0.1
   package_info_plus:
   firebase_remote_config: ^3.0.15
-  webview_flutter:
 
 dependency_overrides:
   http: ^1.0.0
